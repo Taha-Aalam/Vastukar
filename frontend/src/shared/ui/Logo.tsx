@@ -134,7 +134,7 @@ const gapSizeMap = {
  * - Letter-spacing: -0.02em
  * - Icon is compact, name is prominent
  */
-export function LogoWithText({ size = 'md', animate, showVersion = true, className }: LogoWithTextProps) {
+export function LogoWithText({ size = 'md', animate, className }: LogoWithTextProps) {
   return (
     <div className={clsx('flex items-center', gapSizeMap[size], className)}>
       <Logo size={size} animate={animate} />
@@ -145,8 +145,7 @@ export function LogoWithText({ size = 'md', animate, showVersion = true, classNa
         )}
         style={{ fontFamily: "'Plus Jakarta Sans', system-ui, sans-serif", letterSpacing: '-0.02em' }}
       >
-        Open<span className="text-oe-blue">Construction</span>
-        {showVersion && <span className="text-content-quaternary">ERP</span>}
+        Vastukar
       </span>
     </div>
   );

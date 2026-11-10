@@ -1,4 +1,4 @@
-# OpenConstructionERP on Microsoft Azure
+# Vastukar on Microsoft Azure
 
 English | [Deutsch](azure.de.md) | [Русский](azure.ru.md)
 

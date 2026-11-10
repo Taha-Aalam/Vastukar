@@ -1,4 +1,4 @@
-# Installing OpenConstructionERP on Linux (Ubuntu / Debian)
+# Installing Vastukar on Linux (Ubuntu / Debian)
 
 This page covers the Linux-specific gotchas that the generic `pip install openconstructionerp` instruction does not. If you are on Ubuntu 23.04 or newer (including Ubuntu 26), read this first - `pip install` directly to system Python will fail.
 

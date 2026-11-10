@@ -1,4 +1,4 @@
-# Autostart OpenConstructionERP on system boot
+# Autostart Vastukar on system boot
 
 Three ready-to-use templates for the three major OSes. Pick yours.
 

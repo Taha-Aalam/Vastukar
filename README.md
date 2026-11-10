@@ -1,10 +1,10 @@
 <div align="center">
 
-# OpenConstructionERP
+# Vastukar
 
 ### A leading open-source workspace for construction project management
 
-<img src="docs/screenshots/hero-overview.png" alt="OpenConstructionERP - open-source construction ERP for BOQ, BIM takeoff, DWG/PDF quantification and 5D cost modeling" width="900" />
+<img src="docs/screenshots/hero-overview.png" alt="Vastukar - open-source construction ERP for BOQ, BIM takeoff, DWG/PDF quantification and 5D cost modeling" width="900" />
 
 Professional BOQ, CAD and BIM takeoff, 4D scheduling, 5D cost model, and tendering - all in one self-hosted platform.
 
@@ -23,7 +23,7 @@ Professional BOQ, CAD and BIM takeoff, 4D scheduling, 5D cost model, and tenderi
 
 <sub><picture><source media="(prefers-color-scheme: dark)" srcset="docs/readme-icons/device-camera-video-dark.svg"><img src="docs/readme-icons/device-camera-video-light.svg" width="14" align="center" alt=""></picture> <b>1-minute teaser above</b> · for the full 12-minute walkthrough → <a href="https://www.youtube.com/watch?v=X06cIaroAeI"><b>watch on YouTube</b></a> · onboarding → BOQ → BIM → DWG → PDF → AI → dashboard</sub>
 
-<img src="docs/screenshots/banner.png" alt="OpenConstructionERP: a honeycomb of the eight company types and fifteen professional roles the platform is built around, over a second honeycomb of its 190+ backend modules and the two shared libraries drawn beside them, each cell coloured by the category its own manifest declares and shaded by how many of the others it is wired to" width="800" />
+<img src="docs/screenshots/banner.png" alt="Vastukar: a honeycomb of the eight company types and fifteen professional roles the platform is built around, over a second honeycomb of its 190+ backend modules and the two shared libraries drawn beside them, each cell coloured by the category its own manifest declares and shaded by how many of the others it is wired to" width="800" />
 
 <br/><br/>
 
@@ -157,7 +157,7 @@ Also: [The uberization of construction (ETH Zürich)](https://www.youtube.com/wa
 
 ---
 
-## Why OpenConstructionERP?
+## Why Vastukar?
 
 Construction cost estimation software is expensive, closed-source, and locked to specific regions. OpenConstructionERP changes that.
 
@@ -192,7 +192,7 @@ The entire UI ships in **44 languages**, including full right-to-left support fo
 <thead>
 <tr>
 <th align="left">Capability</th>
-<th align="center">OpenConstructionERP</th>
+<th align="center">Vastukar</th>
 <th align="center">Enterprise<br/>BIM</th>
 <th align="center">CAD<br/>Takeoff</th>
 <th align="center">Legacy<br/>Estimating</th>

@@ -1,4 +1,4 @@
-# Install OpenConstructionERP
+# Install Vastukar
 
 OpenConstructionERP by DataDrivenConstruction is an open-source platform for construction cost estimation, bills of quantities, and data validation, with CAD and BIM quantity takeoff and multi-currency support. The desktop app puts the whole thing on your computer. You download one installer and run it. There is no Python, no pip, no Docker, and no database to set up. Everything it needs is already inside.
 

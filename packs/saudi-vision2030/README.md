@@ -1,4 +1,4 @@
-# OpenConstructionERP — Saudi Vision 2030 Pack
+# Vastukar — Saudi Vision 2030 Pack
 
 Partner pack pre-configuring [OpenConstructionERP](https://github.com/DataDrivenConstruction/openconstructionerp)
 for Saudi Arabian mega-project contractors — NEOM, Red Sea Global,

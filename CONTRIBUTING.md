@@ -1,4 +1,4 @@
-# Contributing to OpenConstructionERP
+# Contributing to Vastukar
 
 Thank you for your interest. OpenConstructionERP is an open-source platform for
 construction cost estimation, and the work that comes in from outside genuinely shapes

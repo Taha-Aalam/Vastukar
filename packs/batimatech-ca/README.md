@@ -1,4 +1,4 @@
-# OpenConstructionERP Canada Regional Pack
+# Vastukar Canada Regional Pack
 
 Regional pack pre-configuring [OpenConstructionERP](https://github.com/DataDrivenConstruction/openconstructionerp)
 for Canadian construction companies.

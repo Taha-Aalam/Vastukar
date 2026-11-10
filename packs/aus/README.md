@@ -1,4 +1,4 @@
-# OpenConstructionERP — Australia Partner Pack (`aus`)
+# Vastukar — Australia Partner Pack (`aus`)
 
 Pre-configures OpenConstructionERP for **Australian** general contractors.
 

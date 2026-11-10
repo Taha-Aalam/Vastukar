@@ -1265,7 +1265,7 @@ function StepWelcome({
       </Badge>
 
       <h1 className="text-2xl sm:text-3xl font-bold text-content-primary tracking-tight">
-        {t('onboarding.welcome_title', { defaultValue: 'Welcome to OpenConstructionERP' })}
+        {t('onboarding.welcome_title', { defaultValue: 'Welcome to Vastukar' })}
       </h1>
 
       <p className="mt-2 max-w-md text-sm sm:text-base text-content-secondary leading-relaxed">
@@ -4929,7 +4929,7 @@ export function OnboardingWizard() {
   // and re-translated on a language switch in step 1.
   const brandName = useBrandingStore((s) => (s.companyName.trim() ? s.companyName.trim() : null));
   useEffect(() => {
-    document.title = `${t('onboarding.page_title', { defaultValue: 'Getting started' })} | ${brandName ?? 'OpenConstructionERP'}`;
+    document.title = `${t('onboarding.page_title', { defaultValue: 'Getting started' })} | ${brandName ?? 'Vastukar'}`;
   }, [t, i18nInstance.language, brandName]);
   const [restored] = useState(() => loadWizardProgress(TOTAL_STEPS));
   const [step, setStep] = useState(() => restored?.step ?? 0);

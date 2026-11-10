@@ -1,4 +1,4 @@
-# Build on OpenConstructionERP
+# Build on Vastukar
 
 OpenConstructionERP is an open platform for building construction software. The
 same modular core that runs the shipped product, projects, bills of quantities,

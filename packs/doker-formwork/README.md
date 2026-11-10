@@ -1,4 +1,4 @@
-# OpenConstructionERP Formwork Pack
+# Vastukar Formwork Pack
 
 Pre-configures OpenConstructionERP for **formwork (Schalung) and concrete
 contractors** in the DACH region.

@@ -1135,10 +1135,10 @@ export function LoginPage() {
                 {t('about.title', 'Professional construction cost estimation - free and open source')}
               </h3>
               <p className="text-[13px] text-content-secondary leading-relaxed">
-                {t('about.intro', 'OpenConstructionERP is a modern platform for construction cost management. It covers the full estimation workflow - from creating a bill of quantities to tendering and bid comparison. Designed for professionals worldwide, it supports international standards and works in 24 languages.')}
+                {t('about.intro', 'Vastukar is a modern platform for construction cost management. It covers the full estimation workflow - from creating a bill of quantities to tendering and bid comparison. Designed for professionals worldwide, it supports international standards and works in 24 languages.')}
               </p>
               <p className="mt-2 text-[13px] text-content-secondary leading-relaxed">
-                {t('about.intro2', 'Unlike traditional commercial solutions, OpenConstructionERP runs entirely on your computer. Your project data never leaves your machine - you have full ownership and control. The source code is open and auditable, so you always know exactly what the software does.')}
+                {t('about.intro2', 'Unlike traditional commercial solutions, Vastukar runs entirely on your computer. Your project data never leaves your machine - you have full ownership and control. The source code is open and auditable, so you always know exactly what the software does.')}
               </p>
             </div>
 
@@ -1181,7 +1181,7 @@ export function LoginPage() {
               </h3>
               <div className="space-y-2 text-[13px] text-content-secondary leading-relaxed">
                 <p>{t('about.why_1', 'Construction cost data is one of the most valuable assets a company owns. With proprietary software, your data is often locked inside formats you cannot control. If the vendor raises prices, changes terms, or discontinues the product - you may lose access to years of work.')}</p>
-                <p>{t('about.why_2', 'OpenConstructionERP takes a different approach. Your data is stored in open formats (SQLite, JSON, CSV) on your own hardware. You can export everything at any time. The source code is publicly auditable under AGPL-3.0, so there are no hidden data transfers, no telemetry, and no surprises.')}</p>
+                <p>{t('about.why_2', 'Vastukar takes a different approach. Your data is stored in open formats (SQLite, JSON, CSV) on your own hardware. You can export everything at any time. The source code is publicly auditable under AGPL-3.0, so there are no hidden data transfers, no telemetry, and no surprises.')}</p>
                 <p>{t('about.why_3', 'The platform is modular - install only what you need. Community modules extend functionality without bloating the core. And because it runs locally, it works offline and performs fast even with large projects.')}</p>
               </div>
             </div>
@@ -1192,7 +1192,7 @@ export function LoginPage() {
                 {t('about.who_title', 'Who is it for')}
               </h3>
               <p className="text-[13px] text-content-secondary leading-relaxed mb-3">
-                {t('about.who_desc', 'OpenConstructionERP is designed for anyone involved in construction cost management - whether you work on residential projects or large-scale infrastructure, in-house or as a consultant.')}
+                {t('about.who_desc', 'Vastukar is designed for anyone involved in construction cost management - whether you work on residential projects or large-scale infrastructure, in-house or as a consultant.')}
               </p>
               <div className="flex flex-wrap gap-1.5">
                 {[
@@ -1240,7 +1240,7 @@ export function LoginPage() {
                 {t('about.ai_title', 'About AI features')}
               </h3>
               <p className="text-[13px] text-content-secondary leading-relaxed">
-                {t('about.ai_desc', 'OpenConstructionERP includes optional AI-powered tools - quick estimation from text descriptions, smart cost suggestions, and BOQ chat assistant. These features require an API key from a provider of your choice (Anthropic, OpenAI, Google). AI is always opt-in: it only activates when you configure it, and you decide what data to send. Without an API key, all other features work fully offline.')}
+                {t('about.ai_desc', 'Vastukar includes optional AI-powered tools - quick estimation from text descriptions, smart cost suggestions, and BOQ chat assistant. These features require an API key from a provider of your choice (Anthropic, OpenAI, Google). AI is always opt-in: it only activates when you configure it, and you decide what data to send. Without an API key, all other features work fully offline.')}
               </p>
             </div>
 

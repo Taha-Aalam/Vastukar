@@ -1,4 +1,4 @@
-# OpenConstructionERP — New Zealand Partner Pack (`nzs`)
+# Vastukar — New Zealand Partner Pack (`nzs`)
 
 Pre-configures OpenConstructionERP for **New Zealand** contractors.
 

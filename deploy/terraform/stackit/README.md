@@ -1,4 +1,4 @@
-# OpenConstructionERP on STACKIT, one isolated instance per company
+# Vastukar on STACKIT, one isolated instance per company
 
 English | [Deutsch](README.de.md) | [Русский](README.ru.md)
 

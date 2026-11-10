@@ -1,4 +1,4 @@
-# OpenConstructionERP Desktop
+# Vastukar Desktop
 
 This folder holds the desktop build of OpenConstructionERP by DataDrivenConstruction. The desktop app is a native shell built with Tauri that bundles the full backend and an embedded PostgreSQL database into a single installer. People who install it do not need Python, pip, Docker, or any database setup. They download one file, run it, and the app takes care of the rest.
 

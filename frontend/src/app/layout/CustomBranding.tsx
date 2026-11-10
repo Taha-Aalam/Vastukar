@@ -129,7 +129,7 @@ export function CustomBranding({ iconified }: CustomBrandingProps) {
         target="_blank"
         rel="noopener noreferrer"
         className="hover:opacity-80 transition-opacity"
-        title="OpenConstructionERP"
+        title="Vastukar"
       >
         <Logo size="sm" />
       </a>
@@ -211,7 +211,7 @@ export function CustomBranding({ iconified }: CustomBrandingProps) {
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center gap-1 hover:opacity-80 transition-opacity"
-              title="OpenConstructionERP"
+              title="Vastukar"
             >
               {/* Compact wordmark — 13px text + smaller gap to fit
                   the 248px sidebar minus the 32px edit button without
