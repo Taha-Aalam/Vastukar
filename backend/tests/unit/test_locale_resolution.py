@@ -73,6 +73,15 @@ def _git_show(revision: str, path: str) -> str:
     return result.stdout
 
 
+def _commit_exists(revision: str) -> bool:
+    """True when *revision* is reachable in this checkout's history."""
+    return subprocess.run(
+        ["git", "cat-file", "-e", f"{revision}^{{commit}}"],
+        cwd=_REPO_ROOT,
+        capture_output=True,
+    ).returncode == 0
+
+
 def _probe_source(name: str, source: str, workdir: Path) -> dict:
     """Load a standalone copy of a catalogue and ask the lock about it."""
     target = workdir / "__init__.py" if name == "bcf" else workdir / f"{name}_intl.py"
@@ -118,6 +127,12 @@ def test_lock_flags_the_catalogue_as_it_was_before_the_fix(name: str, tmp_path: 
     while holding a complete translation for its base language. If the lock
     cannot see them it cannot see the next one either.
     """
+    if not _commit_exists(_FIX_COMMIT):
+        pytest.skip(
+            "the pre-fix catalogues are not reachable: Vastukar has its own fresh "
+            "history (DOWNSTREAM.md), so the upstream fix commit is absent and this "
+            "red proof cannot be replayed"
+        )
     source = _git_show(f"{_FIX_COMMIT}^", _HISTORICAL[name])
     result = _probe_source(name, source, tmp_path / "pre")
 
