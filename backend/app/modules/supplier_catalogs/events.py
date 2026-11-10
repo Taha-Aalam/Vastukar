@@ -1,0 +1,284 @@
+# DDC-CWICR-OE: DataDrivenConstruction · OpenConstructionERP
+# Copyright (c) 2026 Artem Boiko / DataDrivenConstruction
+"""Supplier Catalogs event names + cross-module subscribers.
+
+All events are best-effort published via ``event_bus.publish_detached``
+inside the service layer. Subscribers in notifications + finance can
+consume these without coupling to the supplier_catalogs ORM.
+
+The bottom half of this file (after the topic constants) registers
+Wave-M4 deep-pass cross-module subscribers that fan SKU lifecycle and
+vendor-rating events out to ``match_elements.vector_reindex`` and
+``bi_dashboards.kpi_recompute``.
+"""
+
+from __future__ import annotations
+
+import logging
+import uuid
+from decimal import Decimal, InvalidOperation
+from typing import Any
+
+from sqlalchemy import select
+from sqlalchemy.ext.asyncio import AsyncSession
+
+from app.core.event_effects import claim_effect
+from app.core.events import Event, event_bus
+
+VENDOR_CREATED = "supplier_catalogs.vendor.created"
+VENDOR_SUSPENDED = "supplier_catalogs.vendor.suspended"
+VENDOR_BLACKLISTED = "supplier_catalogs.vendor.blacklisted"
+VENDOR_RATED = "supplier_catalogs.vendor.rated"
+# Emitted only for a vendor nothing pointed at. A vendor with orders,
+# invoices, price lists or KYC documents against it cannot be deleted at all -
+# it is suspended or blacklisted instead - so this topic never carries the
+# disappearance of a supplier anyone traded with.
+VENDOR_DELETED = "supplier_catalogs.vendor.deleted"
+
+# Catalog SKU lifecycle (Wave M4 deep-pass) - Match Elements
+# subscribes to MATERIAL_ADDED to schedule a vector re-index of the
+# affected SKU into the embedding store. BI Dashboards uses the same
+# topic to bump the supplier-coverage KPI projection.
+MATERIAL_ADDED = "supplier_catalogs.material.added"
+MATERIAL_UPDATED = "supplier_catalogs.material.updated"
+MATERIAL_DEACTIVATED = "supplier_catalogs.material.deactivated"
+# An item that no requisition line, order line, vendor price or stock balance
+# referenced. Same reasoning as VENDOR_DELETED: anything with a history behind
+# it is refused rather than removed.
+MATERIAL_DELETED = "supplier_catalogs.material.deleted"
+
+PRICE_LIST_IMPORTED = "supplier_catalogs.price_list.imported"
+
+PR_SUBMITTED = "supplier_catalogs.pr.submitted"
+PR_APPROVED = "supplier_catalogs.pr.approved"
+PR_REJECTED = "supplier_catalogs.pr.rejected"
+PR_CONVERTED = "supplier_catalogs.pr.converted"
+
+PO_CREATED = "supplier_catalogs.po.created"
+PO_SENT = "supplier_catalogs.po.sent"
+PO_ACKNOWLEDGED = "supplier_catalogs.po.acknowledged"
+PO_RECEIVED = "supplier_catalogs.po.received"
+PO_CLOSED = "supplier_catalogs.po.closed"
+
+GR_POSTED = "supplier_catalogs.gr.posted"
+# Published by procurement when a goods receipt is confirmed; the stock ledger
+# here advances from it.
+PROCUREMENT_GR_POSTED = "procurement.goods_receipt.posted"
+
+INVOICE_MATCHED = "supplier_catalogs.invoice.matched"
+INVOICE_EXCEPTION = "supplier_catalogs.invoice.exception"
+# Distinct from INVOICE_EXCEPTION on purpose. An exception means the match ran
+# and the figures disagreed; this means the match could not run at all, so the
+# invoice may be perfectly correct. Sharing the event would put an exception's
+# wording - a price variance - in front of an operator for a comparison that
+# never happened.
+INVOICE_CURRENCY_MISMATCH = "supplier_catalogs.invoice.currency_mismatch"
+
+STOCK_RESERVED = "supplier_catalogs.stock.reserved"
+STOCK_ISSUED = "supplier_catalogs.stock.issued"
+STOCK_LOW_THRESHOLD = "supplier_catalogs.stock.low_threshold"
+STOCK_ADJUSTED = "supplier_catalogs.stock.adjusted"
+# A location with no stock on hand and no goods receipt against it.
+WAREHOUSE_DELETED = "supplier_catalogs.warehouse.deleted"
+
+# Stock low / reorder alert - emitted whenever a balance dips below reorder_point
+STOCK_LOW = "supplier_catalogs.stock.low"
+
+# KYC / compliance lifecycle
+KYC_DOC_UPLOADED = "supplier_catalogs.kyc.uploaded"
+KYC_DOC_EXPIRING = "supplier_catalogs.kyc.expiring"
+KYC_DOC_EXPIRED = "supplier_catalogs.kyc.expired"
+
+# Scorecard
+SCORECARD_COMPUTED = "supplier_catalogs.scorecard.computed"
+
+# PEPPOL ingest
+PEPPOL_INVOICE_INGESTED = "supplier_catalogs.invoice.peppol_ingested"
+
+
+# ── Wave M4 deep-pass cross-module subscribers ─────────────────────────
+#
+# These subscribers republish supplier-catalogs lifecycle events as
+# ``match_elements.vector_reindex`` and ``bi_dashboards.kpi_recompute``
+# topics so the right side-projections fire without coupling either
+# downstream module to our ORM. All handlers are fail-soft.
+
+_logger = logging.getLogger(__name__)
+
+
+async def _on_material_added(event: Event) -> None:
+    """``supplier_catalogs.material.added`` → match_elements re-index + BI tick."""
+    data = event.data or {}
+    catalog_item_id = data.get("catalog_item_id")
+    if not catalog_item_id:
+        return
+    # Match Elements vector store reindex - Qdrant collection
+    # ``supplier_catalog_items`` keyed on catalog_item_id.
+    try:
+        event_bus.publish_detached(
+            "match_elements.vector_reindex",
+            {
+                "source_event": "supplier_catalogs.material.added",
+                "collection": "supplier_catalog_items",
+                "entity_id": str(catalog_item_id),
+                "payload": {
+                    "sku": data.get("sku") or "",
+                    "name": data.get("name") or "",
+                    "manufacturer": data.get("manufacturer") or "",
+                    "mpn": data.get("mpn") or "",
+                    "unit_of_measure": data.get("unit_of_measure") or "",
+                    "description": data.get("description") or "",
+                    "category_id": data.get("category_id"),
+                },
+                "operation": "upsert",
+            },
+            source_module="supplier_catalogs",
+        )
+    except Exception:
+        _logger.debug(
+            "supplier_catalogs: vector_reindex emit failed",
+            exc_info=True,
+        )
+
+    try:
+        event_bus.publish_detached(
+            "bi_dashboards.kpi_recompute",
+            {
+                "source_module": "supplier_catalogs",
+                "source_event": "supplier_catalogs.material.added",
+                "project_id": None,  # catalog is tenant-scoped, not project-scoped
+                "kpi_codes": ["catalog_coverage", "supplier_count"],
+                "reason": "material_added",
+            },
+            source_module="supplier_catalogs",
+        )
+    except Exception:
+        _logger.debug(
+            "supplier_catalogs: kpi_recompute emit failed",
+            exc_info=True,
+        )
+
+
+async def _on_vendor_rated(event: Event) -> None:
+    """``supplier_catalogs.vendor.rated`` → BI supplier-performance recompute."""
+    data = event.data or {}
+    vendor_id = data.get("vendor_id")
+    if not vendor_id:
+        return
+    try:
+        event_bus.publish_detached(
+            "bi_dashboards.kpi_recompute",
+            {
+                "source_module": "supplier_catalogs",
+                "source_event": "supplier_catalogs.vendor.rated",
+                "project_id": None,
+                "kpi_codes": ["subcontractor_avg_rating", "vendor_otd_rate"],
+                "reason": "vendor_rated",
+                "vendor_id": str(vendor_id),
+                "rating": data.get("rating"),
+            },
+            source_module="supplier_catalogs",
+        )
+    except Exception:
+        _logger.debug(
+            "supplier_catalogs: vendor_rated kpi_recompute failed",
+            exc_info=True,
+        )
+
+
+def _uuid(value: Any) -> uuid.UUID | None:
+    try:
+        return uuid.UUID(str(value)) if value else None
+    except (ValueError, AttributeError):
+        return None
+
+
+async def _default_warehouse(session: AsyncSession, project_id: uuid.UUID | None) -> uuid.UUID | None:
+    """The project's own active warehouse (lowest code), else none."""
+    if project_id is None:
+        return None
+    from app.modules.supplier_catalogs.models import Warehouse
+
+    q = (
+        select(Warehouse.id)
+        .where(Warehouse.project_id == project_id, Warehouse.status == "active")
+        .order_by(Warehouse.code)
+        .limit(1)
+    )
+    return (await session.execute(q)).scalar_one_or_none()
+
+
+async def apply_goods_receipt_posted(session: AsyncSession, data: dict[str, Any]) -> int:
+    """Advance warehouse stock for one posted procurement goods receipt; returns lines booked.
+
+    Guarded by the event's idempotency key, so a replayed event moves nothing.
+    A line with no catalogue item, no quantity or no resolvable warehouse is
+    logged and skipped: stock never blocks a receipt.
+    """
+    from app.modules.supplier_catalogs.service import SupplierCatalogsService
+
+    key = str(data.get("idempotency_key") or "")
+    gr_id = _uuid(data.get("gr_id"))
+    if not key or gr_id is None:
+        return 0
+    if not await claim_effect(session, key, "supplier_catalogs.stock_in"):
+        _logger.info("procurement GR %s already booked into stock (replay skipped)", gr_id)
+        return 0
+    project_id = _uuid(data.get("project_id"))
+    service = SupplierCatalogsService(session)
+    fallback = None
+    booked = 0
+    alerts: list[dict[str, Any]] = []
+    for line in data.get("lines") or []:
+        item_id = _uuid(line.get("catalog_item_id"))
+        try:
+            qty = Decimal(str(line.get("qty") or "0"))
+            price = Decimal(str(line.get("unit_rate") or "0"))
+        except InvalidOperation:
+            continue
+        if item_id is None or qty <= 0:
+            continue
+        warehouse_id = _uuid(line.get("warehouse_id"))
+        if warehouse_id is None:
+            fallback = fallback or await _default_warehouse(session, project_id)
+            warehouse_id = fallback
+        if warehouse_id is None:
+            _logger.info("GR %s line %s: no warehouse resolves; stock not moved", gr_id, line.get("po_line_id"))
+            continue
+        alert = await service.receive_into_stock(
+            warehouse_id=warehouse_id,
+            catalog_item_id=item_id,
+            quantity=qty,
+            unit_price=price,
+            currency=data.get("currency_code") or None,
+            batch_lot=line.get("batch_lot"),
+            gr_id=gr_id,
+            project_id=project_id,
+            user_id=data.get("actor_id"),
+        )
+        booked += 1
+        if alert is not None:
+            alerts.append(alert)
+    for alert in alerts:
+        event_bus.publish_detached(STOCK_LOW, alert, source_module="supplier_catalogs")
+    return booked
+
+
+async def _on_procurement_gr_posted(event: Event) -> None:
+    """``procurement.goods_receipt.posted`` -> warehouse stock, once per receipt."""
+    from app.database import async_session_factory
+
+    try:
+        async with async_session_factory() as session:
+            await apply_goods_receipt_posted(session, event.data or {})
+            await session.commit()
+    except Exception:
+        _logger.warning("supplier_catalogs: stock booking for a posted receipt failed", exc_info=True)
+
+
+def register_subscribers() -> None:
+    """Idempotently subscribe supplier-catalogs cross-module handlers."""
+    event_bus.subscribe_once(MATERIAL_ADDED, _on_material_added)
+    event_bus.subscribe_once(VENDOR_RATED, _on_vendor_rated)
+    event_bus.subscribe_once(PROCUREMENT_GR_POSTED, _on_procurement_gr_posted)
+    _logger.info("Supplier Catalogs: 3 cross-module subscriber(s) registered")
