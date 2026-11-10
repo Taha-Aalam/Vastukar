@@ -75,11 +75,14 @@ def _git_show(revision: str, path: str) -> str:
 
 def _commit_exists(revision: str) -> bool:
     """True when *revision* is reachable in this checkout's history."""
-    return subprocess.run(
-        ["git", "cat-file", "-e", f"{revision}^{{commit}}"],
-        cwd=_REPO_ROOT,
-        capture_output=True,
-    ).returncode == 0
+    return (
+        subprocess.run(
+            ["git", "cat-file", "-e", f"{revision}^{{commit}}"],
+            cwd=_REPO_ROOT,
+            capture_output=True,
+        ).returncode
+        == 0
+    )
 
 
 def _probe_source(name: str, source: str, workdir: Path) -> dict:
