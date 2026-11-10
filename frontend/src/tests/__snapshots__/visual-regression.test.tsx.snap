@@ -4409,17 +4409,7 @@ exports[`Visual Regression - Logo > LogoWithText - default 1`] = `
       class="text-[17px] leading-none font-medium text-content-primary whitespace-nowrap tracking-tight"
       style="font-family: "Plus Jakarta Sans", system-ui, sans-serif; letter-spacing: -0.02em;"
     >
-      Open
-      <span
-        class="text-oe-blue"
-      >
-        Construction
-      </span>
-      <span
-        class="text-content-quaternary"
-      >
-        ERP
-      </span>
+      Vastukar
     </span>
   </div>
 </div>
@@ -4572,12 +4562,7 @@ exports[`Visual Regression - Logo > LogoWithText - without version 1`] = `
       class="text-[17px] leading-none font-medium text-content-primary whitespace-nowrap tracking-tight"
       style="font-family: "Plus Jakarta Sans", system-ui, sans-serif; letter-spacing: -0.02em;"
     >
-      Open
-      <span
-        class="text-oe-blue"
-      >
-        Construction
-      </span>
+      Vastukar
     </span>
   </div>
 </div>
