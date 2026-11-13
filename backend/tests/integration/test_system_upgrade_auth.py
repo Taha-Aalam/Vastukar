@@ -123,9 +123,7 @@ async def _demo_admin_headers() -> dict[str, str]:
     from app.modules.users.service import create_access_token, hash_password
 
     async with async_session_factory() as session:
-        user = (
-            await session.execute(select(User).where(User.email == "demo@vastukar.com"))
-        ).scalar_one_or_none()
+        user = (await session.execute(select(User).where(User.email == "demo@vastukar.com"))).scalar_one_or_none()
         if user is None:
             user = User(
                 id=uuid.uuid4(),

@@ -1,6 +1,15 @@
 [
   {
     "locale_set": [
+      "et",
+      "kk",
+      "ky",
+      "mn"
+    ],
+    "key_count_at_seed": 3
+  },
+  {
+    "locale_set": [
       "cs"
     ],
     "key_count_at_seed": 29

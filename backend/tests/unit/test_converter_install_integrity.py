@@ -242,7 +242,7 @@ def test_an_install_unpacks_the_package_and_stamps_it(monkeypatch: pytest.Monkey
     assert stamp is not None and stamp["asset"] == PACKAGES["dwg"].asset and stamp["sha256"] == PACKAGES["dwg"].sha256
     # The download came from the release, by asset name.
     assert downloads == [
-        f"https://github.com/datadrivenconstruction/cad2data-Revit-IFC-DWG/releases/download/v2026.10.0/{PACKAGES['dwg'].asset}"
+        f"https://github.com/Taha-Aalam/cad2data-Revit-IFC-DWG/releases/download/v2026.10.0/{PACKAGES['dwg'].asset}"
     ]
     # No staging folder or half-downloaded archive is left behind.
     assert [p.name for p in tmp_path.iterdir() if p.name not in {"dwg_windows", "cache"}] == []

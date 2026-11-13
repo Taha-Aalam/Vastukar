@@ -41,8 +41,7 @@ class ConverterPackageMissingError(RuntimeError):
     def __init__(self, asset: str, tag: str, repo: str) -> None:
         self.asset, self.tag, self.repo = asset, tag, repo
         super().__init__(
-            f"This version expects {asset} from {tag}, which the converter release no longer offers. "
-            "Update Vastukar."
+            f"This version expects {asset} from {tag}, which the converter release no longer offers. Update Vastukar."
         )
 
 

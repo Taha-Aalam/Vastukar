@@ -1343,7 +1343,7 @@ jobs:
       # Bundle the DDC IFC converter into the Windows installer so a fresh
       # install converts .ifc files offline with no first-use download. The
       # converter is the portable package of the DDC converter release
-      # (datadrivenconstruction/cad2data-Revit-IFC-DWG, tag v2026.10.0): a zip
+      # (Taha-Aalam/cad2data-Revit-IFC-DWG, tag v2026.10.0): a zip
       # with its own Python runtime and the IFC reader. We download that one
       # asset, check its SHA-256 against the digest pinned below AND against the
       # release's SHA256SUMS.txt, and unpack it under
@@ -1366,7 +1366,7 @@ jobs:
           # Same override knobs the runtime auto-installer honours. A fork or a
           # newer release can be selected without editing this file, in which
           # case the digest comes from that release's SHA256SUMS.txt alone.
-          OE_CONVERTER_REPO: ${{ vars.OE_CONVERTER_REPO || 'datadrivenconstruction/cad2data-Revit-IFC-DWG' }}
+          OE_CONVERTER_REPO: ${{ vars.OE_CONVERTER_REPO || 'Taha-Aalam/cad2data-Revit-IFC-DWG' }}
           OE_CONVERTER_TAG: ${{ vars.OE_CONVERTER_TAG || 'v2026.10.0' }}
           OE_CONVERTER_IFC_ASSET: DDC-IFC-to-Excel-2.0.0-portable.zip
           OE_CONVERTER_IFC_SHA256: 1fc8e8120a8be0923da0484733bb42566c3ec08e6acc751180a9f68b961e93a2
@@ -1376,7 +1376,7 @@ jobs:
           $tag   = $env:OE_CONVERTER_TAG
           $asset = $env:OE_CONVERTER_IFC_ASSET
           $pinnedTag = 'v2026.10.0'
-          $pinnedRepo = 'datadrivenconstruction/cad2data-Revit-IFC-DWG'
+          $pinnedRepo = 'Taha-Aalam/cad2data-Revit-IFC-DWG'
           $destRoot = 'desktop/src-tauri/resources/converters/ifc_windows'
           $base = "https://github.com/$repo/releases/download/$tag"
           $tmpZip = Join-Path $env:RUNNER_TEMP 'ddc_ifc.zip'
