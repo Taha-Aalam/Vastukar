@@ -32,12 +32,12 @@ const TEXT: Record<BimQuantityWarningCode, BimQuantityWarningText> = {
   no_quantities_converter_absent: {
     key: 'bim.quantity_warning.no_quantities_converter_absent',
     defaultValue:
-      'Quantities could not be extracted: the DDC converter is not available on this server. The elements were imported for viewing and linking only. Install the converter and retry the import to get areas, volumes and lengths.',
+      'Quantities could not be extracted: the Vastukar converter is not available on this server. The elements were imported for viewing and linking only. Install the converter and retry the import to get areas, volumes and lengths.',
   },
   converter_absent: {
     key: 'bim.quantity_warning.converter_absent',
     defaultValue:
-      'The DDC converter is not available on this server, so quantities were read only from the file’s embedded IFC base quantities and may be incomplete. Install the converter and retry the import for complete quantities.',
+      'The Vastukar converter is not available on this server, so quantities were read only from the file’s embedded IFC base quantities and may be incomplete. Install the converter and retry the import for complete quantities.',
   },
   no_quantities: {
     key: 'bim.quantity_warning.no_quantities',
@@ -47,12 +47,12 @@ const TEXT: Record<BimQuantityWarningCode, BimQuantityWarningText> = {
   no_quantities_converter_failed: {
     key: 'bim.quantity_warning.no_quantities_converter_failed',
     defaultValue:
-      'Quantities could not be extracted: the DDC converter is installed but did not finish this file (it timed out or stopped with an error). The elements were imported for viewing and linking only. Retry the import to run the converter again.',
+      'Quantities could not be extracted: the Vastukar converter is installed but did not finish this file (it timed out or stopped with an error). The elements were imported for viewing and linking only. Retry the import to run the converter again.',
   },
   converter_failed: {
     key: 'bim.quantity_warning.converter_failed',
     defaultValue:
-      'The DDC converter is installed but did not finish this file (it timed out or stopped with an error), so quantities were read only from the file’s embedded IFC base quantities and may be incomplete. Retry the import for complete quantities.',
+      'The Vastukar converter is installed but did not finish this file (it timed out or stopped with an error), so quantities were read only from the file’s embedded IFC base quantities and may be incomplete. Retry the import for complete quantities.',
   },
 };
 

@@ -856,7 +856,7 @@ async def preview_bundle(
 def _readme_md(manifest: BundleManifest, attachment_count: int) -> str:
     """Plain-text README packed inside the bundle for the recipient."""
     lines = [
-        "# OpenConstructionERP Project Bundle",
+        "# Vastukar Project Bundle",
         "",
         f"Project: **{manifest.project_name}**",
         f"Scope: **{manifest.scope}**",
@@ -868,7 +868,7 @@ def _readme_md(manifest: BundleManifest, attachment_count: int) -> str:
         "",
         "## How to open",
         "",
-        "1. Install OpenConstructionERP - `pip install openconstructionerp` or download from openconstructionerp.com.",
+        "1. Install Vastukar - `pip install openconstructionerp` or download from vastukar.com.",
         "2. Run `openconstructionerp serve` and sign in.",
         "3. Use **Files → Import project bundle** and select this `.ocep` file.",
         "",

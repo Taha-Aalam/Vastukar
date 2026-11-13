@@ -26,7 +26,7 @@ from app.modules.users.models import APIKey, User
 LOCAL_DESKTOP_OWNER_EMAIL = "owner@openestimate.local"
 
 # The seeded demo logins, excluded from every "real user / real admin" check
-# by exact address. This used to be the whole ``@openconstructionerp.com``
+# by exact address. This used to be the whole ``@vastukar.com``
 # domain, which made anyone registering with an address on it invisible to the
 # bootstrap: on a fresh install each such registrant found no real admin and no
 # real user and was handed admin, the second as much as the first. Only the
@@ -136,7 +136,7 @@ class UserRepository:
         deactivated, or whose operator never registered, that rule handed
         admin to whoever reached the public form first.
 
-        The seeded demo account ``demo@openconstructionerp.com`` is intentionally
+        The seeded demo account ``demo@vastukar.com`` is intentionally
         excluded: a fresh ``pip install openconstructionerp`` ships with
         that admin already in the DB, and counting it would dead-lock the
         bootstrap path - every self-registered user would be created

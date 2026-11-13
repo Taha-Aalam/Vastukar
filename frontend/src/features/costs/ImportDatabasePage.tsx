@@ -2986,7 +2986,7 @@ export function ImportDatabasePage() {
         })}
       </DismissibleInfo>
 
-      {/* DDC CWICR Database -- 11 regional databases */}
+      {/* Vastukar CWICR Database -- 11 regional databases */}
       <Card padding="none">
         <div className="px-6 pt-5 pb-2">
           <div className="flex items-center gap-3 mb-1">

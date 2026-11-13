@@ -1,7 +1,7 @@
 {
   "costs.catalog_name_unavailable": "لا يمكن استخدام هذا الاسم لكتالوج جديد. اختر اسمًا آخر.",
   "app": {
-    "name": "OpenConstructionERP",
+    "name": "Vastukar",
     "tagline": "تقدير تكاليف البناء مفتوح المصدر"
   },
   "nav": {
@@ -296,7 +296,7 @@
     "update": "تحديث"
   },
   "dashboard": {
-    "welcome": "مرحباً بك في OpenConstructionERP",
+    "welcome": "مرحباً بك في Vastukar",
     "subtitle": "منصة تقدير تكاليف البناء مفتوحة المصدر",
     "recent_projects": "المشاريع الأخيرة",
     "system_status": "حالة النظام",
@@ -1526,7 +1526,7 @@
         "no_data_heading": "لا توجد بيانات متاحة",
         "no_data_body": "أُنشئ هذا التقرير من لقطة بيانات فارغة. تحقّق من أن الوحدات المصدرية (المالية، والجدول الزمني، والسلامة، وغيرها) أعادت بيانات للمشروع المحدد.",
         "no_data_body_short": "أُنشئ هذا التقرير من لقطة بيانات فارغة. تحقّق من أن الوحدات المصدرية أعادت بيانات للمشروع المحدد.",
-        "footer_generated_by": "أنشأه OpenConstructionERP بتاريخ {timestamp}.",
+        "footer_generated_by": "أنشأه Vastukar بتاريخ {timestamp}.",
         "worksheet_name": "التقرير",
         "pdf_subject": "تقرير المشروع",
         "overall_progress": "التقدم الإجمالي",
@@ -1827,9 +1827,9 @@
     "notification_email": {
       "greeting": "السيد/السيدة {name} المحترم/المحترمة،",
       "greeting_generic": "تحية طيبة،",
-      "cta": "الفتح في OpenConstructionERP",
+      "cta": "الفتح في Vastukar",
       "footer": "وصلتكم هذه الرسالة بناءً على إعدادات الإشعارات الخاصة بكم، ويمكنكم تغييرها من ملفكم الشخصي.",
-      "digest_subject": "OpenConstructionERP: ملخص الإشعارات ({count})",
+      "digest_subject": "Vastukar: ملخص الإشعارات ({count})",
       "digest_heading": "آخر الإشعارات:"
     },
     "tender_xlsx": {

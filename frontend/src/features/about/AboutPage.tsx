@@ -24,11 +24,11 @@ import { Changelog, getRecentReleases } from './Changelog';
 import { ThirdPartyLicenses } from './ThirdPartyLicenses';
 import { CONTRIBUTORS, SPONSORS, acknowledgedUrl, type Acknowledged } from './acknowledgments';
 
-const REPO_URL = 'https://github.com/datadrivenconstruction/OpenConstructionERP';
+const REPO_URL = 'https://github.com/Taha-Aalam/Vastukar';
 // Clean product URL - "?source=search" is G2's search-result tracking.
-const G2_REVIEWS_URL = 'https://www.g2.com/products/openconstructionerp/reviews';
+const G2_REVIEWS_URL = 'https://www.g2.com/products/vastukar/reviews';
 const PAYPAL_DONATE_URL = 'https://www.paypal.com/donate/?hosted_button_id=DWBCLNLY2VWAA';
-const GITHUB_SPONSORS_URL = 'https://github.com/sponsors/datadrivenconstruction';
+const GITHUB_SPONSORS_URL = 'https://github.com/sponsors/Taha-Aalam';
 
 // Warm palette for avatar monograms - a deterministic pick keeps each person's
 // fallback color stable across renders while staying varied across the wall.
@@ -190,7 +190,7 @@ export function AboutPage() {
       >
         {t('about.intro_body', {
           defaultValue:
-            'Shows your installed version, recent release notes, the AGPL-3.0 licence and the open-source story behind the platform, plus links to the wider DataDrivenConstruction ecosystem and the cost-estimation book. Use it to confirm what build you are on before reporting an issue or planning an upgrade.',
+            'Shows your installed version, recent release notes, the AGPL-3.0 licence and the open-source story behind the platform, plus links to the wider Vastukar ecosystem and the cost-estimation book. Use it to confirm what build you are on before reporting an issue or planning an upgrade.',
         })}
       </DismissibleInfo>
 
@@ -202,13 +202,13 @@ export function AboutPage() {
         {/* ── Left column — project identity (left-aligned on wide) ── */}
         <div className="text-center lg:text-left">
           <a
-            href="https://openconstructionerp.com?utm_source=app&utm_medium=about"
+            href="https://vastukar.com?utm_source=app&utm_medium=about"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-1.5 text-xs font-semibold text-oe-blue hover:text-oe-blue-text transition-colors mb-4"
           >
             <Globe size={13} />
-            openconstructionerp.com
+            vastukar.com
             <ExternalLink size={11} />
           </a>
           <div className="flex items-center justify-center lg:justify-start gap-2 mb-4">
@@ -354,7 +354,7 @@ export function AboutPage() {
 
               {/* Featured row — Telegram, primary live channel. */}
               <a
-                href="https://t.me/datadrivenconstruction"
+                href="https://t.me/vastukar"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="group flex items-center gap-3 rounded-lg border border-[#26A5E4]/25 bg-[#26A5E4]/[0.04] px-3.5 py-3 hover:border-[#26A5E4]/50 hover:bg-[#26A5E4]/[0.08] transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-oe-blue focus-visible:ring-offset-1"
@@ -403,7 +403,7 @@ export function AboutPage() {
                 </a>
 
                 <a
-                  href="https://x.com/datadrivenconst"
+                  href="https://x.com/vastukar"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="group flex items-center gap-2.5 rounded-lg border border-border-light bg-surface-primary px-3 py-2.5 hover:border-slate-700/50 hover:bg-slate-900/[0.04] dark:hover:border-slate-300/40 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-oe-blue focus-visible:ring-offset-1"
@@ -464,7 +464,7 @@ export function AboutPage() {
       </div>
       {/* /Two-card band */}
 
-      {/* About the project — founder's note (left) + DDC ecosystem (right).
+      {/* About the project — founder's note (left) + Vastukar ecosystem (right).
           Two-column inside one Card so heights stay synced on wide screens.
           On narrow screens the right column stacks below. */}
       <Card className="animate-card-in" style={{ animationDelay: '150ms' }}>
@@ -494,11 +494,11 @@ export function AboutPage() {
                 <p>
                   <Trans
                     i18nKey="about.founder_bio_p2"
-                    defaults='We&rsquo;ve written a fair amount on these topics over the years, and some of it found a wide readership. Alongside the writing, we&rsquo;ve consulted for construction and consulting firms, developers, and software vendors on how they handle project data - treating it as the basis for decisions rather than a byproduct of them. That work let us see the industry from both sides: the people who build the tools, and the people who use them every day. A lot of those observations ended up in the book <book>Data-Driven Construction</book>, now available in 16 languages (<books>datadrivenconstruction.io/books</books>). It is free of charge in every one of them.'
+                    defaults='We&rsquo;ve written a fair amount on these topics over the years, and some of it found a wide readership. Alongside the writing, we&rsquo;ve consulted for construction and consulting firms, developers, and software vendors on how they handle project data - treating it as the basis for decisions rather than a byproduct of them. That work let us see the industry from both sides: the people who build the tools, and the people who use them every day. A lot of those observations ended up in the book <book>Data-Driven Construction</book>, now available in 16 languages (<books>vastukar.com/books</books>). It is free of charge in every one of them.'
                     components={{
                       book: (
                         <a
-                          href="https://datadrivenconstruction.io/books"
+                          href="https://vastukar.com/books"
                           target="_blank"
                           rel="noopener noreferrer"
                           className="text-oe-blue hover:underline italic font-medium"
@@ -506,7 +506,7 @@ export function AboutPage() {
                       ),
                       books: (
                         <a
-                          href="https://datadrivenconstruction.io/books"
+                          href="https://vastukar.com/books"
                           target="_blank"
                           rel="noopener noreferrer"
                           className="text-oe-blue hover:underline"
@@ -518,7 +518,7 @@ export function AboutPage() {
                 <p>
                   <Trans
                     i18nKey="about.founder_bio_p3"
-                    defaults='Two other problems kept us busy. One was helping non-developers get into proprietary file formats that were never meant to be opened. The other was finding a cleaner way to describe construction work through a resource model. Both produced free tools: the <cad>DDC CAD/BIM converters</cad> (Revit®, IFC, DWG → structured data) <gh>on GitHub</gh>, and <cwicr>CWICR</cwicr>, a multilingual database of construction works and resources - over 55,000 items in 11 languages, published as <cwicr>OpenConstructionEstimate-DDC-CWICR</cwicr>.'
+                    defaults='Two other problems kept us busy. One was helping non-developers get into proprietary file formats that were never meant to be opened. The other was finding a cleaner way to describe construction work through a resource model. Both produced free tools: the <cad>Vastukar CAD/BIM converters</cad> (Revit®, IFC, DWG → structured data) <gh>on GitHub</gh>, and <cwicr>CWICR</cwicr>, a multilingual database of construction works and resources - over 55,000 items in 11 languages, published as <cwicr>VastukarEstimate-DDC-CWICR</cwicr>.'
                     components={{
                       cad: (
                         <a
@@ -530,7 +530,7 @@ export function AboutPage() {
                       ),
                       gh: (
                         <a
-                          href="https://github.com/datadrivenconstruction"
+                          href="https://github.com/Taha-Aalam"
                           target="_blank"
                           rel="noopener noreferrer"
                           className="text-oe-blue hover:underline"
@@ -538,7 +538,7 @@ export function AboutPage() {
                       ),
                       cwicr: (
                         <a
-                          href="https://github.com/datadrivenconstruction/OpenConstructionEstimate-DDC-CWICR"
+                          href="https://github.com/Taha-Aalam/Vastukar"
                           target="_blank"
                           rel="noopener noreferrer"
                           className="text-oe-blue hover:underline font-medium"
@@ -564,20 +564,20 @@ export function AboutPage() {
               <div className="mt-5 flex items-center gap-3 border-t border-border-light pt-4">
                 <img
                   src="/brand/ddc-logo.webp"
-                  alt={t('about.team_name', { defaultValue: 'DataDrivenConstruction' })}
+                  alt={t('about.team_name', { defaultValue: 'Vastukar' })}
                   className="h-12 w-12 shrink-0 rounded-xl object-cover bg-gradient-to-br from-slate-50 to-blue-50 dark:from-slate-800 dark:to-slate-900 ring-1 ring-border-light shadow-sm p-1.5"
                   loading="lazy"
                 />
                 <div className="min-w-0 flex-1">
                   <h3 className="flex items-center gap-1.5 text-base font-bold text-content-primary leading-tight">
-                    {t('about.team_name', { defaultValue: 'DataDrivenConstruction' })}
+                    {t('about.team_name', { defaultValue: 'Vastukar' })}
                     <a
-                      href="https://www.linkedin.com/company/datadrivenconstruction/"
+                      href="https://www.linkedin.com/company/vastukar/"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="inline-flex h-5 w-5 shrink-0 items-center justify-center rounded text-oe-blue transition-colors hover:bg-oe-blue/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-oe-blue focus-visible:ring-offset-1"
-                      title={t('about.team_linkedin', { defaultValue: 'DataDrivenConstruction on LinkedIn' })}
-                      aria-label={t('about.team_linkedin', { defaultValue: 'DataDrivenConstruction on LinkedIn' })}
+                      title={t('about.team_linkedin', { defaultValue: 'Vastukar on LinkedIn' })}
+                      aria-label={t('about.team_linkedin', { defaultValue: 'Vastukar on LinkedIn' })}
                     >
                       <Linkedin size={15} />
                     </a>
@@ -595,17 +595,17 @@ export function AboutPage() {
           </div>
           {/* /Left column */}
 
-          {/* ── Right column — DDC ecosystem (2 of 5 cols on wide screens) ──
-              Three subsections, matching the "Built on DataDrivenConstruction"
-              band on openconstructionerp.com:
-                1. Flagship products (datadrivenconstruction.io)
+          {/* ── Right column — Vastukar ecosystem (2 of 5 cols on wide screens) ──
+              Three subsections, matching the "Built on Vastukar"
+              band on vastukar.com:
+                1. Flagship products (vastukar.com)
                 2. Open source on GitHub
                 3. Find us across the network (social) */}
           <aside className="lg:col-span-2 lg:border-l lg:border-border-light lg:pl-8 flex flex-col h-full">
             <div className="mb-5 flex items-center gap-2">
               <Globe size={16} className="text-oe-blue" />
               <h3 className="text-sm font-semibold text-content-primary">
-                {t('about.ddc_ecosystem_title', { defaultValue: 'DDC Ecosystem' })}
+                {t('about.ddc_ecosystem_title', { defaultValue: 'Vastukar Ecosystem' })}
               </h3>
             </div>
             <p className="text-xs text-content-tertiary mb-6">
@@ -614,14 +614,14 @@ export function AboutPage() {
 
             {/* ── Subsection 1: Flagship products ── */}
             <p className="mb-2 text-2xs font-semibold uppercase tracking-wider text-content-tertiary">
-              {t('about.ddc_flagship_label', { defaultValue: 'Flagship products · datadrivenconstruction.io' })}
+              {t('about.ddc_flagship_label', { defaultValue: 'Flagship products · vastukar.com' })}
             </p>
             <ul className="mb-6 grid grid-cols-1 sm:grid-cols-2 gap-2.5">
               {[
-                { href: 'https://datadrivenconstruction.io', label: 'DataDrivenConstruction', desc: t('about.ddc_link_lab', { defaultValue: 'Lab homepage - research & consulting' }) },
-                { href: 'https://datadrivenconstruction.io/books/', label: 'DDC Guidebook', desc: t('about.ddc_link_book', { defaultValue: 'Reference reading, free, 16 languages' }) },
+                { href: 'https://vastukar.com', label: 'Vastukar', desc: t('about.ddc_link_lab', { defaultValue: 'Lab homepage - research & consulting' }) },
+                { href: 'https://vastukar.com/books/', label: 'Vastukar Guidebook', desc: t('about.ddc_link_book', { defaultValue: 'Reference reading, free, 16 languages' }) },
                 { href: 'https://github.com/datadrivenconstruction/cad2data-Revit-IFC-DWG-DGN-pipeline-with-conversion-validation-qto', label: 'CAD-BIM Converter', desc: t('about.ddc_link_cad', { defaultValue: 'Pipeline: Revit® · IFC · DWG · DGN → data' }) },
-                { href: 'https://datadrivenconstruction.io/excel-plugin/', label: 'DDC Excel Plugin', desc: t('about.ddc_link_excel', { defaultValue: 'Spreadsheet bridge - pull live data into Excel' }) },
+                { href: 'https://vastukar.com/excel-plugin/', label: 'Vastukar Excel Plugin', desc: t('about.ddc_link_excel', { defaultValue: 'Spreadsheet bridge - pull live data into Excel' }) },
               ].map(item => (
                 <li key={item.href}>
                   <a
@@ -646,13 +646,13 @@ export function AboutPage() {
 
             {/* ── Subsection 2: Open source on GitHub ── */}
             <p className="mb-2 text-2xs font-semibold uppercase tracking-wider text-content-tertiary">
-              {t('about.ddc_oss_label', { defaultValue: 'Open source on GitHub · @datadrivenconstruction' })}
+              {t('about.ddc_oss_label', { defaultValue: 'Open source on GitHub · @vastukar' })}
             </p>
             <ul className="mb-6 grid grid-cols-1 sm:grid-cols-2 gap-2.5">
               {[
-                { href: 'https://github.com/datadrivenconstruction/cad2data-Revit-IFC-DWG-DGN-pipeline-with-conversion-validation-qto', label: 'DDC Pipeline', desc: t('about.ddc_gh_cad2data', { defaultValue: 'Revit® · IFC · DWG · DGN → structured quantities' }) },
-                { href: 'https://github.com/datadrivenconstruction/OpenConstructionEstimate-DDC-CWICR', label: 'OpenConstructionEstimate', desc: t('about.ddc_gh_cwicr', { defaultValue: '55,000+ cost items · 27 languages · 48 regions' }) },
-                { href: 'https://github.com/datadrivenconstruction', label: 'DDC Skills for AI Agents', desc: t('about.ddc_gh_skills', { defaultValue: 'Tool definitions & prompts for LLM agents' }) },
+                { href: 'https://github.com/datadrivenconstruction/cad2data-Revit-IFC-DWG-DGN-pipeline-with-conversion-validation-qto', label: 'Vastukar Pipeline', desc: t('about.ddc_gh_cad2data', { defaultValue: 'Revit® · IFC · DWG · DGN → structured quantities' }) },
+                { href: 'https://github.com/Taha-Aalam/Vastukar', label: 'VastukarEstimate', desc: t('about.ddc_gh_cwicr', { defaultValue: '55,000+ cost items · 27 languages · 48 regions' }) },
+                { href: 'https://github.com/Taha-Aalam', label: 'Vastukar Skills for AI Agents', desc: t('about.ddc_gh_skills', { defaultValue: 'Tool definitions & prompts for LLM agents' }) },
               ].map(item => (
                 <li key={item.href}>
                   <a
@@ -685,11 +685,11 @@ export function AboutPage() {
               </p>
               <div className="flex flex-wrap items-center gap-2">
                 {[
-                  { href: 'https://github.com/datadrivenconstruction', icon: Github, label: 'GitHub' },
-                  { href: 'https://datadrivenconstruction.io', icon: Globe, label: 'Website' },
+                  { href: 'https://github.com/Taha-Aalam', icon: Github, label: 'GitHub' },
+                  { href: 'https://vastukar.com', icon: Globe, label: 'Website' },
                   { href: 'https://www.linkedin.com/company/78381569', icon: Linkedin, label: 'LinkedIn' },
-                  { href: 'https://www.youtube.com/@datadrivenconstruction', icon: Youtube, label: 'YouTube' },
-                  { href: 'https://t.me/datadrivenconstruction', icon: MessageCircle, label: 'Telegram' },
+                  { href: 'https://www.youtube.com/@vastukar', icon: Youtube, label: 'YouTube' },
+                  { href: 'https://t.me/vastukar', icon: MessageCircle, label: 'Telegram' },
                 ].map(({ href, icon: Icon, label }) => (
                   <a
                     key={href}
@@ -711,7 +711,7 @@ export function AboutPage() {
       </Card>
 
       {/* Consulting Services — matches the "Build 01 / Workshops 02 / Consulting 03"
-          structure on openconstructionerp.com so users coming from the marketing
+          structure on vastukar.com so users coming from the marketing
           page see the same offering shape inside the product. */}
       <Card>
         <div className="p-6">
@@ -722,7 +722,7 @@ export function AboutPage() {
             </h2>
           </div>
           <p className="text-sm text-content-secondary leading-relaxed mb-5 max-w-3xl">
-            {t('about.services_desc_v2', { defaultValue: 'Need a custom build, a workshop, or an outside expert on data + cost workflows? Data Driven Construction delivers three engagement shapes - pick what fits and we scope from there.' })}
+            {t('about.services_desc_v2', { defaultValue: 'Need a custom build, a workshop, or an outside expert on data + cost workflows? Vastukar delivers three engagement shapes - pick what fits and we scope from there.' })}
           </p>
 
           {/* Three numbered service cards — Build · Workshops · Consulting */}
@@ -830,7 +830,7 @@ export function AboutPage() {
           {/* CTA row — primary contact button (case-studies link removed per
               user request 2026-05-20). */}
           <div className="mt-5 flex flex-wrap items-center gap-3">
-            <a href="https://datadrivenconstruction.io/contact-support/" target="_blank" rel="noopener noreferrer">
+            <a href="https://vastukar.com/contact-support/" target="_blank" rel="noopener noreferrer">
               <Button variant="primary" size="md" icon={<Mail size={15} />}>
                 {t('about.contact_us', { defaultValue: 'Contact Us' })}
               </Button>
@@ -881,7 +881,7 @@ export function AboutPage() {
               {/* 4 action cards, stacked vertically to keep the section dense */}
               <div className="space-y-2">
                 <a
-                  href="https://github.com/datadrivenconstruction/OpenConstructionERP"
+                  href="https://github.com/Taha-Aalam/Vastukar"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="group flex items-center gap-3 rounded-lg border border-border-light bg-surface-primary/80 backdrop-blur-sm px-3.5 py-3 hover:border-amber-400/60 hover:bg-amber-50/60 dark:hover:bg-amber-900/15 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-oe-blue focus-visible:ring-offset-1"
@@ -935,7 +935,7 @@ export function AboutPage() {
                 </a>
 
                 <a
-                  href="https://datadrivenconstruction.io/contact-support/"
+                  href="https://vastukar.com/contact-support/"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="group flex items-center gap-3 rounded-lg border border-border-light bg-surface-primary/80 backdrop-blur-sm px-3.5 py-3 hover:border-oe-blue/50 hover:bg-oe-blue/[0.06] dark:hover:bg-blue-900/15 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-oe-blue focus-visible:ring-offset-1"
@@ -1038,14 +1038,14 @@ export function AboutPage() {
               <Badge variant="blue" size="sm">Free</Badge>
             </div>
             <p className="text-xs text-content-tertiary mb-4">
-              {t('about.book_subtitle', { defaultValue: 'By the DataDrivenConstruction team · 16 languages · 600+ pages · 10 parts, 173 chapters' })}
+              {t('about.book_subtitle', { defaultValue: 'By the Vastukar team · 16 languages · 600+ pages · 10 parts, 173 chapters' })}
             </p>
             <a
-              href="https://datadrivenconstruction.io/books/"
+              href="https://vastukar.com/books/"
               target="_blank"
               rel="noopener noreferrer"
               className="group block overflow-hidden rounded-xl bg-gradient-to-br from-slate-50 via-white to-blue-50 dark:from-slate-900 dark:via-slate-900 dark:to-slate-800 border border-border-light hover:border-oe-blue/40 hover:shadow-lg transition-all max-w-[320px] mx-auto lg:mx-0"
-              title={t('about.book_cta', { defaultValue: 'Pick your language on datadrivenconstruction.io' })}
+              title={t('about.book_cta', { defaultValue: 'Pick your language on vastukar.com' })}
             >
               <img
                 src="/brand/ddc-book.png"
@@ -1055,7 +1055,7 @@ export function AboutPage() {
               />
             </a>
             <a
-              href="https://datadrivenconstruction.io/books/"
+              href="https://vastukar.com/books/"
               target="_blank"
               rel="noopener noreferrer"
               className="mt-4 inline-flex items-center gap-2 rounded-lg bg-oe-blue px-4 py-2 text-sm font-medium text-white hover:bg-oe-blue-hover transition-colors shadow-sm"
@@ -1149,12 +1149,12 @@ export function AboutPage() {
             </p>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
               {[
-                { id: 'quickstart', href: 'https://github.com/datadrivenconstruction/OpenConstructionERP/tree/main/docs', label: t('about.docs_pop_quickstart', { defaultValue: 'Quick start - Docker compose' }) },
-                { id: 'bim', href: 'https://github.com/datadrivenconstruction/OpenConstructionERP/blob/main/docs/BIM-STORAGE-ARCHITECTURE.md', label: t('about.docs_pop_bim', { defaultValue: 'Import BIM (RVT/IFC) → BOQ' }) },
-                { id: 'gaeb', href: 'https://github.com/datadrivenconstruction/OpenConstructionERP/tree/main/docs', label: t('about.docs_pop_gaeb', { defaultValue: 'GAEB X83/X84 import & export' }) },
-                { id: 'takeoff', href: 'https://github.com/datadrivenconstruction/OpenConstructionERP/tree/main/docs', label: t('about.docs_pop_takeoff', { defaultValue: 'PDF takeoff with annotations' }) },
-                { id: 'sdk', href: 'https://github.com/datadrivenconstruction/OpenConstructionERP/tree/main/docs/module-development', label: t('about.docs_pop_sdk', { defaultValue: 'Module SDK · write a plugin' }) },
-                { id: 'deploy', href: 'https://github.com/datadrivenconstruction/OpenConstructionERP/blob/main/docs/INSTALL_LINUX.md', label: t('about.docs_pop_deploy', { defaultValue: 'VPS deployment guide' }) },
+                { id: 'quickstart', href: 'https://github.com/Taha-Aalam/Vastukar/tree/main/docs', label: t('about.docs_pop_quickstart', { defaultValue: 'Quick start - Docker compose' }) },
+                { id: 'bim', href: 'https://github.com/Taha-Aalam/Vastukar/blob/main/docs/BIM-STORAGE-ARCHITECTURE.md', label: t('about.docs_pop_bim', { defaultValue: 'Import BIM (RVT/IFC) → BOQ' }) },
+                { id: 'gaeb', href: 'https://github.com/Taha-Aalam/Vastukar/tree/main/docs', label: t('about.docs_pop_gaeb', { defaultValue: 'GAEB X83/X84 import & export' }) },
+                { id: 'takeoff', href: 'https://github.com/Taha-Aalam/Vastukar/tree/main/docs', label: t('about.docs_pop_takeoff', { defaultValue: 'PDF takeoff with annotations' }) },
+                { id: 'sdk', href: 'https://github.com/Taha-Aalam/Vastukar/tree/main/docs/module-development', label: t('about.docs_pop_sdk', { defaultValue: 'Module SDK · write a plugin' }) },
+                { id: 'deploy', href: 'https://github.com/Taha-Aalam/Vastukar/blob/main/docs/INSTALL_LINUX.md', label: t('about.docs_pop_deploy', { defaultValue: 'VPS deployment guide' }) },
               ].map(topic => (
                 <a
                   key={topic.id}
@@ -1172,7 +1172,7 @@ export function AboutPage() {
             </div>
 
             <div className="mt-auto pt-4">
-              <a href="https://github.com/datadrivenconstruction/OpenConstructionERP/tree/main/docs" target="_blank" rel="noopener noreferrer">
+              <a href="https://github.com/Taha-Aalam/Vastukar/tree/main/docs" target="_blank" rel="noopener noreferrer">
                 <Button variant="primary" size="md" icon={<BookOpen size={15} />}>
                   {t('about.docs_open', { defaultValue: 'Open Docs' })}
                 </Button>
@@ -1262,7 +1262,7 @@ export function AboutPage() {
               <p className="text-xs text-content-secondary mb-2">
                 {t('about.license_commercial_short', { defaultValue: 'Need a commercial licence (without AGPL obligations) or an enterprise SLA?' })}
               </p>
-              <a href="https://datadrivenconstruction.io/contact-support/" target="_blank" rel="noopener noreferrer">
+              <a href="https://vastukar.com/contact-support/" target="_blank" rel="noopener noreferrer">
                 <Button variant="secondary" size="md" icon={<Shield size={15} />}>
                   {t('about.license_commercial_cta', { defaultValue: 'Commercial licensing' })}
                 </Button>
@@ -1459,10 +1459,10 @@ export function AboutPage() {
       {/* Credits */}
       <div className="text-center py-4 text-xs text-content-quaternary">
         <p className="flex items-center justify-center gap-1">
-          {t('about.built_by', { defaultValue: 'Built by the DataDrivenConstruction team' })}
+          {t('about.built_by', { defaultValue: 'Built by the Vastukar team' })}
           {' · '}
-          <a href="https://datadrivenconstruction.io" target="_blank" rel="noopener noreferrer" className="hover:text-oe-blue transition-colors">
-            datadrivenconstruction.io
+          <a href="https://vastukar.com" target="_blank" rel="noopener noreferrer" className="hover:text-oe-blue transition-colors">
+            vastukar.com
           </a>
         </p>
         <p className="mt-1">&copy; 2026 Data Driven Construction. All rights reserved.</p>

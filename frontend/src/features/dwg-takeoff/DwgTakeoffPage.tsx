@@ -544,7 +544,7 @@ function OfflineReadyBadge({
       })
     : t('dwg_takeoff.offline_ready_tooltip_server', {
         defaultValue:
-          'Conversions run on your OpenConstructionERP server and are never sent to third parties.',
+          'Conversions run on your Vastukar server and are never sent to third parties.',
       });
 
   return (
@@ -3448,7 +3448,7 @@ export function DwgTakeoffPage() {
                         <span className="text-xs text-emerald-300/90 font-medium">
                           {offlineReadiness?.local_only
                             ? t('common.local_processing', { defaultValue: '100% Local Processing · Your files never leave your computer' })
-                            : t('dwg_takeoff.processed_on_your_server', { defaultValue: 'Processed on your OpenConstructionERP server · never sent to third parties' })}
+                            : t('dwg_takeoff.processed_on_your_server', { defaultValue: 'Processed on your Vastukar server · never sent to third parties' })}
                         </span>
                         <span className="text-[10px] text-emerald-500/30">|</span>
                         <a
@@ -3457,7 +3457,7 @@ export function DwgTakeoffPage() {
                           rel="noopener noreferrer"
                           className="text-[10px] text-emerald-400/70 hover:text-emerald-300 hover:underline whitespace-nowrap"
                         >
-                          {t('common.powered_by_cad2data', { defaultValue: 'Powered by DDC Converters 2.0' })}
+                          {t('common.powered_by_cad2data', { defaultValue: 'Powered by Vastukar Converters 2.0' })}
                         </a>
                       </div>
                     </div>
@@ -6863,7 +6863,7 @@ function ConversionErrorCard({
   // version, corrupt file) still show "Retry / Delete" without an Install
   // button that wouldn't help. Rows from before error codes match the text.
   const isMissingConverter =
-    errorCode === 'converter_missing' || (!!message && message.includes('DDC DWG converter'));
+    errorCode === 'converter_missing' || (!!message && message.includes('Vastukar DWG converter'));
   const shownMessage = conversionErrorText(errorCode, message, t);
   return (
     <div className="flex flex-1 items-center justify-center p-6">
@@ -6892,7 +6892,7 @@ function ConversionErrorCard({
               {isMissingConverter
                 ? t('dwg_takeoff.conv_missing_message', {
                     defaultValue:
-                      'OpenConstructionERP needs the DDC DWG converter to read DWG files. Install it once - works for every DWG you upload after.',
+                      'Vastukar needs the Vastukar DWG converter to read DWG files. Install it once - works for every DWG you upload after.',
                   })
                 : shownMessage ||
                   t('dwg_takeoff.conv_error_default', {
@@ -7077,7 +7077,7 @@ function NeedsConversionCard({
             <p className="text-xs text-content-secondary mt-3 leading-relaxed">
               {t('dwg_takeoff.needs_conv_message', {
                 defaultValue:
-                  'DWG is an open format and we open it directly once the DDC converter is set up. This drawing has not been converted yet, and the converter is not installed on this server. Install it once and every DWG you open after will render here automatically. DXF files render without any converter.',
+                  'DWG is an open format and we open it directly once the Vastukar converter is set up. This drawing has not been converted yet, and the converter is not installed on this server. Install it once and every DWG you open after will render here automatically. DXF files render without any converter.',
               })}
             </p>
 

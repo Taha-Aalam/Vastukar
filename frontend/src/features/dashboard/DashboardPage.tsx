@@ -229,7 +229,7 @@ function WidgetSkeleton() {
  * Examples:
  *   "artem.boiko@acme.io" → "Artem"
  *   "j_smith42@x.com"     → "J"
- *   "demo@openconstructionerp.com" → "Demo"
+ *   "demo@vastukar.com" → "Demo"
  *   "@x.com" / "" / null  → undefined
  */
 function deriveGreetingName(email: string | null | undefined): string | undefined {
@@ -2781,7 +2781,7 @@ function DashboardPageInner() {
       {/* ─── 1. Hero · row A - greeting + primary actions ────────────────
           Compressed from the previous 6-row hero (audit 2026-05-11): the
           greeting and the 3 CTAs share a single line on desktop; row B
-          below merges DDC attribution + OSS badge + status pills into a
+          below merges Vastukar attribution + OSS badge + status pills into a
           thin meta-strip. Saves ~180px above the fold. */}
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between animate-card-in">
         <h1 className="text-2xl font-semibold tracking-tight gradient-text pl-2">
@@ -2889,20 +2889,20 @@ function DashboardPageInner() {
 
       {/* ─── 2. Hero · row B - thin meta-strip ───────────────────────── */}
       <div className="flex items-center flex-wrap gap-x-4 gap-y-2 pl-2 animate-stagger-in" style={{ animationDelay: '140ms' }}>
-        {/* DDC attribution - slim inline link with tiny logo */}
+        {/* Vastukar attribution - slim inline link with tiny logo */}
         <a
-          href="https://datadrivenconstruction.io/?utm_source=erp"
+          href="https://vastukar.com/?utm_source=erp"
           target="_blank"
           rel="noopener noreferrer"
           className="group/ddc inline-flex items-center gap-1.5 text-[11px] text-content-tertiary hover:text-content-secondary transition-colors"
         >
           <img
             src="/brand/ddc-logo.webp"
-            alt="DataDrivenConstruction"
+            alt="Vastukar"
             className="h-3.5 w-auto opacity-60 group-hover/ddc:opacity-100 transition-opacity"
           />
           <span className="hidden sm:inline">
-            {t('dashboard.developed_by_short', { defaultValue: 'by DataDrivenConstruction' })}
+            {t('dashboard.developed_by_short', { defaultValue: 'by Vastukar' })}
           </span>
         </a>
 
@@ -2910,7 +2910,7 @@ function DashboardPageInner() {
 
         {/* Open-source pill - slimmer (was a heavy gradient card) */}
         <a
-          href="https://github.com/datadrivenconstruction/OpenConstructionERP"
+          href="https://github.com/Taha-Aalam/Vastukar"
           target="_blank"
           rel="noopener noreferrer"
           className="group/oss inline-flex items-center gap-2 text-xs font-medium text-content-secondary hover:text-content-primary transition-colors"

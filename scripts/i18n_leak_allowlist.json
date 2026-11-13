@@ -55,7 +55,7 @@
     "reason_category": "abbreviation"
   },
   "app.name": {
-    "en_value": "OpenConstructionERP",
+    "en_value": "Vastukar",
     "note": "our own product name, never translated",
     "reason_category": "product_name"
   },
@@ -1510,7 +1510,7 @@
     "reason_category": "standard_code"
   },
   "about.team_name": {
-    "en_value": "DataDrivenConstruction",
+    "en_value": "Vastukar",
     "note": "company/product proper noun, identical in all languages by design",
     "reason_category": "product_name"
   },

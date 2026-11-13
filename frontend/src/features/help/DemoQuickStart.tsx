@@ -25,7 +25,7 @@ import { DEMO_PROFILES } from '@/shared/lib/demoProfiles';
 import { fmtList, fmtNumber } from '@/shared/lib/formatters';
 import { MODULE_EXPLANATIONS } from './moduleExplanations';
 
-const PRICING_URL = 'https://openconstructionerp.com/pricing';
+const PRICING_URL = 'https://vastukar.com/pricing';
 
 interface Card {
   id: string;
@@ -70,7 +70,7 @@ export function DemoQuickStart() {
       title: t('howto.demo.what_title', { defaultValue: 'What this demo is' }),
       body: t('howto.demo.what_body', {
         defaultValue:
-          'A live copy of OpenConstructionERP with sample companies and projects. Click anything: nothing you do here can break it.',
+          'A live copy of Vastukar with sample companies and projects. Click anything: nothing you do here can break it.',
       }),
       action: choose,
       to: '/onboarding/demo',

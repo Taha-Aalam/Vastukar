@@ -132,7 +132,7 @@ export function SharePage() {
             <p className="mt-1 text-xs text-content-tertiary">
               {t('share.page.subtitle', {
                 defaultValue:
-                  'Someone shared a file with you via OpenConstructionERP.',
+                  'Someone shared a file with you via Vastukar.',
               })}
             </p>
           </div>
@@ -308,7 +308,7 @@ export function SharePage() {
         </div>
 
         <p className="mt-4 text-center text-2xs text-content-quaternary">
-          OpenConstructionERP · datadrivenconstruction.io
+          Vastukar · vastukar.com
         </p>
       </div>
     </div>

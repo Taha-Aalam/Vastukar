@@ -67,7 +67,7 @@ pack:
     Verifies that every building element carries a DIN 276 cost-group
     code in the 300, 400 or 500 ranges so cost-group rollups are
     well-defined.
-  source: openconstructionerp
+  source: vastukar
   version: "1.0.0"
   applies_to:
     classifications: ["DIN276"]
@@ -124,7 +124,7 @@ pack:
   description: |
     Validates barrier-free clearance dimensions for corridors and doors
     per DIN 18040-1 (public buildings, accessible routes).
-  source: openconstructionerp
+  source: vastukar
   version: "1.0.0"
   applies_to:
     classifications: ["DIN276", "DIN18040"]
@@ -183,7 +183,7 @@ pack:
   description: |
     Validates that every internal wall declares a FireRating value
     drawn from the DIN 4102-2 / EN 13501-2 vocabulary.
-  source: openconstructionerp
+  source: vastukar
   version: "1.0.0"
   applies_to:
     classifications: ["DIN276", "DIN4102"]
@@ -246,7 +246,7 @@ pack:
   description: |
     Validates that pipe segments maintain a minimum 100 mm clearance
     from structural beams per VDI 2055.
-  source: openconstructionerp
+  source: vastukar
   version: "1.0.0"
   applies_to:
     classifications: ["DIN276"]
@@ -290,7 +290,7 @@ pack:
   description: |
     Enforces the canonical "<DEPT>.<LEVEL>.<ROOM>" room-code naming
     convention on IfcSpace.Name so downstream FM exports parse cleanly.
-  source: openconstructionerp
+  source: vastukar
   version: "1.0.0"
   applies_to:
     classifications: ["DIN276", "COBie"]
@@ -341,7 +341,7 @@ pack:
     Verifies that every Revit® wall carries a DIN 276 cost-group code in the
     300, 400 or 500 ranges, stored in the DIN_276_Code shared parameter, so
     cost-group rollups are well-defined.
-  source: openconstructionerp
+  source: vastukar
   version: "1.0.0"
   applies_to:
     classifications: ["DIN276"]
@@ -402,7 +402,7 @@ pack:
   description: |
     Validates barrier-free clearance for Revit® Rooms tagged as corridors
     and for Doors on accessible routes, per DIN 18040-1 (public buildings).
-  source: openconstructionerp
+  source: vastukar
   version: "1.0.0"
   applies_to:
     classifications: ["DIN276", "DIN18040"]
@@ -471,7 +471,7 @@ pack:
   description: |
     Validates that every interior Revit® wall declares a Fire Rating value
     drawn from the DIN 4102-2 / EN 13501-2 vocabulary.
-  source: openconstructionerp
+  source: vastukar
   version: "1.0.0"
   applies_to:
     classifications: ["DIN276", "DIN4102"]
@@ -538,7 +538,7 @@ pack:
   description: |
     Validates that Revit® pipes maintain a minimum 100 mm clearance from
     structural framing per VDI 2055.
-  source: openconstructionerp
+  source: vastukar
   version: "1.0.0"
   applies_to:
     classifications: ["DIN276"]
@@ -585,7 +585,7 @@ pack:
   description: |
     Enforces the canonical "<DEPT>.<LEVEL>.<ROOM>" room-code pattern on the
     Revit® Rooms "Number" parameter so downstream FM exports parse cleanly.
-  source: openconstructionerp
+  source: vastukar
   version: "1.0.0"
   applies_to:
     classifications: ["DIN276", "COBie"]
@@ -616,7 +616,7 @@ export const SEED_PACKS: SeedPack[] = [
     name: 'DIN 276 Cost-Group Completeness',
     description:
       'Verifies that every building element carries a DIN 276 cost-group code in the 300, 400 or 500 ranges so cost-group rollups are well-defined.',
-    source: 'openconstructionerp',
+    source: 'vastukar',
     version: '1.0.0',
     regions: ['DE', 'AT', 'CH', 'LU'],
     classifications: ['DIN276'],
@@ -630,7 +630,7 @@ export const SEED_PACKS: SeedPack[] = [
     name: 'DIN 18040-1 Corridor and Door Clearance',
     description:
       'Validates barrier-free clearance dimensions for corridors and doors per DIN 18040-1 (public buildings, accessible routes).',
-    source: 'openconstructionerp',
+    source: 'vastukar',
     version: '1.0.0',
     regions: ['DE', 'AT', 'CH'],
     classifications: ['DIN276', 'DIN18040'],
@@ -644,7 +644,7 @@ export const SEED_PACKS: SeedPack[] = [
     name: 'Interior Wall Fire-Rating Completeness',
     description:
       'Validates that every internal wall declares a FireRating value drawn from the DIN 4102-2 / EN 13501-2 vocabulary.',
-    source: 'openconstructionerp',
+    source: 'vastukar',
     version: '1.0.0',
     regions: ['DE', 'AT', 'CH'],
     classifications: ['DIN276', 'DIN4102'],
@@ -658,7 +658,7 @@ export const SEED_PACKS: SeedPack[] = [
     name: 'MEP-to-Structure Clearance',
     description:
       'Validates that pipe segments maintain a minimum 100 mm clearance from structural beams per VDI 2055.',
-    source: 'openconstructionerp',
+    source: 'vastukar',
     version: '1.0.0',
     regions: ['DE', 'AT', 'CH'],
     classifications: ['DIN276'],
@@ -672,7 +672,7 @@ export const SEED_PACKS: SeedPack[] = [
     name: 'Room-Code Naming Convention',
     description:
       'Enforces the canonical "<DEPT>.<LEVEL>.<ROOM>" room-code naming convention on IfcSpace.Name so downstream FM exports parse cleanly.',
-    source: 'openconstructionerp',
+    source: 'vastukar',
     version: '1.0.0',
     regions: ['INT'],
     classifications: ['DIN276', 'COBie'],
@@ -686,7 +686,7 @@ export const SEED_PACKS: SeedPack[] = [
     name: 'DIN 276 Cost-Group Completeness (Revit)',
     description:
       'Verifies that every Revit® wall carries a DIN 276 cost-group code in the 300, 400 or 500 ranges, stored in the DIN_276_Code shared parameter, so cost-group rollups are well-defined.',
-    source: 'openconstructionerp',
+    source: 'vastukar',
     version: '1.0.0',
     regions: ['DE', 'AT', 'CH', 'LU'],
     classifications: ['DIN276'],
@@ -700,7 +700,7 @@ export const SEED_PACKS: SeedPack[] = [
     name: 'Corridor and Door Clearance (Revit)',
     description:
       'Validates barrier-free clearance for Revit® Rooms tagged as corridors and for Doors on accessible routes, per DIN 18040-1 (public buildings).',
-    source: 'openconstructionerp',
+    source: 'vastukar',
     version: '1.0.0',
     regions: ['DE', 'AT', 'CH'],
     classifications: ['DIN276', 'DIN18040'],
@@ -714,7 +714,7 @@ export const SEED_PACKS: SeedPack[] = [
     name: 'Interior Wall Fire-Rating Completeness (Revit)',
     description:
       'Validates that every interior Revit® wall declares a Fire Rating value drawn from the DIN 4102-2 / EN 13501-2 vocabulary.',
-    source: 'openconstructionerp',
+    source: 'vastukar',
     version: '1.0.0',
     regions: ['DE', 'AT', 'CH'],
     classifications: ['DIN276', 'DIN4102'],
@@ -728,7 +728,7 @@ export const SEED_PACKS: SeedPack[] = [
     name: 'MEP-to-Structure Clearance (Revit)',
     description:
       'Validates that Revit® pipes maintain a minimum 100 mm clearance from structural framing per VDI 2055.',
-    source: 'openconstructionerp',
+    source: 'vastukar',
     version: '1.0.0',
     regions: ['DE', 'AT', 'CH'],
     classifications: ['DIN276'],
@@ -742,7 +742,7 @@ export const SEED_PACKS: SeedPack[] = [
     name: 'Room-Number Naming Convention (Revit)',
     description:
       'Enforces the canonical "<DEPT>.<LEVEL>.<ROOM>" room-code pattern on the Revit® Rooms "Number" parameter so downstream FM exports parse cleanly.',
-    source: 'openconstructionerp',
+    source: 'vastukar',
     version: '1.0.0',
     regions: ['INT'],
     classifications: ['DIN276', 'COBie'],

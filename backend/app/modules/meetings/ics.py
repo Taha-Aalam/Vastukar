@@ -55,7 +55,7 @@ __all__ = [
 ]
 
 # Product identifier written into every VCALENDAR (RFC 5545 section 3.7.3).
-PRODID = "-//DataDrivenConstruction//OpenConstructionERP Meetings//EN"
+PRODID = "-//Vastukar//Meetings//EN"
 # Right-hand side of the stable per-meeting UID.
 UID_DOMAIN = "openconstructionerp"
 # Reserved ``.invalid`` TLD (RFC 2606) used when an attendee has no real email:

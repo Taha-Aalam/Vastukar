@@ -1,4 +1,4 @@
-~V|es-pbc-sample.bc3|FIEBDC-3/2020|OpenConstructionERP|26052026|Obra de Ejemplo PBC|ISO-8859-1|2||EUR|
+~V|es-pbc-sample.bc3|FIEBDC-3/2020|Vastukar|26052026|Obra de Ejemplo PBC|ISO-8859-1|2||EUR|
 ~C|##||Obra de Ejemplo PBC|0|||3|
 ~C|01#||01 Actuaciones Previas|0|||1|
 ~C|01.01|m2|Despeje y desbroce del terreno con medios mecánicos|1.25|||0|
@@ -12,7 +12,7 @@
 ~D|01#|01.01\1\1500\01.02\1\320|
 ~D|02#|02.01\1\180\02.02\1\14500|
 ~D|03#|03.01\1\420|
-~T|01.01|Despeje y desbroce del terreno con un espesor medio hasta 20 cm, con medios mecánicos, retirada de los materiales y carga sobre transporte. Fila de ejemplo para el importador PBC de OpenConstructionERP.|
+~T|01.01|Despeje y desbroce del terreno con un espesor medio hasta 20 cm, con medios mecánicos, retirada de los materiales y carga sobre transporte. Fila de ejemplo para el importador PBC de Vastukar.|
 ~T|02.01|Hormigón armado HA-30/B/20/IIa, central, vertido por bombeo, vibrado y curado, incluido transporte y puesta en obra.|
 ~M|01#\01.01|1|1500.000||
 ~M|01#\01.02|1|320.000||

@@ -25,7 +25,7 @@ import { useFocusTrap } from '@/shared/hooks/useFocusTrap';
 import { useDemoReadOnlyStore } from '@/stores/useDemoReadOnlyStore';
 
 /** Where the real builds live. Already the download link used elsewhere in the app. */
-const DOWNLOAD_URL = 'https://openconstructionerp.com/download';
+const DOWNLOAD_URL = 'https://vastukar.com/download';
 
 /**
  * The install options, in the order a visitor is likely to want them.

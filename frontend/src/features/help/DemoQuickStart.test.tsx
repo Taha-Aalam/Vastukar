@@ -33,7 +33,7 @@ describe('DemoQuickStart', () => {
     expect(screen.getAllByTestId('hex-mark')).toHaveLength(6);
     expect(screen.getByTestId('demo-quick-card-data').textContent).toContain('4');
     const pricing = screen.getByTestId('demo-quick-card-install').querySelector('a');
-    expect(pricing?.getAttribute('href')).toBe('https://openconstructionerp.com/pricing');
+    expect(pricing?.getAttribute('href')).toBe('https://vastukar.com/pricing');
   });
 
   it('shows nothing outside demo mode', () => {

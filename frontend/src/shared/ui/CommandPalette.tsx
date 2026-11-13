@@ -25,7 +25,6 @@ import {
   Zap,
   Crown,
   ExternalLink,
-  GraduationCap,
   type LucideIcon,
 } from 'lucide-react';
 import { projectsApi, type Project } from '@/features/projects/api';
@@ -53,8 +52,6 @@ import {
 } from '@/shared/lib/actions/useActionRunner';
 import { askAi } from '@/shared/lib/actions/askAi';
 import { openLink } from '@/shared/lib/desktop';
-import { useVideosStore } from '@/features/videos/useVideosStore';
-import { useProjectContextStore } from '@/stores/useProjectContextStore';
 
 registerAppActions();
 
@@ -168,27 +165,6 @@ export function CommandPalette({ open, onClose }: CommandPaletteProps) {
   const [globalResults, setGlobalResults] = useState<GlobalSearchResult[]>([]);
   const [globalSearchLoading, setGlobalSearchLoading] = useState(false);
   const globalSearchTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
-  // The Academy catalogue is a lazy chunk, fetched the first time a query could match it.
-  const [academy, setAcademy] = useState<typeof import('@/features/videos/academyItems') | null>(null);
-  const marketChoice = useVideosStore((s) => s.market);
-  const activeProjectId = useProjectContextStore((s) => s.activeProjectId);
-  const academyReader = useMemo(() => {
-    const language = i18n.language || 'en';
-    if (marketChoice === 'any') return { language, market: null, anyMarket: true };
-    if (marketChoice !== 'auto') return { language, market: marketChoice };
-    return { language, market: projects.find((p) => p.id === activeProjectId)?.country_code?.toUpperCase() ?? null };
-  }, [i18n.language, marketChoice, projects, activeProjectId]);
-  const wantsAcademy = open && !academy && query.trim().length >= 2;
-  useEffect(() => {
-    if (!wantsAcademy) return;
-    let cancelled = false;
-    void import('@/features/videos/academyItems').then((m) => {
-      if (!cancelled) setAcademy(m);
-    });
-    return () => {
-      cancelled = true;
-    };
-  }, [wantsAcademy]);
   // Rebinding: which action is listening for keys, and why the last try was refused.
   const [recordingFor, setRecordingFor] = useState<string | null>(null);
   const [recordError, setRecordError] = useState<string | null>(null);
@@ -468,28 +444,9 @@ export function CommandPalette({ open, onClose }: CommandPaletteProps) {
       }
     }
 
-    // Courses and guides: only for a typed query, at most three, never a nag.
-    const courseRows = academy ? academy.paletteItems(trimmed, academyReader, lang) : [];
-    if (courseRows.length > 0) {
-      groups.push({
-        title: t('nav.courses', { defaultValue: 'Courses and guides' }),
-        items: courseRows.map(
-          (item): PaletteRow => ({
-            kind: 'external',
-            id: `academy-${item.id}`,
-            label: item.title,
-            description: t(`learn.kind.${item.kind}`, { defaultValue: item.kind }),
-            icon: GraduationCap,
-            url: academy!.academyUrlFor(item, i18n.language || 'en'),
-            paid: item.access === 'paid',
-          }),
-        ),
-      });
-    }
-
     if (best >= ASK_FIRST_BELOW) groups.push(aiGroup);
     return groups;
-  }, [query, actions, projects, boqs, globalResults, t, i18n.language, lang, actionTargets, academy, academyReader]);
+  }, [query, actions, projects, boqs, globalResults, t, i18n.language, lang, actionTargets]);
 
   // Flat list for keyboard navigation
   const flatResults = useMemo(() => results.flatMap((g) => g.items), [results]);
