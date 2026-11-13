@@ -53,14 +53,14 @@ interface Props {
 // attribute conversions back to this in-app CTA so we can measure
 // whether the popup pays for itself.
 //
-// 2026-05-13: pointed at openconstructionerp.com/contact (the canonical
+// 2026-05-13: pointed at vastukar.com/contact (the canonical
 // product marketing site, confirmed 200 with a real Contact page).
-// The earlier-tried openconstructionerp.com / openestimate.io hosts are
+// The earlier-tried vastukar.com / openestimate.io hosts are
 // parked / 405 and dead-ended the buttons.
 const URL_COMMUNITY =
-  'https://openconstructionerp.com/contact?topic=module_proposal_public&utm_source=oe_app&utm_medium=sidebar_cta&utm_campaign=request_module';
+  'https://vastukar.com/contact?topic=module_proposal_public&utm_source=oe_app&utm_medium=sidebar_cta&utm_campaign=request_module';
 const URL_PRIVATE =
-  'https://openconstructionerp.com/contact?topic=module_proposal_private&utm_source=oe_app&utm_medium=sidebar_cta&utm_campaign=request_module_bespoke';
+  'https://vastukar.com/contact?topic=module_proposal_private&utm_source=oe_app&utm_medium=sidebar_cta&utm_campaign=request_module_bespoke';
 
 export function RequestCustomModuleDialog({ open, onClose }: Props) {
   const { t } = useTranslation();
@@ -173,7 +173,7 @@ export function RequestCustomModuleDialog({ open, onClose }: Props) {
             <div className="inline-flex h-20 w-20 sm:h-24 sm:w-24 items-center justify-center mb-4">
               <img
                 src={ddcLogoUrl}
-                alt="DataDrivenConstruction"
+                alt="Vastukar"
                 className="max-h-full max-w-full object-contain"
                 width="96"
                 height="96"
@@ -195,7 +195,7 @@ export function RequestCustomModuleDialog({ open, onClose }: Props) {
             <p className="mt-3 mx-auto max-w-[640px] text-sm sm:text-base text-content-secondary leading-relaxed">
               {t('modules.request_hero_subtitle', {
                 defaultValue:
-                  'OpenConstructionERP runs on a plug-in architecture - every report, integration, regional catalogue and AI tool is its own module. If the one you need is missing, we will build it. Choose the path that fits your situation.',
+                  'Vastukar runs on a plug-in architecture - every report, integration, regional catalogue and AI tool is its own module. If the one you need is missing, we will build it. Choose the path that fits your situation.',
               })}
             </p>
           </div>
@@ -239,7 +239,7 @@ export function RequestCustomModuleDialog({ open, onClose }: Props) {
             <p className="text-sm text-content-secondary leading-relaxed">
               {t('modules.request_card_community_body', {
                 defaultValue:
-                  'We add your idea to the public roadmap. If it has broad demand we ship it in a future release of OpenConstructionERP - included in every user’s install, including yours, at no cost.',
+                  'We add your idea to the public roadmap. If it has broad demand we ship it in a future release of Vastukar - included in every user’s install, including yours, at no cost.',
               })}
             </p>
             <ul className="space-y-1.5 text-xs text-content-secondary">

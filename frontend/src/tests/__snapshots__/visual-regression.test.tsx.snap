@@ -1314,19 +1314,19 @@ exports[`Visual Regression - DashboardPage > renders loading/skeleton state 1`] 
     >
       <a
         class="group/ddc inline-flex items-center gap-1.5 text-[11px] text-content-tertiary hover:text-content-secondary transition-colors"
-        href="https://datadrivenconstruction.io/?utm_source=erp"
+        href="https://vastukar.com/?utm_source=erp"
         rel="noopener noreferrer"
         target="_blank"
       >
         <img
-          alt="DataDrivenConstruction"
+          alt="Vastukar"
           class="h-3.5 w-auto opacity-60 group-hover/ddc:opacity-100 transition-opacity"
           src="/brand/ddc-logo.webp"
         />
         <span
           class="hidden sm:inline"
         >
-          by DataDrivenConstruction
+          by Vastukar
         </span>
       </a>
       <span
@@ -1335,7 +1335,7 @@ exports[`Visual Regression - DashboardPage > renders loading/skeleton state 1`] 
       />
       <a
         class="group/oss inline-flex items-center gap-2 text-xs font-medium text-content-secondary hover:text-content-primary transition-colors"
-        href="https://github.com/datadrivenconstruction/OpenConstructionERP"
+        href="https://github.com/Taha-Aalam/Vastukar"
         rel="noopener noreferrer"
         target="_blank"
       >

@@ -28,7 +28,6 @@ import { MenuAppearanceCard } from './MenuAppearanceCard';
 import { MenuSizeCard } from './MenuSizeCard';
 import { SidebarFooterCard } from './SidebarFooterCard';
 import { FloatingButtonsCard } from './FloatingButtonsCard';
-import { LearningTipsCard } from './LearningTipsCard';
 import { NotificationChannelsCard } from './NotificationChannelsCard';
 import { ChordShortcutsCard } from './ChordShortcutsCard';
 import VectorStatusCard from './VectorStatusCard';
@@ -1507,7 +1506,7 @@ const TABS: readonly TabDef[] = [
   // Market & standards: country, packs, standards and units; language and formats sit below as display formats.
   { id: 'market',       labelKey: 'settings.tab_market',       defaultLabel: 'Market & standards', icon: Globe, descKey: 'settings.tab_market_desc', descDefault: 'Country, packs, standards and units' },
   { id: 'einvoice',     labelKey: 'settings.tab_einvoice',     defaultLabel: 'E-invoice',    icon: ReceiptText, descKey: 'settings.tab_einvoice_desc',  descDefault: 'Seller identity and bank account for electronic invoices' },
-  { id: 'converters',   labelKey: 'settings.tab_converters',   defaultLabel: 'Converters',  icon: Layers,   descKey: 'settings.tab_converters_desc',   descDefault: 'DDC converters - installed versions and GitHub sources' },
+  { id: 'converters',   labelKey: 'settings.tab_converters',   defaultLabel: 'Converters',  icon: Layers,   descKey: 'settings.tab_converters_desc',   descDefault: 'Vastukar converters - installed versions and GitHub sources' },
   { id: 'ai',           labelKey: 'settings.tab_ai',           defaultLabel: 'AI',           icon: Sparkles, descKey: 'settings.tab_ai_desc',           descDefault: 'AI provider and semantic search' },
   { id: 'security',     labelKey: 'settings.tab_security',     defaultLabel: 'Data & Security', icon: ShieldCheck, descKey: 'settings.tab_security_desc', descDefault: 'Where your data lives and what leaves this instance' },
   { id: 'integrations', labelKey: 'settings.tab_integrations', defaultLabel: 'Integrations', icon: Plug,     descKey: 'settings.tab_integrations_desc', descDefault: 'Slack, Teams, Telegram, webhooks' },
@@ -1755,7 +1754,7 @@ export function SettingsPage() {
       >
         {t('settings.intro_body', {
           defaultValue:
-            'Connect an AI provider key, choose language, timezone and number formats, manage DDC converter versions, and wire integrations like Slack, Teams, Telegram and webhooks from one place. The Advanced tab holds backup, restore and the database setup wizard, so the choices made here flow into every module for this workspace.',
+            'Connect an AI provider key, choose language, timezone and number formats, manage Vastukar converter versions, and wire integrations like Slack, Teams, Telegram and webhooks from one place. The Advanced tab holds backup, restore and the database setup wizard, so the choices made here flow into every module for this workspace.',
         })}
       </DismissibleInfo>
 
@@ -1845,7 +1844,7 @@ export function SettingsPage() {
               to="/about"
               className="inline-flex items-center gap-1 text-xs text-content-tertiary hover:text-oe-blue transition-colors"
             >
-              {t('settings.about_link', { defaultValue: 'About OpenConstructionERP' })}
+              {t('settings.about_link', { defaultValue: 'About Vastukar' })}
               <ChevronRight size={11} />
             </Link>
           </div>
@@ -1905,7 +1904,6 @@ export function SettingsPage() {
               <TableOptionsCard key={`tables-${modeKey}`} />
               <SidebarFooterCard />
               <FloatingButtonsCard />
-              <LearningTipsCard />
               <NotificationChannelsCard />
               <ChordShortcutsCard />
             </>
@@ -2030,7 +2028,7 @@ export function SettingsPage() {
                         {t('settings.sign_out_title', { defaultValue: 'Sign out of all sessions' })}
                       </p>
                       <p className="text-xs text-content-secondary mt-0.5">
-                        {t('settings.sign_out_desc', { defaultValue: 'You will need to enter your credentials to access OpenConstructionERP again.' })}
+                        {t('settings.sign_out_desc', { defaultValue: 'You will need to enter your credentials to access Vastukar again.' })}
                       </p>
                     </div>
                     <Button
@@ -2436,7 +2434,7 @@ export function SettingsPage() {
               to="/about"
               className="inline-flex items-center gap-1 text-sm text-content-tertiary hover:text-oe-blue transition-colors"
             >
-              {t('settings.about_link', { defaultValue: 'About OpenConstructionERP' })}
+              {t('settings.about_link', { defaultValue: 'About Vastukar' })}
               <ChevronRight size={12} />
             </Link>
           </div>
@@ -2479,7 +2477,7 @@ interface ConverterStatusResponse {
 }
 
 const DDC_REPO_URL =
-  'https://github.com/datadrivenconstruction/cad2data-Revit-IFC-DWG-DGN-pipeline-with-conversion-validation-qto';
+  'https://github.com/Taha-Aalam/cad2data-Revit-IFC-DWG-DGN-pipeline-with-conversion-validation-qto';
 
 function formatBytes(n: number | null): string {
   if (n === null || n === undefined) return '—';
@@ -2511,7 +2509,7 @@ function ConverterStatusPanel() {
         title={t('settings.converters_title', { defaultValue: 'Release packages' })}
         subtitle={t('settings.converters_subtitle', {
           defaultValue:
-            'DDC converter release: the installed package and the latest one on GitHub.',
+            'Vastukar converter release: the installed package and the latest one on GitHub.',
         })}
         action={
           <button
@@ -2537,7 +2535,7 @@ function ConverterStatusPanel() {
             <p className="text-2xs text-content-tertiary">
               {t('settings.converters_source_desc', {
                 defaultValue:
-                  'Converters for Revit® (RVT), IFC and DWG, published by DataDrivenConstruction.',
+                  'Converters for Revit® (RVT), IFC and DWG, published by Vastukar.',
               })}
             </p>
           </div>

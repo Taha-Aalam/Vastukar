@@ -1,5 +1,5 @@
-// DDC-CWICR-OE: DataDrivenConstruction · OpenConstructionERP
-// Copyright (c) 2026 Artem Boiko / DataDrivenConstruction
+// DDC-CWICR-OE: Vastukar · Vastukar
+// Copyright (c) 2026 Artem Boiko / Vastukar
 /**
  * Tests for the desktop "open in your browser" bridge.
  *
@@ -124,7 +124,7 @@ async function settle() {
   });
 }
 
-const LINK = 'https://openconstructionerp.com/docs';
+const LINK = 'https://vastukar.com/docs';
 
 describe('a link that the shell refuses to open', () => {
   it('reaches the user instead of dying on the console', async () => {
@@ -300,9 +300,9 @@ describe('revealing a file in the OS file manager', () => {
  */
 describe('outbound links from the header menus', () => {
   const MAIL =
-    'mailto:info@datadrivenconstruction.io?subject=OpenConstructionERP%20Issue&body=I%20clicked%20Install';
-  const FORM = 'https://openconstructionerp.com/contact.html?report=true&app_version=18.5.0';
-  const ISSUE = 'https://github.com/datadrivenconstruction/OpenConstructionERP/issues/new?title=x&body=y';
+    'mailto:info@vastukar.com?subject=Vastukar%20Issue&body=I%20clicked%20Install';
+  const FORM = 'https://vastukar.com/contact.html?report=true&app_version=18.5.0';
+  const ISSUE = 'https://github.com/Taha-Aalam/Vastukar/issues/new?title=x&body=y';
 
   it('hands every external link and mail link to the OS opener on desktop', async () => {
     const invoke = vi.fn().mockResolvedValue(undefined);
@@ -337,9 +337,9 @@ describe('outbound links from the header menus', () => {
     installDesktopExternalLinks();
 
     const links: Array<[string, string]> = [
-      ['https://openconstructionerp.com/docs', '_blank'],
-      ['https://github.com/datadrivenconstruction/OpenConstructionERP', '_blank'],
-      ['mailto:info@datadrivenconstruction.io?subject=OpenConstructionERP%20Issue%20Report', ''],
+      ['https://vastukar.com/docs', '_blank'],
+      ['https://github.com/Taha-Aalam/Vastukar', '_blank'],
+      ['mailto:info@vastukar.com?subject=Vastukar%20Issue%20Report', ''],
       ['/how-it-works', ''],
     ];
     const anchors = links.map(([href, target]) => {
@@ -362,9 +362,9 @@ describe('outbound links from the header menus', () => {
 
     expect(prevented).toEqual([true, true, true, false]);
     expect(invoke.mock.calls.map((call) => (call[1] as { url: string }).url)).toEqual([
-      'https://openconstructionerp.com/docs',
-      'https://github.com/datadrivenconstruction/OpenConstructionERP',
-      'mailto:info@datadrivenconstruction.io?subject=OpenConstructionERP%20Issue%20Report',
+      'https://vastukar.com/docs',
+      'https://github.com/Taha-Aalam/Vastukar',
+      'mailto:info@vastukar.com?subject=Vastukar%20Issue%20Report',
     ]);
     anchors.forEach((label) => label.parentElement?.remove());
   });

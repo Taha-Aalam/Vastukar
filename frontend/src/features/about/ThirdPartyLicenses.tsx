@@ -51,7 +51,7 @@ export interface LicenseTextDetail extends LicenseTextSummary {
   text: string;
 }
 
-const NOTICE_URL = 'https://github.com/datadrivenconstruction/OpenConstructionERP/blob/main/NOTICE';
+const NOTICE_URL = 'https://github.com/Taha-Aalam/Vastukar/blob/main/NOTICE';
 
 /**
  * The bundled LGPL components and their licence texts.

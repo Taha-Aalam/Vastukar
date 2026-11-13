@@ -4941,7 +4941,7 @@ export function OnboardingWizard() {
   );
 
   /* ONBOARD-MODAL: the wizard itself had NO completed-flag guard — it
-     always rendered step 0 ("Welcome to OpenConstructionERP"). It is only
+     always rendered step 0 ("Welcome to Vastukar"). It is only
      mounted at the /onboarding route, but anything that routes there
      (the dashboard first-run redirect, a stale bookmark, a back-button,
      QA navigation) re-showed the welcome modal even for users who already

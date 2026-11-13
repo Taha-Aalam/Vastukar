@@ -207,11 +207,11 @@ describe('ReviewPromptCard - review destinations', () => {
     const hrefs = Array.from(screen.getByTestId(CARD).querySelectorAll('a')).map((a) =>
       a.getAttribute('href'),
     );
-    expect(hrefs.some((h) => h?.includes('github.com/datadrivenconstruction'))).toBe(true);
+    expect(hrefs.some((h) => h?.includes('github.com/Taha-Aalam'))).toBe(true);
     expect(hrefs.some((h) => h?.includes('linkedin.com'))).toBe(true);
 
     const g2 = hrefs.find((h) => h?.includes('g2.com'));
-    expect(g2).toBe('https://www.g2.com/products/openconstructionerp/reviews');
+    expect(g2).toBe('https://www.g2.com/products/vastukar/reviews');
     // "?source=search" is G2's search-result tracking. It must never ride
     // along on a link we hand to a user.
     expect(g2).not.toContain('source=search');

@@ -1908,10 +1908,10 @@ function ShellWrapper({
               defaultValue: 'Questions? Email',
             })}{' '}
             <a
-              href="mailto:info@datadrivenconstruction.io"
+              href="mailto:info@vastukar.com"
               className="text-oe-blue hover:underline"
             >
-              info@datadrivenconstruction.io
+              info@vastukar.com
             </a>
           </span>
           <a

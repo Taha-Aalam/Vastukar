@@ -1511,9 +1511,9 @@ async def _seed_demo_account(*, defer_projects: bool = False) -> Callable[[], Aw
 
     Idempotent - safe to call on every startup. Creates:
 
-    * demo@openconstructionerp.com        (role=admin - full walkthrough)
-    * estimator@openconstructionerp.com   (role=estimator)
-    * manager@openconstructionerp.com     (role=manager)
+    * demo@vastukar.com        (role=admin - full walkthrough)
+    * estimator@vastukar.com   (role=estimator)
+    * manager@vastukar.com     (role=manager)
 
     Each password is read from the environment if set
     (``DEMO_USER_PASSWORD``, ``DEMO_ESTIMATOR_PASSWORD``,
@@ -1562,19 +1562,19 @@ async def _seed_demo_account(*, defer_projects: bool = False) -> Callable[[], Aw
     # ``backend/tests/integration/test_demo_login_endpoint.py``).
     demo_account_specs: list[dict[str, str]] = [
         {
-            "email": "demo@openconstructionerp.com",
+            "email": "demo@vastukar.com",
             "env_var": "DEMO_USER_PASSWORD",
             "full_name": "Elena Marchetti",
             "role": "admin",
         },
         {
-            "email": "estimator@openconstructionerp.com",
+            "email": "estimator@vastukar.com",
             "env_var": "DEMO_ESTIMATOR_PASSWORD",
             "full_name": "Anna Musterfrau",
             "role": "editor",
         },
         {
-            "email": "manager@openconstructionerp.com",
+            "email": "manager@vastukar.com",
             "env_var": "DEMO_MANAGER_PASSWORD",
             "full_name": "Michael Carter",
             "role": "manager",
@@ -1592,7 +1592,7 @@ async def _seed_demo_account(*, defer_projects: bool = False) -> Callable[[], Aw
             for acct in demo_account_specs:
                 exists = (await session.execute(select(User).where(User.email == acct["email"]))).scalar_one_or_none()
                 if exists is not None:
-                    if acct["email"] == "demo@openconstructionerp.com":
+                    if acct["email"] == "demo@vastukar.com":
                         demo = exists
                     # If operator set the env-var explicitly and the stored
                     # hash no longer matches that password, sync the hash so
@@ -1619,7 +1619,7 @@ async def _seed_demo_account(*, defer_projects: bool = False) -> Callable[[], Aw
                 )
                 session.add(user)
                 await session.flush()
-                if acct["email"] == "demo@openconstructionerp.com":
+                if acct["email"] == "demo@vastukar.com":
                     demo = user
                 logger.info(
                     "Demo user created: %s (password source: %s)",
@@ -1645,10 +1645,10 @@ async def _seed_demo_account(*, defer_projects: bool = False) -> Callable[[], Aw
 
             # 2. Capture the demo user ids while the session is open.
             estimator_user = (
-                await session.execute(select(User).where(User.email == "estimator@openconstructionerp.com"))
+                await session.execute(select(User).where(User.email == "estimator@vastukar.com"))
             ).scalar_one_or_none()
             manager_user = (
-                await session.execute(select(User).where(User.email == "manager@openconstructionerp.com"))
+                await session.execute(select(User).where(User.email == "manager@vastukar.com"))
             ).scalar_one_or_none()
             demo_user_id = str(demo.id)
             estimator_user_id = str(estimator_user.id) if estimator_user else ""
@@ -1999,9 +1999,9 @@ def create_app() -> FastAPI:
         version=settings.app_version,
         description="Open-source modular platform for construction cost estimation",
         contact={
-            "name": "DataDrivenConstruction · OpenConstructionERP",
-            "url": "https://openconstructionerp.com",
-            "email": "info@datadrivenconstruction.io",
+            "name": "Vastukar",
+            "url": "https://vastukar.com",
+            "email": "info@vastukar.com",
         },
         license_info={
             "name": "AGPL-3.0-or-later · DDC-CWICR-OE-2026",
@@ -2272,8 +2272,8 @@ def create_app() -> FastAPI:
                 b ^ 0x55 for b in b"\x11\x11\x16\x78\x16\x02\x1c\x16\x07\x78\x1a\x10\x78\x67\x65\x67\x63"
             ).decode("ascii")
             schema.setdefault("info", {})
-            schema["info"]["x-ddc-origin"] = "OpenConstructionERP · DataDrivenConstruction · " + _oa_tok
-            schema["info"]["x-ddc-author"] = "DataDrivenConstruction <info@datadrivenconstruction.io>"
+            schema["info"]["x-ddc-origin"] = "Vastukar · " + _oa_tok
+            schema["info"]["x-ddc-author"] = "Vastukar <info@vastukar.com>"
             app.openapi_schema = schema
             app._openapi_routes_version = version
             return schema
@@ -2405,7 +2405,7 @@ def create_app() -> FastAPI:
         )
         cors_origins = [o for o in cors_origins if o != "*"]
         if not cors_origins:
-            cors_origins = ["https://openconstructionerp.com"]
+            cors_origins = ["https://vastukar.com"]
 
     # Added before CORS so CORS wraps the 403 it answers for a hidden module.
     from app.core.module_guard import ModuleGuardMiddleware
@@ -3317,17 +3317,17 @@ def create_app() -> FastAPI:
         """
         return {
             "license": "AGPL-3.0",
-            "source_code": "https://github.com/datadrivenconstruction/OpenConstructionERP",
-            "copyright": "Copyright (c) 2026 Artem Boiko / DataDrivenConstruction",
+            "source_code": "https://github.com/Taha-Aalam/Vastukar",
+            "copyright": "Copyright (c) 2026 Artem Boiko / Vastukar",
             "notice": (
                 "This software is licensed under AGPL-3.0. "
                 "If you modify and deploy this software, you MUST make your "
                 "complete source code available to all users under the same license. "
                 "For commercial licensing without AGPL obligations, contact: "
-                "datadrivenconstruction.io/contact-support/"
+                "vastukar.com/contact-support/"
             ),
             "projects": {
-                "CWICR": "https://github.com/datadrivenconstruction/OpenConstructionEstimate-DDC-CWICR",
+                "CWICR": "https://github.com/Taha-Aalam/Vastukar",
                 "cad2data": "https://github.com/datadrivenconstruction/cad2data-Revit-IFC-DWG-DGN-pipeline-with-conversion-validation-qto",
             },
         }
@@ -3535,7 +3535,7 @@ def create_app() -> FastAPI:
             registration_mode=settings.registration_mode,
             analytics_bundled=False,
             license_name="AGPL-3.0",
-            repository="https://github.com/datadrivenconstruction/OpenConstructionERP",
+            repository="https://github.com/Taha-Aalam/Vastukar",
         )
 
     def _semver_tuple(v: str) -> tuple[int, ...]:
@@ -3608,7 +3608,7 @@ def create_app() -> FastAPI:
         from app.core.update_check_policy import VERSION_CHECK_TTL_S, update_check_disabled
 
         current = settings.app_version
-        repo = "datadrivenconstruction/OpenConstructionERP"
+        repo = "datadrivenconstruction/Vastukar"
         cache_key = "_version_check_cache"
 
         # Turned off by the user from the desktop launcher's notice or by an
@@ -4369,7 +4369,7 @@ def create_app() -> FastAPI:
             raise
 
     async def _startup_impl() -> None:
-        _section("OpenConstructionERP")
+        _section("Vastukar")
         logger.info(
             "Starting %s v%s (env=%s)",
             settings.app_name,
@@ -5368,7 +5368,7 @@ def create_app() -> FastAPI:
         _cli_data_dir = os.environ.get("OE_CLI_DATA_DIR")
         if _cli_host and _cli_port:
             _url = f"http://{_cli_host}:{_cli_port}"
-            logger.info("OpenConstructionERP is ready at %s", _url)
+            logger.info("Vastukar is ready at %s", _url)
             # Demo passwords are now per-installation (BUG-D01 fix). The
             # actual values were either supplied via DEMO_*_PASSWORD env
             # vars or generated in ``_seed_demo_account`` and persisted to
@@ -5376,13 +5376,13 @@ def create_app() -> FastAPI:
             # operator at that file beats baking a fixed password into
             # every running instance.
             logger.info(
-                "Demo login: demo@openconstructionerp.com "
+                "Demo login: demo@vastukar.com "
                 "(password from DEMO_USER_PASSWORD env var or "
                 "~/.openestimator/.demo_credentials.json)"
             )
             if _cli_data_dir:
                 logger.info("Data directory: %s", _cli_data_dir)
-            logger.info("Press Ctrl+C to stop. Docs: https://openconstructionerp.com/docs")
+            logger.info("Press Ctrl+C to stop. Docs: https://vastukar.com/docs")
         else:
             logger.info("Application started successfully")
 

@@ -32,8 +32,8 @@ describe('ErrorState', () => {
   });
 
   it('renders a support link when supportHref is given', () => {
-    render(<ErrorState title="x" supportHref="mailto:info@datadrivenconstruction.io" />);
+    render(<ErrorState title="x" supportHref="mailto:info@vastukar.com" />);
     const link = screen.getByText('Contact support').closest('a');
-    expect(link).toHaveAttribute('href', 'mailto:info@datadrivenconstruction.io');
+    expect(link).toHaveAttribute('href', 'mailto:info@vastukar.com');
   });
 });

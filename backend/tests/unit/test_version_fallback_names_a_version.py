@@ -162,6 +162,6 @@ def test_the_printed_line_uses_the_resolver(
     cmd_version(argparse.Namespace())
     printed = capsys.readouterr().out
 
-    assert f"OpenConstructionERP v{expected}" in printed
+    assert f"Vastukar v{expected}" in printed
     assert NOT_THIS_TREE not in printed
     assert "Undefined" not in printed

@@ -27,7 +27,7 @@ from httpx import ASGITransport, AsyncClient
 from sqlalchemy import select, text
 
 PACK_SLUG = "eleven-areas-framework"
-DEMO_ADMIN = "demo@openconstructionerp.com"
+DEMO_ADMIN = "demo@vastukar.com"
 DEMO_IDS = ("residential-regensburg", "school-ludwigsburg")
 
 #: The modules this QA pass covers, by package name.

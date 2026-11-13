@@ -48,6 +48,6 @@ def test_the_host_still_refuses_a_production_name_when_the_other_gates_are_open(
     monkeypatch.setenv("QA_RESET_ALLOWED", "1")
     monkeypatch.setenv("QA_RESET_TOKEN", "s3cret-token")
     assert (
-        _code(hostname="openconstructionerp.com", confirm_token="s3cret-token", tenant="demo")
+        _code(hostname="vastukar.com", confirm_token="s3cret-token", tenant="demo")
         == "qa_reset_production_hostname"
     )

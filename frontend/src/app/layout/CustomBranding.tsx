@@ -125,7 +125,7 @@ export function CustomBranding({ iconified }: CustomBrandingProps) {
     }
     return (
       <a
-        href="https://openconstructionerp.com/?utm_source=app"
+        href="https://vastukar.com/?utm_source=app"
         target="_blank"
         rel="noopener noreferrer"
         className="hover:opacity-80 transition-opacity"
@@ -187,7 +187,7 @@ export function CustomBranding({ iconified }: CustomBrandingProps) {
                   {companyName}
                 </span>
               )}
-              {/* "by OpenConstructionERP" — minimal subordinate attribution
+              {/* "by Vastukar" — minimal subordinate attribution
                   under the user's brand. AGPL-3.0 attribution requirement
                   is satisfied while the user's logo stays the dominant
                   visual; font is small + muted on purpose. */}
@@ -199,15 +199,12 @@ export function CustomBranding({ iconified }: CustomBrandingProps) {
                 }}
               >
                 by{' '}
-                <span className="font-semibold tracking-tight">
-                  Open<span className="text-oe-blue/60">Construction</span>
-                  <span className="text-content-quaternary">ERP</span>
-                </span>
+                <span className="font-semibold tracking-tight">Vastukar</span>
               </span>
             </button>
           ) : (
             <a
-              href="https://openconstructionerp.com/?utm_source=app"
+              href="https://vastukar.com/?utm_source=app"
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center gap-1 hover:opacity-80 transition-opacity"
@@ -225,8 +222,7 @@ export function CustomBranding({ iconified }: CustomBrandingProps) {
                   letterSpacing: '-0.02em',
                 }}
               >
-                Open<span className="text-oe-blue">Construction</span>
-                <span className="text-content-quaternary">ERP</span>
+                Vastukar
               </span>
             </a>
           )}

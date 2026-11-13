@@ -3090,7 +3090,7 @@ def _snapshot_error_hint(err: str) -> str | None:
         return (
             "The DDC catalogue file is missing on HuggingFace. The region may "
             "still be marked 'available' in the registry before DDC publishes. "
-            "Check huggingface.co/datasets/DataDrivenConstruction/cwicr-vector-db-bgem3-v3."
+            "Check huggingface.co/datasets/Vastukar/cwicr-vector-db-bgem3-v3."
         )
     if "timed out" in low or "timeout" in low or "connection refused" in low:
         return (
@@ -3282,7 +3282,7 @@ async def install_v3_catalogue(
             "Installing cost databases is disabled on the public demo. Each "
             "catalogue is 400+ MB and the demo runs on a small shared box. To "
             "load this region or your own cost data, download and run "
-            "OpenConstructionERP on your own machine: pip install openconstructionerp.",
+            "Vastukar on your own machine: pip install openconstructionerp.",
         )
 
     from app.modules.costs.qdrant_adapter import describe_server_write_mismatch
@@ -5201,7 +5201,7 @@ async def import_cost_file(
 # ── Load CWICR database from local DDC Toolkit ──────────────────────────────
 
 # GitHub repository info for downloading CWICR parquet files
-_GITHUB_CWICR_BASE_URL = "https://github.com/datadrivenconstruction/OpenConstructionEstimate-DDC-CWICR/raw/main"
+_GITHUB_CWICR_BASE_URL = "https://github.com/Taha-Aalam/Vastukar/raw/main"
 
 # Mapping from db_id to the work-item parquet path under the CWICR repo, built
 # from the single-source base registry (app.modules.costs.base_registry) so this
@@ -5366,7 +5366,7 @@ def _download_cwicr_from_github_sync(db_id: str) -> Path | None:
         _LAST_DOWNLOAD_ERROR[db_id] = (
             f"GitHub download for '{db_id}' returned {size} bytes (expected ≥ 1 KB). "
             f"URL: {url}. Likely upstream 404 or proxy strip - try re-checking "
-            f"https://github.com/datadrivenconstruction/OpenConstructionEstimate-DDC-CWICR "
+            f"https://github.com/Taha-Aalam/Vastukar "
             f"is reachable from this network."
         )
         local_path.unlink(missing_ok=True)
@@ -5797,7 +5797,7 @@ async def load_cwicr_region(
                 f"{_CWICR_CACHE_DIR / (db_id + '.parquet')}, or bundled package data) "
                 f"and the GitHub download did not succeed. Check that this server can "
                 f"reach https://github.com/datadrivenconstruction/"
-                f"OpenConstructionEstimate-DDC-CWICR, or place the regional parquet "
+                f"VastukarEstimate-DDC-CWICR, or place the regional parquet "
                 f"in the cache directory and retry."
             )
         raise HTTPException(status_code=404, detail=detail)

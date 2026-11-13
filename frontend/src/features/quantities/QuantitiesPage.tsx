@@ -123,7 +123,7 @@ function removeInstalledConverter(id: string): void {
 // ── Static data ──────────────────────────────────────────────────────────
 
 const GITHUB_RELEASES_URL =
-  'https://github.com/datadrivenconstruction/ddc-community-toolkit/releases';
+  'https://github.com/Taha-Aalam/ddc-community-toolkit/releases';
 
 const methods: MethodCard[] = [
   {
@@ -1096,7 +1096,7 @@ export function QuantitiesPage() {
               </div>
               <p className="mt-0.5 text-xs text-content-quaternary">
                 {t('quantities.converters_author', {
-                  defaultValue: 'DDC Community · Open Source · Free',
+                  defaultValue: 'Vastukar Community · Open Source · Free',
                 })}
               </p>
             </div>

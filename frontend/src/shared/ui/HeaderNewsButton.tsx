@@ -4,7 +4,7 @@
  * HeaderNewsButton - a "What's new" entry point in the top app header.
  *
  * Clicking opens a small popup that links to the latest release news on the
- * marketing site (openconstructionerp.com/news.html). We open the site in a
+ * marketing site (vastukar.com/news.html). We open the site in a
  * new tab rather than embedding it: the site sends X-Frame-Options SAMEORIGIN,
  * so a self-hosted or desktop build (a different origin) could not iframe it,
  * and a real navigation is what makes the visit count in the site's own
@@ -43,8 +43,8 @@ const LAST_SEEN_KEY = 'oe.last_seen_version';
  * (newest first), so it never needs a per-release URL bump.
  */
 const NEWS_URL =
-  'https://openconstructionerp.com/news.html?utm_source=erp_app&utm_medium=news_button';
-const COOKIE_POLICY_URL = 'https://openconstructionerp.com/cookie-policy.html';
+  'https://vastukar.com/news.html?utm_source=erp_app&utm_medium=news_button';
+const COOKIE_POLICY_URL = 'https://vastukar.com/cookie-policy.html';
 
 /**
  * True when the current release is a newer feature version (major.minor)
@@ -168,7 +168,7 @@ export function HeaderNewsButton({ className }: { className?: string }) {
                 <div className="min-w-0 flex-1">
                   <h2 className="text-sm font-semibold text-content-primary">{label}</h2>
                   <p className="mt-0.5 text-xs text-content-tertiary">
-                    {t('header.news.source', { defaultValue: 'From openconstructionerp.com' })}
+                    {t('header.news.source', { defaultValue: 'From vastukar.com' })}
                   </p>
                 </div>
                 <button
@@ -186,13 +186,13 @@ export function HeaderNewsButton({ className }: { className?: string }) {
                 <p className="text-sm text-content-secondary">
                   {t('header.news.body', {
                     defaultValue:
-                      'Read the latest OpenConstructionERP release news on our site.',
+                      'Read the latest Vastukar release news on our site.',
                   })}
                 </p>
                 <p className="text-xs leading-relaxed text-content-tertiary">
                   {t('header.news.cookie_note', {
                     defaultValue:
-                      'This opens openconstructionerp.com in a new tab. The site uses anonymised analytics cookies; you can accept or decline there.',
+                      'This opens vastukar.com in a new tab. The site uses anonymised analytics cookies; you can accept or decline there.',
                   })}{' '}
                   <a
                     href={COOKIE_POLICY_URL}

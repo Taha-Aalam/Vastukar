@@ -250,10 +250,10 @@ export default defineConfig({
       devOptions: { enabled: false },
       includeAssets: ['favicon.svg', 'pwa/*.svg'],
       manifest: {
-        name: 'OpenConstructionERP',
-        short_name: 'OCERP',
+        name: 'Vastukar',
+        short_name: 'Vastukar',
         description:
-          'Open-source construction cost estimation, BIM takeoff, BOQ, tendering and field operations.',
+          'AI-powered construction cost estimation, BIM takeoff, BOQ, tendering and field operations.',
         theme_color: '#0284c7',
         background_color: '#f7fbff',
         display: 'standalone',

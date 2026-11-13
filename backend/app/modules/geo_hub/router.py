@@ -162,7 +162,7 @@ _MAX_SOURCE_ZOOM = 14
 _NATURAL_EARTH_MAX_ZOOM = 6
 
 _TILE_HEADERS = {
-    "User-Agent": "OpenConstructionERP/1.0 (+https://openconstructionerp.com)",
+    "User-Agent": "OpenConstructionERP/1.0 (+https://vastukar.com)",
     "Accept": "*/*",
 }
 

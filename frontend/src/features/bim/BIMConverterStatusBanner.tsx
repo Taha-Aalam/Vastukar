@@ -79,7 +79,7 @@ const CONVERTERS_WITH_FALLBACK = new Set<string>(['ifc']);
 
 /** GitHub root for the manual-install fallback links. */
 const DDC_REPO_URL =
-  'https://github.com/datadrivenconstruction/cad2data-Revit-IFC-DWG/releases/tag/v2026.10.0';
+  'https://github.com/Taha-Aalam/cad2data-Revit-IFC-DWG/releases/tag/v2026.10.0';
 
 const VC_REDIST_URL =
   'https://learn.microsoft.com/en-us/cpp/windows/latest-supported-vc-redist';
@@ -969,7 +969,7 @@ function CollapsedConverterPill({
         : health === 'unknown'
           ? t('bim.converter_pill_unknown', { defaultValue: 'Installed (verify pending)' })
           : hasFallback
-            ? t('bim.converter_pill_fallback', { defaultValue: 'Works without DDC (fallback parser)' })
+            ? t('bim.converter_pill_fallback', { defaultValue: 'Works without Vastukar (fallback parser)' })
             : t('bim.converter_pill_missing', { defaultValue: 'Not installed' });
   return (
     <span
@@ -1098,7 +1098,7 @@ function ConverterRow({
         pillTone =
           'bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-300 border-emerald-200 dark:border-emerald-800';
         pillText = t('bim.converter_row_fallback', {
-          defaultValue: 'Works without DDC (fallback)',
+          defaultValue: 'Works without Vastukar (fallback)',
         });
       } else {
         icon = (
@@ -1170,7 +1170,7 @@ function ConverterRow({
               versionEntry?.installed_sha
                 ? t('bim.converter_sha_tooltip', {
                     defaultValue:
-                      'Installed package SHA-256: {{sha}}. Compared with the package this version installs from the DDC converter release.',
+                      'Installed package SHA-256: {{sha}}. Compared with the package this version installs from the Vastukar converter release.',
                     sha: versionEntry.installed_sha,
                   })
                 : undefined
@@ -1269,7 +1269,7 @@ function ConverterRow({
             <p className="text-[11px] text-emerald-800 dark:text-emerald-200">
               {t('bim.converter_row_fallback_msg', {
                 defaultValue:
-                  'IFC files are parsed by a built-in fallback. Install the DDC binary to upgrade placeholder boxes to real meshes.',
+                  'IFC files are parsed by a built-in fallback. Install the Vastukar binary to upgrade placeholder boxes to real meshes.',
               })}
             </p>
           )}

@@ -1247,7 +1247,7 @@ export function Sidebar({ onClose }: { onClose?: () => void }) {
     addToast(
       {
         type: 'info',
-        title: t('sidebar.learn.hidden_toast', { defaultValue: 'Video guides and use cases are hidden' }),
+        title: t('sidebar.learn.hidden_toast', { defaultValue: 'Use cases and packs are hidden' }),
         message: t('sidebar.learn.hidden_toast_body_topbar', {
           defaultValue: 'They are now behind the graduation cap in the top bar. One click there brings them back.',
         }),
@@ -1398,7 +1398,7 @@ export function Sidebar({ onClose }: { onClose?: () => void }) {
         {/* Brand block — white-labellable. When the user has set a
             custom logo or company name (via the pencil-on-hover edit
             affordance), this renders their brand large with a small
-            "powered by OpenConstructionERP" attribution beneath. */}
+            "powered by Vastukar" attribution beneath. */}
         <CustomBranding iconified={iconified} />
         {!iconified && onClose && (
           <button
@@ -1976,7 +1976,7 @@ export function Sidebar({ onClose }: { onClose?: () => void }) {
                • "Could help others too"  → community / GitHub backlog
                  → ends up in a future open-source release.
                • "Only for my company"    → private / bespoke quote
-                 → DDC team replies with scope + price.
+                 → Vastukar team replies with scope + price.
              We keep this distinct from the developer-guide tile above
              on purpose: contributors who want to build a module
              themselves use the guide; users who want us to build it
@@ -2109,7 +2109,7 @@ export function Sidebar({ onClose }: { onClose?: () => void }) {
           <div className="pt-2 pb-1 flex flex-col items-center gap-1">
             {!footerPrefs.github && (
               <a
-                href="https://github.com/datadrivenconstruction/OpenConstructionERP"
+                href="https://github.com/Taha-Aalam/Vastukar"
                 target="_blank"
                 rel="noopener noreferrer"
                 title={`${t('sidebar.github_repo', { defaultValue: 'GitHub repository' })} (v${APP_VERSION})`}
@@ -2121,7 +2121,7 @@ export function Sidebar({ onClose }: { onClose?: () => void }) {
             )}
             {!footerPrefs.community && (
               <a
-                href="https://t.me/datadrivenconstruction"
+                href="https://t.me/vastukar"
                 target="_blank"
                 rel="noopener noreferrer"
                 title={t('sidebar.community_title', { defaultValue: 'Community' })}
@@ -2150,7 +2150,7 @@ export function Sidebar({ onClose }: { onClose?: () => void }) {
               <div className="grid grid-cols-2 gap-1">
                 {!footerPrefs.github && (
                   <a
-                    href="https://github.com/datadrivenconstruction/OpenConstructionERP"
+                    href="https://github.com/Taha-Aalam/Vastukar"
                     target="_blank"
                     rel="noopener noreferrer"
                     title={t('sidebar.github_repo', { defaultValue: 'GitHub repository' })}
@@ -2169,7 +2169,7 @@ export function Sidebar({ onClose }: { onClose?: () => void }) {
                 )}
                 {!footerPrefs.community && (
                   <a
-                    href="https://t.me/datadrivenconstruction"
+                    href="https://t.me/vastukar"
                     target="_blank"
                     rel="noopener noreferrer"
                     title={t('sidebar.join_telegram', { defaultValue: 'Join the Telegram community' })}
@@ -2190,18 +2190,6 @@ export function Sidebar({ onClose }: { onClose?: () => void }) {
                 )}
               </div>
             )}
-            <div className="flex items-center justify-center gap-1.5 min-w-0">
-              <span className="text-2xs text-content-tertiary">v{APP_VERSION}</span>
-              <span className="text-2xs text-content-quaternary/40">·</span>
-              <a
-                href="/api/source"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-2xs text-content-tertiary hover:text-content-secondary transition-colors"
-              >
-                AGPL-3.0
-              </a>
-            </div>
           </div>
         )}
       </div>
@@ -2600,7 +2588,7 @@ function LearnSection({
               type="button"
               data-testid="sidebar-learn-hide"
               onClick={onHide}
-              aria-label={t('sidebar.learn.hide', { defaultValue: 'Hide video guides & use cases' })}
+              aria-label={t('sidebar.learn.hide', { defaultValue: 'Hide use cases & packs' })}
               aria-describedby={hintId}
               className={clsx(
                 'flex h-6 shrink-0 items-center gap-1 rounded-md px-1.5 text-[10px] font-medium text-content-tertiary',
@@ -2633,7 +2621,7 @@ function LearnSection({
             >
               {t('sidebar.learn.hint_topbar', {
                 defaultValue:
-                  'Tutorial videos and guided cases to learn the platform. Hide this section and it folds into the graduation cap in the top bar; one click there brings it back.',
+                  'Guided cases and packs to learn the platform. Hide this section and it folds into the graduation cap in the top bar; one click there brings it back.',
               })}
             </div>
           </>

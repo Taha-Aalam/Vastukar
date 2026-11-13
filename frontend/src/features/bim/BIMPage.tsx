@@ -462,8 +462,8 @@ function ModelCard({ model, isActive, onClick, onDelete }: {
             </span>
           )}
         </div>
-        {/* DDC converter version badge - stamped by ifc_processor on a
-            successful DDC pass. Hidden when missing (older imports or
+        {/* Vastukar converter version badge - stamped by ifc_processor on a
+            successful Vastukar pass. Hidden when missing (older imports or
             text-fallback path). v3.12.0 / Stream D. */}
         <ConverterVersionBadge metadata={model.metadata} />
       </div>
@@ -493,12 +493,12 @@ function ConverterVersionBadge({
   const source = typeof metadata.converter_source === 'string' ? metadata.converter_source : null;
   const tooltip = source
     ? t('bim.converter_version_tooltip', {
-        defaultValue: 'Processed with DDC converter v{{version}} (source: {{source}})',
+        defaultValue: 'Processed with Vastukar converter v{{version}} (source: {{source}})',
         version,
         source,
       })
     : t('bim.converter_version_tooltip_no_source', {
-        defaultValue: 'Processed with DDC converter v{{version}}',
+        defaultValue: 'Processed with Vastukar converter v{{version}}',
         version,
       });
   return (
@@ -510,7 +510,7 @@ function ConverterVersionBadge({
       <span className="inline-block w-1 h-1 rounded-full bg-emerald-400" />
       <span>
         {t('bim.converter_version_label', {
-          defaultValue: 'DDC v{{version}}',
+          defaultValue: 'Vastukar v{{version}}',
           version,
         })}
       </span>
@@ -1438,7 +1438,7 @@ function NonReadyOverlay({ model, onUploadConverted, onDelete, onRetry, onInstal
     && (errorCode === 'ddc_not_found' || !!backendMessage)
       ? t('bim.overlay_converter_unavailable_calm', {
           defaultValue:
-            "We couldn't convert this {{format}} file. The CAD converter (DDC Converters 2.0) isn't available in this environment - it's an optional, separate install. Add it, then retry the conversion.",
+            "We couldn't convert this {{format}} file. The CAD converter (Vastukar Converters 2.0) isn't available in this environment - it's an optional, separate install. Add it, then retry the conversion.",
           format: fmt || 'CAD',
         })
       : null;
@@ -1948,12 +1948,12 @@ function LandingPage({ projectId, onUploadComplete: _onUploadComplete, breadcrum
                     </span>
                     <span className="text-[10px] text-emerald-500/40">|</span>
                     <a
-                      href="https://github.com/datadrivenconstruction/cad2data-Revit-IFC-DWG-DGN-pipeline-with-conversion-validation-qto"
+                      href="https://github.com/Taha-Aalam/cad2data-Revit-IFC-DWG-DGN-pipeline-with-conversion-validation-qto"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="text-[10px] text-emerald-600/80 dark:text-emerald-400/70 hover:text-emerald-700 dark:hover:text-emerald-300 hover:underline whitespace-nowrap"
                     >
-                      {t('common.powered_by_cad2data', { defaultValue: 'Powered by DDC Converters 2.0' })}
+                      {t('common.powered_by_cad2data', { defaultValue: 'Powered by Vastukar Converters 2.0' })}
                     </a>
                   </div>
                 </div>
@@ -4172,7 +4172,7 @@ export function BIMPage() {
         })}
       </DismissibleInfo>
 
-      {/* ── Converter status banner - surfaces any missing DDC
+      {/* ── Converter status banner - surfaces any missing Vastukar
             converters so the user can one-click install them before
             dragging a native CAD file onto the upload zone. Starts
             collapsed once at least one model is ``status="ready"`` so
@@ -4185,7 +4185,7 @@ export function BIMPage() {
       />
 
       {/* Property-search popover. Floats below the toolbar so the user can
-          search the full DDC Parquet without leaving the canvas. We wire
+          search the full Vastukar Parquet without leaving the canvas. We wire
           onIsolate → setIsolatedIds (the same channel the saved-group and
           clash deep-link use) so matches highlight via the existing
           isolation pipeline. v3.12.0 / Stream D. The fixed positioning
@@ -4369,7 +4369,7 @@ export function BIMPage() {
           <QuantityRuleOfferBanner modelId={activeModel.id} />
         )}
 
-        {/* Imported without quantities (DDC converter missing): say so rather
+        {/* Imported without quantities (Vastukar converter missing): say so rather
             than show a viewer that looks complete with empty quantities. */}
         <QuantityWarningBanner model={activeModel} />
 
@@ -4608,7 +4608,7 @@ export function BIMPage() {
             stage='converting' and no code path later flipped it to 'ready'. */}
 
         {/* Low mesh-match warning - shown when the loaded DAE has no per-element
-            mapping (e.g. DDC RVT exports with numeric node names), which means
+            mapping (e.g. Vastukar RVT exports with numeric node names), which means
             element filters can't hide individual objects in the viewport. */}
         {/* Low mesh-match warning removed - positional fallback always provides
             workable filtering even when direct name-matching is sparse. */}

@@ -1,5 +1,5 @@
-// DDC-CWICR-OE: DataDrivenConstruction · OpenConstructionERP
-// Copyright (c) 2026 Artem Boiko / DataDrivenConstruction
+// DDC-CWICR-OE: Vastukar · Vastukar
+// Copyright (c) 2026 Artem Boiko / Vastukar
 //
 // Tests for <DataSecurityPanel /> - the in-product trust posture panel (#4).
 // Mirrors backend GET /api/system/data-security. Coverage:
@@ -66,7 +66,7 @@ function posture(overrides: Partial<DataSecurityPosture> = {}): DataSecurityPost
     ai: { enabled: false, providers: [], offline_capable: true, external_calls: false },
     registration_mode: 'admin-approve',
     analytics_bundled: false,
-    source: { license: 'AGPL-3.0', repository: 'https://github.com/datadrivenconstruction/OpenConstructionERP' },
+    source: { license: 'AGPL-3.0', repository: 'https://github.com/Taha-Aalam/Vastukar' },
     ...overrides,
   };
 }
@@ -108,7 +108,7 @@ describe('DataSecurityPanel', () => {
     expect(screen.getByText('AGPL-3.0')).toBeInTheDocument();
     expect(screen.getByRole('link', { name: /Open on GitHub/i })).toHaveAttribute(
       'href',
-      'https://github.com/datadrivenconstruction/OpenConstructionERP',
+      'https://github.com/Taha-Aalam/Vastukar',
     );
   });
 

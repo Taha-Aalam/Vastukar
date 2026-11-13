@@ -9,8 +9,8 @@
 /** Last moment the notice is shown, in local time (31 Oct 2026, 23:59:59). */
 export const CONVERTER_NOTICE_UNTIL = new Date(2026, 9, 31, 23, 59, 59);
 
-export const CONVERTER_ISSUES_URL = 'https://github.com/datadrivenconstruction/OpenConstructionERP/issues/new';
-export const CONVERTER_CONTACT_EMAIL = 'info@datadrivenconstruction.io';
+export const CONVERTER_ISSUES_URL = 'https://github.com/Taha-Aalam/Vastukar/issues/new';
+export const CONVERTER_CONTACT_EMAIL = 'info@vastukar.com';
 
 export function isConverterNoticeActive(now: Date = new Date()): boolean {
   return now.getTime() <= CONVERTER_NOTICE_UNTIL.getTime();

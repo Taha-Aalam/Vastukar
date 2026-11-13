@@ -41,7 +41,7 @@ OLD_NAME = re.compile("open ?estimate", re.IGNORECASE)
 
 
 def _assert_branded(subject: str, html_body: str, *, shell: bool = True) -> None:
-    assert BRAND_NAME == "OpenConstructionERP"
+    assert BRAND_NAME == "Vastukar"
     assert brand_header() in html_body, "the mail does not open with the brand line"
     if shell:
         assert html_body.endswith(BRAND_FOOTER), "the mail does not close with the brand line"
@@ -158,9 +158,9 @@ def test_a_progress_report_email_carries_the_brand():
 
 
 def test_a_bare_sender_address_shows_the_brand_name():
-    assert sender_addresses("info@datadrivenconstruction.io") == (
-        "OpenConstructionERP <info@datadrivenconstruction.io>",
-        "info@datadrivenconstruction.io",
+    assert sender_addresses("info@vastukar.com") == (
+        "Vastukar <info@vastukar.com>",
+        "info@vastukar.com",
     )
 
 
@@ -198,7 +198,7 @@ def test_the_smtp_backend_sends_under_the_brand_name():
         smtp_port=587,
         smtp_user="",
         smtp_password="",
-        smtp_from="info@datadrivenconstruction.io",
+        smtp_from="info@vastukar.com",
         smtp_tls=True,
     )
     with patch("app.core.email.smtp.smtplib.SMTP", FakeSMTP):
@@ -206,6 +206,6 @@ def test_the_smtp_backend_sends_under_the_brand_name():
             EmailMessage(to="ann@example.com", subject="Hello", html_body="<p>x</p>")
         )
     assert result.ok
-    assert sent["envelope_from"] == "info@datadrivenconstruction.io"
-    assert "From: OpenConstructionERP <info@datadrivenconstruction.io>" in sent["raw"]
+    assert sent["envelope_from"] == "info@vastukar.com"
+    assert "From: Vastukar <info@vastukar.com>" in sent["raw"]
     assert not OLD_NAME.search(sent["raw"])

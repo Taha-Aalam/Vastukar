@@ -54,8 +54,8 @@ def build(
         ("AuditFileVersion", audit_file_version),
         ("AuditFileCountry", country_code or "XX"),
         ("AuditFileDateCreated", datetime.now(UTC).date().isoformat()),
-        ("SoftwareCompanyName", "DataDrivenConstruction"),
-        ("SoftwareID", "OpenConstructionERP"),
+        ("SoftwareCompanyName", "Vastukar"),
+        ("SoftwareID", "Vastukar"),
         ("SoftwareVersion", software_version or "1"),
     ):
         _sub(header, q(tag), val)
@@ -111,7 +111,7 @@ def build(
     _sub(gle, q("TotalCredit"), f"{sum((ln.credit for ln in lines), ZERO):.2f}")
     journal = _sub(gle, q("Journal"))
     _sub(journal, q("JournalID"), "OE")
-    _sub(journal, q("Description"), "OpenConstructionERP documents")
+    _sub(journal, q("Description"), "Vastukar documents")
     _sub(journal, q("Type"), "GL")
     for no, group in by_entry.items():
         first = group[0]

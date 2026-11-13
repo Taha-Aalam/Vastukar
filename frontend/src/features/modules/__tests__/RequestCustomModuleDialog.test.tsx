@@ -9,7 +9,7 @@
 //   2. Renders the hero, both option cards and the dev-guide footer
 //      when open=true.
 //   3. Each option card is an anchor pointing at the corresponding
-//      hosted contact form on openconstructionerp.com (the canonical
+//      hosted contact form on vastukar.com (the canonical
 //      product marketing site), with target=_blank and rel=noopener
 //      (security baseline).
 //   4. Clicking an option card invokes onClose so the modal dismisses
@@ -80,12 +80,12 @@ describe('RequestCustomModuleDialog', () => {
     });
     expect(link).toHaveAttribute('target', '_blank');
     expect(link).toHaveAttribute('rel', expect.stringContaining('noopener'));
-    // Pinned at openconstructionerp.com — the canonical product
+    // Pinned at vastukar.com — the canonical product
     // marketing site. The pin catches accidental regressions back to
-    // the placeholder openconstructionerp.com / openestimate.io properties
+    // the placeholder vastukar.com / openestimate.io properties
     // (parked / 405 as of 2026-05-13).
     expect(link.getAttribute('href')).toMatch(
-      /openconstructionerp\.com\/contact\?topic=module_proposal_public/,
+      /vastukar\.com\/contact\?topic=module_proposal_public/,
     );
     expect(link.getAttribute('href')).toMatch(/utm_source=oe_app/);
   });
