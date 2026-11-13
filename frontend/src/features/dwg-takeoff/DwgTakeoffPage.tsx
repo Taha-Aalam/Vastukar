@@ -198,7 +198,7 @@ const DWG_PICKER_KINDS: readonly FileKind[] = ['dwg_drawing'];
  *  have fetched, and then reported bugs against a version we could not
  *  reproduce. If the backend pin moves, move this with it. */
 const DWG_CONVERTER_MANUAL_URL =
-  'https://github.com/Taha-Aalam/cad2data-Revit-IFC-DWG/releases/tag/v2026.10.0';
+  'https://github.com/datadrivenconstruction/cad2data-Revit-IFC-DWG/releases/tag/v2026.10.0';
 
 /* ── GridBackground ──────────────────────────────────────────────────── */
 
@@ -3452,7 +3452,7 @@ export function DwgTakeoffPage() {
                         </span>
                         <span className="text-[10px] text-emerald-500/30">|</span>
                         <a
-                          href="https://github.com/Taha-Aalam/cad2data-Revit-IFC-DWG-DGN-pipeline-with-conversion-validation-qto"
+                          href="https://github.com/datadrivenconstruction/cad2data-Revit-IFC-DWG-DGN-pipeline-with-conversion-validation-qto"
                           target="_blank"
                           rel="noopener noreferrer"
                           className="text-[10px] text-emerald-400/70 hover:text-emerald-300 hover:underline whitespace-nowrap"

@@ -79,7 +79,7 @@ const CONVERTERS_WITH_FALLBACK = new Set<string>(['ifc']);
 
 /** GitHub root for the manual-install fallback links. */
 const DDC_REPO_URL =
-  'https://github.com/Taha-Aalam/cad2data-Revit-IFC-DWG/releases/tag/v2026.10.0';
+  'https://github.com/datadrivenconstruction/cad2data-Revit-IFC-DWG/releases/tag/v2026.10.0';
 
 const VC_REDIST_URL =
   'https://learn.microsoft.com/en-us/cpp/windows/latest-supported-vc-redist';

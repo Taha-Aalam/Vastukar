@@ -4056,7 +4056,7 @@ export function CadDataExplorerPage() {
                       </span>
                       <span className="text-[10px] text-emerald-500/40">|</span>
                       <a
-                        href="https://github.com/Taha-Aalam/cad2data-Revit-IFC-DWG-DGN-pipeline-with-conversion-validation-qto"
+                        href="https://github.com/datadrivenconstruction/cad2data-Revit-IFC-DWG-DGN-pipeline-with-conversion-validation-qto"
                         target="_blank"
                         rel="noopener noreferrer"
                         className="text-[10px] text-emerald-600/80 dark:text-emerald-400/70 hover:text-emerald-700 dark:hover:text-emerald-300 hover:underline whitespace-nowrap"

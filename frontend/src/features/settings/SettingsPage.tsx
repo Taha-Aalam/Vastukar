@@ -2477,7 +2477,7 @@ interface ConverterStatusResponse {
 }
 
 const DDC_REPO_URL =
-  'https://github.com/Taha-Aalam/cad2data-Revit-IFC-DWG-DGN-pipeline-with-conversion-validation-qto';
+  'https://github.com/datadrivenconstruction/cad2data-Revit-IFC-DWG-DGN-pipeline-with-conversion-validation-qto';
 
 function formatBytes(n: number | null): string {
   if (n === null || n === undefined) return '—';

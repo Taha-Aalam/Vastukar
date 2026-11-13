@@ -58,7 +58,7 @@ from collections.abc import Mapping
 from dataclasses import dataclass
 from pathlib import Path
 
-DEFAULT_CONVERTER_REPO = "Taha-Aalam/cad2data-Revit-IFC-DWG"
+DEFAULT_CONVERTER_REPO = "datadrivenconstruction/cad2data-Revit-IFC-DWG"
 
 DEFAULT_CONVERTER_TAG = "v2026.10.0"
 

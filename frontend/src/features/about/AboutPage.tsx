@@ -522,7 +522,7 @@ export function AboutPage() {
                     components={{
                       cad: (
                         <a
-                          href="https://github.com/Taha-Aalam/cad2data-Revit-IFC-DWG-DGN-pipeline-with-conversion-validation-qto"
+                          href="https://github.com/datadrivenconstruction/cad2data-Revit-IFC-DWG-DGN-pipeline-with-conversion-validation-qto"
                           target="_blank"
                           rel="noopener noreferrer"
                           className="text-oe-blue hover:underline font-medium"
@@ -620,7 +620,7 @@ export function AboutPage() {
               {[
                 { href: 'https://vastukar.com', label: 'Vastukar', desc: t('about.ddc_link_lab', { defaultValue: 'Lab homepage - research & consulting' }) },
                 { href: 'https://vastukar.com/books/', label: 'Vastukar Guidebook', desc: t('about.ddc_link_book', { defaultValue: 'Reference reading, free, 16 languages' }) },
-                { href: 'https://github.com/Taha-Aalam/cad2data-Revit-IFC-DWG-DGN-pipeline-with-conversion-validation-qto', label: 'CAD-BIM Converter', desc: t('about.ddc_link_cad', { defaultValue: 'Pipeline: Revit® · IFC · DWG · DGN → data' }) },
+                { href: 'https://github.com/datadrivenconstruction/cad2data-Revit-IFC-DWG-DGN-pipeline-with-conversion-validation-qto', label: 'CAD-BIM Converter', desc: t('about.ddc_link_cad', { defaultValue: 'Pipeline: Revit® · IFC · DWG · DGN → data' }) },
                 { href: 'https://vastukar.com/excel-plugin/', label: 'Vastukar Excel Plugin', desc: t('about.ddc_link_excel', { defaultValue: 'Spreadsheet bridge - pull live data into Excel' }) },
               ].map(item => (
                 <li key={item.href}>
@@ -650,7 +650,7 @@ export function AboutPage() {
             </p>
             <ul className="mb-6 grid grid-cols-1 sm:grid-cols-2 gap-2.5">
               {[
-                { href: 'https://github.com/Taha-Aalam/cad2data-Revit-IFC-DWG-DGN-pipeline-with-conversion-validation-qto', label: 'Vastukar Pipeline', desc: t('about.ddc_gh_cad2data', { defaultValue: 'Revit® · IFC · DWG · DGN → structured quantities' }) },
+                { href: 'https://github.com/datadrivenconstruction/cad2data-Revit-IFC-DWG-DGN-pipeline-with-conversion-validation-qto', label: 'Vastukar Pipeline', desc: t('about.ddc_gh_cad2data', { defaultValue: 'Revit® · IFC · DWG · DGN → structured quantities' }) },
                 { href: 'https://github.com/Taha-Aalam/Vastukar', label: 'VastukarEstimate', desc: t('about.ddc_gh_cwicr', { defaultValue: '55,000+ cost items · 27 languages · 48 regions' }) },
                 { href: 'https://github.com/Taha-Aalam', label: 'Vastukar Skills for AI Agents', desc: t('about.ddc_gh_skills', { defaultValue: 'Tool definitions & prompts for LLM agents' }) },
               ].map(item => (
