@@ -129,11 +129,13 @@ historical version entries, and git history.
 
 Files changed in this step:
 
+- .github/workflows/desktop-release.yml
 - DOWNSTREAM.md
 - backend/app/__main__.py
 - backend/app/cli.py
 - backend/app/config.py
 - backend/app/core/converter_package.py
+- backend/app/core/converter_source.py
 - backend/app/core/demo_accounts.py
 - backend/app/core/demo_admin.py
 - backend/app/core/demo_cast.py
@@ -271,6 +273,7 @@ Files changed in this step:
 - backend/tests/unit/test_notification_email_locale.py
 - backend/tests/unit/test_outgoing_documents_print_the_company_letterhead.py
 - backend/tests/unit/test_pack_install_says_what_it_did.py
+- backend/tests/unit/test_pdf_appearance_reaches_the_renderer.py
 - backend/tests/unit/test_pdf_letterhead.py
 - backend/tests/unit/test_portal_login_email.py
 - backend/tests/unit/test_qa_reset_host_is_the_last_gate.py
@@ -454,3 +457,5 @@ Files changed in this step:
 - frontend/tests/pwa/manifest.test.ts
 - frontend/vite.config.ts
 - scripts/i18n_leak_allowlist.json
+- scripts/i18n_leak_baseline.json
+- scripts/i18n_leak_cluster_snapshot.json
