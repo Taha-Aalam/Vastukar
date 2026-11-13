@@ -129,13 +129,11 @@ historical version entries, and git history.
 
 Files changed in this step:
 
-- .github/workflows/desktop-release.yml
 - DOWNSTREAM.md
 - backend/app/__main__.py
 - backend/app/cli.py
 - backend/app/config.py
 - backend/app/core/converter_package.py
-- backend/app/core/converter_source.py
 - backend/app/core/demo_accounts.py
 - backend/app/core/demo_admin.py
 - backend/app/core/demo_cast.py
@@ -354,7 +352,6 @@ Files changed in this step:
 - frontend/src/features/auth/LoginPageNext.tsx
 - frontend/src/features/auth/RegisterPage.tsx
 - frontend/src/features/bcf/issueReport.ts
-- frontend/src/features/bim/AutoInstallConverterNotice.tsx
 - frontend/src/features/bim/BIMConverterStatusBanner.tsx
 - frontend/src/features/bim/BIMPage.tsx
 - frontend/src/features/bim/BIMQuantityRulesPage.prefill.test.tsx
