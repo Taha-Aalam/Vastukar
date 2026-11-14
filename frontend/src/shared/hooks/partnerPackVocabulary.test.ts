@@ -16,9 +16,11 @@
  * writes a bundle the way ``loadLocaleResource`` writes one, and then asserts
  * the pack's words are still there.
  *
- * The real ``@/app/i18n`` singleton is used deliberately - ``normalizePackLocale``
- * and ``SUPPORTED_LANGUAGES`` are exactly what decides ``fr-CA`` -> ``fr``, and a
- * hand-written stand-in would assert the stand-in. Only the network is faked.
+ * The real ``@/app/i18n`` singleton is used deliberately - the pack locale the
+ * reader ends up in is whatever ``normalizePackLocale`` answers from
+ * ``SUPPORTED_LANGUAGES`` (the ``ENABLED_LOCALES`` allowlist since the India
+ * rollout), and a hand-written stand-in would assert the stand-in. Only the
+ * network is faked.
  */
 
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
@@ -146,26 +148,32 @@ describe('packVocabularyFrom', () => {
 });
 
 describe('resolvePackVocabularyCode', () => {
-  it('finds the regional file for the base language it normalizes to', () => {
-    // fr-CA is not in SUPPORTED_LANGUAGES, so the UI language is fr — and the
-    // pack file that belongs to that language is still called fr-CA.
+  it('finds the regional file for the base language it speaks', () => {
+    // The match is on the pack file's own base language, never on what
+    // normalizePackLocale resolves it into: fr-CA speaks French and serves a
+    // French reader, whatever the picker offers. Since the allowlist hid fr,
+    // the normalized answer for fr-CA is 'en' — and matching on THAT would
+    // merge French vocabulary into the English bundle, which is the bug this
+    // base-language rule replaced. The function takes the UI language as an
+    // argument, so this pins the file-choice mechanics either way.
     expect(resolvePackVocabularyCode(['en-CA', 'fr-CA'], 'fr-CA', 'fr')).toBe('fr-CA');
     expect(resolvePackVocabularyCode(['en-CA'], 'en-CA', 'en')).toBe('en-CA');
-    // en-NZ and en-AU write the day first, so they normalize to en-GB rather
-    // than to the month-first unqualified entry, and their files follow.
-    expect(resolvePackVocabularyCode(['en-NZ'], 'en-NZ', 'en-GB')).toBe('en-NZ');
-    expect(resolvePackVocabularyCode(['en-AU'], 'en-AU', 'en-GB')).toBe('en-AU');
-    expect(resolvePackVocabularyCode(['en-NZ'], 'en-NZ', 'en')).toBeNull();
+    // An unqualified English interface is still English: the pack's regional
+    // English file serves it, and the pack's French file does not.
+    expect(resolvePackVocabularyCode(['en-NZ'], 'en-NZ', 'en')).toBe('en-NZ');
+    expect(resolvePackVocabularyCode(['en-CA', 'fr-CA'], 'fr-CA', 'en')).toBe('en-CA');
+    expect(resolvePackVocabularyCode(['fr-CA'], 'fr-CA', 'en')).toBeNull();
   });
 
-  it('gives a region the UI ships its own file rather than the base language’s', () => {
-    // en-GB used to belong in the case above, because the UI shipped no
-    // British entry and uk-jct's file was merged into plain English. Now that
-    // English (UK) is offered, the pack's file follows the reader who picked
-    // it and stops reaching the reader who did not. Both halves are asserted:
-    // without the second, folding en-GB back onto `en` would pass.
+  it('serves a regional English file to the English interface it belongs to', () => {
+    // en-GB used to serve only a reader ON the British entry: the match was
+    // the normalized code, and en-GB normalized to itself while it was
+    // offered. The allowlist answers every English region with plain `en`, so
+    // the match is the base language and the pack's British words reach the
+    // English interface the pack activated — which is the pack working: its
+    // vocabulary is English, and the UI language it forced is English too.
     expect(resolvePackVocabularyCode(['en-GB'], 'en-GB', 'en-GB')).toBe('en-GB');
-    expect(resolvePackVocabularyCode(['en-GB'], 'en-GB', 'en')).toBeNull();
+    expect(resolvePackVocabularyCode(['en-GB'], 'en-GB', 'en')).toBe('en-GB');
   });
 
   it('serves the pack’s second file when the user picks that language', () => {

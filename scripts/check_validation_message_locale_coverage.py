@@ -265,33 +265,32 @@ def read_bundle_locales(messages_dir: Path = MESSAGES_DIR) -> set[str]:
 
 
 def read_frontend_languages(i18n_ts: Path = FRONTEND_I18N_TS) -> list[str]:
-    """Reachable ``SUPPORTED_LANGUAGES`` codes from ``frontend/src/app/i18n.ts``.
+    """The codes the frontend picker offers, read from ``frontend/src/app/i18n.ts``.
 
-    Line-based, not a TS parser: skips any line whose trimmed text starts with
-    ``//`` (a fully commented-out entry, e.g. ``uz`` today) so a language taken
-    off the picker without deleting its file is not counted as offered. An
-    entry with no ``code:`` field, such as the ``uk`` region-vs-language
-    comment block, contributes nothing because there is nothing to match.
+    Since the India rollout the offered set is the ``ENABLED_LOCALES``
+    allowlist; ``SUPPORTED_LANGUAGES`` below it is that allowlist filtered
+    through the full registry, and parsing it again would mean re-deriving a
+    decision the file has already made. So the allowlist is what is parsed:
+    every quoted string between ``export const ENABLED_LOCALES`` and its
+    closing ``];``, with trailing ``//`` comments stripped per line. Line-based,
+    not a TS parser — the same approach the old ``code: '...'`` reader used,
+    which this replaces; that reader found nothing to parse once the registry
+    literal became ``ALL_LANGUAGES`` and the export became a ``.filter()``.
     """
     text = i18n_ts.read_text(encoding="utf-8")
-    start = text.find("export const SUPPORTED_LANGUAGES")
+    start = text.find("export const ENABLED_LOCALES")
     if start == -1:
-        raise RuntimeError(f"SUPPORTED_LANGUAGES not found in {i18n_ts}")
-    end = text.find("\n];", start)
+        raise RuntimeError(f"ENABLED_LOCALES not found in {i18n_ts}")
+    end = text.find(chr(10) + "];", start)
     block = text[start:end]
     codes: list[str] = []
     for line in block.splitlines():
-        trimmed = line.strip()
-        if trimmed.startswith("//"):
+        trimmed = line.split("//", 1)[0].strip()
+        if not trimmed.startswith("'"):
             continue
-        marker = "code: '"
-        idx = trimmed.find(marker)
-        if idx == -1:
-            continue
-        rest = trimmed[idx + len(marker) :]
-        end_quote = rest.find("'")
+        end_quote = trimmed.find("'", 1)
         if end_quote != -1:
-            codes.append(rest[:end_quote])
+            codes.append(trimmed[1:end_quote])
     return codes
 
 

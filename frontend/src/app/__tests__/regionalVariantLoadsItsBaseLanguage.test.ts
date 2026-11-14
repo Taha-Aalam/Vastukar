@@ -1,83 +1,64 @@
 // DDC-CWICR-OE: DataDrivenConstruction · OpenConstructionERP
 // Copyright (c) 2026 Artem Boiko / DataDrivenConstruction
-import { beforeAll, describe, expect, it, vi } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 
 /**
- * A regional variant has to actually *download* the language it falls back to.
+ * A regional variant has to actually *download* the language it falls back to —
+ * and, since the India rollout, no regional variant is offered at all.
  *
  * `i18n.ts` has named the chain for a long time - `fallbackLng` maps es-MX to
- * ['es', 'en'] - and that map was correct and inert. It names a bundle; it does
- * not fetch one. `loadLocaleResource` imported the chunk for the code it was
- * given and nothing else, so an es-MX reader's lookup walked es-MX, then an `es`
- * bucket that was never loaded, then landed on English. The ~2700 `cases.*` keys
- * that `es.ts` carries and `es-MX.ts` does not rendered in English while a
- * complete Spanish translation sat in a chunk nobody requested. es-CL, es-CO and
- * pt-BR were all in the same position.
+ * ['es', 'en'] - and that map was correct and inert until `loadLocaleResource`
+ * learned to fetch the base alongside the variant. That fix was proven here
+ * with es-MX fixtures: the loader was called for real, and the store was
+ * probed for a base bundle that only the loader change could put there. Six
+ * tests covered the mechanics: the base bundle lands in the store, the variant
+ * still loads, a key only the base defines resolves through the chain, a key
+ * both define keeps the variant's wording, and the bundled-English base asks
+ * for no second chunk. The full set is one `git log` away; restore it the day
+ * a regional variant re-enters ``ENABLED_LOCALES`` — the loader code is
+ * untouched by the rollout, and the tests were deleted with their subject, not
+ * with their correctness.
  *
- * `enUSFallsBackToEnglish.test.ts` could not catch this, and the reason is worth
- * keeping: it hand-adds both bundles and then asserts i18next's resolution order.
- * Resolution order was never the broken part. It is also the one variant whose
- * base is `en`, which ships in the main bundle and is in `loadedLocales` from the
- * start - so the only variant with a test was the only variant that worked.
+ * What is pinned now is the other half, and it is the half the rollout made
+ * load-bearing: a variant (or any code) outside the allowlist is refused at
+ * runtime, even when someone asks for it directly and its bundle sits in the
+ * tree. `loadLocaleChunk` answers ``SUPPORTED_LANGUAGES`` — the filtered list —
+ * so a hidden language gets no chunk, no store entry, and no fallback-chain
+ * half-load that could resurrect it behind the picker's back.
+ * ``matchSupportedLanguage`` shows the resolution each code gets instead.
  *
- * This file therefore probes the *store* after calling the real loader, which is
- * the thing only the loader change can produce, and only then checks resolution
- * in both directions.
- *
- * Every locale chunk is mocked. `localeKeyResolution.test.ts` records why the real
- * ones cannot be used: they are megabytes of object literal and handing one to the
- * vitest transform pipeline times the worker out - measured here at ~55s for
- * `en.ts` alone, which killed the pool worker outright before any assertion ran.
- * The stubs are shaped exactly the way a locale file is shaped, one `translation`
- * member of flat dotted keys, so `loadLocaleResource` consumes them by the same
- * path it consumes the real thing. That keeps the subject of the test where it
- * belongs: which chunks the loader decides to fetch, not what any language says.
+ * Every locale chunk is mocked. `localeKeyResolution.test.ts` records why the
+ * real ones cannot be used: they are megabytes of object literal and handing
+ * one to the vitest transform pipeline times the worker out - measured at ~55s
+ * for `en.ts` alone, which killed the pool worker outright before any
+ * assertion ran. The stub is shaped exactly the way a locale file is shaped,
+ * one `translation` member of flat dotted keys, so the same code path consumes
+ * it. The es-MX / es / en-US stubs the previous version of this file mocked
+ * are gone with the assertions they fed: nothing offers those codes now, so
+ * nothing would load them for a stub to answer.
  *
  * The fixtures go through `vi.hoisted` because `vi.mock` factories are hoisted
  * above ordinary `const` declarations, and `../i18n` imports `./locales/en`
- * statically - a plain const would still be in its temporal dead zone when that
- * factory runs.
+ * statically - a plain const would still be in its temporal dead zone when
+ * that factory runs.
  */
 
-const { ONLY_IN_ES, IN_BOTH, ES, ES_MX, EN } = vi.hoisted(() => {
-  const onlyInEs = 'cases.__probe_only_in_es';
-  const inBoth = 'cases.__probe_in_both';
-  // Annotated rather than inferred. A bare object literal keyed by these two
-  // consts gets the narrow type `{ "cases.__probe_in_both": string }`, and then
-  // reading it back with a `string`-typed key is an implicit any that `tsc -b`
-  // rejects under strict mode. `Record<string, string>` is also the shape
-  // `addResourceBundle` is handed, so it is the honest annotation here.
-  /** Peninsular Spanish. Uses the Spain words for formwork and for cost. */
-  const es: Record<string, string> = {
-    [onlyInEs]: 'Encofrado y coste de la partida',
-    [inBoth]: 'Certificacion de obra',
-  };
-  /** Mexican Spanish. Names the shared item the way Mexican practice names it. */
-  const esMx: Record<string, string> = {
-    [inBoth]: 'Estimacion de obra',
-  };
+const { PROBE_KEY, EN } = vi.hoisted(() => {
+  const probeKey = 'cases.__probe_in_both';
   /** Final fallback. Only has to exist and be shaped right. */
   const en: Record<string, string> = {
-    [onlyInEs]: 'Formwork and cost of the item',
-    [inBoth]: 'Payment certificate',
+    [probeKey]: 'Payment certificate',
   };
-  return { ONLY_IN_ES: onlyInEs, IN_BOTH: inBoth, ES: es, ES_MX: esMx, EN: en };
+  return { PROBE_KEY: probeKey, EN: en };
 });
 
-vi.mock('../locales/es.ts', () => ({ default: { translation: ES } }));
-vi.mock('../locales/es-MX.ts', () => ({ default: { translation: ES_MX } }));
-vi.mock('../locales/en-US.ts', () => ({ default: { translation: {} } }));
 vi.mock('../locales/en', () => ({ default: { translation: EN } }));
 
-// Imported statically, not inside the hook: the module-level cost of `i18n.ts` is
-// paid during collection, which is not charged against the 10s hook timeout.
+// Imported statically, not inside a hook: the module-level cost of `i18n.ts` is
+// paid during collection, which is not charged against any test timeout.
 import i18n, { isLocaleLoaded, loadLocaleResource, matchSupportedLanguage } from '../i18n';
 
-beforeAll(async () => {
-  await loadLocaleResource('es-MX');
-});
-
-describe('a regional variant loads the base language it falls back to', () => {
+describe('a regional variant outside the allowlist loads nothing', () => {
   it('leaves unsupported Mongolian unloaded, including a regional request', async () => {
     const englishBefore = { ...i18n.getResourceBundle('en', 'translation') };
     for (const code of ['mn', 'mn-MN']) {
@@ -89,54 +70,49 @@ describe('a regional variant loads the base language it falls back to', () => {
     expect(i18n.getResourceBundle('en', 'translation')).toEqual(englishBefore);
   });
 
-  it('puts the base bundle in the store, not just in the fallback map', () => {
-    // Asserted on the bundle's actual contents, not with `hasResourceBundle`.
-    // That was the first thing written here and it passed against the unfixed
-    // loader: i18next's `getResourceBundle` spreads a missing bundle into `{}`,
-    // so the "is it there" question answers yes for a bucket nobody filled. The
-    // key itself is the only form of the question that can come back no.
-    const bundle = i18n.getResourceBundle('es', 'translation') as Record<string, string>;
-    expect(bundle?.[ONLY_IN_ES]).toBe(ES[ONLY_IN_ES]);
+  it('refuses a variant the allowlist hides, and fetches its base neither', async () => {
+    // es-MX was offered and this file proved its base-chaining worked. The
+    // language is hidden now, and hiding must hold at runtime, not only in the
+    // picker: a direct request — the pack-locale hook, a stale saved
+    // preference, a test — loads no es-MX chunk and no es base chunk either,
+    // because the refusal fires before the base derivation runs. Probed with
+    // `isLocaleLoaded`, not `getResourceBundle`: the module registry
+    // legitimately adds small nav-key bundles for languages it ships module
+    // strings for at boot, so a Spanish bucket exists here regardless — what
+    // must never exist is the *locale chunk*, which is what isLocaleLoaded
+    // tracks.
+    await expect(loadLocaleResource('es-MX')).resolves.toBeUndefined();
+    expect(matchSupportedLanguage('es-MX')).toBeNull();
+    expect(isLocaleLoaded('es-MX')).toBe(false);
+    expect(isLocaleLoaded('es')).toBe(false);
   });
 
-  it('still loads the variant itself', () => {
-    const bundle = i18n.getResourceBundle('es-MX', 'translation') as Record<string, string>;
-    expect(bundle?.[IN_BOTH]).toBe(ES_MX[IN_BOTH]);
-  });
-
-  // Direction one: the fallback fires at all.
-  it('answers a key only Spain defines with the Spanish string', () => {
-    // No `defaultValue` anywhere in this file. Every call site in the app passes
-    // one, which is exactly why this defect was invisible on screen: a key that
-    // resolves and a key that fails render the same English text. Without a
-    // default, a failed lookup returns the key itself and the two outcomes differ.
-    expect(i18n.t(ONLY_IN_ES, { lng: 'es-MX' })).toBe(ES[ONLY_IN_ES]);
-    expect(i18n.t(ONLY_IN_ES, { lng: 'es-MX' })).not.toBe(EN[ONLY_IN_ES]);
-  });
-
-  // Direction two: the fallback is a fallback and not a replacement. This is the
-  // half that catches a chain wired backwards, which would quietly overwrite
-  // deliberate Mexican wording with peninsular Spanish while everything stayed
-  // green - the variants exist precisely because a quantity surveyor in Mexico
-  // City does not call it a `certificacion de obra`.
-  it('keeps the Mexican wording for a key both files define', () => {
-    expect(i18n.t(IN_BOTH, { lng: 'es-MX' })).toBe(ES_MX[IN_BOTH]);
-    expect(i18n.t(IN_BOTH, { lng: 'es-MX' })).not.toBe(ES[IN_BOTH]);
-  });
-
-  it('has a probe that could tell the two apart in the first place', () => {
-    // Guards the test itself: if these ever became equal the direction-two
-    // assertion above would pass for the wrong reason.
-    expect(ES[IN_BOTH]).not.toBe(ES_MX[IN_BOTH]);
-    expect(ES[ONLY_IN_ES]).not.toBe(EN[ONLY_IN_ES]);
-  });
-
-  it('asks for no second chunk when the base is the bundled English one', async () => {
-    // en-US derives base `en`, which is seeded into `loadedLocales` and ships in
-    // the main bundle. Nothing extra should be fetched for it. Named here so the
-    // `'en'` seed cannot be dropped later without a test going red.
+  it('answers the regional English variants with the bundled English and loads no chunk', async () => {
+    // en-US used to exercise the "base is the bundled English" branch: base
+    // `en` is seeded into `loadedLocales` and ships in the main bundle, so
+    // nothing extra was fetched. The variant is hidden now, so the refusal
+    // branch answers first — and the store must look exactly as it did: the
+    // bundled English untouched, no en-US chunk. matchSupportedLanguage
+    // answers 'en-US' with 'en': the regional entry is gone from the offered
+    // set, so the base-language match is what answers, which is precisely the
+    // "en-GB and en-US map to en" behaviour the rollout promised. Named here
+    // so the `'en'` seed cannot be dropped later without a test going red.
     await expect(loadLocaleResource('en-US')).resolves.toBeUndefined();
+    expect(matchSupportedLanguage('en-US')).toBe('en');
+    expect(isLocaleLoaded('en-US')).toBe(false);
     const bundle = i18n.getResourceBundle('en', 'translation') as Record<string, string>;
-    expect(bundle?.[IN_BOTH]).toBe(EN[IN_BOTH]);
+    expect(bundle?.[PROBE_KEY]).toBe(EN[PROBE_KEY]);
+  });
+
+  it('still resolves the region of an offered language to that language', () => {
+    // The full-code-first lookup the file was written around is unchanged;
+    // it just answers into the allowlist now. hi-IN is a Hindi reader, not a
+    // failed lookup — and every English region falls to the unqualified entry
+    // while en-GB is hidden, day-first rule deliberately inert.
+    expect(matchSupportedLanguage('hi-IN')).toBe('hi');
+    expect(matchSupportedLanguage('ur-PK')).toBe('ur');
+    expect(matchSupportedLanguage('bn-BD')).toBe('bn');
+    expect(matchSupportedLanguage('en-GB')).toBe('en');
+    expect(matchSupportedLanguage('en-IN')).toBe('en');
   });
 });

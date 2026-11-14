@@ -165,14 +165,14 @@ Construction cost estimation software is expensive, closed-source, and locked to
 |-------------|-------------|
 | **Free forever** | AGPL-3.0 license. No subscriptions, no per-seat fees, no vendor lock-in. |
 | **Your data, your server** | Self-hosted. Everything runs on your machine - nothing leaves your network. |
-| **44 languages** | Full UI translation: English, German, French, Spanish, Portuguese, Russian, Chinese, Arabic, Hindi, Japanese, Korean, and 33 more. |
+| **4 languages** | Full UI translation: English, Hindi, Bengali, Urdu — the interface India reads, with Urdu rendered right to left. |
 | **30+ regional standards** | DIN 276, NRM 1/2, CSI MasterFormat, GAEB, ГЭСН, DPGF, GB/T 50500, CPWD, ÖNORM, Birim Fiyat, Sekisan, SINAPI, and more. |
 | **AI-powered** | Connect any LLM provider (Anthropic, OpenAI, Gemini, Mistral, Groq, DeepSeek) for smart estimation. |
 | **120,000+ cost items** | Nine cost bases covering 40+ markets - global CWICR plus eight national bases (China, Turkey, Brazil, Spain, Italy, Greece, Vietnam, Indonesia). |
 
 ### The whole platform in your language
 
-The entire UI ships in **44 languages**, including full right-to-left support for Arabic, Urdu, Persian and Hebrew. Switch language from any screen and every label, message and report follows.
+The entire UI ships in **4 languages** (English, Hindi, Bengali, Urdu), with full right-to-left support for Urdu. The other 41 bundles stay in the tree behind the `ENABLED_LOCALES` allowlist, tested and ready to re-enable. Switch language from any screen and every label, message and report follows.
 
 <p align="center">
 🇬🇧 English &nbsp;·&nbsp; 🇩🇪 Deutsch &nbsp;·&nbsp; 🇫🇷 Français &nbsp;·&nbsp; 🇪🇸 Español &nbsp;·&nbsp; 🇲🇽 Español (MX) &nbsp;·&nbsp; 🇨🇱 Español (CL) &nbsp;·&nbsp; 🇨🇴 Español (CO) &nbsp;·&nbsp; 🇵🇹 Português &nbsp;·&nbsp; 🇧🇷 Português (BR) &nbsp;·&nbsp; 🇷🇺 Русский &nbsp;·&nbsp; 🇨🇳 简体中文 &nbsp;·&nbsp; 🇸🇦 العربية &nbsp;·&nbsp; 🇮🇳 हिन्दी &nbsp;·&nbsp; 🇹🇷 Türkçe &nbsp;·&nbsp; 🇮🇹 Italiano &nbsp;·&nbsp; 🇳🇱 Nederlands &nbsp;·&nbsp; 🇵🇱 Polski &nbsp;·&nbsp; 🇨🇿 Čeština &nbsp;·&nbsp; 🇯🇵 日本語 &nbsp;·&nbsp; 🇰🇷 한국어 &nbsp;·&nbsp; 🇸🇪 Svenska &nbsp;·&nbsp; 🇳🇴 Norsk &nbsp;·&nbsp; 🇩🇰 Dansk &nbsp;·&nbsp; 🇫🇮 Suomi &nbsp;·&nbsp; 🇧🇬 Български &nbsp;·&nbsp; 🇭🇷 Hrvatski &nbsp;·&nbsp; 🇭🇺 Magyar &nbsp;·&nbsp; 🇮🇩 Bahasa Indonesia &nbsp;·&nbsp; 🇷🇴 Română &nbsp;·&nbsp; 🇹🇭 ไทย &nbsp;·&nbsp; 🇻🇳 Tiếng Việt &nbsp;·&nbsp; 🇺🇦 Українська &nbsp;·&nbsp; 🇬🇷 Ελληνικά &nbsp;·&nbsp; 🇰🇬 Кыргызча &nbsp;·&nbsp; 🇰🇿 Қазақша &nbsp;·&nbsp; 🇧🇩 বাংলা &nbsp;·&nbsp; 🇪🇪 Eesti &nbsp;·&nbsp; 🇵🇭 Filipino &nbsp;·&nbsp; 🇵🇰 اردو &nbsp;·&nbsp; 🇮🇷 فارسی &nbsp;·&nbsp; 🇮🇱 עברית &nbsp;·&nbsp; 🇺🇿 Oʻzbekcha &nbsp;·&nbsp; 🇲🇳 Монгол
@@ -352,7 +352,7 @@ The platform also includes 3D globe visualization (Cesium), property development
 
 ### <picture><source media="(prefers-color-scheme: dark)" srcset="docs/readme-icons/rocket-dark.svg"><img src="docs/readme-icons/rocket-light.svg" width="14" align="center" alt=""></picture> Guided Onboarding
 
-1. **Choose language** - Select from 44 languages. The entire UI switches instantly
+1. **Choose language** - Select from the offered languages (English, Hindi, Bengali, Urdu). The entire UI switches instantly
 2. **Select region** - Determines default cost database, currency, and classification standard
 3. **Load cost database** - One-click import of CWICR pricing data for your region (120,000+ items)
 4. **Import resource catalog** - Materials, labor, equipment, and pre-built assemblies
@@ -499,13 +499,13 @@ Three demo accounts are created on first start. On a local install, sign in to a
 | Layer | Technology | Purpose |
 |-------|-----------|---------|
 | Backend | Python 3.12+ / FastAPI | Async API, Pydantic v2 validation, modular architecture |
-| Frontend | React 18 / TypeScript / Vite | SPA with code splitting, 44 languages |
+| Frontend | React 18 / TypeScript / Vite | SPA with code splitting, 4 languages |
 | Database | PostgreSQL 16+ (only) | OLTP with JSON columns; an embedded PostgreSQL starts automatically for local dev, so there is no Docker, no separate database, and nothing to configure |
 | UI | Tailwind CSS / AG Grid | Professional data grid, responsive design, dark mode |
 | AI | Any LLM via REST API | Anthropic, OpenAI, Gemini, Mistral, Groq, DeepSeek |
 | Vector Search | LanceDB (embedded) / Qdrant | Semantic cost item search, 384d or 3072d embeddings |
 | CAD/BIM | [DDC Converters 2.0](https://github.com/datadrivenconstruction) | RVT, IFC, DWG → structured quantities |
-| i18n | i18next | 44 languages, full RTL support |
+| i18n | i18next | 4 languages offered, full RTL support |
 
 ## Architecture
 
