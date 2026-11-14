@@ -15,61 +15,82 @@
  * the locale shipped unchecked anyway. This test exists because a comment
  * recording a rule cannot enforce it.
  *
- * Both directions matter, so both are asserted. A language added to
- * ``SUPPORTED_LANGUAGES`` and forgotten here fails the first assertion; a
- * locale added here that nobody can select fails the second. Writing them as
- * exact set differences rather than as counts is deliberate: a count passes
- * again the moment two mistakes cancel out.
+ * Since the India rollout the offered set is the ``ENABLED_LOCALES`` allowlist
+ * in ``i18n.ts`` — English plus the Indian languages whose bundles are
+ * complete — while the aggregator still imports every locale file on disk.
+ * That is deliberate and it is the ``mn`` precedent grown to full size: a
+ * bundle nobody can select still sits in the tree, still syncs from upstream,
+ * and still gets whatever test coverage the aggregator gives it, so the file
+ * does not rot while it waits. Hiding a language is one code removed from the
+ * allowlist, never an import to delete.
+ *
+ * Three assertions, each guarding a direction of the drift this test exists
+ * for:
+ *
+ * - the offered set is exactly the allowlist, so a registry entry that nobody
+ *   can explain and nobody enabled cannot sneak into the picker;
+ * - no offered language is missing from the aggregator, so a newly enabled
+ *   language cannot ship invisible to every locale test (the Kyrgyz failure);
+ * - the aggregator misses no full locale file on disk except the two English
+ *   overlays, so a file added under ``locales/`` cannot sit unimported and
+ *   untested (the Greek and Ukrainian failure) — now checked against the
+ *   directory itself rather than against the offered list, because with 39
+ *   hidden-but-kept locales the old "nothing unselectable may be aggregated"
+ *   direction would fail on every file the India decision deliberately keeps.
+ *
+ * Writing them as exact set comparisons rather than as counts is deliberate: a
+ * count passes again the moment two mistakes cancel out.
  */
+
+import { readdirSync } from 'node:fs';
+import { resolve } from 'node:path';
 
 import { describe, expect, it } from 'vitest';
 
-import { SUPPORTED_LANGUAGES } from '../i18n';
+import { ENABLED_LOCALES, SUPPORTED_LANGUAGES } from '../i18n';
 import { fallbackResources } from '../i18n-fallbacks';
 
 /**
- * Offered, but deliberately not aggregated.
+ * Overrides-only overlays rather than full locales, so a test that iterates
+ * the object would compare a deliberate 9 key and ~1.6k key file against a
+ * ~35k key one and report a gap that is the whole point of those files.
  *
- * ``en-GB`` and ``en-US`` are overrides-only overlays rather than full
- * locales, so a test that iterates the object would compare a deliberate 9 key
- * and ~1.6k key file against a ~35k key one and report a gap that is the whole
- * point of those files.
+ * Neither is offered today — ``ENABLED_LOCALES`` answers every English region
+ * with plain ``en`` — but they stay on disk, and they stay out of the
+ * aggregator on the old grounds: overlay size is deliberately not comparable.
  */
-const OFFERED_BUT_NOT_AGGREGATED = ['en-GB', 'en-US'];
-
-/**
- * Aggregated, but deliberately not offered.
- *
- * ``mn`` is kept here so the Mongolian file holds whatever coverage it has
- * while it waits for a native-speaker pass. It is the only locale in that
- * state; ``hu`` is not aggregated because it is not offered and has no
- * coverage to keep yet.
- */
-const AGGREGATED_BUT_NOT_OFFERED = ['mn'];
+const OVERLAY_FILES = ['en-GB.ts', 'en-US.ts'];
 
 describe('the offered languages and the fallback aggregator', () => {
   const offered = new Set(SUPPORTED_LANGUAGES.map((language) => language.code));
   const aggregated = new Set(Object.keys(fallbackResources));
 
-  it('leaves no offered language out of the aggregator except the named overlay', () => {
+  it('offers exactly the allowlist, nothing more and nothing less', () => {
+    expect([...offered].sort()).toEqual([...ENABLED_LOCALES].sort());
+  });
+
+  it('leaves no offered language out of the aggregator', () => {
     const missing = [...offered].filter((code) => !aggregated.has(code)).sort();
 
-    expect(missing).toEqual([...OFFERED_BUT_NOT_AGGREGATED].sort());
+    expect(missing).toEqual([]);
   });
 
-  it('aggregates nothing a user cannot select except the one waiting on review', () => {
-    const extra = [...aggregated].filter((code) => !offered.has(code)).sort();
+  it('aggregates every full locale file on disk except the two overlays', () => {
+    const dir = resolve(__dirname, '../locales');
+    const onDisk = readdirSync(dir)
+      .filter((name) => name.endsWith('.ts') && !OVERLAY_FILES.includes(name))
+      .map((name) => name.replace(/\.ts$/, ''))
+      .sort();
 
-    expect(extra).toEqual([...AGGREGATED_BUT_NOT_OFFERED].sort());
+    expect([...aggregated].sort()).toEqual(onDisk);
   });
 
-  it('names each exception rather than merely counting them', () => {
-    // The counts are the weakest form of this check and are asserted only to
-    // catch a rewrite that empties one of the lists above and leaves the two
-    // set comparisons trivially true.
-    expect(OFFERED_BUT_NOT_AGGREGATED).toHaveLength(2);
-    expect(AGGREGATED_BUT_NOT_OFFERED).toHaveLength(1);
-    expect(offered.size).toBeGreaterThan(40);
-    expect(aggregated.size).toBeGreaterThan(40);
+  it('names the shape of the set rather than merely trusting it', () => {
+    // The counts are the weakest form of these checks and are asserted only to
+    // catch a rewrite that empties one of the comparisons above and leaves
+    // them trivially true. Four offered is the India decision itself; 43
+    // aggregated is every file under locales/ minus the two overlays.
+    expect(offered.size).toBe(4);
+    expect(aggregated.size).toBe(43);
   });
 });

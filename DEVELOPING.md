@@ -199,15 +199,16 @@ Do not open or hand-edit the locale bundles; they run 4 to 9 MB each. Use `scrip
 
 Counting the languages is worth doing carefully, because the obvious numbers disagree and every
 one of them is correct about something. There are 45 locale files in `frontend/src/app/locales/`,
-44 entries in the `SUPPORTED_LANGUAGES` list in `frontend/src/app/i18n.ts`, and 38 distinct
-languages, because four of those entries are regional variants of Spanish, Portuguese or English
-rather than languages of their own. The gap between the first two numbers is one file that exists
-and is deliberately not offered: `mn` is held back until a native speaker has read it, after five
-invented roots passed every gate in it, and the comment beside its place in the list says so. So
-count files when you are asking about coverage, count `SUPPORTED_LANGUAGES` when you are asking
-what a user can select, and fold the regional variants together when you are asking how many
-languages the product speaks. If you inherit a single number for this, it is wrong for two of the
-three questions.
+44 entries in the full registry (`ALL_LANGUAGES`) in `frontend/src/app/i18n.ts`, and 4 languages
+offered in the picker: the `ENABLED_LOCALES` allowlist in the same file filters the registry to
+English, Hindi, Bengali and Urdu, because the product is for India. A file on disk is coverage, a
+registry entry is readiness, and the allowlist is what a user can select — the gap between the
+first two and the third is now large by design, and the files behind it stay imported, tested and
+ready to re-enable (`mn` was held back the same way before the rollout, for the native-speaker
+reason recorded beside its place in the registry). So count files when you are asking about
+coverage, count `ENABLED_LOCALES` when you are asking what a user can select, and count
+`ALL_LANGUAGES` when you are asking how many languages the tree can speak. If you inherit a single
+number for this, it is wrong for two of the three questions.
 
 Do not inherit these three from this paragraph either. It carried the counts from two releases
 back for long enough to be wrong about both of them, and it also still said Uzbek was commented
@@ -351,8 +352,11 @@ test and not by the loader.
 Beyond the pack, a market adaptation typically touches:
 
 The interface language, in `frontend/src/app/locales/`. Adding a file is not enough, the language
-must also be added to `SUPPORTED_LANGUAGES` in `frontend/src/app/i18n.ts` or it will not appear
-in the picker, which is precisely what `mn` demonstrates today.
+must also be added to `ENABLED_LOCALES` in `frontend/src/app/i18n.ts` or it will not appear in
+the picker — the allowlist is the one place visibility is decided, and it is exactly what held
+`mn` back and what the India rollout holds every non-Indian language behind. The file also needs
+an import in `frontend/src/app/i18n-fallbacks.ts` (the aggregator test reads the directory and
+fails on any file that is missing there).
 
 Backend validation messages, in `backend/app/core/validation/messages/`. Drop in a `<locale>.json`
 and it is picked up by the directory glob. If you skip this, users of that language get English

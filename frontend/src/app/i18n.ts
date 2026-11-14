@@ -4,7 +4,57 @@ import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import { useTranslation as useI18nTranslation } from 'react-i18next';
 
-export const SUPPORTED_LANGUAGES = [
+/**
+ * The languages offered to the people using the product.
+ *
+ * Vastukar is built for India, so the visible set is English plus the Indian
+ * languages whose bundles are complete. This allowlist is the one place that
+ * decides visibility: the language picker, the settings and profile language
+ * options, the login/register/about statistics and the pack-locale
+ * normalisation all read `SUPPORTED_LANGUAGES` below, and that list is
+ * filtered through this one — there is no second list to keep in step, and no
+ * per-component gate to forget.
+ *
+ * Everything else stays exactly where it is. The full registry in
+ * `ALL_LANGUAGES` below keeps all 44 entries, every locale file stays on disk,
+ * the fallback aggregator keeps importing every file, and the locale parity
+ * tests keep checking all of them, so a bundle does not rot while it is not
+ * offered and a future upstream sync lands the same way it always did.
+ * Re-enabling a language is one code in this array, never a file to restore.
+ *
+ * A saved preference in a hidden language falls back to English through the
+ * validation that already existed: `resolveInitialLanguage` and
+ * `accountLanguageToApply` only accept codes in `SUPPORTED_LANGUAGES`, so a
+ * stored `de` finds no entry and the app resolves to English, and
+ * `matchSupportedLanguage` answers `en-GB` and `en-US` with plain `en` for the
+ * same reason — the regional-variant entries are no longer in the offered set.
+ *
+ * Regional English: a product for India reads `en-IN` as plain `en`. The
+ * day-first rule in `ENGLISH_DAY_FIRST_REGIONS` (which lists `IN`) would have
+ * steered an `en-IN` browser at `en-GB`, so it deliberately stops matching
+ * while `en-GB` is not offered: the region check inside
+ * `matchSupportedLanguage` requires `en-GB` to be in the offered set, and it
+ * is not, so every English region resolves to `en`.
+ */
+export const ENABLED_LOCALES: readonly string[] = [
+  'en', // English (International)
+  'hi', // हिन्दी Hindi
+  'bn', // বাংলা Bengali
+  'ur', // اردو Urdu
+];
+
+/**
+ * The full language registry, one entry per bundle the tree carries.
+ *
+ * Nothing reads this directly; `SUPPORTED_LANGUAGES` below is the offered
+ * subset every consumer — picker, settings, profile, statistics, pack
+ * normalisation, account sync — already imports, which is why the allowlist
+ * above is the single point of registration. An entry leaves this array only
+ * when its locale file leaves the tree; hiding a language is an
+ * `ENABLED_LOCALES` decision, exactly how Mongolian was held back before
+ * (its comment below survives from that decision).
+ */
+const ALL_LANGUAGES = [
   // Plain English names no region, and the two entries under it are how a
   // reader says which one they mean rather than working out what unqualified
   // `English` is. It used to fly a Union Jack over a `gb` country, which said
@@ -96,6 +146,8 @@ export const SUPPORTED_LANGUAGES = [
   // below.
   { code: 'uz', name: 'Oʻzbekcha', english: 'Uzbek', flag: '🇺🇿', country: 'uz' },
 ];
+
+export const SUPPORTED_LANGUAGES = ALL_LANGUAGES.filter((l) => ENABLED_LOCALES.includes(l.code));
 
 export function getLanguageByCode(code: string): (typeof SUPPORTED_LANGUAGES)[number] {
   return SUPPORTED_LANGUAGES.find((l) => l.code === code) ?? SUPPORTED_LANGUAGES[0]!;
@@ -513,8 +565,10 @@ export function resolveInitialLanguage(): string {
  *
  * Read from the ``dir`` field on the ``SUPPORTED_LANGUAGES`` entry rather than
  * from a list of codes kept somewhere else, so a fifth right-to-left language
- * is carried by the entry that adds it. Four languages we offer are written
- * right to left today: ar, fa, he and ur.
+ * is carried by the entry that adds it. Of the languages offered today only
+ * Urdu is written right to left; Arabic, Persian and Hebrew keep their ``dir``
+ * fields on their (hidden) registry entries so the field is carried by the
+ * entry that would need it the day they are re-enabled.
  */
 export function resolveDirection(code: string): 'rtl' | 'ltr' {
   const lang = getLanguageByCode(code);

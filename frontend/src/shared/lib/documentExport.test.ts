@@ -50,7 +50,10 @@ describe('document languages', () => {
     expect(documentLocaleName('en')).toBe('English');
     expect(documentLocaleName('de')).toBe('Deutsch');
     expect(documentLocaleName('tr')).toBe('Türkçe');
-    expect(documentLocaleName('zh')).toBe('简体中文');
+    // zh is hidden behind the allowlist, so its name comes from the runtime's
+    // Intl.DisplayNames rather than the picker entry — still the language's
+    // own name, never the bare code, which is what this test is for.
+    expect(documentLocaleName('zh')).toBe('中文');
     expect(documentLocaleName('he')).toBe('עברית');
   });
 
@@ -68,13 +71,20 @@ describe('document languages', () => {
   });
 
   it('starts on the interface language when the document exists in it, else English', () => {
-    expect(defaultDocumentLocale(REGISTER_DOCUMENT_LOCALES, 'de-AT')).toBe('de');
-    expect(defaultDocumentLocale(REGISTER_DOCUMENT_LOCALES, 'TR')).toBe('tr');
+    // The menu follows the offer now: a German or Turkish reader on the India
+    // build runs an English interface, and the menu answers with the English
+    // document the server would have produced anyway. The offered languages
+    // answer with themselves, region and case stripped.
+    expect(defaultDocumentLocale(REGISTER_DOCUMENT_LOCALES, 'de-AT')).toBe('en');
+    expect(defaultDocumentLocale(REGISTER_DOCUMENT_LOCALES, 'TR')).toBe('en');
+    expect(defaultDocumentLocale(REGISTER_DOCUMENT_LOCALES, 'ur-PK')).toBe('ur');
+    expect(defaultDocumentLocale(REGISTER_DOCUMENT_LOCALES, 'hi-IN')).toBe('hi');
     expect(defaultDocumentLocale(REGISTER_DOCUMENT_LOCALES, 'bn')).toBe('en');
     expect(defaultDocumentLocale(REGISTER_DOCUMENT_LOCALES, 'sw')).toBe('en');
     expect(defaultDocumentLocale(REGISTER_DOCUMENT_LOCALES, null)).toBe('en');
-    expect(defaultDocumentLocale(PURCHASING_DOCUMENT_LOCALES, 'ja')).toBe('ja');
+    expect(defaultDocumentLocale(PURCHASING_DOCUMENT_LOCALES, 'ja')).toBe('en');
     expect(defaultDocumentLocale(PURCHASING_DOCUMENT_LOCALES, 'bn')).toBe('en');
-    expect(defaultDocumentLocale(PURCHASING_DOCUMENT_LOCALES, 'ar-EG')).toBe('ar');
+    expect(defaultDocumentLocale(PURCHASING_DOCUMENT_LOCALES, 'ar-EG')).toBe('en');
+    expect(defaultDocumentLocale(PURCHASING_DOCUMENT_LOCALES, 'ur-PK')).toBe('ur');
   });
 });

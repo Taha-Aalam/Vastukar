@@ -81,10 +81,16 @@ describe('homeMarketForLanguage', () => {
 
   it('does not hand a Spanish-speaking market the cases written for Spain', () => {
     // The sharp one. Spain's cases implement Spanish public procurement,
-    // FIEBDC-3 and Spanish site paperwork. Leading with them for a Mexican,
-    // Chilean or Colombian reader would name a law that does not apply where
-    // they work, which is worse than showing them nothing in particular.
-    expect(homeMarketForLanguage('es', MARKETS)).toBe('ES');
+    // FIEBDC-3 and Spanish site paperwork. While Spanish was offered, this
+    // protected a Mexican, Chilean or Colombian reader from being led with
+    // them by their base language. Spanish is hidden behind the allowlist
+    // now, and the protection got stricter: a bare hidden code declares no
+    // country and carries no region subtag, so it names no market at all and
+    // Spain's cases are unreachable by language. The variant path still
+    // guards by subtag, and the day Spanish re-enters the allowlist the
+    // first assertion returns to `toBe('ES')` — this shape is what a
+    // regression would take.
+    expect(homeMarketForLanguage('es', MARKETS)).toBeNull();
     for (const code of ['es-MX', 'es-CL', 'es-CO']) {
       expect(homeMarketForLanguage(code, MARKETS), code).not.toBe('ES');
     }

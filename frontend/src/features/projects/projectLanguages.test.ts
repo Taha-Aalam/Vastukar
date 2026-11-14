@@ -15,9 +15,16 @@ import { PROJECT_LANGUAGES } from './projectLanguages';
 const BACKEND_LOCALES = join(dirname(fileURLToPath(import.meta.url)), '../../../../backend/locales');
 
 describe('project languages', () => {
-  it('offers Ukrainian under its own code', () => {
-    const uk = PROJECT_LANGUAGES.find((l) => l.value === 'uk');
-    expect(uk?.label).toBe('Українська');
+  it('offers exactly the interface allowlist, and hides the rest', () => {
+    // Ukrainian was the case that was reported: offered in the header,
+    // missing from the project form, so the project went out as "other". The
+    // form now derives from SUPPORTED_LANGUAGES like every other picker, so
+    // a language cannot be offered in one and missing in the other — and the
+    // India rollout narrowed both to the ENABLED_LOCALES allowlist. Ukrainian
+    // keeps its locale file and its backend locale; the day it re-enters the
+    // allowlist it is back here under Українська with no further change.
+    expect(PROJECT_LANGUAGES.map((l) => l.value)).toEqual(['en', 'hi', 'bn', 'ur']);
+    expect(SUPPORTED_LANGUAGES.find((l) => l.code === 'uk')).toBeUndefined();
   });
 
   it('offers every base language of the interface picker', () => {
@@ -35,10 +42,14 @@ describe('project languages', () => {
     expect(missing).toEqual([]);
   });
 
-  it('keeps the languages the form offered before', () => {
-    const before = ['en', 'de', 'fr', 'es', 'it', 'pt', 'nl', 'pl', 'cs', 'hr', 'hu', 'ru', 'tr', 'ar', 'zh', 'ja',
-      'ko', 'hi', 'th', 'vi', 'id', 'sv', 'no', 'da', 'fi'];
-    const offered = new Set(PROJECT_LANGUAGES.map((l) => l.value));
-    expect(before.filter((c) => !offered.has(c))).toEqual([]);
+  it('names the offered languages the way their readers name them', () => {
+    // The pre-rollout form offered 25 base languages; the allowlist narrows
+    // that to four. The labels are the registry's own names, so a project
+    // language never reads as a bare code.
+    const labels = new Map(PROJECT_LANGUAGES.map((l) => [l.value, l.label]));
+    expect(labels.get('en')).toBe('English');
+    expect(labels.get('hi')).toBe('हिन्दी');
+    expect(labels.get('bn')).toBe('বাংলা');
+    expect(labels.get('ur')).toBe('اردو');
   });
 });

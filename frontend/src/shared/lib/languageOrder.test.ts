@@ -9,8 +9,15 @@ describe('sortLanguagesByName', () => {
       expect(names[i - 1]!.localeCompare(names[i]!, 'en', { sensitivity: 'base' })).toBeLessThanOrEqual(0);
     }
     expect(names).toHaveLength(SUPPORTED_LANGUAGES.length);
-    expect(names.indexOf('Deutsch')).toBeLessThan(names.indexOf('English (International)'));
-    expect(names.indexOf('Svenska')).toBeLessThan(names.indexOf('Русский'));
+    // The offered set is the India allowlist; the unqualified English entry
+    // leads, and every other name is the name a reader of that language
+    // writes for it. The old cross-name pins (Deutsch, Svenska, Русский)
+    // belonged to languages the allowlist hides; the ordering behaviour they
+    // checked is the loop above, which is what any re-enabled language joins.
+    expect(names[0]).toBe('English (International)');
+    for (const name of ['हिन्दी', 'বাংলা', 'اردو']) {
+      expect(names, name).toContain(name);
+    }
   });
 
   it('leaves the registry order (and its fallback at index 0) untouched', () => {
