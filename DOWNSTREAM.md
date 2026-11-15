@@ -793,6 +793,9 @@ menus).
 Files changed in this step:
 
 - DEVELOPING.md
+- docs/india-rollout/screenshots/phase1-language-picker.png
+- docs/india-rollout/screenshots/phase1-login-4-languages.png
+- docs/india-rollout/screenshots/phase1-login-hindi.png
 - README.md
 - docs/architecture/OVERVIEW.md
 - frontend/index.html
