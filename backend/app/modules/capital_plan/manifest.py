@@ -12,7 +12,7 @@ manifest = ModuleManifest(
         "Rank projects against a limited annual budget: yearly funding envelopes, "
         "phased project spend, what-if scenarios and greedy funding suggestions"
     ),
-    author="OpenConstructionERP Core Team",
+    author="Vastukar",
     category="business",
     depends=["oe_users", "oe_projects", "oe_portfolio"],
     auto_install=True,

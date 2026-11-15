@@ -14,7 +14,7 @@ manifest = ModuleManifest(
         "which runs server-side filter specs against registered entities and stores no column "
         "layout; this one keeps presentation state for any table, registered or not."
     ),
-    author="OpenConstructionERP Core Team",
+    author="Vastukar",
     category="core",
     depends=["oe_users"],
     auto_install=True,

@@ -15,7 +15,7 @@ manifest = ModuleManifest(
         "journal (CSV, Excel) or OECD SAF-T. Account and tax-code mapping per company from country "
         "templates, idempotent pushes with a sync log, retry and validation."
     ),
-    author="OpenConstructionERP Core Team",
+    author="Vastukar",
     category="business",
     depends=["oe_projects", "oe_finance"],
     optional_depends=["oe_contacts", "oe_guarantees", "oe_notifications", "oe_subcontractors", "oe_procurement"],

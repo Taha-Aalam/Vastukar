@@ -1,7 +1,7 @@
 {
   "about.book_title": {
-    "en_value": "Data-Driven Construction",
-    "note": "book/product title, identical in en/ru/kk (kk locale addition)",
+    "en_value": "Vastukar",
+    "note": "our own product name, never translated - the About page book card now carries the Vastukar name after the round-2 UI rebrand (was the upstream book title \"Data-Driven Construction\", identical in en/ru/kk)",
     "reason_category": "product_name"
   },
   "about.third_party_size": {

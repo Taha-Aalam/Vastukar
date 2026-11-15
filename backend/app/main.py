@@ -3608,7 +3608,7 @@ def create_app() -> FastAPI:
         from app.core.update_check_policy import VERSION_CHECK_TTL_S, update_check_disabled
 
         current = settings.app_version
-        repo = "datadrivenconstruction/Vastukar"
+        repo = "Taha-Aalam/Vastukar"
         cache_key = "_version_check_cache"
 
         # Turned off by the user from the desktop launcher's notice or by an

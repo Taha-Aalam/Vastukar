@@ -13,7 +13,7 @@ manifest = ModuleManifest(
         "turn approved timesheets into pay lines by country overtime and allowance rules, lock "
         "against edits, export CSV, Excel, LODAS or JSON and post labour cost with burden."
     ),
-    author="OpenConstructionERP Core Team",
+    author="Vastukar",
     category="core",
     depends=["oe_projects", "oe_fieldreports", "oe_resources"],
     optional_depends=["oe_field_time", "oe_costmodel", "oe_notifications", "oe_certified_payroll"],

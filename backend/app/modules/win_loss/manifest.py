@@ -12,7 +12,7 @@ manifest = ModuleManifest(
         "Record how each bid we submitted ended: won, lost or withdrawn, the winning and second price, "
         "the number of competitors, the money left on the table and the hit rate by client, trade and size"
     ),
-    author="OpenConstructionERP Core Team",
+    author="Vastukar",
     category="business",
     depends=["oe_users"],
     auto_install=True,

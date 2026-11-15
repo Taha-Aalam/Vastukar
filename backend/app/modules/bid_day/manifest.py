@@ -16,7 +16,7 @@ manifest = ModuleManifest(
         "its reason, markups are set on the board, and the submitted bid is frozen as an immutable snapshot that "
         "exports to PDF and Excel and can be pushed back into the estimate."
     ),
-    author="OpenConstructionERP Core Team",
+    author="Vastukar",
     category="business",
     depends=["oe_projects", "oe_tendering", "oe_bid_management"],
     optional_depends=["oe_fx", "oe_boq", "oe_collaboration_locks"],

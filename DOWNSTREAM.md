@@ -456,3 +456,265 @@ Files changed in this step:
 - scripts/i18n_leak_allowlist.json
 - scripts/i18n_leak_baseline.json
 - scripts/i18n_leak_cluster_snapshot.json
+
+### Completion pass — remaining user-visible traces (same PR, later pass)
+
+Finishes the round-2 sweep: the module manifest `author` field (rendered on
+the Modules page by ModulesPage.tsx), the residual locale keys (costs import
+attribution, About services/book/founder-bio copy, the positioning trio
+login.hero_desc / dashboard.welcome_sub / support.action_share_body), the
+About page's remaining upstream links, the upstream brand images, and the
+sidebar footer's version tooltip.
+
+Files changed in this step:
+
+- backend/app/core/self_upgrade.py (RELEASES_URL follows the Vastukar repo - the previous mixed slug datadrivenconstruction/Vastukar pointed at a nonexistent repo)
+- frontend/src/app/__tests__/everyBrandAssetExists.test.ts
+- frontend/src/app/layout/Sidebar.tsx
+- frontend/public/brand/artem-boiko-avatar.png (DELETED - upstream founder avatar, unreferenced)
+- frontend/public/brand/ddc-book.png (DELETED - replaced by vastukar-book.png)
+- frontend/public/brand/ddc-logo.png (DELETED - replaced by vastukar-logo.png)
+- frontend/public/brand/ddc-logo.webp (DELETED - replaced by vastukar-logo.webp)
+- frontend/public/brand/vastukar-book.png (ADDED)
+- frontend/public/brand/vastukar-logo.png (ADDED)
+- frontend/public/brand/vastukar-logo.webp (ADDED)
+- scripts/i18n_leak_allowlist.json (about.book_title entry follows the rebranded value)
+
+Module manifests - the `author="OpenConstructionERP Core Team"` field that the
+Modules page renders was set to `author="Vastukar"` in all of them:
+
+
+- backend/app/modules/accommodation/manifest.py
+- backend/app/modules/accounting_sync/manifest.py
+- backend/app/modules/admin/manifest.py
+- backend/app/modules/ai/manifest.py
+- backend/app/modules/ai_agents/manifest.py
+- backend/app/modules/ai_estimator/manifest.py
+- backend/app/modules/allowances/manifest.py
+- backend/app/modules/approval_routes/manifest.py
+- backend/app/modules/architecture_map/manifest.py
+- backend/app/modules/asia_pac_pack/manifest.py
+- backend/app/modules/assemblies/manifest.py
+- backend/app/modules/assets/manifest.py
+- backend/app/modules/authority_submission/manifest.py
+- backend/app/modules/backup/manifest.py
+- backend/app/modules/bcf/manifest.py
+- backend/app/modules/bi_feed/manifest.py
+- backend/app/modules/bid_day/manifest.py
+- backend/app/modules/bid_management/manifest.py
+- backend/app/modules/bid_no_bid/manifest.py
+- backend/app/modules/bim_hub/manifest.py
+- backend/app/modules/bim_requirements/manifest.py
+- backend/app/modules/bimlv/manifest.py
+- backend/app/modules/boq/manifest.py
+- backend/app/modules/cad/manifest.py
+- backend/app/modules/capital_plan/manifest.py
+- backend/app/modules/carbon/manifest.py
+- backend/app/modules/cases/manifest.py
+- backend/app/modules/catalog/manifest.py
+- backend/app/modules/cde/manifest.py
+- backend/app/modules/certified_payroll/manifest.py
+- backend/app/modules/change_intelligence/manifest.py
+- backend/app/modules/changeorders/manifest.py
+- backend/app/modules/china_pack/manifest.py
+- backend/app/modules/claims_evidence/manifest.py
+- backend/app/modules/clash/manifest.py
+- backend/app/modules/clash_ai_triage/manifest.py
+- backend/app/modules/clash_cost_impact/manifest.py
+- backend/app/modules/client_errors/manifest.py
+- backend/app/modules/closeout/manifest.py
+- backend/app/modules/collaboration/manifest.py
+- backend/app/modules/collaboration_locks/manifest.py
+- backend/app/modules/commitment_release/manifest.py
+- backend/app/modules/compliance/manifest.py
+- backend/app/modules/compliance_ai/manifest.py
+- backend/app/modules/compliance_docs/manifest.py
+- backend/app/modules/condition/manifest.py
+- backend/app/modules/connectors/manifest.py
+- backend/app/modules/construction_control/manifest.py
+- backend/app/modules/contacts/manifest.py
+- backend/app/modules/contracts/manifest.py
+- backend/app/modules/coordination_hub/manifest.py
+- backend/app/modules/correspondence/manifest.py
+- backend/app/modules/cost_benchmarks/manifest.py
+- backend/app/modules/cost_explorer/manifest.py
+- backend/app/modules/cost_match/manifest.py
+- backend/app/modules/cost_plan/manifest.py
+- backend/app/modules/cost_recovery/manifest.py
+- backend/app/modules/costmodel/manifest.py
+- backend/app/modules/costs/manifest.py
+- backend/app/modules/credentials/manifest.py
+- backend/app/modules/crm/manifest.py
+- backend/app/modules/cutting/manifest.py
+- backend/app/modules/cvr/manifest.py
+- backend/app/modules/dach_pack/manifest.py
+- backend/app/modules/daily_diary/manifest.py
+- backend/app/modules/dashboard/manifest.py
+- backend/app/modules/dashboards/manifest.py
+- backend/app/modules/deadlines/manifest.py
+- backend/app/modules/defects_liability/manifest.py
+- backend/app/modules/delivery_model/manifest.py
+- backend/app/modules/design_management/manifest.py
+- backend/app/modules/design_options/manifest.py
+- backend/app/modules/dispatch/manifest.py
+- backend/app/modules/doc_assistant/manifest.py
+- backend/app/modules/documents/manifest.py
+- backend/app/modules/dwg_takeoff/manifest.py
+- backend/app/modules/eac/manifest.py
+- backend/app/modules/economics/manifest.py
+- backend/app/modules/einvoice/manifest.py
+- backend/app/modules/einvoice_clearance/manifest.py
+- backend/app/modules/einvoice_eta/manifest.py
+- backend/app/modules/einvoice_ksef/manifest.py
+- backend/app/modules/einvoice_zatca/manifest.py
+- backend/app/modules/engineering_brief/manifest.py
+- backend/app/modules/enterprise_workflows/manifest.py
+- backend/app/modules/equipment/manifest.py
+- backend/app/modules/erp_chat/manifest.py
+- backend/app/modules/esg/manifest.py
+- backend/app/modules/estimate_basis/manifest.py
+- backend/app/modules/estimate_checks/manifest.py
+- backend/app/modules/estimate_rollup/manifest.py
+- backend/app/modules/field_diary/manifest.py
+- backend/app/modules/field_time/manifest.py
+- backend/app/modules/fieldreports/manifest.py
+- backend/app/modules/file_approvals/manifest.py
+- backend/app/modules/file_comments/manifest.py
+- backend/app/modules/file_distribution/manifest.py
+- backend/app/modules/file_favorites/manifest.py
+- backend/app/modules/file_references/manifest.py
+- backend/app/modules/file_saved_views/manifest.py
+- backend/app/modules/file_search/manifest.py
+- backend/app/modules/file_tags/manifest.py
+- backend/app/modules/file_transmittals/manifest.py
+- backend/app/modules/file_trash/manifest.py
+- backend/app/modules/file_versions/manifest.py
+- backend/app/modules/finance/manifest.py
+- backend/app/modules/forms/manifest.py
+- backend/app/modules/formwork/manifest.py
+- backend/app/modules/full_evm/manifest.py
+- backend/app/modules/funding/manifest.py
+- backend/app/modules/fx/manifest.py
+- backend/app/modules/geo_hub/manifest.py
+- backend/app/modules/global_presence/manifest.py
+- backend/app/modules/guarantees/manifest.py
+- backend/app/modules/haul_tickets/manifest.py
+- backend/app/modules/hse_advanced/manifest.py
+- backend/app/modules/hse_frame/manifest.py
+- backend/app/modules/i18n_foundation/manifest.py
+- backend/app/modules/inbound_capture/manifest.py
+- backend/app/modules/inbound_email/manifest.py
+- backend/app/modules/india_pack/manifest.py
+- backend/app/modules/inspections/manifest.py
+- backend/app/modules/integrations/manifest.py
+- backend/app/modules/interface_management/manifest.py
+- backend/app/modules/jobs/manifest.py
+- backend/app/modules/labor_rates/manifest.py
+- backend/app/modules/latam_pack/manifest.py
+- backend/app/modules/leasing/manifest.py
+- backend/app/modules/legal_entities/manifest.py
+- backend/app/modules/lessons_learned/manifest.py
+- backend/app/modules/list_views/manifest.py
+- backend/app/modules/markups/manifest.py
+- backend/app/modules/match/manifest.py
+- backend/app/modules/match_elements/manifest.py
+- backend/app/modules/mcp/manifest.py
+- backend/app/modules/measurement/manifest.py
+- backend/app/modules/measurement_book/manifest.py
+- backend/app/modules/meetings/manifest.py
+- backend/app/modules/methodology/manifest.py
+- backend/app/modules/mexico_pack/manifest.py
+- backend/app/modules/middle_east_pack/manifest.py
+- backend/app/modules/moc/manifest.py
+- backend/app/modules/module_builder/manifest.py
+- backend/app/modules/ncr/manifest.py
+- backend/app/modules/norm_expansion/manifest.py
+- backend/app/modules/notifications/manifest.py
+- backend/app/modules/offers/manifest.py
+- backend/app/modules/onboarding/manifest.py
+- backend/app/modules/opencde_api/manifest.py
+- backend/app/modules/owner_schedule/manifest.py
+- backend/app/modules/payment_clock/manifest.py
+- backend/app/modules/payment_release/manifest.py
+- backend/app/modules/payroll/manifest.py
+- backend/app/modules/permits/manifest.py
+- backend/app/modules/phonelog/manifest.py
+- backend/app/modules/photos/manifest.py
+- backend/app/modules/pipelines/manifest.py
+- backend/app/modules/plant_register/manifest.py
+- backend/app/modules/pointcloud/manifest.py
+- backend/app/modules/portal/manifest.py
+- backend/app/modules/portfolio/manifest.py
+- backend/app/modules/postcalc/manifest.py
+- backend/app/modules/prefab/manifest.py
+- backend/app/modules/preliminaries/manifest.py
+- backend/app/modules/price_breakdown/manifest.py
+- backend/app/modules/price_index/manifest.py
+- backend/app/modules/procurement/manifest.py
+- backend/app/modules/procurement_concept/manifest.py
+- backend/app/modules/progress/manifest.py
+- backend/app/modules/project_governance/manifest.py
+- backend/app/modules/project_handbook/manifest.py
+- backend/app/modules/project_intelligence/manifest.py
+- backend/app/modules/project_route/manifest.py
+- backend/app/modules/projects/manifest.py
+- backend/app/modules/property_dev/manifest.py
+- backend/app/modules/punchlist/manifest.py
+- backend/app/modules/quality_concept/manifest.py
+- backend/app/modules/quote_capture/manifest.py
+- backend/app/modules/rate_feedback/manifest.py
+- backend/app/modules/rebar_schedule/manifest.py
+- backend/app/modules/reconciliation/manifest.py
+- backend/app/modules/record_publishing/manifest.py
+- backend/app/modules/reporting/manifest.py
+- backend/app/modules/resource_summary/manifest.py
+- backend/app/modules/resources/manifest.py
+- backend/app/modules/resumable_uploads/manifest.py
+- backend/app/modules/retrieval/manifest.py
+- backend/app/modules/review_authority/manifest.py
+- backend/app/modules/rfi/manifest.py
+- backend/app/modules/rfq_bidding/manifest.py
+- backend/app/modules/risk/manifest.py
+- backend/app/modules/rom_estimate/manifest.py
+- backend/app/modules/russia_pack/manifest.py
+- backend/app/modules/sa_pack/manifest.py
+- backend/app/modules/safety/manifest.py
+- backend/app/modules/saved_views/manifest.py
+- backend/app/modules/schedule/manifest.py
+- backend/app/modules/schedule_advanced/manifest.py
+- backend/app/modules/scim/manifest.py
+- backend/app/modules/search/manifest.py
+- backend/app/modules/service/manifest.py
+- backend/app/modules/service_charges/manifest.py
+- backend/app/modules/signing/manifest.py
+- backend/app/modules/site_inventory/manifest.py
+- backend/app/modules/site_prep/manifest.py
+- backend/app/modules/site_sensors/manifest.py
+- backend/app/modules/site_supervision/manifest.py
+- backend/app/modules/smart_views/manifest.py
+- backend/app/modules/source_data/manifest.py
+- backend/app/modules/staffing/manifest.py
+- backend/app/modules/stakeholders/manifest.py
+- backend/app/modules/subcontractors/manifest.py
+- backend/app/modules/submittals/manifest.py
+- backend/app/modules/takeoff/manifest.py
+- backend/app/modules/tasks/manifest.py
+- backend/app/modules/tax_withholding/manifest.py
+- backend/app/modules/teams/manifest.py
+- backend/app/modules/temporary_works/manifest.py
+- backend/app/modules/tendering/manifest.py
+- backend/app/modules/timeline/manifest.py
+- backend/app/modules/transmittals/manifest.py
+- backend/app/modules/uk_pack/manifest.py
+- backend/app/modules/us_ca_pack/manifest.py
+- backend/app/modules/us_pack/manifest.py
+- backend/app/modules/us_tx_pack/manifest.py
+- backend/app/modules/users/manifest.py
+- backend/app/modules/validation/manifest.py
+- backend/app/modules/value/manifest.py
+- backend/app/modules/variations/manifest.py
+- backend/app/modules/voice/manifest.py
+- backend/app/modules/waste_factors/manifest.py
+- backend/app/modules/webhook_leads/manifest.py
+- backend/app/modules/win_loss/manifest.py
+- backend/app/modules/wip_report/manifest.py

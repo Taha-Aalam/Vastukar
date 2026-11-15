@@ -58,7 +58,6 @@ import { useRecentStore } from '@/stores/useRecentStore';
 import { useGlobalSearchStore } from '@/stores/useGlobalSearchStore';
 import { getModuleNavItems, navItemModuleId } from '@/modules/_registry';
 import { RUNTIME_MODULE_ICONS, runtimeModuleRoute, useRuntimeUiEntries } from '@/features/modules/runtimeModules';
-import { APP_VERSION } from '@/shared/lib/version';
 import { useSidebarBadges } from '@/shared/hooks/useSidebarBadges';
 import { useHiddenModules } from '@/shared/hooks/useHiddenModules';
 import { useFooterPrefs } from '@/shared/lib/footerPrefs';
@@ -2112,7 +2111,7 @@ export function Sidebar({ onClose }: { onClose?: () => void }) {
                 href="https://github.com/Taha-Aalam/Vastukar"
                 target="_blank"
                 rel="noopener noreferrer"
-                title={`${t('sidebar.github_repo', { defaultValue: 'GitHub repository' })} (v${APP_VERSION})`}
+                title={t('sidebar.github_repo', { defaultValue: 'GitHub repository' })}
                 aria-label={t('sidebar.github_repo', { defaultValue: 'GitHub repository' })}
                 className="flex h-8 w-8 items-center justify-center rounded-md border border-border-light bg-surface-primary hover:bg-surface-elevated transition-all"
               >

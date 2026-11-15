@@ -12,7 +12,7 @@ manifest = ModuleManifest(
         "Model Context Protocol endpoint: an external AI client reads a person's projects under that "
         "person's permissions and proposes changes the person confirms in the app"
     ),
-    author="OpenConstructionERP Core Team",
+    author="Vastukar",
     category="integration",
     # Read tools reach BOQ, schedule, costs, validation, RFIs, submittals, punch
     # items and documents only while those modules are enabled; the proposal

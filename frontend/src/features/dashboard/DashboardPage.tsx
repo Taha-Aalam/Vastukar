@@ -2897,7 +2897,7 @@ function DashboardPageInner() {
           className="group/ddc inline-flex items-center gap-1.5 text-[11px] text-content-tertiary hover:text-content-secondary transition-colors"
         >
           <img
-            src="/brand/ddc-logo.webp"
+            src="/brand/vastukar-logo.webp"
             alt="Vastukar"
             className="h-3.5 w-auto opacity-60 group-hover/ddc:opacity-100 transition-opacity"
           />

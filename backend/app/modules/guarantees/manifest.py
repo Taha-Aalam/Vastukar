@@ -17,7 +17,7 @@ manifest = ModuleManifest(
         "performance bond, alerts 60, 30 and 14 days before expiry and shows company exposure by bank, "
         "by type and against bank credit lines."
     ),
-    author="OpenConstructionERP Core Team",
+    author="Vastukar",
     category="business",
     depends=["oe_projects"],
     optional_depends=["oe_contracts", "oe_documents", "oe_notifications", "oe_subcontractors", "oe_tendering"],

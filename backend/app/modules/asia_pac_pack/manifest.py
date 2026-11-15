@@ -17,7 +17,7 @@ manifest = ModuleManifest(
         "Japanese sekkisan standards, Singapore BCA references, "
         "and multi-currency support (AUD/NZD/JPY/SGD)."
     ),
-    author="OpenConstructionERP Core Team",
+    author="Vastukar",
     category="regional",
     depends=[],
     markets=["AU", "NZ", "JP", "SG", "HK", "MY"],

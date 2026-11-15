@@ -189,7 +189,7 @@ DOCS_URL = "https://vastukar.com/docs"
 # in step with docs/INSTALL_TROUBLESHOOTING.md.
 TROUBLESHOOTING_URL = "https://vastukar.com/install-help"
 ISSUES_URL = "https://github.com/Taha-Aalam/Vastukar/issues"
-COMMUNITY_URL = "https://t.me/datadrivenconstruction"
+COMMUNITY_URL = "https://t.me/vastukar"
 GITHUB_URL = "https://github.com/Taha-Aalam/Vastukar"
 
 logger = logging.getLogger("openestimate.cli")

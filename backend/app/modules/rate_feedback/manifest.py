@@ -14,7 +14,7 @@ manifest = ModuleManifest(
         "hours per unit with a sample size and a confidence score. Nothing changes until an "
         "estimator confirms each proposal."
     ),
-    author="OpenConstructionERP Core Team",
+    author="Vastukar",
     category="business",
     depends=["oe_costs", "oe_boq", "oe_postcalc", "oe_projects"],
     optional_depends=["oe_field_time"],

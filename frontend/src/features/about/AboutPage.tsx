@@ -384,7 +384,7 @@ export function AboutPage() {
                   compact and matches the Platform Capabilities card's height. */}
               <div className="grid grid-cols-2 gap-2.5">
                 <a
-                  href="https://www.linkedin.com/company/78381569"
+                  href="https://www.linkedin.com/company/vastukar/"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="group flex items-center gap-2.5 rounded-lg border border-border-light bg-surface-primary px-3 py-2.5 hover:border-[#0A66C2]/50 hover:bg-[#0A66C2]/[0.04] transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-oe-blue focus-visible:ring-offset-1"
@@ -494,7 +494,7 @@ export function AboutPage() {
                 <p>
                   <Trans
                     i18nKey="about.founder_bio_p2"
-                    defaults='We&rsquo;ve written a fair amount on these topics over the years, and some of it found a wide readership. Alongside the writing, we&rsquo;ve consulted for construction and consulting firms, developers, and software vendors on how they handle project data - treating it as the basis for decisions rather than a byproduct of them. That work let us see the industry from both sides: the people who build the tools, and the people who use them every day. A lot of those observations ended up in the book <book>Data-Driven Construction</book>, now available in 16 languages (<books>vastukar.com/books</books>). It is free of charge in every one of them.'
+                    defaults='We&rsquo;ve written a fair amount on these topics over the years, and some of it found a wide readership. Alongside the writing, we&rsquo;ve consulted for construction and consulting firms, developers, and software vendors on how they handle project data - treating it as the basis for decisions rather than a byproduct of them. That work let us see the industry from both sides: the people who build the tools, and the people who use them every day. A lot of those observations ended up in the book <book>Vastukar</book>, now available in 16 languages (<books>vastukar.com/books</books>). It is free of charge in every one of them.'
                     components={{
                       book: (
                         <a
@@ -522,7 +522,7 @@ export function AboutPage() {
                     components={{
                       cad: (
                         <a
-                          href="https://github.com/datadrivenconstruction/cad2data-Revit-IFC-DWG-DGN-pipeline-with-conversion-validation-qto"
+                          href="https://github.com/Taha-Aalam/Vastukar"
                           target="_blank"
                           rel="noopener noreferrer"
                           className="text-oe-blue hover:underline font-medium"
@@ -563,7 +563,7 @@ export function AboutPage() {
               {/* Author attribution — moved to the bottom of the bio per request. */}
               <div className="mt-5 flex items-center gap-3 border-t border-border-light pt-4">
                 <img
-                  src="/brand/ddc-logo.webp"
+                  src="/brand/vastukar-logo.webp"
                   alt={t('about.team_name', { defaultValue: 'Vastukar' })}
                   className="h-12 w-12 shrink-0 rounded-xl object-cover bg-gradient-to-br from-slate-50 to-blue-50 dark:from-slate-800 dark:to-slate-900 ring-1 ring-border-light shadow-sm p-1.5"
                   loading="lazy"
@@ -620,7 +620,7 @@ export function AboutPage() {
               {[
                 { href: 'https://vastukar.com', label: 'Vastukar', desc: t('about.ddc_link_lab', { defaultValue: 'Lab homepage - research & consulting' }) },
                 { href: 'https://vastukar.com/books/', label: 'Vastukar Guidebook', desc: t('about.ddc_link_book', { defaultValue: 'Reference reading, free, 16 languages' }) },
-                { href: 'https://github.com/datadrivenconstruction/cad2data-Revit-IFC-DWG-DGN-pipeline-with-conversion-validation-qto', label: 'CAD-BIM Converter', desc: t('about.ddc_link_cad', { defaultValue: 'Pipeline: Revit® · IFC · DWG · DGN → data' }) },
+                { href: 'https://github.com/Taha-Aalam/Vastukar', label: 'CAD-BIM Converter', desc: t('about.ddc_link_cad', { defaultValue: 'Pipeline: Revit® · IFC · DWG · DGN → data' }) },
                 { href: 'https://vastukar.com/excel-plugin/', label: 'Vastukar Excel Plugin', desc: t('about.ddc_link_excel', { defaultValue: 'Spreadsheet bridge - pull live data into Excel' }) },
               ].map(item => (
                 <li key={item.href}>
@@ -650,7 +650,7 @@ export function AboutPage() {
             </p>
             <ul className="mb-6 grid grid-cols-1 sm:grid-cols-2 gap-2.5">
               {[
-                { href: 'https://github.com/datadrivenconstruction/cad2data-Revit-IFC-DWG-DGN-pipeline-with-conversion-validation-qto', label: 'Vastukar Pipeline', desc: t('about.ddc_gh_cad2data', { defaultValue: 'Revit® · IFC · DWG · DGN → structured quantities' }) },
+                { href: 'https://github.com/Taha-Aalam/Vastukar', label: 'Vastukar Pipeline', desc: t('about.ddc_gh_cad2data', { defaultValue: 'Revit® · IFC · DWG · DGN → structured quantities' }) },
                 { href: 'https://github.com/Taha-Aalam/Vastukar', label: 'VastukarEstimate', desc: t('about.ddc_gh_cwicr', { defaultValue: '55,000+ cost items · 27 languages · 48 regions' }) },
                 { href: 'https://github.com/Taha-Aalam', label: 'Vastukar Skills for AI Agents', desc: t('about.ddc_gh_skills', { defaultValue: 'Tool definitions & prompts for LLM agents' }) },
               ].map(item => (
@@ -687,7 +687,7 @@ export function AboutPage() {
                 {[
                   { href: 'https://github.com/Taha-Aalam', icon: Github, label: 'GitHub' },
                   { href: 'https://vastukar.com', icon: Globe, label: 'Website' },
-                  { href: 'https://www.linkedin.com/company/78381569', icon: Linkedin, label: 'LinkedIn' },
+                  { href: 'https://www.linkedin.com/company/vastukar/', icon: Linkedin, label: 'LinkedIn' },
                   { href: 'https://www.youtube.com/@vastukar', icon: Youtube, label: 'YouTube' },
                   { href: 'https://t.me/vastukar', icon: MessageCircle, label: 'Telegram' },
                 ].map(({ href, icon: Icon, label }) => (
@@ -1033,7 +1033,7 @@ export function AboutPage() {
             <div className="flex items-center gap-2 mb-3 flex-wrap">
               <BookOpen size={18} className="text-oe-blue" />
               <h2 className="text-lg font-semibold text-content-primary">
-                {t('about.book_title', { defaultValue: 'Data-Driven Construction' })}
+                {t('about.book_title', { defaultValue: 'Vastukar' })}
               </h2>
               <Badge variant="blue" size="sm">Free</Badge>
             </div>
@@ -1048,8 +1048,8 @@ export function AboutPage() {
               title={t('about.book_cta', { defaultValue: 'Pick your language on vastukar.com' })}
             >
               <img
-                src="/brand/ddc-book.png"
-                alt={t('about.book_title', { defaultValue: 'Data-Driven Construction' })}
+                src="/brand/vastukar-book.png"
+                alt={t('about.book_title', { defaultValue: 'Vastukar' })}
                 className="block w-full h-auto transition-transform duration-500 group-hover:scale-[1.02]"
                 loading="lazy"
               />
@@ -1465,7 +1465,7 @@ export function AboutPage() {
             vastukar.com
           </a>
         </p>
-        <p className="mt-1">&copy; 2026 Data Driven Construction. All rights reserved.</p>
+        <p className="mt-1">&copy; 2026 Vastukar. All rights reserved.</p>
       </div>
     </div>
   );
