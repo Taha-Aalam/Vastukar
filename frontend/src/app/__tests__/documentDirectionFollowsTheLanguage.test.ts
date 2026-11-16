@@ -39,7 +39,7 @@ describe('document direction follows the active language', () => {
   });
 
   it('offers exactly one right-to-left language, and names it', () => {
-    // The population, printed beside the verdict: 4 languages offered, of
+    // The population, printed beside the verdict: 11 languages offered, of
     // which Urdu is RTL. A suite that asserted only the language would not
     // notice the denominator moving underneath it. The denominator moved here
     // when English (UK) joined the picker, again when Hungarian was offered,
@@ -49,7 +49,7 @@ describe('document direction follows the active language', () => {
     // into this assertion by existing.
     expect(
       `${RTL.length} of ${SUPPORTED_LANGUAGES.length} offered languages are RTL: ${RTL.join(', ')}`,
-    ).toBe('1 of 4 offered languages are RTL: ur');
+    ).toBe('1 of 11 offered languages are RTL: ur');
   });
 
   it('resolves rtl for every right-to-left language', () => {
@@ -61,7 +61,7 @@ describe('document direction follows the active language', () => {
     // to answer 'rtl' for everything - or for one language by accident - the
     // assertion above would still pass and this one would fail.
     const wrong = LTR.filter((code) => resolveDirection(code) !== 'ltr');
-    expect({ checked: LTR.length, wrong }).toEqual({ checked: 3, wrong: [] });
+    expect({ checked: LTR.length, wrong }).toEqual({ checked: 10, wrong: [] });
   });
 
   it('writes dir and lang onto <html> for each right-to-left language', () => {

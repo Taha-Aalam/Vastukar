@@ -26,7 +26,7 @@ export type DocumentFormat = 'pdf' | 'xlsx';
  * derived from the other: the hard lists below mirror the backend's own
  * catalogues (`document_forms_i18n.py`) and change when the backend does, while
  * the offered side is the `ENABLED_LOCALES` allowlist the picker reads. Since
- * the India rollout the picker offers four languages, so a menu that showed
+ * the India rollout the picker offers eleven languages, so a menu that showed
  * every renderable language would offer German documents to a reader who can
  * no longer run the interface in German — offering a document language the
  * reader cannot name anywhere else in the product is not a service. The

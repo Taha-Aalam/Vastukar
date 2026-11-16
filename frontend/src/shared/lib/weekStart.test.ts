@@ -115,7 +115,7 @@ describe('week start, over every offered language', () => {
     expect(
       SHIPPED_BASE_CODES.length,
       'the tree ships locale files the census cannot see',
-    ).toBeGreaterThanOrEqual(39);
+    ).toBeGreaterThanOrEqual(46);
     expect(new Set(CODES).size, 'duplicate language codes').toBe(CODES.length);
   });
 

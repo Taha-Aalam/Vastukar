@@ -198,10 +198,11 @@ verify by switching language rather than by watching a gate go green.
 Do not open or hand-edit the locale bundles; they run 4 to 9 MB each. Use `scripts/i18n.py`: `get KEY [--lang xx]`, `add KEY --en "..." [--de "..."]`, `set KEY --lang xx "..."`, `missing --lang xx [--prefix p]`, `rename OLD NEW`, and `export` / `import` for a translator working on a small JSON file instead of the bundle. It touches only the lines it changes, places a new key next to its namespace siblings, and leaves the rest of the file byte-identical.
 
 Counting the languages is worth doing carefully, because the obvious numbers disagree and every
-one of them is correct about something. There are 45 locale files in `frontend/src/app/locales/`,
-44 entries in the full registry (`ALL_LANGUAGES`) in `frontend/src/app/i18n.ts`, and 4 languages
+one of them is correct about something. There are 52 locale files in `frontend/src/app/locales/`,
+51 entries in the full registry (`ALL_LANGUAGES`) in `frontend/src/app/i18n.ts`, and 11 languages
 offered in the picker: the `ENABLED_LOCALES` allowlist in the same file filters the registry to
-English, Hindi, Bengali and Urdu, because the product is for India. A file on disk is coverage, a
+English, Hindi, Bengali, Urdu and the seven phase 2 Indian languages (Tamil, Telugu, Marathi,
+Gujarati, Kannada, Malayalam, Punjabi), because the product is for India. A file on disk is coverage, a
 registry entry is readiness, and the allowlist is what a user can select — the gap between the
 first two and the third is now large by design, and the files behind it stay imported, tested and
 ready to re-enable (`mn` was held back the same way before the rollout, for the native-speaker
