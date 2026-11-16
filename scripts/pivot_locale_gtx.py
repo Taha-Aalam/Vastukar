@@ -38,11 +38,10 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 import requests  # noqa: E402
-
 from i18n_new_locale import locale_paths, shipped_values  # noqa: E402
 from translate_locale_gtx import (  # noqa: E402
-    Throttle,
     WORK,
+    Throttle,
     backoff_sleep,
     finish,
     inject_pivot,
@@ -54,9 +53,44 @@ from translate_locale_gtx import (  # noqa: E402
 # single sibling — some only in hu and uz, some in cs/ar/es — so the walk has
 # to cover every file on disk to leave nothing unresolved.
 SOURCE_ORDER = [
-    "hi", "bn", "de", "fr", "es", "pt", "it", "ru", "ja", "ko", "zh", "ar", "tr",
-    "pl", "nl", "cs", "sv", "no", "da", "fi", "bg", "hr", "hu", "id", "ro", "th",
-    "vi", "ky", "et", "kk", "fil", "fa", "he", "el", "uk", "uz", "en-US", "en-GB",
+    "hi",
+    "bn",
+    "de",
+    "fr",
+    "es",
+    "pt",
+    "it",
+    "ru",
+    "ja",
+    "ko",
+    "zh",
+    "ar",
+    "tr",
+    "pl",
+    "nl",
+    "cs",
+    "sv",
+    "no",
+    "da",
+    "fi",
+    "bg",
+    "hr",
+    "hu",
+    "id",
+    "ro",
+    "th",
+    "vi",
+    "ky",
+    "et",
+    "kk",
+    "fil",
+    "fa",
+    "he",
+    "el",
+    "uk",
+    "uz",
+    "en-US",
+    "en-GB",
 ]
 MAX_QS = 24
 
@@ -111,7 +145,7 @@ def main() -> int:
                 if reply is None:
                     failed += len(pairs)
                     continue
-                for (source, keys), candidate in zip(pairs, reply):
+                for (source, keys), candidate in zip(pairs, reply, strict=False):
                     value = finish(source, candidate, lang)
                     if value is None:
                         failed += 1
@@ -132,9 +166,7 @@ def main() -> int:
             f"-> _pivot.json"
         )
         if unresolved:
-            (directory / "_pivot_unresolved.txt").write_text(
-                "\n".join(unresolved) + "\n", encoding="utf-8"
-            )
+            (directory / "_pivot_unresolved.txt").write_text("\n".join(unresolved) + "\n", encoding="utf-8")
     return 0
 
 
