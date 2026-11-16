@@ -156,7 +156,7 @@ def unprotect(text: str, spans: list[str]) -> str | None:
     runs = re.findall(r"(?<!\d)\d+(?!\d)", restored)
     if len(runs) == len(spans) and all(int(r) < len(spans) for r in runs):
         for m in reversed(list(re.finditer(r"(?<!\d)\d+(?!\d)", restored))):
-            restored = restored[: m.start()] + spans[int(m.group(0))] + restored[m.end():]
+            restored = restored[: m.start()] + spans[int(m.group(0))] + restored[m.end() :]
         if SENTINEL_OPEN in restored or SENTINEL_CLOSE in restored:
             return None
         if all(span in restored for span in spans):
@@ -274,7 +274,7 @@ def translate_sources(sources: list[str], lang: str, throttle: Throttle) -> dict
             with print_lock:
                 failed_chunks.append(list(chunk_))
             return
-        for source, candidate in zip(chunk_, reply):
+        for source, candidate in zip(chunk_, reply, strict=False):
             value = finish(source, candidate, lang)
             if value is None:
                 with print_lock:
@@ -294,16 +294,18 @@ def translate_sources(sources: list[str], lang: str, throttle: Throttle) -> dict
     retry_chunks = failed_chunks
     while retry_chunks:
         throttle.wait()
-        reply = request_bulk([x for c in retry_chunks for x in c], lang) if (
-            sum(len(c) for c in retry_chunks) <= MAX_QS
-        ) else None
+        reply = (
+            request_bulk([x for c in retry_chunks for x in c], lang)
+            if (sum(len(c) for c in retry_chunks) <= MAX_QS)
+            else None
+        )
         if reply is None:
             with ThreadPoolExecutor(max_workers=4) as pool:
                 list(pool.map(lambda c: worker(c), retry_chunks))
             break
         offset = 0
         for chunk_ in retry_chunks:
-            for source, candidate in zip(chunk_, reply[offset : offset + len(chunk_)]):
+            for source, candidate in zip(chunk_, reply[offset : offset + len(chunk_)], strict=False):
                 value = finish(source, candidate, lang)
                 if value is None:
                     failed.append(source)
