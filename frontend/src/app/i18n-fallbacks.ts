@@ -80,6 +80,13 @@ import he from './locales/he';
 import el from './locales/el';
 import uk from './locales/uk';
 import uz from './locales/uz';
+import ta from './locales/ta';
+import te from './locales/te';
+import mr from './locales/mr';
+import gu from './locales/gu';
+import kn from './locales/kn';
+import ml from './locales/ml';
+import pa from './locales/pa';
 
 export const fallbackResources = {
   en,
@@ -125,4 +132,11 @@ export const fallbackResources = {
   el,
   uk,
   uz,
+  ta,
+  te,
+  mr,
+  gu,
+  kn,
+  ml,
+  pa,
 };

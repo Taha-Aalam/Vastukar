@@ -16,7 +16,7 @@ import { useTranslation as useI18nTranslation } from 'react-i18next';
  * per-component gate to forget.
  *
  * Everything else stays exactly where it is. The full registry in
- * `ALL_LANGUAGES` below keeps all 44 entries, every locale file stays on disk,
+ * `ALL_LANGUAGES` below keeps all 51 entries, every locale file stays on disk,
  * the fallback aggregator keeps importing every file, and the locale parity
  * tests keep checking all of them, so a bundle does not rot while it is not
  * offered and a future upstream sync lands the same way it always did.
@@ -41,6 +41,18 @@ export const ENABLED_LOCALES: readonly string[] = [
   'hi', // हिन्दी Hindi
   'bn', // বাংলা Bengali
   'ur', // اردو Urdu
+  // Phase 2 of the India rollout: the seven bundles were machine translated
+  // from the extracted corpus (scripts/translate_locale_gtx.py, Google
+  // translate_a bulk endpoint) and carry full key parity; each is flagged for
+  // a native-speaker read of its review-first list
+  // (docs/india-rollout/review-first/<code>.md) before it is called final.
+  'ta', // தமிழ் Tamil
+  'te', // తెలుగు Telugu
+  'mr', // मराठी Marathi
+  'gu', // ગુજરાતી Gujarati
+  'kn', // ಕನ್ನಡ Kannada
+  'ml', // മലയാളം Malayalam
+  'pa', // ਪੰਜਾਬੀ Punjabi
 ];
 
 /**
@@ -145,6 +157,20 @@ const ALL_LANGUAGES = [
   // uz.ts that was still byte-identical to en.ts outside those bands. Offered
   // below.
   { code: 'uz', name: 'Oʻzbekcha', english: 'Uzbek', flag: '🇺🇿', country: 'uz' },
+  // Phase 2 of the India rollout (see ENABLED_LOCALES above): the seven
+  // Indian-language bundles were built by the scripted pipeline documented in
+  // the rollout pull request and offered together with these entries. Each
+  // declares India as its country — unlike bn, whose entry predates the
+  // rollout and keeps the market it was written for — because the market these
+  // languages steer is India, and every one is written left to right, so no
+  // `dir` field is carried.
+  { code: 'ta', name: 'தமிழ்', english: 'Tamil', flag: '🇮🇳', country: 'in' },
+  { code: 'te', name: 'తెలుగు', english: 'Telugu', flag: '🇮🇳', country: 'in' },
+  { code: 'mr', name: 'मराठी', english: 'Marathi', flag: '🇮🇳', country: 'in' },
+  { code: 'gu', name: 'ગુજરાતી', english: 'Gujarati', flag: '🇮🇳', country: 'in' },
+  { code: 'kn', name: 'ಕನ್ನಡ', english: 'Kannada', flag: '🇮🇳', country: 'in' },
+  { code: 'ml', name: 'മലയാളം', english: 'Malayalam', flag: '🇮🇳', country: 'in' },
+  { code: 'pa', name: 'ਪੰਜਾਬੀ', english: 'Punjabi', flag: '🇮🇳', country: 'in' },
 ];
 
 export const SUPPORTED_LANGUAGES = ALL_LANGUAGES.filter((l) => ENABLED_LOCALES.includes(l.code));

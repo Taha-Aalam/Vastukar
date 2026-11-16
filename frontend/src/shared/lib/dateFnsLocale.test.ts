@@ -18,19 +18,27 @@ import { dateFnsLocaleFor, LANGUAGES_WITHOUT_DATE_FNS_LOCALE } from './dateFnsLo
 
 /** i18next code → the `code` field of the date-fns locale it must resolve to. */
 const EXPECTED: Record<string, string> = {
-  // The offered set is the ENABLED_LOCALES allowlist now: English, Hindi,
-  // Bengali, Urdu. Plain `en` names no region and date-fns ships no
-  // region-free English, so it lands on enUS, which is also what CLDR gives
-  // unqualified `en`; the en-GB entry went with the regions when the
-  // allowlist answered every English region with plain en. Urdu is the one
-  // offered language date-fns has no locale for, so it resolves to enUS —
-  // the gap LANGUAGES_WITHOUT_DATE_FNS_LOCALE records and this file watches.
-  // The full 44-code map is one git log away; the map in dateFnsLocale.ts is
-  // unchanged and still answers every code the tree ships.
+  // The offered set is the ENABLED_LOCALES allowlist: English, Hindi,
+  // Bengali, Urdu, and the seven phase 2 Indian languages. Plain `en` names
+  // no region and date-fns ships no region-free English, so it lands on enUS,
+  // which is also what CLDR gives unqualified `en`; the en-GB entry went with
+  // the regions when the allowlist answered every English region with plain
+  // en. Urdu, Marathi, Malayalam and Punjabi are the offered languages
+  // date-fns has no locale for — the gap LANGUAGES_WITHOUT_DATE_FNS_LOCALE
+  // records and this file watches. The full registry map is one git log
+  // away; the map in dateFnsLocale.ts is unchanged and still answers every
+  // code the tree ships.
   en: 'en-US',
   hi: 'hi',
   bn: 'bn',
   ur: 'en-US',
+  ta: 'ta',
+  te: 'te',
+  mr: 'en-US',
+  gu: 'gu',
+  kn: 'kn',
+  ml: 'en-US',
+  pa: 'en-US',
 };
 
 describe('date-fns locale resolution', () => {
@@ -53,9 +61,9 @@ describe('date-fns locale resolution', () => {
     // Asserted in both directions on purpose. The first half says the gap is
     // where we think it is; the second says nothing else quietly joined it,
     // which is the failure mode that put this defect in front of readers.
-    // The gap list spans the whole tree (fil, ky, ur), while the offered set
-    // is the allowlist — so the second half compares against the offered
-    // subset of the gaps, which is Urdu alone today.
+    // The gap list spans the whole tree (fil, ky, ur plus the phase 2 trio
+    // mr, ml, pa), while the offered set is the allowlist — so the second
+    // half compares against the offered subset of the gaps.
     const gaps = [...LANGUAGES_WITHOUT_DATE_FNS_LOCALE];
     for (const code of gaps) {
       expect(dateFnsLocaleFor(code).code, `known gap "${code}"`).toBe('en-US');
