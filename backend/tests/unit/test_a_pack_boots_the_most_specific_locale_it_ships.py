@@ -242,11 +242,7 @@ def test_the_allowlists_cost_is_exactly_the_packs_it_hides() -> None:
         and not (m.default_locale or "").strip().lower().startswith("en")
     }
     assert hidden, "no pack falls back to English - the allowlist no longer hides anything, revise this test"
-    unexplained = {
-        slug: locale
-        for slug, locale in hidden.items()
-        if _match_supported(locale, registry) is None
-    }
+    unexplained = {slug: locale for slug, locale in hidden.items() if _match_supported(locale, registry) is None}
     assert not unexplained, f"packs declaring a language the tree does not carry at all: {unexplained}"
     # The two packs this file was written for are in the set, which is the
     # concrete confirmation that the cost reaches the case the defect was about.
