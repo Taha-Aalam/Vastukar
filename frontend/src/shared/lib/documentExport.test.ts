@@ -11,25 +11,37 @@ import {
   DIARY_DOCUMENT_LOCALES,
   PURCHASING_DOCUMENT_LOCALES,
   REGISTER_DOCUMENT_LOCALES,
+  REGISTER_RENDERABLE,
   defaultDocumentLocale,
   documentLocaleEnglishName,
   documentLocaleName,
 } from './documentExport';
-
-// Bengali is a backend language no bundled PDF face can draw, so the server answers it
-// in English and the menu does not offer it. Urdu is set in runs of faces and is offered.
-const NOT_RENDERABLE = new Set(['bn']);
 
 // The interface also ships regional variants of a language (en-GB, pt-BR ...);
 // a document language is the base language.
 const BASE_INTERFACE_LANGUAGES = SUPPORTED_LANGUAGES.map((l) => l.code).filter((c) => !c.includes('-'));
 
 describe('document languages', () => {
-  it('offers every interface language the server renders, once each, and nothing else', () => {
-    const expected = BASE_INTERFACE_LANGUAGES.filter((c) => !NOT_RENDERABLE.has(c));
+  it('offers the interface languages the server renders, once each, and nothing else', () => {
+    // Two sets meet here and the menu is their intersection, not either one:
+    // every language the backend can render a register in, narrowed to what
+    // the interface offers. Asserting the interface set alone was right while
+    // every offered language was also a backend one; the India rollout ended
+    // that, because the seven new bundles have no backend catalogue yet by
+    // design. The invariant that holds is both directions at once.
+    const offered = new Set(BASE_INTERFACE_LANGUAGES);
+    const expected = REGISTER_RENDERABLE.filter((code) => offered.has(code));
+
     expect([...REGISTER_DOCUMENT_LOCALES].sort()).toEqual([...expected].sort());
     expect(new Set(REGISTER_DOCUMENT_LOCALES).size).toBe(REGISTER_DOCUMENT_LOCALES.length);
     expect(REGISTER_DOCUMENT_LOCALES[0]).toBe('en');
+    // Bengali is the one backend language no bundled PDF face can draw: the
+    // interface offers it and it still cannot be a document language.
+    expect(REGISTER_DOCUMENT_LOCALES).not.toContain('bn');
+    // And the seven new interface languages have no backend catalogue yet.
+    for (const code of ['ta', 'te', 'mr', 'gu', 'kn', 'ml', 'pa']) {
+      expect(REGISTER_DOCUMENT_LOCALES, `${code} has no backend catalogue yet`).not.toContain(code);
+    }
   });
 
   it('prints the diary in the same languages as the registers', () => {
@@ -50,10 +62,13 @@ describe('document languages', () => {
     expect(documentLocaleName('en')).toBe('English');
     expect(documentLocaleName('de')).toBe('Deutsch');
     expect(documentLocaleName('tr')).toBe('Türkçe');
-    // zh is hidden behind the allowlist, so its name comes from the runtime's
-    // Intl.DisplayNames rather than the picker entry — still the language's
-    // own name, never the bare code, which is what this test is for.
-    expect(documentLocaleName('zh')).toBe('中文');
+    // zh is hidden behind the allowlist, but its entry is still in the
+    // registry, so its own name comes from there: 简体中文, which says which
+    // Chinese it is, where the runtime's Intl.DisplayNames answers the vaguer
+    // 中文. Before the allowlist this test asserted the runtime's answer
+    // because the picker entry was out of reach; it is in reach now, and the
+    // registry is the better source for a name.
+    expect(documentLocaleName('zh')).toBe('简体中文');
     expect(documentLocaleName('he')).toBe('עברית');
   });
 

@@ -15,7 +15,7 @@
  * list stops matching the catalogues it names (`GET /api/v1/i18n/document-locales`
  * reports the same sets).
  */
-import { SUPPORTED_LANGUAGES } from '@/app/i18n';
+import { ALL_LANGUAGES, SUPPORTED_LANGUAGES } from '@/app/i18n';
 import { API_BASE, activeLanguageTag, downloadWithAuth } from './api';
 
 export type DocumentFormat = 'pdf' | 'xlsx';
@@ -45,8 +45,14 @@ function offeredOf(codes: readonly string[]): string[] {
  * changeorders, transmittals, variations and claims_evidence catalogues): every
  * language the backend runs in except Bengali, which no bundled PDF face can draw
  * (`REGISTER_UNRENDERABLE` in `document_forms_i18n.py`).
+ *
+ * Exported so `documentExport.test.ts` can assert the real invariant — that the
+ * menu is exactly this list narrowed by the allowlist — instead of recomputing
+ * the expected set from the interface and so asserting that the server speaks
+ * every interface language. It does not: the seven bundles the India rollout
+ * added have no backend catalogue yet, by design.
  */
-const REGISTER_RENDERABLE: readonly string[] = [
+export const REGISTER_RENDERABLE: readonly string[] = [
   'en', 'de', 'ru', 'fr', 'es', 'pt', 'it', 'nl', 'pl', 'cs', 'hu', 'tr', 'ar', 'ur', 'zh', 'ja', 'ko', 'hi', 'sv', 'no',
   'da', 'fi', 'bg', 'hr', 'id', 'ro', 'th', 'vi', 'uk', 'uz', 'et', 'ky', 'kk', 'fil', 'fa', 'he', 'el',
 ];
@@ -92,13 +98,20 @@ export const PURCHASING_DOCUMENT_LOCALES: readonly string[] = offeredOf(PURCHASI
 
 /**
  * A language under its own name, which is how a reader looks for it in a
- * list. The names are the ones in the interface's language picker
- * (`SUPPORTED_LANGUAGES`) without the regional qualifier, so "English
- * (International)" reads "English"; a code the picker does not list is named
- * by the runtime's own language names, and last of all by its upper-case code.
+ * list. The names are the ones in the language registry (`ALL_LANGUAGES`)
+ * without the regional qualifier, so "English (International)" reads
+ * "English"; a code the registry does not list is named by the runtime's own
+ * language names, and last of all by its upper-case code.
+ *
+ * The registry, not the offered subset: a document menu still names languages
+ * the interface no longer offers — the purchasing forms include German and
+ * Turkish — and reading the allowlist made every hidden language fall back to
+ * `Intl.DisplayNames`, which renders "Français" as the lowercase "français"
+ * and "Türkçe" as "Türkçe" only by luck of capitalisation. The name is data
+ * about a language; the offer is a separate question.
  */
 export function documentLocaleName(locale: string): string {
-  const entry = SUPPORTED_LANGUAGES.find((l) => l.code === locale);
+  const entry = ALL_LANGUAGES.find((l) => l.code === locale);
   if (entry) return entry.name.replace(/\s*\(.*\)\s*$/, '');
   // A combined code such as the hakedis `tr-en` is not a language: it keeps its upper-case spelling.
   if (!/^[a-z]{2,3}$/.test(locale)) return locale.toUpperCase();
@@ -111,7 +124,7 @@ export function documentLocaleName(locale: string): string {
 
 /** The same language in English, which the search box also matches ("German" finds Deutsch). */
 export function documentLocaleEnglishName(locale: string): string {
-  const entry = SUPPORTED_LANGUAGES.find((l) => l.code === locale);
+  const entry = ALL_LANGUAGES.find((l) => l.code === locale);
   if (entry && 'english' in entry && typeof entry.english === 'string') return entry.english.replace(/\s*\(.*\)\s*$/, '');
   if (locale === 'en') return 'English';
   try {
