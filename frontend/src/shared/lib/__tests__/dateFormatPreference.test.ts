@@ -14,10 +14,11 @@
 // equal rather than keep two copies of the same mistake in step.
 
 import { describe, it, expect, beforeEach, afterAll, vi } from 'vitest';
+import { readdirSync } from 'node:fs';
+import { resolve } from 'node:path';
 import i18next from 'i18next';
 import { formatDateWithPreference, fmtDate, getIntlLocale } from '../formatters';
 import { LOCALE_MAP } from '../intlLocale';
-import { SUPPORTED_LANGUAGES } from '@/app/i18n';
 import { usePreferencesStore, type DateFormat } from '@/stores/usePreferencesStore';
 
 vi.mock('@/shared/lib/api', () => ({ apiGet: vi.fn() }));
@@ -222,10 +223,23 @@ describe('Kyrgyz is the single all-numeric exception to the auto path', () => {
     expect(formatDateWithPreference(AMBIGUOUS, 'ky', NUMERIC_UTC, 'YYYY-MM-DD')).toBe('2026-11-03');
   });
 
-  it('is an exception of exactly one across every offered language', () => {
+  it('is an exception of exactly one across every language the tree ships', () => {
     // The population, printed beside the verdict. A gate whose denominator is
-    // not the whole set can be satisfied by narrowing the set instead.
-    const unreadable = SUPPORTED_LANGUAGES.filter(({ code }) => {
+    // not the whole set can be satisfied by narrowing the set instead — and
+    // that is exactly what happened when the allowlist cut the offered set to
+    // eleven: Kyrgyz left the offer, `SUPPORTED_LANGUAGES` stopped containing
+    // it, and this assertion went from "exactly one" to "none" while the
+    // exception it guards was still in the code and still needed. The
+    // population is now every bundle on disk, which is where the exception
+    // lives, not the subset a reader can pick.
+    const shipped = [
+      ...new Set(
+        readdirSync(resolve(__dirname, '../../../app/locales'))
+          .filter((f) => f.endsWith('.ts'))
+          .map((f) => f.replace(/\.ts$/, '').split('-')[0]!),
+      ),
+    ];
+    const unreadable = shipped.filter((code) => {
       const tag = LOCALE_MAP[code] ?? code;
       const order = new Intl.DateTimeFormat(tag, NUMERIC_UTC)
         .formatToParts(AMBIGUOUS)
@@ -233,7 +247,10 @@ describe('Kyrgyz is the single all-numeric exception to the auto path', () => {
         .map((p) => p.type.charAt(0))
         .join('');
       return !['dmy', 'mdy', 'ymd'].includes(order);
-    }).map((entry) => entry.code);
+    });
+    console.log(
+      `[date order] ${shipped.length} shipped languages, odd orders: ${unreadable.join(', ') || 'none'}`,
+    );
     expect(unreadable).toEqual(['ky']);
   });
 });

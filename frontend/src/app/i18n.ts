@@ -58,15 +58,22 @@ export const ENABLED_LOCALES: readonly string[] = [
 /**
  * The full language registry, one entry per bundle the tree carries.
  *
- * Nothing reads this directly; `SUPPORTED_LANGUAGES` below is the offered
- * subset every consumer — picker, settings, profile, statistics, pack
- * normalisation, account sync — already imports, which is why the allowlist
- * above is the single point of registration. An entry leaves this array only
- * when its locale file leaves the tree; hiding a language is an
- * `ENABLED_LOCALES` decision, exactly how Mongolian was held back before
- * (its comment below survives from that decision).
+ * `SUPPORTED_LANGUAGES` below is the offered subset every consumer — picker,
+ * settings, profile, statistics, pack normalisation, account sync — already
+ * imports, which is why the allowlist above is the single point of
+ * registration. An entry leaves this array only when its locale file leaves
+ * the tree; hiding a language is an `ENABLED_LOCALES` decision, exactly how
+ * Mongolian was held back before (its comment below survives from that
+ * decision).
+ *
+ * Exported, despite nothing in the app needing the hidden entries, because the
+ * document menus still name languages the interface no longer offers:
+ * `documentLocaleName` read this list before the allowlist existed and now
+ * reads it through `SUPPORTED_LANGUAGES`, which made "Français" fall back to
+ * the runtime's lowercase "français" the moment `fr` left the offer. A name is
+ * data about a language, not an offer of it.
  */
-const ALL_LANGUAGES = [
+export const ALL_LANGUAGES = [
   // Plain English names no region, and the two entries under it are how a
   // reader says which one they mean rather than working out what unqualified
   // `English` is. It used to fly a Union Jack over a `gb` country, which said

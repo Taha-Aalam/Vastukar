@@ -10,7 +10,7 @@ import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { render, screen, fireEvent, waitFor, cleanup } from '@testing-library/react';
 
 import { DocumentExportMenu, type DocumentExportItem } from './DocumentExportMenu';
-import { REGISTER_DOCUMENT_LOCALES } from '@/shared/lib/documentExport';
+import { REGISTER_DOCUMENT_LOCALES, REGISTER_RENDERABLE } from '@/shared/lib/documentExport';
 import { useToastStore } from '@/stores/useToastStore';
 
 const runPdf = vi.fn<(locale: string) => Promise<void>>();
@@ -167,8 +167,17 @@ describe('DocumentExportMenu', () => {
   });
 
   describe('with the long language list of the registers', () => {
+    // The component picks its shape from the list length: a row of radio
+    // buttons up to four languages, a searchable list beyond that. Since the
+    // India rollout the register family narrows to three offered languages, so
+    // the default list no longer reaches the path these tests exist for. They
+    // pass the renderable list directly — the same prop a caller with a wider
+    // offer would pass — so the long-list code stays measured, and each
+    // assertion still says what it protects.
+    const LONG_LIST = REGISTER_RENDERABLE;
+
     it('offers a searchable list of every register language, each under its own name', () => {
-      render(<DocumentExportMenu label="Export register" items={items()} testId="exp" />);
+      render(<DocumentExportMenu label="Export register" items={items()} testId="exp" locales={LONG_LIST} />);
       fireEvent.click(screen.getByTestId('exp-more'));
       // Too many for a row of buttons.
       expect(screen.queryByRole('radiogroup')).toBeNull();
@@ -176,7 +185,7 @@ describe('DocumentExportMenu', () => {
       expect(trigger.textContent).toContain('English');
       fireEvent.click(trigger);
       const options = screen.getAllByRole('option');
-      expect(options).toHaveLength(REGISTER_DOCUMENT_LOCALES.length);
+      expect(options).toHaveLength(LONG_LIST.length);
       const names = options.map((o) => o.textContent ?? '');
       for (const own of ['Deutsch', 'Türkçe', 'Français', 'Русский', 'العربية', 'עברית']) {
         expect(names.some((n) => n.includes(own)), own).toBe(true);
@@ -186,7 +195,7 @@ describe('DocumentExportMenu', () => {
     });
 
     it('finds a language by its own name or its English name and downloads in it', async () => {
-      render(<DocumentExportMenu label="Export register" items={items()} testId="exp" />);
+      render(<DocumentExportMenu label="Export register" items={items()} testId="exp" locales={LONG_LIST} />);
       fireEvent.click(screen.getByTestId('exp-more'));
       fireEvent.click(screen.getByTestId('exp-lang'));
       const search = screen.getByRole('textbox');
@@ -202,7 +211,7 @@ describe('DocumentExportMenu', () => {
     });
 
     it('lets one Escape close the language list and the next close the menu', () => {
-      render(<DocumentExportMenu label="Export register" items={items()} testId="exp" />);
+      render(<DocumentExportMenu label="Export register" items={items()} testId="exp" locales={LONG_LIST} />);
       fireEvent.click(screen.getByTestId('exp-more'));
       fireEvent.click(screen.getByTestId('exp-lang'));
       expect(screen.getByRole('listbox')).toBeTruthy();
@@ -211,6 +220,17 @@ describe('DocumentExportMenu', () => {
       expect(screen.getByTestId('exp-menu')).toBeTruthy();
       fireEvent.keyDown(document, { key: 'Escape' });
       expect(screen.queryByTestId('exp-menu')).toBeNull();
+    });
+
+    it('falls back to a radio row when the offered list is short', () => {
+      // The other half of the same decision, now reachable: three register
+      // languages is under the threshold, so a reader sees buttons and no
+      // search box. Asserted so the switch cannot silently move.
+      render(<DocumentExportMenu label="Export register" items={items()} testId="exp" />);
+      fireEvent.click(screen.getByTestId('exp-more'));
+      expect(REGISTER_DOCUMENT_LOCALES.length).toBeLessThanOrEqual(4);
+      expect(screen.getByRole('radiogroup')).toBeTruthy();
+      expect(screen.queryByTestId('exp-lang')).toBeNull();
     });
   });
 });
