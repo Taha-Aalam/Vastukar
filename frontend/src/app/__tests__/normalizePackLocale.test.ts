@@ -6,7 +6,8 @@
 // and never an unsupported one.
 //
 // Since the India rollout the "supported" set is the ENABLED_LOCALES allowlist
-// (en, hi, bn, ur), not every bundle on disk. A pack that names a language the
+// (eleven: en, hi, bn, ur and the seven phase-2 bundles), not every bundle on
+// disk. A pack that names a language the
 // product no longer offers is answered with English, exactly like a language
 // the tree never shipped: the allowlist is the one place visibility is decided,
 // and a pack must not resurrect a language the picker does not show. The

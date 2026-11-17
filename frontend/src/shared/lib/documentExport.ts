@@ -39,15 +39,25 @@ export type DocumentFormat = 'pdf' | 'xlsx';
  * the picker; the document languages are a fact about the backend's catalogues.
  *
  * So these lists are the backend's own sets, kept whole, and
- * `REGISTER_RENDERABLE` is exported so `documentExport.test.ts` can assert
- * against the real set rather than recomputing it from the interface.
+ * `REGISTER_RENDERABLE` is exported beside `REGISTER_DOCUMENT_LOCALES` so
+ * `documentExport.test.ts` can assert against the real set rather than
+ * recomputing it from the interface.
+ *
+ * The literal array is `REGISTER_DOCUMENT_LOCALES` and the new name is the
+ * alias, not the other way round: `test_register_documents_speak_every_language.py`
+ * and `test_property_documents_offer_every_platform_language.py` parse this
+ * file's literal arrays and hold them equal to the server's catalogues, so the
+ * direction is a contract with the backend rather than a matter of taste.
  */
-export const REGISTER_RENDERABLE: readonly string[] = [
+export const REGISTER_DOCUMENT_LOCALES: readonly string[] = [
   'en', 'de', 'ru', 'fr', 'es', 'pt', 'it', 'nl', 'pl', 'cs', 'hu', 'tr', 'ar', 'ur', 'zh', 'ja', 'ko', 'hi', 'sv', 'no',
   'da', 'fi', 'bg', 'hr', 'id', 'ro', 'th', 'vi', 'uk', 'uz', 'et', 'ky', 'kk', 'fil', 'fa', 'he', 'el',
 ];
 
-export const REGISTER_DOCUMENT_LOCALES: readonly string[] = REGISTER_RENDERABLE;
+/** The same set under the name that says what it is: every language the backend
+ *  renders a register in, which is a fact about the document and not about what
+ *  the language picker currently offers. */
+export const REGISTER_RENDERABLE: readonly string[] = REGISTER_DOCUMENT_LOCALES;
 
 /** Languages of the daily diary PDF: the same set as the registers. */
 export const DIARY_DOCUMENT_LOCALES: readonly string[] = REGISTER_DOCUMENT_LOCALES;
@@ -62,11 +72,11 @@ export const DIARY_DOCUMENT_LOCALES: readonly string[] = REGISTER_DOCUMENT_LOCAL
  * `templateLanguageFor('de-AT')` has to answer `de` whether or not the picker
  * offers German.
  */
-export const MESSAGE_RENDERABLE: readonly string[] = [...REGISTER_RENDERABLE, 'bn'];
+export const MESSAGE_RENDERABLE: readonly string[] = [...REGISTER_DOCUMENT_LOCALES, 'bn'];
 
 /** Languages of the outgoing emails and workbooks (portal login mail, tender
  *  invitations and workbooks, schedule import templates). */
-export const MESSAGE_DOCUMENT_LOCALES: readonly string[] = MESSAGE_RENDERABLE;
+export const MESSAGE_DOCUMENT_LOCALES: readonly string[] = [...REGISTER_DOCUMENT_LOCALES, 'bn'];
 
 /**
  * Languages of the property-development documents (reservation receipt, sales
@@ -74,21 +84,16 @@ export const MESSAGE_DOCUMENT_LOCALES: readonly string[] = MESSAGE_RENDERABLE;
  * the registers' languages plus Mongolian. A language without a translation file
  * of its own prints in English, key by key.
  */
-export const PROPERTY_DOCUMENT_LOCALES: readonly string[] = [
-  ...REGISTER_RENDERABLE,
-  'mn',
-];
+export const PROPERTY_DOCUMENT_LOCALES: readonly string[] = [...REGISTER_DOCUMENT_LOCALES, 'mn'];
 
 /**
  * Languages of the purchase order, goods receipt, invoice and payment forms
  * (`procurement` and `finance` in `document_forms_i18n.py`).
  */
-const PURCHASING_RENDERABLE: readonly string[] = [
+export const PURCHASING_DOCUMENT_LOCALES: readonly string[] = [
   'en', 'de', 'ru', 'fr', 'es', 'pt', 'it', 'nl', 'pl', 'cs', 'hu', 'tr', 'ar', 'ur', 'zh', 'ja', 'ko', 'hi', 'sv', 'no',
   'da', 'fi', 'bg', 'hr', 'id', 'ro', 'th', 'vi', 'uk', 'uz', 'et', 'ky', 'kk', 'fil', 'fa', 'he', 'el',
 ];
-
-export const PURCHASING_DOCUMENT_LOCALES: readonly string[] = PURCHASING_RENDERABLE;
 
 /**
  * A language under its own name, which is how a reader looks for it in a
