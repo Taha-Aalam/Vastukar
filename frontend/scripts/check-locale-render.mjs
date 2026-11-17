@@ -184,15 +184,23 @@ function readLocale(path) {
 /**
  * The locale codes the language picker actually offers.
  *
- * Each line is cut at its first `//` before matching, because a locale can
- * leave the list two ways and both have to read as absent: mn's entry was
- * deleted, uz's was commented out in place and the literal text `code: 'uz'`
- * is still sitting in the file. This is the same rule
- * scripts/check_i18n_orphan_keys.py applies, for the same reason.
+ * Read from `ENABLED_LOCALES`, the allowlist, which is a plain string array
+ * with one quoted code per line. This used to scrape the `code:` fields inside
+ * the `SUPPORTED_LANGUAGES` literal, back when that literal was the offered
+ * set. It is now a `.filter()` over the allowlist, so it holds no `code:`
+ * field at all, and searching for the bare name lands in the doc comment
+ * above the registry rather than on the export.
+ *
+ * Each line is cut at its first `//` before matching, because the allowlist
+ * entries carry a trailing `// தமிழ் Tamil` comment naming the language and
+ * the regex must not read a word out of it. That same rule is what lets a
+ * locale leave the list by being commented out in place — the entry is still
+ * sitting in the file as text, and it has to read as absent. This is the same
+ * rule scripts/check_i18n_orphan_keys.py applies, for the same reason.
  */
 function readSupportedLanguages(path) {
   const text = readFileSync(path, 'utf8');
-  const start = text.indexOf('SUPPORTED_LANGUAGES');
+  const start = text.indexOf('export const ENABLED_LOCALES');
   const end = start >= 0 ? text.indexOf('\n];', start) : -1;
   if (end < 0) return [];
   const active = text
@@ -200,7 +208,7 @@ function readSupportedLanguages(path) {
     .split('\n')
     .map((line) => line.split('//')[0])
     .join('\n');
-  return [...active.matchAll(/code:\s*'([A-Za-z0-9-]+)'/g)].map((m) => m[1]);
+  return [...active.matchAll(/'([a-z]{2,3}(?:-[A-Za-z0-9]+)?)'/g)].map((m) => m[1]);
 }
 
 /**

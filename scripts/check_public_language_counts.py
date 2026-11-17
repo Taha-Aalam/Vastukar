@@ -20,20 +20,24 @@ WHAT COUNTS AS WHAT
 
 Three numbers, and they are genuinely different questions:
 
-  offered   entries in SUPPORTED_LANGUAGES in frontend/src/app/i18n.ts, which
-            is what a user can pick. Regional variants are separate entries
-            here, so Spanish and Spanish (Mexico) count twice, which is right
-            for "what can I select" and wrong for "how many languages".
+  offered   entries in ENABLED_LOCALES in frontend/src/app/i18n.ts, which is
+            what a user can pick. Since the India rollout this is a short
+            allowlist, eleven languages, and it is the number to quote about
+            what the interface ships in.
   files     locale bundles on disk in frontend/src/app/locales. A language can
-            have a file before it is offered, so this is always >= offered.
-  base      distinct base languages among the offered entries, es-MX folded
-            into es. The honest answer to "how many languages", and the
-            smallest of the three.
+            have a file before it is offered, so this is always >= offered. It
+            is larger still than the registry by exactly the files nobody has
+            registered yet (`mn`, held back for a native-speaker read).
+  registry  entries in ALL_LANGUAGES in the same file: every language the tree
+            can speak, offered or not. Between `files` and `offered`, and the
+            number a contributor means by "how many languages does the
+            platform support".
 
 This guard does not decide which one a sentence ought to use. It reads the
 sentence, works out which question it is asking, and checks the digit against
 that question's answer. A claim about the picker is checked against `offered`,
-a claim about locale files against `files`.
+a claim about locale files against `files`, a claim about the full registry
+against `registry`.
 
 WHAT IT WILL NOT CATCH
 
@@ -103,25 +107,50 @@ RULES = [
     ),
     Rule(
         "entries in the language list",
-        r"(?<![\d.,])(\d+) entries in the `SUPPORTED_LANGUAGES`",
-        "offered",
+        r"(?<![\d.,])(\d+) entries in the full registry",
+        "registry",
         1,
     ),
-    Rule("distinct languages", r"(?<![\d.,])(\d+) distinct\s+languages\b", "base", 1),
 ]
 
 
 def offered_codes() -> list[str]:
-    """Return the language codes SUPPORTED_LANGUAGES offers, in file order.
+    """Return the language codes the picker offers, in file order.
 
-    Read from the `code:` field alone. The entries also carry a name, an
-    English name, a flag and a country, so scraping every quoted string in the
-    block reports well over a hundred languages.
+    Read from `ENABLED_LOCALES`, the allowlist. This used to scrape the `code:`
+    fields inside the `SUPPORTED_LANGUAGES` literal, which was the list of
+    offered languages until the registry grew entries that are not offered and
+    `SUPPORTED_LANGUAGES` became a `.filter()` over that allowlist instead of a
+    literal. Scraping `code:` out of a filtered expression finds no `code:`
+    field at all, and anchoring on the bare name finds the doc comment above
+    the registry rather than the export.
+
+    The allowlist is a plain string array, one quoted code per line, and the
+    entries carry a trailing `// தமிழ் Tamil` comment naming the language, so
+    each line is stripped of its comment before the codes are read. The regex
+    takes only a two-or-three-letter tag, so a stray English word in a comment
+    cannot be counted as a language.
     """
     src = I18N.read_text(encoding="utf-8")
-    start = src.index("export const SUPPORTED_LANGUAGES")
+    start = src.index("export const ENABLED_LOCALES")
     end = src.index("\n];", start)
-    return re.findall(r"\bcode:\s*'([A-Za-z-]+)'", src[start:end])
+    active = "\n".join(line.split("//", 1)[0] for line in src[start:end].splitlines())
+    return re.findall(r"'([a-z]{2,3}(?:-[A-Za-z0-9]+)?)'", active)
+
+
+def registry_codes() -> list[str]:
+    """Return every language code in `ALL_LANGUAGES`, offered or not.
+
+    This is the readiness count: one entry per bundle the tree can speak, which
+    is a larger set than the picker now that the allowlist holds most of it
+    back. Read from the `code:` field alone for the same reason as the old
+    scrape — each entry also carries a name, an English name, a flag and a
+    country.
+    """
+    src = I18N.read_text(encoding="utf-8")
+    start = src.index("const ALL_LANGUAGES")
+    end = src.index("\n];", start)
+    return re.findall(r"code:\s*'([A-Za-z0-9-]+)'", src[start:end])
 
 
 def bundle_codes() -> list[str]:
@@ -131,11 +160,10 @@ def bundle_codes() -> list[str]:
 
 def counts() -> dict[str, int]:
     """Return the three counts the documents are checked against."""
-    offered = offered_codes()
     return {
-        "offered": len(offered),
+        "offered": len(offered_codes()),
         "files": len(bundle_codes()),
-        "base": len({c.split("-")[0] for c in offered}),
+        "registry": len(registry_codes()),
     }
 
 
@@ -181,7 +209,7 @@ def check(quiet: bool = False) -> int:
     if not quiet:
         print(f"offered in the picker : {n['offered']}")
         print(f"locale bundles        : {n['files']}")
-        print(f"distinct languages    : {n['base']}")
+        print(f"full registry         : {n['registry']}")
         print("")
 
     problems: list[str] = []
@@ -240,7 +268,7 @@ SELF_TEST_DOC = """\
 <td align="center"><b>7</b><br/><sub>languages</sub></td>
 <tr><td><b>UI languages</b></td><td align="center"><b>7</b></td></tr>
 The interface ships in 7 languages, and there are 9 locale files, 7 of them offered.
-There are 7 entries in the `SUPPORTED_LANGUAGES` list and 5 distinct languages.
+There are 7 entries in the full registry (`ALL_LANGUAGES`) and 9 files.
 Full UI translation: English, German, and 4 more.
 """
 
@@ -266,7 +294,6 @@ def self_test() -> int:
         "count of locale bundles": [9],
         "offered in the picker": [7],
         "entries in the language list": [7],
-        "distinct languages": [5],
     }
     if by_rule != expected:
         print(f"SELF-TEST FAIL: the rules read the fixture as {by_rule!r}, expected {expected!r}.")

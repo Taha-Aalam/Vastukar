@@ -220,6 +220,11 @@ _KEY_VALUE_LINE = re.compile(r'^\s*"([A-Za-z0-9_.\-]+)"\s*:\s*"((?:[^"\\]|\\.)*)
 # `{ code: 'xx', ... }` entries inside SUPPORTED_LANGUAGES.
 _SUPPORTED_CODE = re.compile(r"code:\s*'([A-Za-z0-9\-]+)'")
 
+# A bare quoted string, which is how ENABLED_LOCALES spells each offered code:
+# a plain string array, one code per line. Restricted to a two-or-three letter
+# tag so a stray English word in a comment cannot be read as a locale.
+_ENABLED_CODE = re.compile(r"'([a-z]{2,3}(?:-[A-Za-z0-9]+)?)'")
+
 # The opening of `t(` with a template-literal key.
 _TPL_HEAD = re.compile(r"\bt\(\s*`")
 
@@ -539,22 +544,29 @@ def read_supported_languages(path: str = DEFAULT_I18N_TS_PATH) -> set[str]:
     Duplicated from check_i18n_orphan_keys.py rather than imported, for the
     same reason the rest of this file's helpers are.
 
-    A locale can leave SUPPORTED_LANGUAGES two ways, and both have to read as
-    absent here. mn's entry was deleted outright. uz's was commented out in
-    place, `// { code: 'uz', ... },`, so the literal text `code: 'uz'` is
-    still sitting in the file. A regex blind to `//` would match it anyway
-    and keep enforcing uz as supported for the wrong reason. Each line is cut
-    at its first `//` before matching, which is safe for this array because
-    none of its fields ever contain that sequence.
+    Since the India rollout the offered set is the ``ENABLED_LOCALES``
+    allowlist; ``SUPPORTED_LANGUAGES`` is that allowlist filtered through the
+    ``ALL_LANGUAGES`` registry, so it is a ``.filter()`` expression rather
+    than an array literal and carries no ``code: '...'`` entries to read. The
+    allowlist is what is parsed instead.
+
+    A locale can leave this list two ways, and both have to read as absent
+    here. mn's entry was deleted outright. uz's was commented out in place,
+    `// { code: 'uz', ... },`, so the literal text `code: 'uz'` is still
+    sitting in the file. A regex blind to `//` would match it anyway and
+    keep enforcing uz as supported for the wrong reason. Each line is cut at
+    its first `//` before matching, and only bare quoted strings count, so
+    the trailing ``// हिन्दी Hindi`` comments that name a language in its own
+    script cannot be mistaken for a code.
     """
     with open(path, encoding="utf-8") as fh:
         text = fh.read()
-    start = text.find("SUPPORTED_LANGUAGES")
+    start = text.find("export const ENABLED_LOCALES")
     end = text.find("\n];", start) if start >= 0 else -1
     if end < 0:
         return set()
     active = "\n".join(line.split("//", 1)[0] for line in text[start:end].splitlines())
-    return set(_SUPPORTED_CODE.findall(active))
+    return set(_ENABLED_CODE.findall(active))
 
 
 def read_en_values(en_path: str) -> dict[str, str]:
