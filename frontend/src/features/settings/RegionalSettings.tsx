@@ -137,11 +137,11 @@ const NUMBER_FORMATS: NumberFormatOption[] = NUMBER_LOCALES.filter((l) => l !== 
  *
  * `en-US` is not a guess among the buttons that happen to print alike. CLDR has
  * no region-free English and gives unqualified `en` the American reading, which
- * is why `LOCALE_MAP` says so; measured on ICU 78 across fifteen currencies,
- * five amounts and four option sets, `en` and `en-US` differed zero times,
- * while `en-GB` differed on ten (it writes `US$` where `en` writes `$`). So
- * this is an equality, not a resemblance - the thing the row claims is exactly
- * true.
+ * is why `LOCALE_MAP` says so; measured on ICU 78.3 over fifteen currencies,
+ * five amounts and four option sets (300 cells), `en` and `en-US` differed zero
+ * times, while `en-GB` differed on 56 - it writes `US$` and `JP¥` where `en`
+ * writes `$` and `¥`. So this is an equality, not a resemblance - the thing the
+ * row claims is exactly true.
  *
  * This never reaches the wire. It decides which button reads as pressed; a
  * click still sends the button's own tag, which is the reader turning an
