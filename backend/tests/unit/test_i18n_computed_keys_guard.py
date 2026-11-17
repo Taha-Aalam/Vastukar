@@ -89,9 +89,7 @@ def _i18n_ts(tmp_path: Path) -> str:
     path = tmp_path / "i18n.ts"
     if not path.exists():
         path.write_text(
-            "export const ENABLED_LOCALES: readonly string[] = [\n"
-            "  'en', // English (International)\n"
-            "];\n",
+            "export const ENABLED_LOCALES: readonly string[] = [\n  'en', // English (International)\n];\n",
             encoding="utf-8",
         )
     return str(path)
