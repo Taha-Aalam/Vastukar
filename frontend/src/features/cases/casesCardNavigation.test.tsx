@@ -67,6 +67,14 @@ vi.mock("@/app/i18n", () => ({
   SUPPORTED_LANGUAGES: [
     { code: "en", name: "English", flag: "gb", country: "gb" },
   ],
+  // The real module exports the full registry beside the offered subset, and
+  // `homeMarketForLanguage` reads the registry: a language's country is a fact
+  // about the language, not about what the picker currently offers. A mock that
+  // omits this makes `CasesList` throw while rendering, which Vitest reports as
+  // a missing export rather than as a test failure.
+  ALL_LANGUAGES: [
+    { code: "en", name: "English", flag: "gb", country: "gb" },
+  ],
   getLanguageByCode: () => ({
     code: "en",
     name: "English",

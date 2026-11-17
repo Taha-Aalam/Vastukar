@@ -15,86 +15,80 @@
  * list stops matching the catalogues it names (`GET /api/v1/i18n/document-locales`
  * reports the same sets).
  */
-import { ALL_LANGUAGES, SUPPORTED_LANGUAGES } from '@/app/i18n';
+import { ALL_LANGUAGES } from '@/app/i18n';
 import { API_BASE, activeLanguageTag, downloadWithAuth } from './api';
 
 export type DocumentFormat = 'pdf' | 'xlsx';
 
 /**
- * The languages the export menu actually offers: what the server can render,
- * narrowed to what the interface offers. Two truths meet here and neither is
- * derived from the other: the hard lists below mirror the backend's own
- * catalogues (`document_forms_i18n.py`) and change when the backend does, while
- * the offered side is the `ENABLED_LOCALES` allowlist the picker reads. Since
- * the India rollout the picker offers eleven languages, so a menu that showed
- * every renderable language would offer German documents to a reader who can
- * no longer run the interface in German — offering a document language the
- * reader cannot name anywhere else in the product is not a service. The
- * narrowing is the registry, so re-enabling a language widens every family's
- * menu at once, and the hard lists stay intact for the day it happens.
- */
-const OFFERED_BASE_LANGUAGES = new Set(SUPPORTED_LANGUAGES.map((l) => l.code.split('-')[0]));
-
-function offeredOf(codes: readonly string[]): string[] {
-  return codes.filter((code) => OFFERED_BASE_LANGUAGES.has(code));
-}
-
-/**
- * Languages of the registers and record forms built on
- * `backend/app/core/document_forms_i18n.py` (the submittals, rfi log, correspondence,
- * changeorders, transmittals, variations and claims_evidence catalogues): every
- * language the backend runs in except Bengali, which no bundled PDF face can draw
- * (`REGISTER_UNRENDERABLE` in `document_forms_i18n.py`).
+ * Per-document-family language lists.
  *
- * Exported so `documentExport.test.ts` can assert the real invariant — that the
- * menu is exactly this list narrowed by the allowlist — instead of recomputing
- * the expected set from the interface and so asserting that the server speaks
- * every interface language. It does not: the seven bundles the India rollout
- * added have no backend catalogue yet, by design.
+ * WHY THESE ARE NOT NARROWED BY THE INTERFACE ALLOWLIST. An earlier revision
+ * filtered every family through `SUPPORTED_LANGUAGES`, on the argument that
+ * offering a document language the reader cannot name elsewhere is not a
+ * service. It reads plausibly and is wrong, because it confuses the reader of
+ * the SCREEN with the reader of the DOCUMENT. A register is exported to be sent
+ * to somebody: a Turkish subcontractor receives the variation register, a
+ * German engineer receives the claims pack. The person who clicks Export is
+ * naming the language of the recipient, which has nothing to do with the
+ * language they chose to run the application in. The filter cut the menu from
+ * thirty-seven languages to three (`en`, `hi`, `ur`) and took Turkish, German,
+ * French, Spanish, Russian and the rest out of a feature the backend still
+ * renders in full, while seven feature suites across the registers kept
+ * asserting their Turkish exports worked. The interface offer is a fact about
+ * the picker; the document languages are a fact about the backend's catalogues.
+ *
+ * So these lists are the backend's own sets, kept whole, and
+ * `REGISTER_RENDERABLE` is exported so `documentExport.test.ts` can assert
+ * against the real set rather than recomputing it from the interface.
  */
 export const REGISTER_RENDERABLE: readonly string[] = [
   'en', 'de', 'ru', 'fr', 'es', 'pt', 'it', 'nl', 'pl', 'cs', 'hu', 'tr', 'ar', 'ur', 'zh', 'ja', 'ko', 'hi', 'sv', 'no',
   'da', 'fi', 'bg', 'hr', 'id', 'ro', 'th', 'vi', 'uk', 'uz', 'et', 'ky', 'kk', 'fil', 'fa', 'he', 'el',
 ];
 
-export const REGISTER_DOCUMENT_LOCALES: readonly string[] = offeredOf(REGISTER_RENDERABLE);
+export const REGISTER_DOCUMENT_LOCALES: readonly string[] = REGISTER_RENDERABLE;
 
 /** Languages of the daily diary PDF: the same set as the registers. */
 export const DIARY_DOCUMENT_LOCALES: readonly string[] = REGISTER_DOCUMENT_LOCALES;
 
 /**
- * Languages of the outgoing emails and workbooks (portal login mail, tender
- * invitations and workbooks, schedule import templates): every language the
- * backend runs in, Bengali included, because a message needs no PDF face.
+ * Languages the backend writes an outgoing email or workbook in: the registers'
+ * languages plus Bengali, because a message needs no bundled PDF face.
+ *
+ * Exported beside the family list because "what can this be written in" and
+ * "what does the menu offer" are different questions, and a schedule template
+ * is the case that proves it: the backend still writes German, so
+ * `templateLanguageFor('de-AT')` has to answer `de` whether or not the picker
+ * offers German.
  */
-export const MESSAGE_DOCUMENT_LOCALES: readonly string[] = offeredOf([
-  ...REGISTER_RENDERABLE,
-  'bn',
-]);
+export const MESSAGE_RENDERABLE: readonly string[] = [...REGISTER_RENDERABLE, 'bn'];
+
+/** Languages of the outgoing emails and workbooks (portal login mail, tender
+ *  invitations and workbooks, schedule import templates). */
+export const MESSAGE_DOCUMENT_LOCALES: readonly string[] = MESSAGE_RENDERABLE;
 
 /**
  * Languages of the property-development documents (reservation receipt, sales
  * contract, handover certificate and the rest, `property_dev/document_templates.py`):
  * the registers' languages plus Mongolian. A language without a translation file
- * of its own prints in English, key by key. Mongolian is not offered by the
- * allowlist, so the menu narrows back to the registers' set until it returns.
+ * of its own prints in English, key by key.
  */
-export const PROPERTY_DOCUMENT_LOCALES: readonly string[] = offeredOf([
+export const PROPERTY_DOCUMENT_LOCALES: readonly string[] = [
   ...REGISTER_RENDERABLE,
   'mn',
-]);
+];
 
 /**
  * Languages of the purchase order, goods receipt, invoice and payment forms
  * (`procurement` and `finance` in `document_forms_i18n.py`).
  */
-/** What the backend can render for the purchasing family, before the offer narrows it. */
 const PURCHASING_RENDERABLE: readonly string[] = [
   'en', 'de', 'ru', 'fr', 'es', 'pt', 'it', 'nl', 'pl', 'cs', 'hu', 'tr', 'ar', 'ur', 'zh', 'ja', 'ko', 'hi', 'sv', 'no',
   'da', 'fi', 'bg', 'hr', 'id', 'ro', 'th', 'vi', 'uk', 'uz', 'et', 'ky', 'kk', 'fil', 'fa', 'he', 'el',
 ];
 
-export const PURCHASING_DOCUMENT_LOCALES: readonly string[] = offeredOf(PURCHASING_RENDERABLE);
+export const PURCHASING_DOCUMENT_LOCALES: readonly string[] = PURCHASING_RENDERABLE;
 
 /**
  * A language under its own name, which is how a reader looks for it in a

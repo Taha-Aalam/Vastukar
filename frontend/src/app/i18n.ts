@@ -356,12 +356,20 @@ export function browserRegionForLanguage(uiLanguage: string | null | undefined):
   return detectBrowserRegion();
 }
 
-/** The country a language entry declares (`xx` for plain English), or null. */
+/** The country a language entry declares (`xx` for plain English), or null.
+ *
+ *  Reads `ALL_LANGUAGES`, not `SUPPORTED_LANGUAGES`. This asks what a language
+ *  says about a country, and the allowlist is a separate question: reading the
+ *  offer here made the eleven-language rollout answer `null` for German, so a
+ *  reader who had just chosen German in the language step fell through to no
+ *  country at all and the dashboard lost its home market. The same correction
+ *  was made in `homeMarketForLanguage` and `documentLocaleName`.
+ */
 function countryOfLanguage(uiLanguage?: string): string | null {
   const code = uiLanguage || i18n.language || 'en';
   const entry =
-    SUPPORTED_LANGUAGES.find((l) => l.code === code) ??
-    SUPPORTED_LANGUAGES.find((l) => l.code === code.split('-')[0]);
+    ALL_LANGUAGES.find((l) => l.code === code) ??
+    ALL_LANGUAGES.find((l) => l.code === code.split('-')[0]);
   return entry?.country ?? null;
 }
 

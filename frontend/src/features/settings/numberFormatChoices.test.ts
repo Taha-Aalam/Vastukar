@@ -67,3 +67,71 @@ describe('the number format picker', () => {
     }
   });
 });
+
+// ---------------------------------------------------------------------------
+// The alias that keeps the row lit for a reader who never opened this screen.
+//
+// `resolveNumberLocale` answers in the vocabulary of `Intl`; these buttons are
+// regional tags. Where the two disagree about a tag that names the same format,
+// the row used to light nothing. That is not a cosmetic gap: plain English is
+// the default resolution for every English browser, because the India rollout's
+// allowlist narrowed the offered set and `en-US`/`en-GB` left it, so the row
+// went dark for the reader who had chosen nothing at all.
+// ---------------------------------------------------------------------------
+
+describe('the alias from a resolved locale to the button that renders it', () => {
+  /** The table, read from the component so it cannot drift from the shipped one. */
+  function aliases(): Record<string, string> {
+    const text = source();
+    const start = text.indexOf('const BUTTON_FOR_RESOLVED');
+    expect(start, 'BUTTON_FOR_RESOLVED not found in RegionalSettings.tsx').toBeGreaterThan(-1);
+    const body = text.slice(start, text.indexOf('};', start));
+    const out: Record<string, string> = {};
+    // The key is written bare (`en:`) because it is a valid identifier; the
+    // value is always quoted. Accept both spellings so a future entry that
+    // needs quotes (a tag with a hyphen) is read rather than silently skipped.
+    for (const m of body.matchAll(/(?:'([^']+)'|([a-z]{2,3}(?:-[A-Z]{2})?)):\s*'([^']+)'/g)) {
+      out[m[1] ?? m[2]!] = m[3]!;
+    }
+    return out;
+  }
+
+  it('sends every alias to a locale that actually has a button', () => {
+    // An alias pointing at a tag the picker does not offer would leave the row
+    // dark exactly as before, and would look like a fix while doing nothing.
+    for (const [from, to] of Object.entries(aliases())) {
+      expect(CHOICES as readonly string[], `${from} -> ${to}`).toContain(to);
+    }
+  });
+
+  it('only aliases a locale that renders byte-identically to its target', () => {
+    // The whole licence for the alias. If a target ever stops printing what the
+    // resolved tag prints, the row would claim a format the product is not
+    // using - worse than lighting nothing, and invisible in a screenshot.
+    // Measured through the currencies and amounts rather than one sample,
+    // because that is where `en` and `en-GB` part company.
+    const sample = 1234567.89;
+    const currencies = ['EUR', 'USD', 'GBP', 'CHF', 'JPY', 'INR', 'BRL', 'XOF', 'AED', 'CNY'];
+    for (const [from, to] of Object.entries(aliases())) {
+      expect(new Intl.NumberFormat(from).format(sample), `${from} vs ${to}`).toBe(
+        new Intl.NumberFormat(to).format(sample),
+      );
+      for (const currency of currencies) {
+        const options = { style: 'currency', currency } as const;
+        expect(new Intl.NumberFormat(from, options).format(sample), `${from} vs ${to} ${currency}`).toBe(
+          new Intl.NumberFormat(to, options).format(sample),
+        );
+      }
+    }
+  });
+
+  it('leaves English as the only alias, because no other offered language renders like a button', () => {
+    // Stated so the table cannot quietly grow. The other ten offered languages
+    // resolve to tags with no button - `hi` to `hi-IN`, `mr` to `mr` in
+    // Devanagari digits - and none of them prints what any button prints, so an
+    // entry for them would light a control that does not describe the product.
+    const table = aliases();
+    expect(Object.keys(table)).toEqual(['en']);
+    expect(table.en).toBe('en-US');
+  });
+});

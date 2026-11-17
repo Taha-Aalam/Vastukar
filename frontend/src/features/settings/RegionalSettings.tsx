@@ -124,6 +124,47 @@ const NUMBER_FORMATS: NumberFormatOption[] = NUMBER_LOCALES.filter((l) => l !== 
 );
 
 /**
+ * A resolved locale the picker has no button for, and the button that renders
+ * the very same figures.
+ *
+ * `resolveNumberLocale` answers in the vocabulary of `Intl`, not of this
+ * picker, so the two can disagree about a tag that names the same format. Plain
+ * English is the case that matters: `getIntlLocale` deliberately returns the
+ * region-free `en` (see `LOCALE_MAP`), while every button here is a regional
+ * tag. Nothing in the row matched `en`, so the default reader - the one who
+ * never opened this screen - saw a Number Format row with no button pressed
+ * while the product was formatting in English all along.
+ *
+ * `en-US` is not a guess among the buttons that happen to print alike. CLDR has
+ * no region-free English and gives unqualified `en` the American reading, which
+ * is why `LOCALE_MAP` says so; measured on ICU 78 across fifteen currencies,
+ * five amounts and four option sets, `en` and `en-US` differed zero times,
+ * while `en-GB` differed on ten (it writes `US$` where `en` writes `$`). So
+ * this is an equality, not a resemblance - the thing the row claims is exactly
+ * true.
+ *
+ * This never reaches the wire. It decides which button reads as pressed; a
+ * click still sends the button's own tag, which is the reader turning an
+ * automatic default into an explicit choice.
+ *
+ * Deliberately only `en`. The other offered languages resolve to tags with no
+ * button - `hi` reaches `hi-IN`, `ta` reaches `ta`, `mr` reaches `mr` and
+ * prints Devanagari digits - and none of them renders identically to a button
+ * here, so mapping them would light a control that does not describe what the
+ * product prints. An unpressed row is the honest answer there, and that rule
+ * predates this table: it is the same one the comment above applies to an
+ * account value the toggle has no button for.
+ */
+const BUTTON_FOR_RESOLVED: Record<string, NumberLocale> = {
+  en: 'en-US',
+};
+
+/** Which button should read as pressed for the locale in force. */
+function pressedLocale(resolved: string): string {
+  return BUTTON_FOR_RESOLVED[resolved] ?? resolved;
+}
+
+/**
  * One button per digit system after `'auto'`, each labelled with the ten
  * digits it writes. Computed through `Intl` like the number examples above, so
  * the label is what the product will print, not a transcription of it.
@@ -403,8 +444,9 @@ export function RegionalSettings({ animationDelay = '0ms' }: { animationDelay?: 
   // something. Showing the resolved locale keeps the control describing what
   // the money surfaces actually render with. Clicking a button turns the
   // automatic default into an explicit choice, which is the honest reading of a
-  // deliberate click. A locale outside the list (the UI has 29 languages) lights
-  // no button, exactly as an unmapped account value already did.
+  // deliberate click. A locale outside the list lights no button, exactly as an
+  // unmapped account value already did — except for the one locale that renders
+  // byte-identically to a button, which `BUTTON_FOR_RESOLVED` sends there.
   // Read the account value through the same translator the boot path uses. The
   // column is free-form and has been written in two vocabularies: `i18n_data.py`
   // seeds a display pattern (`1.234,56`) and this toggle PATCHes a BCP-47 tag
@@ -423,6 +465,12 @@ export function RegionalSettings({ animationDelay = '0ms' }: { animationDelay?: 
     ? adoptServerNumberFormat(prefs.number_format, storeNumberLocale)
     : undefined;
   const numberFormat = resolveNumberLocale(serverFormat ?? storeNumberLocale);
+  // Show the reader the button that renders what the product renders. The
+  // resolver answers in `Intl`'s vocabulary and this picker's buttons are
+  // regional tags, so plain English arrives as `en` and would light nothing;
+  // see `BUTTON_FOR_RESOLVED`. A resolved locale no button can honestly stand
+  // for still lights none, which is the rule this row has always followed.
+  const numberFormatPressed = pressedLocale(numberFormat);
   // MONEY-BUG FIX: read the persisted server value from `currency_code`
   // (the real backend field) instead of the non-existent `currency`, so a
   // saved currency survives reload. Do NOT hardcode 'EUR' here — fall back to
@@ -678,7 +726,7 @@ export function RegionalSettings({ animationDelay = '0ms' }: { animationDelay?: 
               {t('settings.number_format', { defaultValue: 'Number Format' })}
             </label>
             <ToggleGroup
-              value={numberFormat}
+              value={numberFormatPressed}
               options={NUMBER_FORMATS.map((f) => ({
                 value: f.locale,
                 label: f.example,

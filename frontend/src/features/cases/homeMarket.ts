@@ -18,7 +18,7 @@
 // lays out the strip at the foot of a case, so a reader meets one idea twice
 // rather than two.
 
-import { SUPPORTED_LANGUAGES } from '@/app/i18n';
+import { ALL_LANGUAGES } from '@/app/i18n';
 
 /** A language tag as i18next writes it: lower-case base, upper-case region
  *  subtag, at most two parts. Anything unparseable comes back empty.
@@ -83,6 +83,17 @@ export function normalizeLanguageTag(lang: string | null | undefined): string {
  * `DE` for that reader. That is survivable only because the answer orders the
  * catalogue instead of narrowing it - an Austrian sees the German cases first
  * and every other case right behind them.
+ *
+ * WHY `ALL_LANGUAGES` AND NOT `SUPPORTED_LANGUAGES`. This table is what a
+ * language says about a country, and that fact does not change when the
+ * picker stops offering the language. Reading the offer instead made the
+ * India rollout's eleven-language allowlist silently take `de`, `es`, `ru`,
+ * `ar` and the rest out of this function: a German reader's own language
+ * stopped naming Germany, and the cases carousel quietly fell back to the
+ * catalogue's default order. Nothing failed loudly - a language that reaches
+ * no market is a legitimate answer here, which is exactly why the narrowing
+ * was invisible. Same reasoning as `documentLocaleName`: a name, or a
+ * country, is data about a language; the offer is a separate question.
  */
 export function homeMarketForLanguage(
   lang: string | null | undefined,
@@ -90,7 +101,7 @@ export function homeMarketForLanguage(
 ): string | null {
   const code = normalizeLanguageTag(lang);
   if (!code) return null;
-  const declared = SUPPORTED_LANGUAGES.find((l) => l.code === code)?.country;
+  const declared = ALL_LANGUAGES.find((l) => l.code === code)?.country;
   const subtag = code.split('-')[1];
   const market = (declared ?? subtag)?.toUpperCase();
   if (!market) return null;
