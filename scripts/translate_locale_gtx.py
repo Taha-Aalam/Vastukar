@@ -104,6 +104,17 @@ PROTECTED = [PLACEHOLDER, URL, TAG, BRAND, SHORTCUT, TECH]
 SENTINEL_OPEN = "\ue000"
 SENTINEL_CLOSE = "\ue001"
 SENTINEL_RE = re.compile(SENTINEL_OPEN + r"(\d+)" + SENTINEL_CLOSE)
+# The close marker does not survive the round trip reliably: across 470
+# replies that unprotect() declined, the open marker and its index came back
+# but the close marker had been replaced 439 times - by an em space (255), by
+# a literal percent sign when the span sat next to one (51), by a plain space
+# (40), by nothing at the end of the string (13), by an ellipsis (11), and by
+# a handful of other punctuation marks. Not one case kept the pair intact and
+# lost a span, so the index alone identifies the span and the close marker is
+# matched when present and tolerated when not. Matching open+digits is
+# therefore safe where SENTINEL_RE required both markers and made the whole
+# reply unusable.
+SENTINEL_OPEN_RUN = re.compile(SENTINEL_OPEN + r"(\d+)(?:" + SENTINEL_CLOSE + r"|\u2003)?")
 PLACEHOLDER_NAME_RE = re.compile(r"\{\{([^{}]+)\}\}")
 MAX_SENTINELS = 100
 MAX_QS = 24
@@ -140,7 +151,10 @@ def protect(value: str) -> tuple[str, list[str]] | None:
 def unprotect(text: str, spans: list[str]) -> str | None:
     """Restore the sentinels, or None when any of them did not come back."""
     if SENTINEL_OPEN in text:
-        restored = SENTINEL_RE.sub(lambda m: spans[int(m.group(1))], text)
+        restored = SENTINEL_OPEN_RUN.sub(
+            lambda m: spans[int(m.group(1))] if int(m.group(1)) < len(spans) else m.group(0),
+            text,
+        )
     else:
         restored = text
     if SENTINEL_OPEN in restored or SENTINEL_CLOSE in restored:
@@ -212,10 +226,24 @@ def request_bulk(texts: list[str], lang: str) -> list[str] | None:
     return None
 
 
+_single_blocked = threading.Event()
+
+
 def request_single(text: str, lang: str) -> str | None:
     # Two attempts with short backoff: the single endpoint exists here to
     # rescue individual mangled strings, not to absorb rate limiting — a
     # throttled run belongs to the bulk path, which retries as a chunk.
+    #
+    # The endpoint answers 429 far more readily than the bulk one, and a 429
+    # here says nothing about this string, so retrying it per string is pure
+    # latency: on 2026-11-17 the bulk endpoint answered all 32 chunks of a
+    # bundle in 4 seconds while the single endpoint 429'd every request, and
+    # four workers at ~5s each turned that pass into 24 minutes without
+    # recovering one string. Once a 429 is seen the endpoint is treated as
+    # unavailable for the rest of the run and the tail is left English, which
+    # is the same outcome the per-string retries were producing, at no cost.
+    if _single_blocked.is_set():
+        return None
     for attempt in range(2):
         try:
             response = session.get(
@@ -223,7 +251,11 @@ def request_single(text: str, lang: str) -> str | None:
                 params={"client": "gtx", "sl": "en", "tl": lang, "dt": "t", "q": text},
                 timeout=30,
             )
-            if response.status_code == 429 or response.status_code >= 500:
+            if response.status_code == 429:
+                _single_blocked.set()
+                log(f"{lang}: single endpoint rate-limited; the rest of this run stays on bulk")
+                raise requests.HTTPError("429")
+            if response.status_code >= 500:
                 raise requests.HTTPError(str(response.status_code))
             response.raise_for_status()
             payload = json.loads(response.text)
@@ -269,12 +301,32 @@ def translate_sources(sources: list[str], lang: str, throttle: Throttle) -> dict
 
     def worker(chunk_: list[str]) -> None:
         throttle.wait()
-        reply = request_bulk(chunk_, lang)
+        # protect() belongs here, before the request, not only inside finish().
+        # finish() protects the source so it knows which spans to look for in
+        # the reply, so a reply fetched from UNPROTECTED text can never satisfy
+        # it: the engine rewrites the placeholder along with the sentence,
+        # unprotect() finds no sentinel to restore, and the cell stays English.
+        # Sending the raw envelopes is why this pass recovered almost nothing
+        # (0 translated on five of seven bundles on 2026-11-17) while the same
+        # strings went through when protected, and it is the tail the pass
+        # exists to remove, so the protection has to be applied to the wire
+        # text too.
+        prepared: list[tuple[str, str]] = []
+        for source in chunk_:
+            spans = protect(source)
+            if spans is None:
+                with print_lock:
+                    failed.append(source)
+                continue
+            prepared.append((source, spans[0]))
+        if not prepared:
+            return
+        reply = request_bulk([marked for _source, marked in prepared], lang)
         if reply is None:
             with print_lock:
                 failed_chunks.append(list(chunk_))
             return
-        for source, candidate in zip(chunk_, reply, strict=False):
+        for (source, _marked), candidate in zip(prepared, reply, strict=False):
             value = finish(source, candidate, lang)
             if value is None:
                 with print_lock:
@@ -328,7 +380,7 @@ def translate_sources(sources: list[str], lang: str, throttle: Throttle) -> dict
                 results[source] = value
 
     tail = [s0 for s0 in failed if s0 not in results]
-    if tail:
+    if tail and not _single_blocked.is_set():
         with ThreadPoolExecutor(max_workers=4) as pool:
             list(pool.map(retry_single, tail))
     return results

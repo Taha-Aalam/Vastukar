@@ -79,6 +79,12 @@ BLOCKS: dict[str, str] = {
     "arabic": r"؀-ۿݐ-ݿ",
     "devanagari": r"ऀ-ॣ०-ॿ",
     "bengali": r"ঀ-৿",
+    "gurmukhi": r"਀-੿",
+    "gujarati": r"઀-૿",
+    "tamil": r"஀-௿",
+    "telugu": r"ఀ-౿",
+    "kannada": r"ಀ-೿",
+    "malayalam": r"ഀ-ൿ",
     "thai": r"฀-๿",
     "hangul": r"가-힯ᄀ-ᇿ",
     "kana": r"぀-ヺー-ヿ",
@@ -107,6 +113,7 @@ SCRIPTS: dict[str, tuple[str, ...]] = {
     "fi": (),
     "fil": (),
     "fr": (),
+    "gu": ("gujarati",),
     "he": ("hebrew",),
     "hi": ("devanagari",),
     "hr": (),
@@ -115,17 +122,23 @@ SCRIPTS: dict[str, tuple[str, ...]] = {
     "it": (),
     "ja": ("kana", "han"),
     "kk": ("cyrillic",),
+    "kn": ("kannada",),
     "ko": ("hangul", "han"),
     "ky": ("cyrillic",),
+    "ml": ("malayalam",),
     "mn": ("cyrillic",),
+    "mr": ("devanagari",),
     "nl": (),
     "no": (),
+    "pa": ("gurmukhi",),
     "pl": (),
     "pt": (),
     "pt-BR": (),
     "ro": (),
     "ru": ("cyrillic",),
     "sv": (),
+    "ta": ("tamil",),
+    "te": ("telugu",),
     "th": ("thai",),
     "tr": (),
     "uk": ("cyrillic",),
@@ -185,6 +198,14 @@ def _offenders(value: str, script: str, limit: int = 6) -> str:
 
 
 def main() -> int:
+    # The finding this guard reports is by definition a character from a script
+    # the locale does not use, and the console it runs on is cp1252 on Windows.
+    # Printing the offender therefore crashed with UnicodeEncodeError *instead
+    # of* reporting - a gate that fails loudly for the wrong reason, and only
+    # on the platform this project is developed on. Redirecting stdout to a file
+    # does not help: the stream is still cp1252.
+    if hasattr(sys.stdout, "reconfigure"):
+        sys.stdout.reconfigure(encoding="utf-8", errors="replace")
     paths = sorted(glob.glob(LOCALE_GLOB))
     locales = {os.path.splitext(os.path.basename(p))[0]: p for p in paths}
     locales = {k: v for k, v in locales.items() if k not in {"index", "types"}}
