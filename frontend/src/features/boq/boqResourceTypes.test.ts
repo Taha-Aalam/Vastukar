@@ -1,22 +1,50 @@
 // DDC-CWICR-OE: DataDrivenConstruction · OpenConstructionERP
 // Copyright (c) 2026 Artem Boiko / DataDrivenConstruction
 /**
- * Tests for shared resource-type helpers — ensures all 21 supported
- * locales translate the canonical types and the helper falls back
- * gracefully for missing keys / unknown values.
+ * Tests for shared resource-type helpers — ensures the locales translate the
+ * canonical types and the helper falls back gracefully for missing keys /
+ * unknown values.
+ *
+ * WHY THIS FILE READS THE LOCALE FILES AS TEXT INSTEAD OF IMPORTING THEM.
+ * It used to `import { fallbackResources } from '../../app/i18n-fallbacks'`,
+ * which is an aggregate of every locale bundle in the tree. On `main` that was
+ * 43 files and 275.5 MB of source; the seven bundles this branch adds took it to
+ * 50 files and 353.5 MB, and that was enough to kill the worker. Measured on the
+ * failing CI job (Frontend CI ubuntu-latest, run 44148606822): 1410 of 1411 test
+ * files reported, 15367 tests passed and none failed, and the step still exited
+ * 1 because one fork died with "FATAL ERROR: Reached heap limit Allocation
+ * failed - JavaScript heap out of memory" at 4137 MB of its default ~4 GB heap.
+ * The file with no result was this one. Reproduced locally: alone, it burns
+ * 202 s and reaches no test at all.
+ *
+ * `everyOfferedLanguageIsInTheFallbackAggregator.test.ts` already documents the
+ * same wall for the same aggregate ("Ineffective mark-compacts near heap limit"
+ * at a 12 GB worker heap) and reads it as text for that reason. This file
+ * follows it: the question here is "does the shipped bundle hold this key with
+ * this value", which is a question about the file, and importing 353 MB to
+ * answer it is what broke.
+ *
+ * The population is stated and asserted, not assumed. A text scan whose files
+ * are missing, or whose lines stop matching the shape, reports a clean table
+ * over an empty set; the two floors at the bottom of this file exist for that.
  */
+import { existsSync, readFileSync } from 'node:fs';
+import { resolve } from 'node:path';
+
 import { describe, it, expect } from 'vitest';
 import {
   RESOURCE_TYPES,
   getResourceTypeLabel,
   getResourceTypeI18nKey,
 } from './boqResourceTypes';
-import { fallbackResources } from '../../app/i18n-fallbacks';
 
 /* ── Expected translations ─────────────────────────────────────────────
- * Construction-industry vocabulary; mirrors the table in
- * `scripts/inject_resource_type_i18n.mjs` (one-shot helper). When you
- * touch this list, also update the i18n bundle for the same locale.
+ * Construction-industry vocabulary. Read out of the shipped bundle rather
+ * than translated here: a gate that carries its own copy of the answer
+ * cannot tell a translation mistake from its own, and these are the words
+ * the product actually prints.
+ *
+ * When you touch this list, also update the i18n bundle for the same locale.
  */
 const EXPECTED_TRANSLATIONS: Record<string, Record<string, string>> = {
   en: { material: 'Material', labor: 'Labor', equipment: 'Equipment', operator: 'Operator', subcontractor: 'Subcontractor', electricity: 'Electricity', composite: 'Composite', other: 'Other' },
@@ -40,7 +68,75 @@ const EXPECTED_TRANSLATIONS: Record<string, Record<string, string>> = {
   da: { material: 'Materialer', labor: 'Arbejdskraft', equipment: 'Udstyr', operator: 'Operatør', subcontractor: 'Underleverandør', electricity: 'El', composite: 'Sammensat', other: 'Andet' },
   fi: { material: 'Materiaali', labor: 'Työ', equipment: 'Kalusto', operator: 'Käyttäjä', subcontractor: 'Aliurakoitsija', electricity: 'Sähkö', composite: 'Yhdistetty', other: 'Muu' },
   bg: { material: 'Материали', labor: 'Труд', equipment: 'Оборудване', operator: 'Оператор', subcontractor: 'Подизпълнител', electricity: 'Електричество', composite: 'Съставна', other: 'Други' },
+  // The seven bundles this branch adds. Read out of each shipped file, not
+  // translated here.
+  ta: { material: 'பொருள்', labor: 'உழைப்பு', equipment: 'உபகரணங்கள்', operator: 'ஆபரேட்டர்', subcontractor: 'துணை ஒப்பந்ததாரர்', electricity: 'மின்சாரம்', composite: 'கூட்டு', other: 'மற்றவை' },
+  te: { material: 'మెటీరియల్', labor: 'శ్రమ', equipment: 'పరికరాలు', operator: 'ఆపరేటర్', subcontractor: 'సబ్ కాంట్రాక్టర్', electricity: 'విద్యుత్', composite: 'మిశ్రమ', other: 'ఇతర' },
+  mr: { material: 'साहित्य', labor: 'श्रम', equipment: 'उपकरणे', operator: 'ऑपरेटर', subcontractor: 'उपकंत्राटदार', electricity: 'वीज', composite: 'संमिश्र', other: 'इतर' },
+  gu: { material: 'સામગ્રી', labor: 'મજૂરી', equipment: 'સાધનસામગ્રી', operator: 'ઓપરેટર', subcontractor: 'પેટા કોન્ટ્રાક્ટર', electricity: 'વીજળી', composite: 'સંયુક્ત', other: 'અન્ય' },
+  kn: { material: 'ವಸ್ತು', labor: 'ಕಾರ್ಮಿಕ', equipment: 'ಸಲಕರಣೆ', operator: 'ಆಪರೇಟರ್', subcontractor: 'ಉಪಗುತ್ತಿಗೆದಾರ', electricity: 'ವಿದ್ಯುತ್', composite: 'ಸಂಯೋಜಿತ', other: 'ಇತರೆ' },
+  ml: { material: 'മെറ്റീരിയൽ', labor: 'തൊഴിൽ', equipment: 'ഉപകരണങ്ങൾ', operator: 'ഓപ്പറേറ്റർ', subcontractor: 'സബ് കോൺട്രാക്ടർ', electricity: 'വൈദ്യുതി', composite: 'സംയുക്തം', other: 'മറ്റുള്ളവ' },
+  pa: { material: 'ਸਮੱਗਰੀ', labor: 'ਲੇਬਰ', equipment: 'ਉਪਕਰਨ', operator: 'ਆਪਰੇਟਰ', subcontractor: 'ਉਪ-ਠੇਕੇਦਾਰ', electricity: 'ਬਿਜਲੀ', composite: 'ਸੰਯੁਕਤ', other: 'ਹੋਰ' },
 };
+
+/* ── Reading a locale bundle without importing it ────────────────────── */
+
+const LOCALES_DIR = ['src/app/locales', 'frontend/src/app/locales']
+  .map((p) => resolve(process.cwd(), p))
+  .find(existsSync);
+
+/** `  "key": "value",` — the shape every line in a locale file has. */
+const PAIR = /^\s*"((?:[^"\\]|\\.)*)"\s*:\s*"((?:[^"\\]|\\.)*)"\s*,?\s*$/;
+
+const UNESCAPE: Record<string, string> = {
+  '"': '"',
+  '\\': '\\',
+  '/': '/',
+  b: '\b',
+  f: '\f',
+  n: '\n',
+  r: '\r',
+  t: '\t',
+};
+
+/**
+ * One locale's `boq.resource_type_*` entries, read from its source file.
+ *
+ * JSON string escapes are decoded, because a value is compared against the
+ * table above as text and an un-decoded `\"` would make an identical
+ * translation read as a different one.
+ *
+ * Memoised: the suites below ask for the same locale once per canonical type,
+ * and each read is a 10 MB file. Reading it eight times is what made this file
+ * take 19 s of test time for 261 trivial assertions.
+ */
+const cache = new Map<string, Map<string, string>>();
+
+function resourceTypeKeys(locale: string): Map<string, string> {
+  const cached = cache.get(locale);
+  if (cached) return cached;
+  if (!LOCALES_DIR) throw new Error('could not find src/app/locales');
+  const path = resolve(LOCALES_DIR, `${locale}.ts`);
+  if (!existsSync(path)) throw new Error(`locale file is missing: ${path}`);
+
+  const entries = new Map<string, string>();
+  for (const line of readFileSync(path, 'utf8').split(/\r?\n/)) {
+    const match = PAIR.exec(line);
+    if (!match) continue;
+    const [, key, raw] = match;
+    if (!key!.startsWith('boq.resource_type_')) continue;
+    entries.set(key!, raw!.replace(/\\(["\\/bfnrt])/g, (_, c: string) => UNESCAPE[c]!));
+  }
+  cache.set(locale, entries);
+  return entries;
+}
+
+/** A `t` that resolves against one locale's shipped keys, as i18next would. */
+function tFor(locale: string) {
+  const bundle = resourceTypeKeys(locale);
+  return (key: string, opts?: Record<string, string>) =>
+    bundle.get(key) ?? opts?.defaultValue ?? key;
+}
 
 describe('boqResourceTypes - RESOURCE_TYPES list', () => {
   it('exposes the canonical 8 types in expected order', () => {
@@ -99,26 +195,17 @@ describe('boqResourceTypes - getResourceTypeI18nKey', () => {
 });
 
 describe('i18n bundle - every locale ships every resource-type key', () => {
-  // Every canonical type must have a translation in every supported
-  // locale. Missing entries fall back to English at runtime, but they
-  // would be a regression — i18next would log a warning and the chip
-  // would render as English in an otherwise-localised UI.
+  // Every canonical type must have a translation in every locale listed
+  // above. Missing entries fall back to English at runtime, but they would
+  // be a regression: i18next would log a warning and the chip would render
+  // as English in an otherwise-localised UI.
   for (const [locale, dict] of Object.entries(EXPECTED_TRANSLATIONS)) {
     describe(locale, () => {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const bundle = (fallbackResources as any)[locale]?.translation as
-        | Record<string, string>
-        | undefined;
-
-      it('has a translation bundle', () => {
-        expect(bundle).toBeDefined();
-      });
-
       for (const rt of RESOURCE_TYPES) {
         it(`translates ${rt.value}`, () => {
-          const key = rt.i18nKey;
+          const bundle = resourceTypeKeys(locale);
           const expected = dict[rt.value];
-          expect(bundle?.[key], `missing ${key} for ${locale}`).toBe(expected);
+          expect(bundle.get(rt.i18nKey), `missing ${rt.i18nKey} for ${locale}`).toBe(expected);
         });
       }
     });
@@ -126,22 +213,36 @@ describe('i18n bundle - every locale ships every resource-type key', () => {
 });
 
 describe('integration - getResourceTypeLabel hooked up to live bundles', () => {
-  // Simulate i18next behaviour: lookup key in bundle, return defaultValue
-  // when key is missing.
-  const makeT = (locale: string) => (key: string, opts?: Record<string, string>) => {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const bundle = (fallbackResources as any)[locale]?.translation as
-      | Record<string, string>
-      | undefined;
-    return bundle?.[key] ?? opts?.defaultValue ?? key;
-  };
-
   for (const [locale, dict] of Object.entries(EXPECTED_TRANSLATIONS)) {
     it(`renders all canonical types for ${locale}`, () => {
-      const t = makeT(locale);
+      const t = tFor(locale);
       for (const rt of RESOURCE_TYPES) {
         expect(getResourceTypeLabel(rt.value, t)).toBe(dict[rt.value]);
       }
     });
   }
+});
+
+describe('the scan covers what it claims to', () => {
+  it('finds a locale directory to read', () => {
+    // Without this floor a wrong cwd makes every `describe` above skip its
+    // reads and the whole file pass having examined nothing.
+    expect(LOCALES_DIR, 'no src/app/locales directory under the cwd').toBeTruthy();
+  });
+
+  it('reads every key the table expects, in every locale', () => {
+    // A shape change in the locale files (a value wrapped onto another line,
+    // a different quote style) turns `resourceTypeKeys` into a map that is
+    // merely incomplete, and every assertion above would then compare
+    // `undefined` against an expected string and fail loudly - which is fine -
+    // but only for the key that broke. This states the size, so a scan that
+    // silently stops reading is caught even if the expectations are relaxed.
+    const thin = Object.keys(EXPECTED_TRANSLATIONS).filter(
+      (locale) => resourceTypeKeys(locale).size !== 10,
+    );
+    // Ten, not eight: every full locale also carries `variant_chip` and
+    // `variant_tooltip` beside the eight canonical types. Counting only the
+    // eight would go green on a file that had lost those two.
+    expect(thin).toEqual([]);
+  });
 });
