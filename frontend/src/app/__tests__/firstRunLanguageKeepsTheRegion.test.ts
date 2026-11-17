@@ -6,7 +6,8 @@
 // country from the region subtag or, failing that, from the resolved language.
 //
 // Since the India rollout the codes a first run can land on are the
-// ENABLED_LOCALES allowlist (en, hi, bn, ur), not every bundle on disk. The
+// ENABLED_LOCALES allowlist (eleven: en, hi, bn, ur and the seven phase-2
+// bundles), not every bundle on disk. The
 // region-keeping behaviour this file was written to protect still exists for
 // every language the allowlist offers — hi-IN opens in Hindi, not bare-hi
 // confusion — while every English region resolves to plain en and a browser
@@ -171,25 +172,30 @@ describe('detectCountry', () => {
     expect(detectCountry('ur')).toBe('pk');
   });
 
-  it('answers null for a language the tree ships but the allowlist hides', () => {
-    // Unreachable in practice — the UI language can no longer resolve to de,
-    // pl or ar, because resolveInitialLanguage falls back to English first —
-    // but pinned so the null is read as a decision: the allowlist no longer
-    // names these languages, and a hidden entry must not steer a market offer
-    // from the shadows.
+  it('still names the country of a language the tree ships but the allowlist hides', () => {
+    // This asserted null for a while, with a comment calling the null a
+    // protection: "a hidden entry must not steer a market offer from the
+    // shadows". It was not a protection, it was the regression. A language's
+    // country is a fact about the language, and `countryOfLanguage` reads
+    // `ALL_LANGUAGES` for exactly that reason - a reader who chose German in
+    // the language step, or whose stored preference names it, must still be
+    // told where German is spoken. What the allowlist decides is whether the
+    // picker offers the language, which is a different question and is asked
+    // in a different place.
     firstRunWith('de');
-    expect(detectCountry('de')).toBeNull();
+    expect(detectCountry('de')).toBe('de');
     firstRunWith('pl');
-    expect(detectCountry('pl')).toBeNull();
+    expect(detectCountry('pl')).toBe('pl');
     firstRunWith('ar');
-    expect(detectCountry('ar')).toBeNull();
+    expect(detectCountry('ar')).toBe('sa');
   });
 
   it('does not mistake a UN M49 region for a country code', () => {
-    // es-419 is Latin America, not a country. Answering '41' or '419' would
-    // be worse than answering null, which is what es now resolves to.
+    // es-419 is Latin America, not a country. Answering '41' or '419' would be
+    // worse than answering Spain, which is what es resolves to through the
+    // registry's own entry for it.
     firstRunWith('es-419');
-    expect(detectCountry('es')).toBeNull();
+    expect(detectCountry('es')).toBe('es');
   });
 
   it('can name a country for every language we offer', () => {

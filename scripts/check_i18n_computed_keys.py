@@ -698,14 +698,14 @@ def main(argv: list[str] | None = None) -> int:
 
     supported = read_supported_languages(args.i18n_ts)
     if "en" not in supported:
-        # "en" is structurally the first entry of SUPPORTED_LANGUAGES, so its
-        # absence means the array was not found or nothing inside it parsed,
-        # not that English was ever dropped from the picker. A silent empty
-        # set would classify every locale as unsupported and start
+        # "en" is structurally the first entry of ENABLED_LOCALES, so its
+        # absence means the allowlist was not found or nothing inside it
+        # parsed, not that English was ever dropped from the picker. A silent
+        # empty set would classify every locale as unsupported and start
         # downgrading member gaps this check exists to keep enforced, uz
         # among them, which would go green for exactly the wrong reason.
         print(
-            f"ERROR: could not read SUPPORTED_LANGUAGES from {args.i18n_ts}. "
+            f"ERROR: could not read ENABLED_LOCALES from {args.i18n_ts}. "
             "An empty or unparsed read here is not a clean read: it would "
             "classify every locale as unsupported and start downgrading "
             "member gaps this check exists to enforce.",
