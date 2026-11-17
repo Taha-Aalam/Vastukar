@@ -10,7 +10,7 @@ import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { render, screen, fireEvent, waitFor, cleanup } from '@testing-library/react';
 
 import { DocumentExportMenu, type DocumentExportItem } from './DocumentExportMenu';
-import { REGISTER_DOCUMENT_LOCALES, REGISTER_RENDERABLE } from '@/shared/lib/documentExport';
+import { REGISTER_RENDERABLE } from '@/shared/lib/documentExport';
 import { useToastStore } from '@/stores/useToastStore';
 
 const runPdf = vi.fn<(locale: string) => Promise<void>>();
@@ -168,12 +168,10 @@ describe('DocumentExportMenu', () => {
 
   describe('with the long language list of the registers', () => {
     // The component picks its shape from the list length: a row of radio
-    // buttons up to four languages, a searchable list beyond that. Since the
-    // India rollout the register family narrows to three offered languages, so
-    // the default list no longer reaches the path these tests exist for. They
-    // pass the renderable list directly — the same prop a caller with a wider
-    // offer would pass — so the long-list code stays measured, and each
-    // assertion still says what it protects.
+    // buttons up to four languages, a searchable list beyond that. The register
+    // family carries thirty-seven languages, so a real menu takes the
+    // searchable path; these tests name the list rather than lean on the
+    // default, so each assertion says which shape it protects.
     const LONG_LIST = REGISTER_RENDERABLE;
 
     it('offers a searchable list of every register language, each under its own name', () => {
@@ -222,13 +220,17 @@ describe('DocumentExportMenu', () => {
       expect(screen.queryByTestId('exp-menu')).toBeNull();
     });
 
-    it('falls back to a radio row when the offered list is short', () => {
-      // The other half of the same decision, now reachable: three register
-      // languages is under the threshold, so a reader sees buttons and no
-      // search box. Asserted so the switch cannot silently move.
-      render(<DocumentExportMenu label="Export register" items={items()} testId="exp" />);
+    it('falls back to a radio row when the list it is given is short', () => {
+      // The threshold exercised through the prop, not through whatever the
+      // register list happens to hold: an earlier revision asserted
+      // `REGISTER_DOCUMENT_LOCALES.length <= 4`, which only held while the
+      // allowlist had cut the list to three. That made the test a description
+      // of a defect rather than of the switch. Passing the short list directly
+      // measures the branch wherever the real list stands.
+      render(
+        <DocumentExportMenu label="Export register" items={items()} locales={['en', 'ur']} testId="exp" />,
+      );
       fireEvent.click(screen.getByTestId('exp-more'));
-      expect(REGISTER_DOCUMENT_LOCALES.length).toBeLessThanOrEqual(4);
       expect(screen.getByRole('radiogroup')).toBeTruthy();
       expect(screen.queryByTestId('exp-lang')).toBeNull();
     });

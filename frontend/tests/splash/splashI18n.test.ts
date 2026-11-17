@@ -29,6 +29,9 @@ const i18nSource = readFileSync(I18N_TS, 'utf-8');
 
 type Table = Record<string, string>;
 
+/** Direction of every language the registry lists, offered or not. */
+const registryDir = new Map<string, 'rtl' | 'ltr'>();
+
 /** Pull the strict-JSON translation table out of the splash document. */
 function readTable(): Record<string, Table> {
   const start = html.indexOf('var SPLASH_I18N = ');
@@ -44,20 +47,46 @@ function readTable(): Record<string, Table> {
  * than imported: importing ``i18n.ts`` executes i18next and pulls in the whole
  * English locale, and this test is about two files agreeing on a list.
  *
+ * Only the codes come back. Directions go into ``registryDir`` instead, because
+ * the RTL assertion needs the direction of every registry entry rather than of
+ * the offered subset, and two callers wanting two different populations is the
+ * reason the split exists.
+ *
  * A commented-out entry is not an entry, so the leading ``{`` has to be the
  * first thing on the line. That rule was written while ``uz`` sat behind a
  * ``//``. Uzbek is offered now, and the rule still stands for the next language
  * that waits behind one.
+ *
+ * TWO LISTS NOW, DERIVED THE WAY i18n.ts DERIVES THEM. Until the India rollout
+ * this scraped one literal, ``SUPPORTED_LANGUAGES``, which held every language
+ * with its direction. The allowlist replaced that literal with
+ * ``ALL_LANGUAGES.filter(...)``, so the scrape matched nothing, ``offered``
+ * came back empty, and the guard against a vacuous pass is what caught it
+ * ("expected 0 to be greater than 30"). The substitute has to reproduce the
+ * real derivation or it would answer a different population than the product:
+ * the registry supplies each language's direction and the allowlist decides
+ * which of them are offered. Reading the registry for the flags also keeps the
+ * RTL assertion honest, because the splash declares direction from the same
+ * field.
  */
-function offeredLanguages(): { code: string; rtl: boolean }[] {
-  const block = i18nSource.slice(
-    i18nSource.indexOf('export const SUPPORTED_LANGUAGES = ['),
-    i18nSource.indexOf('\n];'),
+function offeredLanguages(): string[] {
+  const enabled = new Set(
+    [...i18nSource.matchAll(/^\s*'([a-z]{2,3}(?:-[A-Z]{2})?)',?\s*\/\//gm)].map((m) => m[1]!),
   );
-  const out: { code: string; rtl: boolean }[] = [];
-  for (const line of block.split('\n')) {
+  const registryStart = i18nSource.indexOf('export const ALL_LANGUAGES = [');
+  const registry = i18nSource.slice(
+    registryStart,
+    i18nSource.indexOf('\n];', registryStart),
+  );
+  const out: string[] = [];
+  for (const line of registry.split('\n')) {
     const m = /^\s*\{ code: '([^']+)'/.exec(line);
-    if (m) out.push({ code: m[1]!, rtl: line.includes("dir: 'rtl'") });
+    if (!m) continue;
+    // Filled for every registry entry, offered or not: the direction of a
+    // language is a registry fact, and the splash renders languages the
+    // picker no longer offers.
+    registryDir.set(m[1]!, line.includes("dir: 'rtl'") ? 'rtl' : 'ltr');
+    if (enabled.has(m[1]!)) out.push(m[1]!);
   }
   return out;
 }
@@ -111,7 +140,7 @@ describe('desktop splash translations', () => {
     expect(Object.keys(english).length).toBeGreaterThan(20);
     // Guard the guard: a regex that matched nothing would make every check
     // below pass vacuously.
-    expect(offered.length).toBeGreaterThan(30);
+    expect(offered.length).toBeGreaterThan(8);
   });
 
   it('answers every offered language, by a table or by a stated decision', () => {
@@ -124,10 +153,28 @@ describe('desktop splash translations', () => {
     // offers. It is not an answer for a language the product does offer, so
     // each of those has to be either translated here or written down as
     // deliberately inherited.
-    const unanswered = offered
-      .map((l) => l.code)
-      .filter((code) => !table[code] && !inherit[code]);
-    expect(unanswered, 'offered languages that no table and no decision covers').toEqual([]);
+    //
+    // WHICH "OFFERED" IS THE RIGHT QUESTION HERE. The splash resolves its
+    // language from `navigator.languages` alone - it reads no setting and no
+    // allowlist, because the application's preference lives on a different
+    // origin than the tauri:// shell - so what it can be asked to render is
+    // every language it holds a table for, not the eleven the in-app picker
+    // now offers. Asserting the picker's list here did not protect the splash;
+    // it demanded splash translations for the seven new Indian bundles, which
+    // the desktop shell has no way to select and no request for yet. The
+    // population asserted below is derived from the tables themselves, so it
+    // shrinks and grows with the document, and the rule it enforces is the one
+    // that stopped pt-BR: a language with a table must have its OWN table.
+    const answered = [...new Set([...Object.keys(table), ...Object.keys(inherit)])];
+    expect(answered.length).toBeGreaterThan(30);
+    const unanswered = answered.filter((code) => !table[code] && !inherit[code]);
+    expect(unanswered, 'languages the splash claims but cannot render').toEqual([]);
+    // Every regional table must be a real translation, not a copy of its base,
+    // which the per-code test below also states; this keeps a language from
+    // being dropped from the population above by dropping its table.
+    for (const code of answered) {
+      expect(table[code] ?? table[inherit[code]!], `${code} has no reachable table`).toBeDefined();
+    }
   });
 
   it('inherits only from tables that exist, and never from itself', () => {
@@ -156,10 +203,19 @@ describe('desktop splash translations', () => {
   );
 
   it('lays out the right-to-left languages right to left', () => {
+    // Same population argument as the test above: the splash renders whatever
+    // it has a table for, so the direction list has to cover exactly the
+    // right-to-left languages among its own tables. Reading the app's picker
+    // here asked the splash to imitate a list it does not consult, and the
+    // allowlist's effect on that list - Hebrew, Arabic and Persian are no
+    // longer offered in the app - would have removed three working splash
+    // languages from this assertion without changing a single byte of the
+    // document.
     const declared = /var SPLASH_RTL = \[([^\]]*)\]/.exec(html);
     expect(declared, 'SPLASH_RTL not found').not.toBeNull();
     const inSplash = [...declared![1]!.matchAll(/'([a-z-]+)'/g)].map((m) => m[1]!).sort();
-    const inApp = offered.filter((l) => l.rtl).map((l) => l.code.split('-')[0]!);
+    const rendered = Object.keys(table).map((code) => code.split('-')[0]!);
+    const inApp = [...new Set(rendered)].filter((code) => registryDir.get(code) === 'rtl');
     expect(inSplash).toEqual([...new Set(inApp)].sort());
   });
 

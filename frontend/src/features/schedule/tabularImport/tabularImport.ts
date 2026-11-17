@@ -14,7 +14,7 @@
  * backend's `detail.code`, which the dialog branches on.
  */
 import { API_BASE, ApiError, downloadWithAuth, fetchWithAuth } from '@/shared/lib/api';
-import { MESSAGE_DOCUMENT_LOCALES } from '@/shared/lib/documentExport';
+import { MESSAGE_RENDERABLE } from '@/shared/lib/documentExport';
 import { fmtList } from '@/shared/lib/formatters';
 
 
@@ -36,8 +36,17 @@ export const IMPORT_FIELDS = [
 ] as const;
 export type ImportField = (typeof IMPORT_FIELDS)[number];
 
-/** Languages the backend writes a template in (and reads headers in): all of its languages. */
-export const TEMPLATE_LANGUAGES: readonly string[] = MESSAGE_DOCUMENT_LOCALES;
+/** Languages the backend writes a template in (and reads headers in): all of its languages.
+ *
+ *  Not narrowed by the offer. This asks which languages exist, not which ones
+ *  the picker shows: a reader on `de-AT` still gets a German template, and the
+ *  backend still accepts the German headers, even while German is not one of
+ *  the eleven offered bundles. Taking it from `MESSAGE_DOCUMENT_LOCALES`, which
+ *  IS narrowed, made `templateLanguageFor('de-AT')` answer `en` — silently
+ *  handing a German-speaking reader an English template on a product that can
+ *  still write the German one.
+ */
+export const TEMPLATE_LANGUAGES: readonly string[] = MESSAGE_RENDERABLE;
 export type TemplateLanguage = string;
 export type TemplateFormat = 'xlsx' | 'csv';
 
