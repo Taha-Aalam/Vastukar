@@ -12,7 +12,7 @@ manifest = ModuleManifest(
         "Compare two revisions of a drawing (PDF sheets or DWG/DXF), list every changed region, "
         "triage it, raise an RFI or markup and flag takeoff and BOQ quantities for re-measure"
     ),
-    author="OpenConstructionERP",
+    author="Vastukar",
     category="extension",
     depends=["oe_projects", "oe_users"],
     # Every revision source and follow-up target is read fail-soft.

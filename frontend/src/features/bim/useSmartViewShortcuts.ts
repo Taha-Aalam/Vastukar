@@ -40,7 +40,13 @@ function readStore(): Store {
     const raw = window.localStorage.getItem(STORAGE_KEY);
     if (!raw) return {};
     const parsed = JSON.parse(raw);
-    return parsed && typeof parsed === 'object' ? (parsed as Store) : {};
+    if (!parsed || typeof parsed !== 'object' || Array.isArray(parsed)) return {};
+    // Null prototype: projectId comes from routes, so the persist callback's
+    // computed-key write must land as an ordinary own property and never
+    // reach Object.prototype. UNSAFE_SHORTCUT_KEYS is the readability guard;
+    // this is the structural one.
+    const store: Store = Object.assign(Object.create(null), parsed as Store);
+    return store;
   } catch {
     return {};
   }

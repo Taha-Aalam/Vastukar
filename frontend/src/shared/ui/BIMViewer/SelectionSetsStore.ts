@@ -94,7 +94,10 @@ function readAll(): PersistedShape {
     if (!raw) return {};
     const parsed = JSON.parse(raw) as unknown;
     if (!parsed || typeof parsed !== 'object' || Array.isArray(parsed)) return {};
-    const out: PersistedShape = {};
+    // Null prototype: modelId keys come from routes and localStorage, so a
+    // crafted key ("__proto__", "constructor") must land as an ordinary own
+    // property instead of reaching Object.prototype.
+    const out: PersistedShape = Object.create(null);
     for (const [modelId, value] of Object.entries(parsed as Record<string, unknown>)) {
       if (!Array.isArray(value)) continue;
       const sets: SelectionSet[] = [];

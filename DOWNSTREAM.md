@@ -718,3 +718,42 @@ Modules page renders was set to `author="Vastukar"` in all of them:
 - backend/app/modules/webhook_leads/manifest.py
 - backend/app/modules/win_loss/manifest.py
 - backend/app/modules/wip_report/manifest.py
+
+### CI guard fixes (same PR, follow-up pass)
+
+Clears the five failing check jobs on PR #13 so the branch ships green:
+
+- a11y attribute ratchet: the two rebranded logo `<img>` alt attributes now go
+  through `t('app.name')` instead of a bare English literal (rendering is
+  unchanged - `app.name` is "Vastukar" in every locale, the proper noun).
+- architecture manifest guard: the committed manifest is regenerated with the
+  generator (`scripts/generate_architecture_manifest.py`) so it mirrors the
+  rebranded `author` field in all 234 module manifests. The page shows what
+  the tree actually holds.
+- authors-guard: this repository is the Vastukar downstream, so the
+  first-party set gains its owner (`taha-aalam` login, `taha.aalam@gmail.com`)
+  beside the upstream identities. Upstream policy itself is untouched.
+- Dependency Review: repo setting - vulnerability alerts / dependency graph
+  enabled for the repository (no code change).
+- CodeQL: fixes the three alerts the PR diff re-surfaced (all three pre-date
+  the PR on `main`, created 2026-11-10):
+  `js/remote-property-injection` in the BIM smart-view shortcuts store and the
+  selection-sets store (both localStorage-backed maps keyed by route-derived
+  ids now use null-prototype objects, so a crafted key lands as an ordinary
+  own property and cannot reach `Object.prototype`), and `js/file-system-race`
+  in the vite pdfjs-asset plugin (the directory listing is read once with
+  dirent types instead of an existsSync/statSync pre-check followed by a
+  separate read).
+
+Files changed in this step:
+
+- .github/workflows/authors-guard.yml
+- backend/app/modules/{bi_dashboards,commissioning,drawing_compare,plan_room,
+  project_controls,qms,requirements,site_logistics,supplier_catalogs,uploads}/manifest.py
+  (10 manifests whose author string differed - now also Vastukar)
+- frontend/src/features/architecture/architecture_manifest.json (regenerated)
+- frontend/src/features/bim/useSmartViewShortcuts.ts
+- frontend/src/features/dashboard/DashboardPage.tsx (alt through t('app.name'))
+- frontend/src/features/modules/RequestCustomModuleDialog.tsx (alt through t('app.name'))
+- frontend/src/shared/ui/BIMViewer/SelectionSetsStore.ts
+- frontend/vite.config.ts

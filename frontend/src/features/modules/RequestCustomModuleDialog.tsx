@@ -173,7 +173,7 @@ export function RequestCustomModuleDialog({ open, onClose }: Props) {
             <div className="inline-flex h-20 w-20 sm:h-24 sm:w-24 items-center justify-center mb-4">
               <img
                 src={vastukarLogoUrl}
-                alt="Vastukar"
+                alt={t('app.name', { defaultValue: 'Vastukar' })}
                 className="max-h-full max-w-full object-contain"
                 width="96"
                 height="96"

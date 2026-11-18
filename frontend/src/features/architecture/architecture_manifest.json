@@ -26,7 +26,7 @@
         "version": "0.1.0",
         "display_name": "Accommodation",
         "description": "Unified housing module: worker camps, rental apartments, and hotels. Rooms, bookings, charges. Optional one-click bootstrap from a PropDev block and HR-driven room suggestion.",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "business",
         "depends": [
           "oe_projects",
@@ -1280,7 +1280,7 @@
         "version": "1.0.0",
         "display_name": "Accounting Sync",
         "description": "Connects the platform to the company's accounting: pushes receivable invoices and interim payment certificates, subcontractor and supplier bills and guarantee fees with contacts and a project dimension to Xero or QBO and pulls payments back, or exports DATEV EXTF, a generic journal (CSV, Excel) or OECD SAF-T. Account and tax-code mapping per company from country templates, idempotent pushes with a sync log, retry and validation.",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "business",
         "depends": [
           "oe_projects",
@@ -2410,7 +2410,7 @@
         "version": "0.1.0",
         "display_name": "Admin",
         "description": "Operator endpoints for QA pipelines (qa-reset, fixtures). Triple-gated by env+token+hostname.",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "core",
         "depends": [
           "oe_users",
@@ -2470,7 +2470,7 @@
         "version": "0.1.0",
         "display_name": "AI Estimation",
         "description": "AI-powered construction cost estimation from text descriptions and photos",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "core",
         "depends": [
           "oe_boq",
@@ -3455,7 +3455,7 @@
         "version": "0.1.0",
         "display_name": "AI Agents",
         "description": "ReAct-style agent loop (reason -> call tool -> observe -> repeat) on top of the AI module. Tool registry, per-run history, mock-friendly LLM bridge. Slice 1: sample BOQ-drafter agent.",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "core",
         "depends": [
           "oe_ai",
@@ -4922,7 +4922,7 @@
         "version": "0.1.0",
         "display_name": "AI Estimate Builder",
         "description": "Full AI-driven precise estimate from any source. The agent understands your data, groups quantities, finds exact logical rates with resource breakdowns, and assembles a validated estimate you confirm. Rates come only from the cost database, never invented by the LLM.",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "core",
         "depends": [
           "oe_users",
@@ -7585,7 +7585,7 @@
         "version": "0.1.0",
         "display_name": "Allowances & Contingency",
         "description": "A register of the money an estimate carries but has not yet measured - provisional sums, prime-cost sums and design / construction contingencies - each with a held amount and a running drawdown as scope firms up. Rolls the remaining allowances into the estimate total per currency and shows how much has been spent against each.",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "core",
         "depends": [
           "oe_projects",
@@ -8079,7 +8079,7 @@
         "version": "1.0.0",
         "display_name": "Approval Routes",
         "description": "Generic multi-step approval engine: routes (templates), steps (ordered approvers), instances (running workflows for a specific target row), step states (per-step decisions). Consumed by markup/submittal/change-order/RFI/contract modules instead of every module hard-coding its own approve/reject.",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "core",
         "depends": [
           "oe_projects",
@@ -9416,7 +9416,7 @@
         "version": "1.0.0",
         "display_name": "Architecture Map",
         "description": "Interactive visual map of system architecture",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "developer_tools",
         "depends": [],
         "auto_install": true,
@@ -9473,7 +9473,7 @@
         "version": "1.0.0",
         "display_name": "Regional Pack - Asia-Pacific",
         "description": "Asia-Pacific construction standards: AIQS/Rawlinsons (AU), NATSPEC, Japanese sekkisan standards, Singapore BCA references, and multi-currency support (AUD/NZD/JPY/SGD).",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "regional",
         "depends": [],
         "auto_install": false,
@@ -9516,7 +9516,7 @@
         "version": "0.1.0",
         "display_name": "Assemblies & Calculations",
         "description": "Composite cost items built from cost database entries with factors. Supports templates, regional factors, and BOQ integration.",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "core",
         "depends": [
           "oe_costs",
@@ -11055,7 +11055,7 @@
         "version": "1.0.0",
         "display_name": "Asset Operations",
         "description": "Operational-phase asset intelligence: discover asset candidates from BIM models, compute warranty / maintenance / lifecycle health, roll up a portfolio summary, and dispatch warranty-expiry alerts. Reads the BIM-sourced asset register; persists nothing of its own (state rides the existing asset_info JSON).",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "core",
         "depends": [
           "oe_users",
@@ -11592,7 +11592,7 @@
         "version": "0.1.0",
         "display_name": "Authority Submission Factory",
         "description": "Generic engine for the structured XML documents a delivery must hand to an authority - tender exchange, expertise packages, asset handover registers. Driven by profiles carried as data (root element, expected field set, schema version) so a new format is a new profile, not new code. Ships jurisdiction-neutral built-in profiles (generic XML, a GAEB-X83-shaped tender example, a COBie-shaped handover example); regional packs plug in national dialects such as RU Minstroy. The same payload is the single source for both the machine XML and the human review, and a submission must validate cleanly before it can be sent.",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "core",
         "depends": [
           "oe_users",
@@ -12079,7 +12079,7 @@
         "version": "1.0.0",
         "display_name": "Backup & Restore",
         "description": "Export and import user data backups",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "core",
         "depends": [],
         "auto_install": true,
@@ -12233,7 +12233,7 @@
         "version": "1.0.0",
         "display_name": "BCF Issues & Viewpoints",
         "description": "Server-backed BCF 2.1 / 3.0 issue tracking: persistent topics, comments and viewpoints with full .bcfzip import/export roundtrip.",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "core",
         "depends": [
           "oe_projects",
@@ -13281,7 +13281,7 @@
         "version": "1.0.0",
         "display_name": "BI Dashboards & Reporting",
         "description": "Role-based dashboards, KPI library, custom report builder, alerts, scheduled digests. Module 20 of the 18-module extension wave - pure consumer of cross-module data.",
-        "author": "OpenConstructionERP",
+        "author": "Vastukar",
         "category": "extension",
         "depends": [
           "oe_projects",
@@ -17580,7 +17580,7 @@
         "version": "1.0.0",
         "display_name": "Data feeds",
         "description": "Read-only flat tables (CSV, Parquet, JSON) over projects, BOQ positions, invoices, purchase orders and schedule activities, for Excel, Power Query and any BI tool; optional PostgreSQL views for SQL access",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "integration",
         "depends": [
           "oe_users",
@@ -17719,7 +17719,7 @@
         "version": "1.0.0",
         "display_name": "Bid Day",
         "description": "The last hours before a tender goes in: one live board per tender with every trade package, the quotes received for it and the estimate's own figure as baseline. Change a figure, add a late phone or email quote or switch the chosen quote and the bid total recalculates at once, with the change logged. Scope gaps are plugged per quote so quotes compare like for like, the lowest adjusted quote is suggested with its reason, markups are set on the board, and the submitted bid is frozen as an immutable snapshot that exports to PDF and Excel and can be pushed back into the estimate.",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "business",
         "depends": [
           "oe_projects",
@@ -19036,7 +19036,7 @@
         "version": "0.1.0",
         "display_name": "Subcontract Packages",
         "description": "Trade and supply packages to subcontractors and suppliers: invitations, Q&A, bid leveling with plugs, award to a subcontract agreement (subcontract package) or a purchase order (supply package)",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "business",
         "depends": [
           "oe_users",
@@ -23198,7 +23198,7 @@
         "version": "1.0.0",
         "display_name": "Bid / No-Bid",
         "description": "A one-page go / no-go decision for a tender: rate client, capacity, risk, margin and competition from 1 to 5, weigh them, and see the score against your threshold. The recommendation is advice; the decision is a person's, an override needs a reason, every change is logged, and the decision and outcome feed the win-loss ledger.",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "business",
         "depends": [
           "oe_projects",
@@ -23739,7 +23739,7 @@
         "version": "0.1.0",
         "display_name": "BIM Hub",
         "description": "BIM data management: models, elements, BOQ linking, quantity maps, and model diffs",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "core",
         "depends": [
           "oe_users",
@@ -27644,7 +27644,7 @@
         "version": "1.0.0",
         "display_name": "BIM Requirements",
         "description": "Universal import/export for BIM requirement formats: IDS XML, COBie, Excel/CSV, Revit Shared Parameters, BIMQ JSON",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "core",
         "depends": [
           "oe_users",
@@ -28267,7 +28267,7 @@
         "version": "0.1.0",
         "display_name": "BIM-LV Container",
         "description": "Read and write DIN SPEC 91350 BIM-LV containers: bundle a GAEB LV with its IFC/BIM model reference and the position-to-element link table, and materialize the links onto existing BOQ positions and BIM elements",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "core",
         "depends": [
           "oe_boq",
@@ -28468,7 +28468,7 @@
         "version": "0.1.0",
         "display_name": "Bill of Quantities",
         "description": "Core BOQ editor with hierarchical structure, positions, and cost calculations",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "core",
         "depends": [
           "oe_projects",
@@ -34758,7 +34758,7 @@
         "version": "0.1.0",
         "display_name": "CAD Import",
         "description": "CAD file import and conversion pipeline (DWG, RVT, IFC)",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "extension",
         "depends": [
           "oe_projects"
@@ -34793,7 +34793,7 @@
         "version": "0.1.0",
         "display_name": "Capital Plan",
         "description": "Rank projects against a limited annual budget: yearly funding envelopes, phased project spend, what-if scenarios and greedy funding suggestions",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "business",
         "depends": [
           "oe_users",
@@ -36024,7 +36024,7 @@
         "version": "0.1.0",
         "display_name": "Carbon & Sustainability",
         "description": "Embodied + operational carbon (scope 1/2/3), EPD database, material matching, targets, sustainability reporting (GHG Protocol / GRI / ISSB)",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "business",
         "depends": [
           "oe_users",
@@ -40330,7 +40330,7 @@
         "version": "1.0.0",
         "display_name": "Cases",
         "description": "User-authored case scenarios. The shipped playbooks are source files compiled into the frontend; this module lets a team write its own walkthrough of how work is done here, start one from any shipped playbook, and pin a curated set to a project so the selection belongs to the account rather than to one browser.",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "core",
         "depends": [
           "oe_projects",
@@ -40933,7 +40933,7 @@
         "version": "0.1.0",
         "display_name": "Product & Resource Catalog",
         "description": "Curated catalog of materials, equipment, labor, and operators extracted from cost databases",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "core",
         "depends": [
           "oe_costs"
@@ -41421,7 +41421,7 @@
         "version": "0.1.0",
         "display_name": "Common Data Environment (ISO 19650)",
         "description": "ISO 19650 compliant Common Data Environment - document containers, revisions, state transitions, and suitability codes",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "core",
         "depends": [
           "oe_users",
@@ -42934,7 +42934,7 @@
         "version": "1.0.0",
         "display_name": "Certified Payroll",
         "description": "Weekly certified payroll for public works: the wage determination on file, the trade classification each worker works under, the week's hours by day with basic wage and fringe benefit held apart, and the signed statement of compliance the awarding body reads. Extends the payroll module rather than duplicating it - the hours and the deductions stay where they already are.",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "compliance",
         "depends": [
           "oe_payroll",
@@ -44735,7 +44735,7 @@
         "version": "0.1.0",
         "display_name": "Change Intelligence",
         "description": "Analytical layer over the change-management family (change orders, variation notices / requests / orders, management-of-change entries). Reads their live state to answer what is waiting on whom and for how long (cycle-time telemetry), with no tables of its own and no migration - it queries the existing change records",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "controls",
         "depends": [
           "oe_users",
@@ -46633,7 +46633,7 @@
         "version": "0.1.0",
         "display_name": "Change Orders",
         "description": "Track scope changes, cost impacts, and approval workflows",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "core",
         "depends": [
           "oe_projects",
@@ -48214,7 +48214,7 @@
         "version": "1.0.0",
         "display_name": "Regional Pack - China",
         "description": "Chinese construction standards: GB 50500 bill of quantities valuation, the GB 50854-50862 measurement family, national and provincial quotas, VAT (13/9/6/3%), CNY, and Chinese model contract forms.",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "regional",
         "depends": [],
         "auto_install": false,
@@ -48255,7 +48255,7 @@
         "version": "0.1.0",
         "display_name": "Claims Evidence",
         "description": "Assembles a deterministic, ordered evidence pack for a claim or dispute from a project's cross-module activity timeline and its change-family records. The pack is content-addressable, so two parties can independently reproduce and verify it. Assembled on demand with no tables of its own and no migration",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "controls",
         "depends": [
           "oe_users",
@@ -48531,7 +48531,7 @@
         "version": "1.0.0",
         "display_name": "Clash Detection",
         "description": "Geometric AABB interference / clearance detection over canonical BIM elements, with a discipline×discipline clash matrix, a review workflow and one-click BCF export - no IfcOpenShell.",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "core",
         "depends": [
           "oe_projects",
@@ -51384,7 +51384,7 @@
         "version": "1.0.0",
         "display_name": "Clash AI Triage",
         "description": "LLM-assisted clash triage with confidence scores and a visible, user-tunable prompt. Each triage persists the full prompt + raw response for audit, exposes a category + suggested action + confidence, and supports replay against a new prompt version.",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "core",
         "depends": [
           "oe_clash",
@@ -51749,7 +51749,7 @@
         "version": "1.0.0",
         "display_name": "Clash Cost Impact",
         "description": "Bridges clash detection (BIM coordination) and the BOQ module to surface an estimated rework cost per clash and a project-level open-impact rollup - the unique-to-AGPL-ERP move competitors cannot match, since they ship coordination without a BOQ side.",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "core",
         "depends": [
           "oe_clash",
@@ -51961,7 +51961,7 @@
         "version": "1.0.0",
         "display_name": "Client Error Sink",
         "description": "Receives anonymised JS error reports from the frontend errorLogger and forwards them to the standard logging pipeline at WARNING level. Per-IP rate limited at 30/min. No DB storage in v4.2.x.",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "infra",
         "depends": [],
         "auto_install": true,
@@ -52048,7 +52048,7 @@
         "version": "0.1.0",
         "display_name": "Handover & Closeout",
         "description": "Per-project digital handover and closeout package assembly - configurable checklist, CDE document binding, live closure evidence from punchlist/inspections/COBie, completeness tracking, idempotent ZIP build with PDF cover and machine-readable manifest",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "core",
         "depends": [
           "oe_users",
@@ -53619,7 +53619,7 @@
         "version": "0.1.0",
         "display_name": "Comments & Viewpoints",
         "description": "Threaded comments with @mentions and viewpoints for any entity",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "core",
         "depends": [
           "oe_users"
@@ -54199,7 +54199,7 @@
         "version": "1.0.0",
         "display_name": "Real-time collaboration locks",
         "description": "Pessimistic soft locks with live presence broadcast. Prevents two estimators from overwriting each other on the same BOQ row.",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "core",
         "depends": [
           "oe_users"
@@ -54460,7 +54460,7 @@
         "version": "1.0.0",
         "display_name": "Commissioning (Cx)",
         "description": "Systems commissioning - prefunctional and functional checklists, issue log, system-readiness scoring and a gated commission action",
-        "author": "OpenConstructionERP",
+        "author": "Vastukar",
         "category": "business",
         "depends": [
           "oe_projects",
@@ -55592,7 +55592,7 @@
         "version": "0.1.0",
         "display_name": "Commitment release",
         "description": "Commitment and release matrix: per commitment the amount, cost bearer, approver tier, preconditions, latest decision date and the residual loss on abort, under a delegation-of-authority schedule",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "core",
         "depends": [
           "oe_users",
@@ -57780,7 +57780,7 @@
         "version": "0.1.0",
         "display_name": "Compliance DSL",
         "description": "Author validation rules as YAML/JSON snippets without writing Python. Persists rule definitions and registers them with the global validation rule registry at startup.",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "core",
         "depends": [
           "oe_users"
@@ -58160,7 +58160,7 @@
         "version": "0.1.0",
         "display_name": "Compliance AI",
         "description": "DSL-based compliance rule engine plus a natural-language rule builder powered by Claude. Rules compile into core ValidationRule subclasses so evaluation uses the single validation pipeline.",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "core",
         "depends": [
           "oe_users",
@@ -58273,7 +58273,7 @@
         "version": "0.1.0",
         "display_name": "Compliance Documents",
         "description": "Track expiring insurance policies, permits, bonds and certifications per project with reminder windows and a convenience expiring-soon endpoint for dashboards.",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "core",
         "depends": [
           "oe_users",
@@ -58691,7 +58691,7 @@
         "version": "0.1.0",
         "display_name": "Condition & Maintenance Plan",
         "description": "Condition ratings per asset or element on a configurable scale (severity, extent, intensity), recorded during inspections, and a multi-year maintenance plan derived from them: actions, intervals, unit costs, year buckets, inflation from the price index, present value, written back to the asset register for whole-life cost",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "core",
         "depends": [
           "oe_projects"
@@ -60040,7 +60040,7 @@
         "version": "0.1.0",
         "display_name": "Document Connectors",
         "description": "Pull documents that live in scattered places into the project record. Point a connector at a watched folder and a sync brings each new file in as a first-class, searchable project document, deduplicated so the same file is never imported twice",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "core",
         "depends": [
           "oe_users",
@@ -60285,7 +60285,7 @@
         "version": "0.1.0",
         "display_name": "Construction Control",
         "description": "Universal QA/QC engine: acceptance criteria, inspections (MIR/WIR/IR/hidden-works/acceptance), material records (digital passport: EN 10204, CE/UKCA, batch/heat/lot traceability), lab test results, as-built records (verified survey/scan records with metrology and a signed legal-record attestation), hold/witness/surveillance/review gating, and handover / acceptance packages (regime-aware taking-over / substantial / practical completion: auto-assembled acceptance evidence, a completion gate over open NCRs and unreleased hold points, and an e-signed acceptance certificate), with format-agnostic model linking and a failed check automatically raising a non-conformance report.",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "core",
         "depends": [
           "oe_users",
@@ -64502,7 +64502,7 @@
         "version": "0.1.0",
         "display_name": "Contacts Directory",
         "description": "Unified contacts directory for clients, subcontractors, suppliers, consultants",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "core",
         "depends": [
           "oe_users"
@@ -65384,7 +65384,7 @@
         "version": "0.1.0",
         "display_name": "Contract Types Engine",
         "description": "Multi-type contract engine: lump-sum, GMP, cost-plus, T&M, unit-price, design-build with progress claims, retention, gainshare, LDs, final account",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "business",
         "depends": [
           "oe_users",
@@ -72826,7 +72826,7 @@
         "version": "1.0.0",
         "display_name": "Coordination Hub",
         "description": "Project-level Model Coordination dashboard: unifies federations, clashes, smart views, rule packs and BCF activity into one read-only rollup with BOQ-impact totals. No new tables - pure aggregator over the sibling BIM modules.",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "core",
         "depends": [
           "oe_projects",
@@ -73383,7 +73383,7 @@
         "version": "0.1.0",
         "display_name": "Correspondence",
         "description": "Project correspondence tracking - letters, emails, notices, memos and reports with direction, contacts, and document cross-references",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "core",
         "depends": [
           "oe_users",
@@ -73890,7 +73890,7 @@
         "version": "1.0.0",
         "display_name": "Cost Benchmarks",
         "description": "Benchmarks from the company's own completed projects: final cost per m2 GFA and per functional unit and by element group (DIN 276, NRM 1, MasterFormat, Uniformat), normalised to one base date, location and reporting currency with the price indices, location factors and exchange rates on file. A new estimate is compared with comparable projects as a P10, P50, P90 band per element with outliers flagged; the open reference band covers types with no own history. Tenant scoped, with an anonymised export.",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "estimation",
         "depends": [
           "oe_projects",
@@ -74457,7 +74457,7 @@
         "version": "1.0.0",
         "display_name": "Cost Explorer",
         "description": "A search-first workspace over the cost and resource databases. Find priced work by the resources it consumes, search the catalogs, compare the same scope across regional price bases, and substitute resources to test the effect on a rate. Built on a resource to work reverse index over each cost item's resource composition.",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "business",
         "depends": [
           "oe_costs",
@@ -75356,7 +75356,7 @@
         "version": "1.0.0",
         "display_name": "Cost Match",
         "description": "Match free-text bill-of-quantities lines against a cost base and review the suggestions: every line lands in one of four tiers by confidence, and a person confirms, overrides or rejects each one.",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "core",
         "depends": [
           "oe_users",
@@ -76466,7 +76466,7 @@
         "version": "1.0.0",
         "display_name": "Elemental Cost Plan",
         "description": "Rolls a bill of quantities up into an NRM 1 elemental cost plan: group elements 0-8 with their elements, the building works estimate, the bill's markup cascade below it, cost per m2 of GIFA and share of total on every line, unallocated positions listed rather than dropped, and an Excel export with the same structure. Read-only.",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "business",
         "depends": [
           "oe_boq",
@@ -76832,7 +76832,7 @@
         "version": "0.1.0",
         "display_name": "Cost Recovery",
         "description": "Records back-charges - costs the project intends to recover from the party responsible for causing them (rework from a subcontractor defect, extra cost from a supplier delay) - and rolls them up into a per-party and per-currency recovery ledger showing what is chargeable, what has been recovered and what is still outstanding against whom.",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "controls",
         "depends": [
           "oe_users",
@@ -77782,7 +77782,7 @@
         "version": "0.1.0",
         "display_name": "5D Cost Model",
         "description": "5D cost management - S-curves, cash flow projections, earned value analysis (EVM), and budget tracking",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "core",
         "depends": [
           "oe_projects",
@@ -81060,7 +81060,7 @@
         "version": "0.1.0",
         "display_name": "Cost Database",
         "description": "Cost item management, rate databases (CWICR and regional catalogues), bulk import",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "core",
         "depends": [],
         "auto_install": true,
@@ -83260,7 +83260,7 @@
         "version": "0.2.0",
         "display_name": "Credentials Registry",
         "description": "Project register of the professional credentials a delivery relies on - licences, certifications, statutory memberships, professional indemnity, registrations and training - with validity windows, renewal reminders and optional statutory-notification obligations. Records what the project requires of whom, and reports who may not work today: which credentials are missing, which have lapsed past their grace period, and which expire in the days ahead. Jurisdiction-neutral: the register tracks what a credential is and when it is valid; regional packs supply the country-specific vocabularies.",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "core",
         "depends": [
           "oe_users",
@@ -84357,7 +84357,7 @@
         "version": "0.1.0",
         "display_name": "CRM Sales Pipeline",
         "description": "Sales pipeline: accounts, leads, opportunities, activities, forecasting, win/loss analytics",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "business",
         "depends": [
           "oe_users"
@@ -86709,7 +86709,7 @@
         "version": "1.0.0",
         "display_name": "Cutting Optimisation",
         "description": "Cutting stock optimisation for bars, profiles, pipes, timber and sheets: turn a known cut list into cutting plans with yield, waste and cost, reuse offcuts from site inventory, return new offcuts to it, and propose the measured waste factor and stock quantity to the bill of quantities and the requisition for the estimator to confirm.",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "business",
         "depends": [
           "oe_users",
@@ -88489,7 +88489,7 @@
         "version": "1.0.0",
         "display_name": "Cost-Value Reconciliation & Cashflow",
         "description": "Commercial monthly CVR - reconcile cost-to-date against value earned per cost head, forecast final cost, value and margin, and forecast project cashflow as a cumulative S-curve, with interim payment applications.",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "business",
         "depends": [
           "oe_users",
@@ -89840,7 +89840,7 @@
         "version": "1.0.0",
         "display_name": "Regional Pack - DACH (DE/AT/CH)",
         "description": "DACH construction standards: GAEB XML exchange formats, VOB/B contract terms, DIN 276 cost groups, HOAI fee schedules, MwSt, and Abschlagsrechnung templates.",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "regional",
         "depends": [],
         "auto_install": false,
@@ -89886,7 +89886,7 @@
         "version": "0.1.0",
         "display_name": "Daily Site Diary",
         "description": "Legally significant daily site diary: weather, entries, photos, videos, drone surveys, reality capture, immutable signed archive",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "business",
         "depends": [
           "oe_users",
@@ -92968,7 +92968,7 @@
         "version": "1.1.0",
         "display_name": "Dashboard Rollup",
         "description": "Single-shot aggregation endpoint for the wave-2 dashboard widgets (BOQ summary, validation, clash, schedule, risk, HSE, procurement, budget, change orders, weather). Replaces the per-project N+1 fan-out the frontend used to do. Also serves the unified approvals/alerts inbox and the acknowledge/dismiss actions that let a user work through it.",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "core",
         "depends": [
           "oe_projects"
@@ -94503,7 +94503,7 @@
         "version": "0.1.0",
         "display_name": "Dashboards",
         "description": "Analytical dashboard layer: Parquet snapshots, DuckDB-backed insight cards, cascade filters, 3D viewer sync, historical diffs.",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "core",
         "depends": [
           "oe_users",
@@ -96146,7 +96146,7 @@
         "version": "0.1.0",
         "display_name": "Deadlines",
         "description": "Cross-module overdue escalation - a unified deadline register plus a background sweep that notifies owners, escalates to managers past a grace window, and rolls repeat overdue items into the notification digest",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "core",
         "depends": [
           "oe_users",
@@ -96357,7 +96357,7 @@
         "version": "1.0.0",
         "display_name": "Defects Liability Register",
         "description": "Post-handover warranty and defects-liability-period (DLP) register for the construction rectification phase. After handover the contractor and its subcontractors remain liable to make good defects for a defined period, and elements carry workmanship or manufacturer warranties. Each entry records what is covered, the responsible subcontractor and work package, the warranty type (workmanship, manufacturer, latent defect, extended, other), the handover and warranty dates, and the key DLP end date, alongside the defect notices raised against it. The module derives the per-status and per-warranty-type counts, the expiring and expired lists, the open and overdue defect load, a per-subcontractor health view, an overall health score, and the single most useful signal: which entries have a finished DLP with no outstanding defects and are clear for the final retention money to be released.",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "business",
         "depends": [
           "oe_projects"
@@ -97582,7 +97582,7 @@
         "version": "0.1.0",
         "display_name": "Delivery model",
         "description": "Project delivery form decision: compare forms against weighted criteria, allocate every risk category to a party, record the decision for the governance gate, and plan the contract packages and owner-furnished items that procurement and contracts apply",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "core",
         "depends": [
           "oe_users",
@@ -99417,7 +99417,7 @@
         "version": "0.1.0",
         "display_name": "Design management",
         "description": "Owner-side design steering: one project breakdown structure, design roles and approval points, a design schedule per phase, drawing numbering as data, the drawing register on CDE, the distribution matrix and releases as transmittals, internal reviews, expert reports and the permit design package",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "core",
         "depends": [
           "oe_users",
@@ -101943,7 +101943,7 @@
         "version": "0.1.0",
         "display_name": "Design Options",
         "description": "Generate and compare alternative design options side by side. Each option pairs a source model or document with its own priced bill of quantities, so the team can weigh a full set of options on total cost, by-trade deltas and cost per m2, pick a baseline and get a fairness-checked recommendation before committing to one.",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "core",
         "depends": [
           "oe_projects",
@@ -103151,7 +103151,7 @@
         "version": "0.1.0",
         "display_name": "Dispatch board",
         "description": "Magnet board for crews, people and machines: place them on sites, yard and shop day by day, see conflicts, book moves ahead, send each foreman tomorrow's plan and prefill the site timesheet",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "business",
         "depends": [
           "oe_projects",
@@ -104600,7 +104600,7 @@
         "version": "0.1.0",
         "display_name": "Document Assistant",
         "description": "Ask a question in plain language over the project's specifications, drawings, RFIs, submittals, correspondence, minutes and contracts. Answers cite document, revision, page or sheet and section, and say so plainly when the documents do not contain the answer",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "core",
         "depends": [
           "oe_users",
@@ -105075,7 +105075,7 @@
         "version": "0.1.0",
         "display_name": "Documents",
         "description": "Upload, categorize, and manage project documents with tagging and search",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "core",
         "depends": [
           "oe_projects"
@@ -107512,7 +107512,7 @@
         "version": "1.0.0",
         "display_name": "Drawing Revision Compare",
         "description": "Compare two revisions of a drawing (PDF sheets or DWG/DXF), list every changed region, triage it, raise an RFI or markup and flag takeoff and BOQ quantities for re-measure",
-        "author": "OpenConstructionERP",
+        "author": "Vastukar",
         "category": "extension",
         "depends": [
           "oe_projects",
@@ -108646,7 +108646,7 @@
         "version": "1.0.0",
         "display_name": "DWG Takeoff",
         "description": "2D DWG/DXF drawing viewer with measurements, annotations, and BOQ linking",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "extension",
         "depends": [
           "oe_projects"
@@ -110124,7 +110124,7 @@
         "version": "1.0.0",
         "display_name": "EAC v2 Engine",
         "description": "Single-kernel rules engine for QTO, validation, clash, and issue outputs. Stores rules as JSON definitions and evaluates them through DuckDB on DDC canonical Parquet (ADR 002 compliant).",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "core",
         "depends": [
           "oe_users",
@@ -112305,7 +112305,7 @@
         "version": "0.1.0",
         "display_name": "Economics",
         "description": "Business case with investment, benefits and key figures, a cost frame by classification code of the project's own standard compared with the estimate and the commitments, and a financing plan with sources, tranches and a coverage check, approved together at the governance gate",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "business",
         "depends": [
           "oe_users",
@@ -113777,7 +113777,7 @@
         "version": "1.0.0",
         "display_name": "E-invoice",
         "description": "EN 16931 electronic invoice library with standalone validation and generation API. Supports CII (ZUGFeRD 2.1, Factur-X 1.0, XRechnung 3.0) and UBL (Peppol BIS Billing 3.0) syntaxes. The finance module uses this library to render persisted invoices; this module exposes the same capabilities as a standalone API for integrations and dry-run validation.",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "core",
         "depends": [],
         "auto_install": true,
@@ -114183,7 +114183,7 @@
         "version": "1.0.0",
         "display_name": "E-invoice clearance",
         "description": "Government clearance for electronic invoices. In a growing list of countries a PDF is not a legal invoice: Mexico, Brazil, Italy, Poland, Romania, Saudi Arabia and India clear the document with the tax authority before or as it is issued, Spain and Hungary report it afterwards, and the European public sector exchanges it over a network. This module holds the registration per country, the state of each document, the identifier the authority returned and the trail behind it. The document itself is built by the EN 16931 engine; the platforms are adapters behind an interface.",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "core",
         "depends": [
           "oe_finance",
@@ -115812,7 +115812,7 @@
         "version": "1.0.0",
         "display_name": "Egypt ETA e-invoicing",
         "description": "Clears invoices, credit notes and debit notes with the Egyptian Tax Authority. Builds the ETA v1.0 JSON document from a finance invoice with the published calculation rules, checks it before it leaves, signs it with the company's eSeal through a pluggable signer (USB token or HSM over PKCS#11, or an external signing service) and talks to the ETA API. A plugin of the e-invoice clearance module: it adds no tables and registers an adapter, a document builder and validation rules into that module's registries.",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "integration",
         "depends": [
           "oe_einvoice_clearance"
@@ -115854,7 +115854,7 @@
         "version": "1.0.0",
         "display_name": "Poland KSeF e-invoicing",
         "description": "Issues invoices through KSeF, the Polish national e-invoicing system. Builds the FA(3) document from a finance invoice (basic, corrective, advance and settlement invoices, split payment and Annex 15 markers), produces the KOD I and KOD II verification QR codes, tracks the offline modes and their upload deadlines, and talks to the KSeF API 2.0. Checks that payment titles carry the KSeF number from 2027. A plugin of the e-invoice clearance module: it adds no tables and registers an adapter, a document builder and validation rules into that module's registries.",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "integration",
         "depends": [
           "oe_einvoice_clearance"
@@ -115901,7 +115901,7 @@
         "version": "1.0.0",
         "display_name": "Saudi Arabia ZATCA e-invoicing",
         "description": "Issues invoices through ZATCA FATOORA phase 2. Builds the UBL 2.1 KSA document from a finance invoice (tax invoice, credit and debit notes, advance invoices), keeps the invoice counter and previous-invoice-hash chain per EGS unit, applies the cryptographic stamp and the QR, onboards the unit with ZATCA (compliance and production CSID), and clears standard invoices and reports simplified ones. Checks the contracting-sector VAT treatment of retention, advances and damages. A plugin of the e-invoice clearance module: it registers an adapter, a document builder and validation rules into that module's registries.",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "integration",
         "depends": [
           "oe_einvoice_clearance"
@@ -116473,7 +116473,7 @@
         "version": "0.1.0",
         "display_name": "Engineering brief",
         "description": "Project definition for engineering and scheduling: the requirements brief with structured requirements, the technical concept, the area and quantity programme and the framework schedule whose milestones are bound to the gates of the project's governance model",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "core",
         "depends": [
           "oe_users",
@@ -117793,7 +117793,7 @@
         "version": "0.1.0",
         "display_name": "Enterprise Workflows",
         "description": "Configurable approval workflows for invoices, purchase orders, variations, and BOQs",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "enterprise",
         "depends": [
           "oe_users",
@@ -118347,7 +118347,7 @@
         "version": "0.1.0",
         "display_name": "Equipment & Fleet Management",
         "description": "Owned/rented equipment fleet with telemetry, maintenance scheduling, inspections, internal rental billing",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "business",
         "depends": [
           "oe_users",
@@ -121722,7 +121722,7 @@
         "version": "0.1.0",
         "display_name": "ERP Chat",
         "description": "AI chat over construction ERP data: reads through tools, proposes changes a person applies",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "core",
         "depends": [
           "oe_ai",
@@ -123029,7 +123029,7 @@
         "version": "1.0.0",
         "display_name": "ESG Site Performance",
         "description": "Operational site ESG tracking - energy, water, waste, site CO2e, local labour, training and safety recorded per period against targets, with direction-aware KPIs and trends (distinct from embodied carbon)",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "business",
         "depends": [
           "oe_users",
@@ -123434,7 +123434,7 @@
         "version": "1.0.0",
         "display_name": "Basis of Estimate",
         "description": "Auto-drafts the qualifications that accompany an estimate - what it includes, what it excludes and the assumptions behind it - from the finished estimate contents. Reads which trades are present, absent or flagged by the coverage check, drafts editable inclusions, exclusions and assumptions, and exports them with the proposal.",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "business",
         "depends": [
           "oe_boq",
@@ -124392,7 +124392,7 @@
         "version": "1.0.0",
         "display_name": "Estimate Check",
         "description": "Traffic-light sanity review of an estimate before it is submitted: labour, equipment, material, subcontractor and markup ratios compared with the usual range of the company's past estimates, plus data quality checks. Findings can be accepted with a reason; thresholds are editable.",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "estimation",
         "depends": [
           "oe_projects",
@@ -124889,7 +124889,7 @@
         "version": "1.0.0",
         "display_name": "Estimate Rollup",
         "description": "Composes a project's full estimate headline number from the estimating modules that are tracked separately today: the BOQ base (measured works plus markups), the preliminaries register and the allowances / contingency register. Read-only - it reuses each module's own rollup and adds preliminaries and remaining allowances on top of the BOQ base without double-counting, with a line-item breakdown a UI can render as 'BOQ base + Preliminaries + Contingency = Estimate total'.",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "business",
         "depends": [
           "oe_boq",
@@ -125072,7 +125072,7 @@
         "version": "0.1.0",
         "display_name": "Field Diary",
         "description": "Field-worker MVP daily diary with PIN-gated magic-link auth and a dedicated per-project module-grant permission table.",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "core",
         "depends": [
           "oe_projects",
@@ -126673,7 +126673,7 @@
         "version": "1.0.0",
         "display_name": "Field Time",
         "description": "Cost-coded, signed field timesheets for labour and plant. The foreman's end-of-day record of who and which machine worked, how long, and against which BOQ cost code - the authoritative source of actual labour and plant hours for payroll and the cost / EVM model.",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "business",
         "depends": [
           "oe_projects",
@@ -128345,7 +128345,7 @@
         "version": "0.1.0",
         "display_name": "Field Reports",
         "description": "Daily field reports for construction sites - weather, workforce, delays, safety incidents, and approvals",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "core",
         "depends": [
           "oe_projects"
@@ -129849,7 +129849,7 @@
         "version": "1.0.0",
         "display_name": "File Approvals",
         "description": "Multi-step approval workflows for project files with stamp burning on final approval. PDFs are overlay-stamped via pypdf when available; non-PDFs (and the no-pypdf fallback) get a JSON sidecar describing the stamp position + text + approver.",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "core",
         "depends": [
           "oe_projects",
@@ -130416,7 +130416,7 @@
         "version": "1.0.0",
         "display_name": "File Comments",
         "description": "Threaded comments + PDF markup pins across all file kinds, with @mention extraction and resolve workflow.",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "core",
         "depends": [
           "oe_projects",
@@ -130916,7 +130916,7 @@
         "version": "1.0.0",
         "display_name": "File Distribution",
         "description": "Cross-project file search and reusable distribution lists / subscriptions so transmittals, share links and review packages always go to the right humans.",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "core",
         "depends": [
           "oe_projects",
@@ -131486,7 +131486,7 @@
         "version": "1.0.0",
         "display_name": "File Favourites",
         "description": "Per-user star + pin for the 8 file-manager kinds. Favourites are personal bookmarks; pins are elevated favourites that always sort first in the user's Recently Viewed strip.",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "core",
         "depends": [
           "oe_projects",
@@ -131649,7 +131649,7 @@
         "version": "1.0.0",
         "display_name": "File References",
         "description": "ISO 19650 filename validation + generic cross-entity references linking files to RFIs, issues, tasks, and submittals.",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "core",
         "depends": [
           "oe_projects",
@@ -132197,7 +132197,7 @@
         "version": "1.0.0",
         "display_name": "File Saved Views",
         "description": "Personal & shared smart-folder views for /files - serialise the current filter (kind, query, sort, extension, tags, date range, custom keys) under a name and re-apply it with one click.",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "core",
         "depends": [
           "oe_projects",
@@ -132542,7 +132542,7 @@
         "version": "0.1.0",
         "display_name": "File Search",
         "description": "OCR-backed full-text content search across project documents, sheets, markups and reports. PDFium + Tesseract extractors, Postgres tsvector / SQLite LIKE fallback.",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "core",
         "depends": [
           "oe_projects",
@@ -132847,7 +132847,7 @@
         "version": "0.1.0",
         "display_name": "File Tags",
         "description": "Project-scoped polymorphic tags for every file kind. Includes bulk assign/unassign endpoints and an AECO seed-defaults helper (disciplines + phases).",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "core",
         "depends": [
           "oe_projects"
@@ -133225,7 +133225,7 @@
         "version": "1.0.0",
         "display_name": "File Transmittals",
         "description": "Formal send-records for project files: who sent which files to which recipients on which date, for which reason. Each transmittal mints an auto-numbered cover sheet (PDF when reportlab is available, structured plain text otherwise) and single-use acknowledgement tokens for recipients.",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "core",
         "depends": [
           "oe_projects",
@@ -133821,7 +133821,7 @@
         "version": "1.0.0",
         "display_name": "Recycle Bin",
         "description": "Centralised soft-delete + restore for the 8 file-manager kinds. Trashed rows are snapshot to oe_file_trash and the original row is removed; restore re-creates the row in its kind table. A configurable retention window (default 30 days) drives a nightly hard-purge job.",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "core",
         "depends": [
           "oe_projects",
@@ -134178,7 +134178,7 @@
         "version": "1.0.0",
         "display_name": "File Versioning",
         "description": "Polymorphic version chains across all 8 file kinds with restore-any-version semantics. A re-upload of the same canonical name within a project flips the old row to superseded and promotes the new row to current.",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "core",
         "depends": [
           "oe_projects",
@@ -134504,7 +134504,7 @@
         "version": "0.1.0",
         "display_name": "Finance",
         "description": "Invoicing, payments, budgets, and Earned Value Management for construction projects",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "core",
         "depends": [
           "oe_users",
@@ -138183,7 +138183,7 @@
         "version": "1.0.0",
         "display_name": "Forms & Checklists",
         "description": "A template builder plus a reusable library for the forms and checklists site teams fill in every day - safety inductions, concrete-pour acceptance, snag and handover lists. Compose a template from ordered fields once, then fill it into a project submission on a phone or tablet, save a draft, complete it, and export the result to PDF. Templates are versioned by snapshot so editing one never corrupts the forms already submitted against it.",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "business",
         "depends": [
           "oe_projects",
@@ -139121,7 +139121,7 @@
         "version": "1.0.0",
         "display_name": "Formwork",
         "description": "Formwork system catalogue with a two-part rate build-up (amortising panel cost plus per-use erect and strike), per-BOQ assignments that re-price whenever the catalogue moves, pour-cycle scheduling that derives the reuse count and checks the striking time, a project rollup showing what the reuse assumption is worth, and eleven validation rules over the whole thing",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "estimation",
         "depends": [
           "oe_projects",
@@ -140732,7 +140732,7 @@
         "version": "1.0.0",
         "display_name": "Full EVM",
         "description": "Earned Value Management register: approved performance measurement baselines with a cumulative planned-value curve, period measurements, and the full metric set (PV, EV, AC, SV, CV, SPI, CPI, EAC, ETC, VAC, TCPI) with every EAC formula reported side by side",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "enterprise",
         "depends": [
           "oe_finance",
@@ -142257,7 +142257,7 @@
         "version": "0.1.0",
         "display_name": "Public Funding & Grants",
         "description": "Public funding lifecycle: programme -> application and award -> disbursement -> proof of use, with the deadlines and eligible-cost rules each programme imposes",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "business",
         "depends": [
           "oe_users",
@@ -144590,7 +144590,7 @@
         "version": "1.0.0",
         "display_name": "Currency / FX",
         "description": "Exchange-rate register: published rate sets with provenance, point-in-time conversion, per-project currency policy with pinning, and revaluation that separates scope movement from rate movement",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "core",
         "depends": [
           "oe_costs"
@@ -145808,7 +145808,7 @@
         "version": "0.2.0",
         "display_name": "Geo Hub",
         "description": "Geospatial + 3D Tiles platform module: WGS84 anchors, canonical -> glTF -> 3D Tiles 1.1 pipeline on MinIO, imagery / terrain providers, GeoJSON & KML I/O, saved viewpoints, an OGC API - Features service for QGIS and other GIS clients, twelve cross-module subscribers (projects / bim_hub / property_dev / carbon / schedule / clash / field_reports / safety / ncr / risk), dated site survey captures (drone orthophotos and scans) compared with the schedule, and a Cesium-based frontend.",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "core",
         "depends": [
           "oe_users",
@@ -149501,7 +149501,7 @@
         "version": "1.0.0",
         "display_name": "Global Presence",
         "description": "Real-time awareness of who is online and which page they are viewing. Ephemeral, in-memory state broadcast over a single global WebSocket room.",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "core",
         "depends": [
           "oe_users"
@@ -149541,7 +149541,7 @@
         "version": "1.0.0",
         "display_name": "Guarantees and Bonds",
         "description": "Register of bank guarantees and bonds: bid bonds, performance bonds, advance payment and retention guarantees, warranty bonds and parent company guarantees, given to clients or received from subcontractors. Tracks issuer, beneficiary, amount, expiry, auto-extension and claim period through a status lifecycle with a full audit history, reduces the advance guarantee as interim payments recover the advance, gates the first payment on the performance bond, alerts 60, 30 and 14 days before expiry and shows company exposure by bank, by type and against bank credit lines.",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "business",
         "depends": [
           "oe_projects"
@@ -151166,7 +151166,7 @@
         "version": "1.0.0",
         "display_name": "Haul Tickets",
         "description": "Every truck load to or from site as a ticket: earthworks, aggregates, concrete, asphalt and waste or spoil disposal, own fleet and hired hauliers. Gross, tare and net weights, volume or loads, rate per tonne, cubic metre, load or hour, BOQ position or cost code, receiver signature and photos. Fast field capture by QR, prefilled from the day's expected deliveries, weighbridge CSV or Excel import with duplicate detection, daily summaries per site and haulier, reconciliation against haulier invoices and a disposal register for environmental reporting. Verified tickets feed the position actuals.",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "field",
         "depends": [
           "oe_projects"
@@ -153241,7 +153241,7 @@
         "version": "0.1.0",
         "display_name": "HSE Advanced",
         "description": "HSE/EHS: JSA, permit-to-work, toolbox talks, PPE, audits, CAPA, KPI (TRIR/LTIFR) - sister to safety",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "business",
         "depends": [
           "oe_users",
@@ -157095,7 +157095,7 @@
         "version": "0.1.0",
         "display_name": "HSE frame",
         "description": "The health, safety and environment frame of a project: requirements on designers and contractors, environmental review, site clearances, permit conditions merged from the permits module, energy, climate and sustainability targets, safety coordination with appointed roles, the health and safety plan and the security concept. National duties are catalogue data; incidents, permits to work, audits and inspections stay in their own modules and are linked.",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "core",
         "depends": [
           "oe_users",
@@ -158499,7 +158499,7 @@
         "version": "0.1.0",
         "display_name": "Internationalization Foundation",
         "description": "Multi-currency exchange rates, country registry, work calendars, tax configurations",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "core",
         "depends": [
           "oe_users"
@@ -159958,7 +159958,7 @@
         "version": "0.1.0",
         "display_name": "Inbound Capture Gateway",
         "description": "Captures correspondence that reaches a project from outside the app - a forwarded email, a chat / generic webhook, an SMS gateway - normalises each ad-hoc payload to one canonical message shape via the pure inbound normalizer, and persists it as an incoming correspondence record. Capture is idempotent on the provider's own message id, so a retried delivery never doubles up, and provider webhooks are authenticated through a per-provider signature-verification seam.",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "integration",
         "depends": [
           "oe_correspondence",
@@ -160169,7 +160169,7 @@
         "version": "0.1.0",
         "display_name": "Inbound Email",
         "description": "Imports project correspondence that arrives as a stored message file (an exported RFC-822 / .eml), normalizes it (subject, sender, recipients, threading ids, text body and attachment metadata) and scans it for construction delay signals, proposing a starter set of schedule activities for the forensic-delay workflow. File import only, not a live mailbox; nothing is persisted, so no migration",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "controls",
         "depends": [
           "oe_users"
@@ -160318,7 +160318,7 @@
         "version": "1.0.0",
         "display_name": "Regional Pack - India",
         "description": "Indian construction standards: IS codes, CPWD/MES rate references, multi-rate GST (28/18/12/5/0%), INR, and Indian contract forms.",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "regional",
         "depends": [],
         "auto_install": false,
@@ -160358,7 +160358,7 @@
         "version": "0.1.0",
         "display_name": "Quality Inspections",
         "description": "Quality inspection management - concrete pours, waterproofing, MEP, fire stopping, handover with checklists and pass/fail workflows",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "core",
         "depends": [
           "oe_users",
@@ -160877,7 +160877,7 @@
         "version": "0.1.0",
         "display_name": "Integrations",
         "description": "Chat connectors (Teams, Slack, Telegram), outgoing webhooks, email, iCal feeds",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "core",
         "depends": [
           "oe_users",
@@ -161669,7 +161669,7 @@
         "version": "1.0.0",
         "display_name": "Interface Register",
         "description": "Coordination register for the interfaces (handshakes) between work packages, contractors and disciplines on a project - the standard tool on multi-package and multi-contractor jobs. Each interface records who OWNS it, who ACCEPTS or depends on it, the date it must be agreed by, its type (physical, functional, contractual, spatial, information, schedule) and its status (identified, open, in progress, agreed, closed, disputed, on hold), alongside the actions needed to close it. The module derives the per-status, per-priority and per-type counts, the overdue and disputed lists, the agreed percentage, the open action load, a per-work-package health view and a single overall health score, so a coordinator can see at a glance where the coordination risk sits.",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "business",
         "depends": [
           "oe_projects"
@@ -162943,7 +162943,7 @@
         "version": "1.0.0",
         "display_name": "Background Jobs",
         "description": "Status, listing and cancellation surface for the platform-wide Celery job runner (RFC 34 §4 W0.1).",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "core",
         "depends": [],
         "auto_install": true,
@@ -163096,7 +163096,7 @@
         "version": "0.1.0",
         "display_name": "Labor & Crew Rates",
         "description": "All-in labor rate build-up from a base wage plus configurable on-costs (statutory charges, insurance, leave, overtime, supervision, small tools), and composite crew rates blending several trades.",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "core",
         "depends": [
           "oe_users"
@@ -163816,7 +163816,7 @@
         "version": "1.0.0",
         "display_name": "Regional Pack - Latin America",
         "description": "Latin America construction standards: SINAPI (Brazil), NTDIF (Mexico), multi-currency support (BRL/MXN/ARS), and regional contract forms.",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "regional",
         "depends": [],
         "auto_install": false,
@@ -163856,7 +163856,7 @@
         "version": "0.1.0",
         "display_name": "Leasing",
         "description": "Leases of units to tenants in any country: terms, deposit, escalation (fixed or index), rent schedule raised as finance invoices, rent roll, arrears read from finance payments, renewals, notices and terminations with an event trail, export with pluggable profiles",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "business",
         "depends": [
           "oe_projects",
@@ -165276,7 +165276,7 @@
         "version": "0.1.0",
         "display_name": "Legal Entities",
         "description": "Companies of the group and their branches, each with its country and functional currency",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "core",
         "depends": [],
         "auto_install": true,
@@ -165873,7 +165873,7 @@
         "version": "1.0.0",
         "display_name": "Lessons Learned",
         "description": "Cross-project register of lessons captured at project closeout, tagged by trade, cost code and risk category. Estimate and risk screens show how many past projects met the same situation. Entirely manual: people write and confirm every lesson.",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "business",
         "depends": [
           "oe_projects"
@@ -166279,7 +166279,7 @@
         "version": "1.0.0",
         "display_name": "List Views",
         "description": "Saved table layouts for every list page: visible columns, widths, sort and the header filters as a named layout, personal or shared with the team. Separate from oe_saved_views, which runs server-side filter specs against registered entities and stores no column layout; this one keeps presentation state for any table, registered or not.",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "core",
         "depends": [
           "oe_users"
@@ -166547,7 +166547,7 @@
         "version": "0.1.0",
         "display_name": "Markups & Annotations",
         "description": "Drawing markups, scale calibration, and stamp templates for document annotation",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "core",
         "depends": [
           "oe_projects"
@@ -167678,7 +167678,7 @@
         "version": "0.1.0",
         "display_name": "Element Match",
         "description": "Element-to-CWICR vector matcher. Takes a BIM/PDF/DWG/photo element and returns ranked CWICR cost-position candidates with classification, unit, region, and lex boosts.",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "core",
         "depends": [
           "oe_users",
@@ -167912,7 +167912,7 @@
         "version": "0.1.0",
         "display_name": "CAD-BIM Match → Cost",
         "description": "Map BIM/CAD/PDF/photo elements to CWICR cost positions; auto-load scaled resources into BOQ",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "core",
         "depends": [
           "oe_users",
@@ -170515,7 +170515,7 @@
         "version": "1.0.0",
         "display_name": "MCP server",
         "description": "Model Context Protocol endpoint: an external AI client reads a person's projects under that person's permissions and proposes changes the person confirms in the app",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "integration",
         "depends": [
           "oe_users",
@@ -170966,7 +170966,7 @@
         "version": "1.0.0",
         "display_name": "Measurement",
         "description": "Formula-based quantity take-off library: every quantity keeps the formula that produced it, with presets for REB 23.003, OENORM A 2063, NRM and CESMM.",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "core",
         "depends": [],
         "auto_install": true,
@@ -170997,7 +170997,7 @@
         "version": "0.1.0",
         "display_name": "Measurement Book",
         "description": "Dated site measurements per BOQ position with dimensions, measured by and check-measured by, cumulative measured and checked quantities, and a running bill that feeds progress claims",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "business",
         "depends": [
           "oe_projects",
@@ -171564,7 +171564,7 @@
         "version": "0.1.0",
         "display_name": "Meetings",
         "description": "Meeting minutes management - agendas, attendees, action items, and status tracking",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "core",
         "depends": [
           "oe_users",
@@ -173413,7 +173413,7 @@
         "version": "0.1.0",
         "display_name": "Estimating Methodologies",
         "description": "Data-driven per-country estimating methodology engine: typed BOQ hierarchies, analytical dimensions, cascading markups and country / industry templates that coexist with the international method.",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "core",
         "depends": [
           "oe_projects",
@@ -174684,7 +174684,7 @@
         "version": "1.0.0",
         "display_name": "Regional Pack - Mexico",
         "description": "Mexican construction standards: APU unit-price analysis (materiales, mano de obra, maquinaria, indirectos, financiamiento, utilidad and cargos adicionales) under the LOPSRM public-works law, IVA 16 percent with the 8 percent border region and IVA/ISR retenciones, CFDI 4.0 invoicing fields, social-housing bodies (INFONAVIT, FOVISSSTE, CONAVI), IMSS and NOM-031-STPS site safety, 32 states and MXN.",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "regional",
         "depends": [],
         "auto_install": false,
@@ -174764,7 +174764,7 @@
         "version": "1.0.0",
         "display_name": "Regional Pack - Middle East & GCC",
         "description": "Middle East / GCC construction standards: FIDIC contract forms, Islamic calendar references, Ramadan adjustments, GCC VAT rates, bilingual PDF support (Arabic + English).",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "regional",
         "depends": [],
         "auto_install": false,
@@ -174803,7 +174803,7 @@
         "version": "1.0.0",
         "display_name": "Management of Change",
         "description": "Structured workflow for proposing, reviewing, approving and implementing engineering or scope changes with full audit trail.",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "project_controls",
         "depends": [
           "oe_projects",
@@ -175572,7 +175572,7 @@
         "version": "1.0.0",
         "display_name": "Module Builder",
         "description": "Describe a module in a few steps and have the platform build and install it.",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "core",
         "depends": [],
         "auto_install": true,
@@ -176318,7 +176318,7 @@
         "version": "0.1.0",
         "display_name": "Non-Conformance Reports",
         "description": "NCR management - material, workmanship, design non-conformances with root cause analysis and corrective actions",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "core",
         "depends": [
           "oe_users",
@@ -176930,7 +176930,7 @@
         "version": "0.1.0",
         "display_name": "Production-Norm Expansion",
         "description": "Expands a work item and its quantity into unpriced resource demand - labor-hours, machine-hours and material quantities - from a library of production-norm coefficients, before any pricing is applied.",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "core",
         "depends": [],
         "auto_install": true,
@@ -177721,7 +177721,7 @@
         "version": "0.1.0",
         "display_name": "Notifications",
         "description": "In-app notification system with i18n keys and per-user preferences",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "core",
         "depends": [
           "oe_users"
@@ -178415,7 +178415,7 @@
         "version": "1.0.0",
         "display_name": "Customer offers",
         "description": "Turns an estimate into the offer a customer receives: numbered, revisioned and frozen once sent, with market-specific titles, tax and consumer rules from the country pack, a payment schedule, reusable texts, a PDF built for the envelope window, and award to a client contract on acceptance.",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "business",
         "depends": [
           "oe_boq",
@@ -179879,7 +179879,7 @@
         "version": "0.1.0",
         "display_name": "Onboarding",
         "description": "Non-blocking first-run provisioning. Runs the heavy first-run loads (regional cost base import, sample project install) as background jobs so the wizard never makes a new user wait, exposing a progress feed the UI polls and a banner that keeps working after the user has moved on.",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "core",
         "depends": [
           "oe_users",
@@ -180087,7 +180087,7 @@
         "version": "0.1.0",
         "display_name": "OpenCDE API",
         "description": "BuildingSMART OpenCDE Foundation API 1.1 + BCF API 3.0 compliance layer",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "core",
         "depends": [
           "oe_users",
@@ -180706,7 +180706,7 @@
         "version": "1.0.0",
         "display_name": "Owner Bid Schedule",
         "description": "Imports an owner's bid schedule (pay items in the owner's spreadsheet or CSV) into an estimate in one step, keeps the owner's item number, text and unit on each position, shows addenda as a diff and writes the priced schedule back into the owner's own file with the owner's rounding. Format profiles come from the platform, from packs and from the mapping wizard.",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "estimation",
         "depends": [
           "oe_projects",
@@ -181462,7 +181462,7 @@
         "version": "1.0.0",
         "display_name": "Payment Clock",
         "description": "The statutory payment clock. In the United Kingdom, Ireland, Australia, New Zealand, Singapore and Malaysia the dates and notices around a payment application are set by statute rather than agreed; in Germany the VOB/B and the BGB fix the payment deadlines for interim and final invoices. Missing one has a defined legal consequence. This module holds the regime, computes the due date, the notice deadlines and the final date for payment, records the notices actually served, and reports the consequence when a deadline passes unanswered.",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "regional",
         "depends": [
           "oe_projects"
@@ -182800,7 +182800,7 @@
         "version": "1.0.0",
         "display_name": "Payment Release",
         "description": "Contract payment terms, payment release computation from the gross invoiced to the amount to pay, invoice ledger per contract and project, and the retention register with release postings",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "core",
         "depends": [
           "oe_projects",
@@ -184018,7 +184018,7 @@
         "version": "0.1.0",
         "display_name": "Payroll",
         "description": "Draft payroll batches from field labour - aggregates site workforce and field-diary hours per worker/date into entries (hours x rate). Export periods turn approved timesheets into pay lines by country overtime and allowance rules, lock against edits, export CSV, Excel, LODAS or JSON and post labour cost with burden.",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "core",
         "depends": [
           "oe_projects",
@@ -185196,7 +185196,7 @@
         "version": "0.1.0",
         "display_name": "Authority permits",
         "description": "Permit roadmap (which authority approvals, who applies, when, in what order, statutory clocks) and the consolidated register of every permit condition with owner, trigger, evidence and discharge",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "core",
         "depends": [
           "oe_users",
@@ -187596,7 +187596,7 @@
         "version": "0.1.0",
         "display_name": "Phone Log",
         "description": "Capture phone calls, voice notes, and verbal instructions as dispute-ready records - parties, direction, duration, a short summary, and the instruction-bearing sentences pulled out of the transcript - so a spoken instruction is on the project record",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "core",
         "depends": [
           "oe_users",
@@ -187954,7 +187954,7 @@
         "version": "1.0.0",
         "display_name": "Photos",
         "description": "One photo archive for the whole project. Gallery, diary, punch list, field report and progress photos are indexed in place, never copied. Grid, timeline, map, albums and before/after comparison; links to BOQ positions, schedule activities, punch items, inspections and safety observations; drawing pins; AI captions, tags, progress and hazard proposals that a person accepts or rejects; zip export with a JSON record per photo.",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "field",
         "depends": [
           "oe_projects",
@@ -189247,7 +189247,7 @@
         "version": "0.1.0",
         "display_name": "Pipeline Builder",
         "description": "Visual node-graph automation builder - wraps the existing JobRun runner, validation engine and per-module services as draggable, gate-able pipeline nodes",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "core",
         "depends": [
           "oe_users",
@@ -189972,7 +189972,7 @@
         "version": "1.0.0",
         "display_name": "Plan Room",
         "description": "Read-only overlay compositor for a document page - defect pins, markups, measurements and photos - plus positioned photo / note pins",
-        "author": "OpenConstructionERP",
+        "author": "Vastukar",
         "category": "business",
         "depends": [
           "oe_projects",
@@ -190500,7 +190500,7 @@
         "version": "0.1.0",
         "display_name": "Plant register",
         "description": "Main components and long-lead items: lead time with the date of enquiry, latest order date, capacity reservation, procurement route, delivery limits and the spares concept",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "core",
         "depends": [
           "oe_users",
@@ -193014,7 +193014,7 @@
         "version": "1.0.0",
         "display_name": "Point Cloud / Reality Capture",
         "description": "Ingest laser-scan, photogrammetry and LiDAR exports and turn a registered cloud into human-confirmed, validation-gated quantities and progress. Thin core that stores metadata only and dispatches heavy conversion to the out-of-core converter service.",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "core",
         "depends": [
           "oe_projects",
@@ -193922,7 +193922,7 @@
         "version": "0.1.0",
         "display_name": "Client & Partner Portal",
         "description": "External portal users (clients/investors/consultants/subcontractors/suppliers/building users) with magic-link auth, RLS, notifications, audit log",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "business",
         "depends": [
           "oe_users",
@@ -196361,7 +196361,7 @@
         "version": "0.1.0",
         "display_name": "Portfolio",
         "description": "Programme and portfolio tree: hierarchical nodes, project membership, cross-schedule links and portfolio-level CPM over a subtree",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "business",
         "depends": [
           "oe_users",
@@ -196963,7 +196963,7 @@
         "version": "1.0.0",
         "display_name": "Post-calculation",
         "description": "Reconciles the estimate against site actuals into planned-vs-actual labour productivity and material cost: a factor per BoQ line and per resource category, the material really consumed against what the estimate allowed, a project rollup, a ranked list of productivity factors to feed back into estimating, and the same comparison rolled up per production norm so a norm library can be corrected from what the jobs priced with it actually cost. Reads existing BoQ positions, field timesheets, progress readings and the site material ledger; a stateless analysis layer that adds no table.",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "business",
         "depends": [
           "oe_boq",
@@ -197041,7 +197041,7 @@
         "version": "1.0.0",
         "display_name": "Off-site / Prefab / DfMA",
         "description": "Design for Manufacture and Assembly register - track off-site manufactured units (pods, panels, volumetric modules, skids) through an ordered production lifecycle from design to installation, with a hard quality gate before anything is dispatched, delivered or installed.",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "business",
         "depends": [
           "oe_users",
@@ -197696,7 +197696,7 @@
         "version": "1.0.0",
         "display_name": "Preliminaries",
         "description": "General conditions / preliminaries estimator. Prices site establishment, site staff, temporary works, standing plant and welfare as time-related items (a rate per period times the project duration) plus fixed one-off items, and rolls them up per category into a preliminaries total that adds to the estimate alongside the measured work.",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "core",
         "depends": [
           "oe_projects"
@@ -198073,7 +198073,7 @@
         "version": "1.0.0",
         "display_name": "Price Breakdown",
         "description": "Unit-price analysis library: splits a position rate into labour, material, plant, subcontract and other, plus overhead, risk and profit markup.",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "core",
         "depends": [],
         "auto_install": true,
@@ -198109,7 +198109,7 @@
         "version": "0.1.0",
         "display_name": "Price Index Adjustment",
         "description": "Bring costs from a base period and base region to a target period and region using stored construction cost index series and regional factors, without rewriting the source estimate.",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "core",
         "depends": [
           "oe_costs"
@@ -198968,7 +198968,7 @@
         "version": "0.1.0",
         "display_name": "Procurement",
         "description": "Purchase orders, goods receipts, and vendor management for construction projects",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "core",
         "depends": [
           "oe_users",
@@ -203516,7 +203516,7 @@
         "version": "0.1.0",
         "display_name": "Procurement concept",
         "description": "Award concept: packages by trade, section or system, advance packages, procedure and threshold check per package, prequalification to a short list, market sounding, award schedule from need dates and lead times, framework agreements with call-offs",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "core",
         "depends": [
           "oe_users",
@@ -205624,7 +205624,7 @@
         "version": "1.0.0",
         "display_name": "Progress Tracking",
         "description": "Site-execution progress measurement: percent-complete per BOQ position, per-period deltas, cumulative rollup, S-curve generation, parent rollup from children, geo-tagged field entries.",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "core",
         "depends": [
           "oe_projects",
@@ -206305,7 +206305,7 @@
         "version": "1.0.0",
         "display_name": "Project Controls",
         "description": "Executive cross-module controls dashboard. Cost (EVM), schedule, quality, safety, risk and change KPIs side by side, currency-honest, with one-click drill-down to the owning module. Pure read-only consumer over the shared KPI registry.",
-        "author": "OpenConstructionERP",
+        "author": "Vastukar",
         "category": "extension",
         "depends": [
           "oe_projects",
@@ -206539,7 +206539,7 @@
         "version": "0.1.0",
         "display_name": "Project governance",
         "description": "Phase model with gates: management areas with owners, frame documents that become binding at a gate, readiness checks, immutable gate decisions with conditions",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "core",
         "depends": [
           "oe_users",
@@ -208802,7 +208802,7 @@
         "version": "0.1.0",
         "display_name": "Project handbook",
         "description": "Project handbook with a chapter catalogue, owners, versions and four-eyes approval per chapter, live links to the records of the other modules, a PDF of the whole handbook, and the data room: the governance folder tree materialised into the project's document folders",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "core",
         "depends": [
           "oe_users",
@@ -209286,7 +209286,7 @@
         "version": "1.0.0",
         "display_name": "Project Intelligence",
         "description": "AI-powered project completion analysis, scoring, and guided recommendations",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "core",
         "depends": [
           "oe_projects"
@@ -210581,7 +210581,7 @@
         "version": "0.1.0",
         "display_name": "Work-type Route Classifier",
         "description": "Classifies a project's work type - new build, reconstruction, capital repair, re-equipment, maintenance, demolition, change of use - plus a few classifier answers into a delivery / permit route: full permit, notification, permitted development, exempt or expertise required. The decision tree is jurisdiction-neutral data that regional packs override; a confirmed route gates the project before it proceeds.",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "core",
         "depends": [
           "oe_users",
@@ -210931,7 +210931,7 @@
         "version": "0.1.0",
         "display_name": "Projects",
         "description": "Project management with regional settings, classification standards, and validation configuration",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "core",
         "depends": [
           "oe_users"
@@ -214334,7 +214334,7 @@
         "version": "0.1.0",
         "display_name": "Property Development",
         "description": "Property development + buyer portal: developments, plots, house types, options, buyer selections, freeze deadlines, handover & snagging, warranty claims",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "business",
         "depends": [
           "oe_users",
@@ -227393,7 +227393,7 @@
         "version": "0.1.0",
         "display_name": "Punch List",
         "description": "Track construction deficiencies, quality issues, and snag items with photo evidence and verification workflows",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "core",
         "depends": [
           "oe_projects"
@@ -228348,7 +228348,7 @@
         "version": "1.0.0",
         "display_name": "Quality Management System (QMS)",
         "description": "Unified ITP + Inspections + NCR + Punch List + Audits with COPQ analytics",
-        "author": "OpenConstructionERP",
+        "author": "Vastukar",
         "category": "extension",
         "depends": [
           "oe_projects",
@@ -232291,7 +232291,7 @@
         "version": "0.1.0",
         "display_name": "Quality and acceptance concept",
         "description": "Quality requirements, certification targets, proof concept per package, commissioning stages from delivery limit to proof of operation, acceptance plan with legal effects, documentation requirements and evidence preservation; coverage read from linked evidence",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "core",
         "depends": [
           "oe_users",
@@ -234968,7 +234968,7 @@
         "version": "1.0.0",
         "display_name": "Quote Capture and Levelling",
         "description": "Reads supplier and subcontractor quotes from PDF, scanned PDF, Excel or email text: header, line items and conditions, each value with a confidence score and a source anchor shown beside the document. Matches the lines to the tender package scope, normalises units and number formats per locale, flags exclusions, qualifications and escalation clauses, and levels several quotes against the scope with plug rates for scope gaps. After human review a quote becomes a bid in the tender comparison, a supplier price list or a draft purchase order, with the trail of machine against human values. Works without AI on a rules parser; uses the configured AI provider when there is one.",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "business",
         "depends": [
           "oe_projects",
@@ -235577,7 +235577,7 @@
         "version": "1.0.0",
         "display_name": "Rate feedback",
         "description": "Compares what closed projects really cost and how many man-hours they took against the rate of the cost item each bill line was priced from, and proposes an updated rate and hours per unit with a sample size and a confidence score. Nothing changes until an estimator confirms each proposal.",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "business",
         "depends": [
           "oe_costs",
@@ -235974,7 +235974,7 @@
         "version": "1.0.0",
         "display_name": "Rebar Schedule",
         "description": "Reinforcement bending schedules in the ABS interchange format - import the .abs file a CAD system writes alongside the printed schedule, validate every shape against the format's own rules, read the shapes back as bars, meshes, helices and lattice girders, summarise steel by bar diameter, and export the file the bending shop receives.",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "business",
         "depends": [
           "oe_users",
@@ -237311,7 +237311,7 @@
         "version": "0.1.0",
         "display_name": "Event Reconciliation",
         "description": "Stitches a project's record of an event back together across modules and channels. A single instruction may surface as correspondence, a change order, a variation and a management-of-change entry, each in its own table; the pure correlation engine scores which heterogeneous records describe the same underlying event and emits explainable links, and this module assembles the reconciled timeline for one event and persists a reviewer's confirm / reject decisions on each suggested link.",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "controls",
         "depends": [
           "oe_users",
@@ -237666,7 +237666,7 @@
         "version": "1.0.0",
         "display_name": "Record Publishing",
         "description": "Publish a project record - a daily site diary today, meeting minutes and inspection reports next - as one signed PDF and distribute it to a named set of recipients who acknowledge receipt, all in a single action. A thin orchestrator over the record renderers, the storage backend and the file-transmittals engine, so it adds no tables.",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "core",
         "depends": [
           "oe_projects",
@@ -237894,7 +237894,7 @@
         "version": "1.0.0",
         "display_name": "Reporting & Dashboards",
         "description": "KPI snapshots, report templates, and generated reports for projects and portfolios",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "core",
         "depends": [
           "oe_users",
@@ -238758,7 +238758,7 @@
         "version": "0.1.0",
         "display_name": "Requirements & Quality Gates",
         "description": "Extract, validate, and track construction requirements using EAC triplets",
-        "author": "Data Driven Construction",
+        "author": "Vastukar",
         "category": "core",
         "depends": [
           "oe_projects"
@@ -240585,7 +240585,7 @@
         "version": "1.0.0",
         "display_name": "Resource Summary",
         "description": "Rolls up the resource split stored on every priced position across the whole estimate into one procurement-ready statement: total labour-hours and cost, and the total quantity and cost of each material, machine and subcontract line. Gives buyers a single schedule of what the estimate implies they must procure. Reads the existing per-position splits; adds no new estimating data.",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "core",
         "depends": [
           "oe_boq"
@@ -241018,7 +241018,7 @@
         "version": "0.1.0",
         "display_name": "Resource Planning",
         "description": "Resources (people/crews/equipment/subs) with skills, certifications, availability, assignments, conflict detection, skill-based matching",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "business",
         "depends": [
           "oe_users",
@@ -243901,7 +243901,7 @@
         "version": "1.0.0",
         "display_name": "Resumable Uploads",
         "description": "Chunked, resumable uploads for large CAD and PDF files. A session tracks received chunks so an interrupted upload resumes instead of restarting. On completion chunks are assembled and handed to the existing document store and conversion pipeline.",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "core",
         "depends": [
           "oe_projects",
@@ -244231,7 +244231,7 @@
         "version": "0.2.0",
         "display_name": "Find Records",
         "description": "Claim-grade retrieval across the project record. Search documents, correspondence, and change orders together, filtered by party, date window, reference and type, ranked with the provenance you need to reconstruct what happened, and pin the searches worth coming back to",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "core",
         "depends": [
           "oe_users",
@@ -244648,7 +244648,7 @@
         "version": "0.1.0",
         "display_name": "Review Authority",
         "description": "Manages the external review cycle a project runs with an approving authority - state expertise, building control, an authority having jurisdiction, or a technical review board. Tracks the submission, the document version pinned at submission, the remarks the authority issues, the responses back, and the final decision, with an SLA clock, a stale-version detector, a contestability classifier that never auto-decides a missing norm reference, and a repeat-remark radar. Jurisdiction-neutral: it models the cycle and its evidence, never a country's rulebook; regional packs supply the authority vocabularies.",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "core",
         "depends": [
           "oe_users",
@@ -245368,7 +245368,7 @@
         "version": "0.1.0",
         "display_name": "Requests for Information",
         "description": "RFI management - questions, responses, cost/schedule impact tracking, and drawing cross-references",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "core",
         "depends": [
           "oe_users",
@@ -246753,7 +246753,7 @@
         "version": "0.1.0",
         "display_name": "Supplier RFQ",
         "description": "Requests for quotation to suppliers for materials and services, quote evaluation and award to a purchase order",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "enterprise",
         "depends": [
           "oe_users",
@@ -248765,7 +248765,7 @@
         "version": "0.1.0",
         "display_name": "Risk Register",
         "description": "Track project risks, assess probability and impact, manage mitigation strategies",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "core",
         "depends": [
           "oe_projects"
@@ -249995,7 +249995,7 @@
         "version": "0.1.0",
         "display_name": "Conceptual Estimate",
         "description": "Instant order-of-magnitude estimate from building type, gross floor area, quality and region - an elemental cost per m2 model with an honest accuracy band",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "core",
         "depends": [
           "oe_projects",
@@ -250728,7 +250728,7 @@
         "version": "1.0.0",
         "display_name": "Regional Pack - Russia & CIS",
         "description": "Russian construction standards: GESN/FER/TER cost databases, NDS rates, and Russian contract templates.",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "regional",
         "depends": [],
         "auto_install": false,
@@ -250761,7 +250761,7 @@
         "version": "1.0.0",
         "display_name": "Regional Pack - South Africa",
         "description": "South African construction standards: SANS 1200 civil works and ASAQS building measurement, CIDB contractor grading, PPPFA 80/20 and 90/10 preferential procurement scoring, National Treasury infrastructure delivery gates, ZAR and 15 percent VAT.",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "regional",
         "depends": [],
         "auto_install": false,
@@ -250830,7 +250830,7 @@
         "version": "0.1.0",
         "display_name": "Safety Management",
         "description": "Safety incident reporting and observation tracking with risk scoring, corrective actions, and regulatory compliance",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "core",
         "depends": [
           "oe_users",
@@ -252235,7 +252235,7 @@
         "version": "1.0.0",
         "display_name": "Saved Views",
         "description": "Record-level saved-search engine: save a filter spec against any registered entity, share it with a team or a project, and reuse it as a list, count, tile, or export.",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "core",
         "depends": [
           "oe_users",
@@ -253053,7 +253053,7 @@
         "version": "0.1.0",
         "display_name": "4D Schedule",
         "description": "4D construction scheduling - linking BOQ positions to a timeline",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "core",
         "depends": [
           "oe_projects",
@@ -256797,7 +256797,7 @@
         "version": "0.1.0",
         "display_name": "Schedule Advanced (Last Planner)",
         "description": "LPS: phase plans, look-ahead, constraints, weekly work plans, commitments, PPC + RNC, baselines + delta tracking",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "business",
         "depends": [
           "oe_users",
@@ -263071,7 +263071,7 @@
         "version": "1.0.0",
         "display_name": "SCIM Provisioning",
         "description": "SCIM 2.0 server for Users and Groups: the company identity provider creates people, changes their role through admin-mapped groups and removes access when they leave. Soft deactivation revokes sessions and API keys; the audit log records each change.",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "core",
         "depends": [
           "oe_users"
@@ -263361,7 +263361,7 @@
         "version": "0.1.0",
         "display_name": "Semantic Search",
         "description": "Cross-collection vector search - fans out to BOQ, documents, tasks, risks, BIM elements and chat history, then merges the results via Reciprocal Rank Fusion.",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "core",
         "depends": [],
         "auto_install": true,
@@ -263577,7 +263577,7 @@
         "version": "0.1.0",
         "display_name": "Service & Maintenance",
         "description": "Service contracts, tickets, work orders, SLA tracking, and preventive-maintenance scheduling for MEP and facility service teams.",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "business",
         "depends": [
           "oe_users",
@@ -266685,7 +266685,7 @@
         "version": "0.1.0",
         "display_name": "Service Charges",
         "description": "Owners associations and service charge budgets in any country: apportionment keys by area, permille, equal or custom shares, approved yearly budgets, demands raised as finance receivables, year-end reconciliation against actual costs from finance payables and service work orders",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "business",
         "depends": [
           "oe_projects",
@@ -267990,7 +267990,7 @@
         "version": "0.1.0",
         "display_name": "E-Signature Registry",
         "description": "Jurisdiction-neutral e-signature workflow abstraction and attestation registry. Models who must sign a document, records signature attestations (signatory, role, signed content hash, certificate metadata) and reasons about completeness, hash-staleness and certificate-metadata expiry. Describes a signature by its legal capability - qualified / advanced / simple electronic, or digital certificate - never by a vendor. Performs no cryptography and stores no keys, passwords or credentials; regional schemes plug in as provider adapters.",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "core",
         "depends": [
           "oe_users",
@@ -268617,7 +268617,7 @@
         "version": "1.0.0",
         "display_name": "Site Inventory",
         "description": "On-site material metering and stock: a movement ledger (inbound, consumption against a BoQ position, waste and shrinkage, inter-location transfer) that derives stock on hand, inventory turnover and days on hand, the waste ratio, and material-cost variance against the estimate. Closes the loop between procurement goods receipts and what is actually held and consumed on site.",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "business",
         "depends": [
           "oe_projects",
@@ -269496,7 +269496,7 @@
         "version": "1.1.0",
         "display_name": "Site Logistics & Delivery",
         "description": "Plan and control what arrives on site: access gates with operating hours and slot capacity, material laydown zones, and a delivery booking board with approve/reject scheduling. Windows are validated against gate hours and checked for clashes so two approved deliveries never fight for the same gate. Deliveries are booked against the bill positions they carry, so every estimate line reads back as booked, delivered and outstanding. The logistics plan adds expansion stages with an area balance, gate load limits, utility connections, the logistics concept, transports with permits, customs data and the neighbourhood.",
-        "author": "OpenConstructionERP",
+        "author": "Vastukar",
         "category": "business",
         "depends": [
           "oe_projects",
@@ -272570,7 +272570,7 @@
         "version": "1.0.0",
         "display_name": "Site Mobilisation Readiness",
         "description": "Pre-construction mobilisation and site-setup readiness. A per-project plan with a target commencement date and a checklist of readiness items grouped by mobilisation category (access, welfare and accommodation, temporary utilities, security and hoarding, temporary works, environmental controls, logistics and laydown, permits and consents, inductions and training). Items flagged as hard prerequisites become commencement gates, and the module derives per-category and overall readiness percentages, the gate status, and the blocked and overdue lists so a site manager can see at a glance whether the site is ready to start.",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "business",
         "depends": [
           "oe_projects"
@@ -273309,7 +273309,7 @@
         "version": "0.1.0",
         "display_name": "Site sensors",
         "description": "Concrete maturity and strength, noise, dust, vibration, weather and water level on site: devices, a compact time series, limits from country data, alerts with acknowledgement, formwork strikes",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "business",
         "depends": [
           "oe_users",
@@ -275275,7 +275275,7 @@
         "version": "0.1.0",
         "display_name": "Site Supervision",
         "description": "Design-side site supervision: plan and record the design team's supervision visits to a project, raise observations (conformance, deviation, hidden-works acceptance, instruction, motivated refusal), track plan-versus-fact and overdue visits, keep a hidden-works acceptance register, feed instructions and deviations into the change route, and export a visit as a structured supervision log. Jurisdiction-neutral: it records what was inspected and observed, never a country's rule; regional packs supply the local vocabularies (author supervision / contract administration / construction administration / Objektüberwachung).",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "core",
         "depends": [
           "oe_users",
@@ -275893,7 +275893,7 @@
         "version": "1.0.0",
         "display_name": "Smart Views",
         "description": "Rule-based, re-evaluating BIM viewer presets. Selectors run against canonical element properties at view-load time so a view authored on one model revision keeps working after the geometry has been re-imported - and the same view can be applied to any model that exposes the right properties.",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "core",
         "depends": [
           "oe_projects",
@@ -276405,7 +276405,7 @@
         "version": "0.1.0",
         "display_name": "Source Data Register",
         "description": "Project register of the prerequisite source documents a delivery depends on before work can start - permits, surveys, geotechnical reports, technical conditions, title deeds, approvals and technical specifications - with validity windows, renewal reminders, a completeness checklist and a schedule-blocking flag. Jurisdiction-neutral: the register tracks what a document is and when it is valid; regional packs supply the country-specific vocabularies.",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "core",
         "depends": [
           "oe_users",
@@ -277146,7 +277146,7 @@
         "version": "0.1.0",
         "display_name": "Staffing",
         "description": "Project staffing plan for development, execution and operation: roles, entry dates, recruiting status, owner organisation, consultants, operator build-up and knowledge handover; plus the personnel file of each person on the project with document expiry, travel, leave and retention",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "core",
         "depends": [
           "oe_users",
@@ -278684,7 +278684,7 @@
         "version": "0.1.0",
         "display_name": "Stakeholders and organisation",
         "description": "Stakeholder register with assessments, communication plan, engagement events and commitments to stakeholders; project roles, governance bodies and the mandate matrix of who decides what",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "core",
         "depends": [
           "oe_users",
@@ -280630,7 +280630,7 @@
         "version": "0.1.0",
         "display_name": "Subcontractor Management",
         "description": "Subcontractor lifecycle: prequalification, certificates, agreements, payment applications, retention, rating",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "business",
         "depends": [
           "oe_users",
@@ -285771,7 +285771,7 @@
         "version": "0.1.0",
         "display_name": "Submittals",
         "description": "Construction submittal management - shop drawings, product data, samples, mock-ups, test reports, calculations, method statements, certificates and warranties with review/approval workflows",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "core",
         "depends": [
           "oe_users",
@@ -286739,7 +286739,7 @@
         "version": "1.0.0",
         "display_name": "Supplier Catalogs & Vendor Management",
         "description": "Extends Procurement: vendor master, item catalogs, price lists, purchase requisitions, extended POs, goods receipts with batch/serial tracking, vendor invoices with 3-way match, and warehouse stock control.",
-        "author": "OpenConstructionERP",
+        "author": "Vastukar",
         "category": "extension",
         "depends": [
           "oe_projects",
@@ -292059,7 +292059,7 @@
         "version": "0.1.0",
         "display_name": "Quantity Takeoff",
         "description": "Manual and AI-assisted quantity takeoff from drawings and models",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "extension",
         "depends": [
           "oe_projects",
@@ -294750,7 +294750,7 @@
         "version": "0.1.0",
         "display_name": "Tasks",
         "description": "Project task management - tasks, topics, decisions, and personal items with checklists and assignment workflows",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "core",
         "depends": [
           "oe_users",
@@ -295470,7 +295470,7 @@
         "version": "1.0.0",
         "display_name": "Withholding Tax",
         "description": "Statutory construction withholding tax and VAT reverse charge. The payer deducts tax from a subcontractor and remits it to the state (UK CIS, German Bauabzugsteuer, Irish RCT, Italian ritenuta d'acconto, US backup withholding), and on a reverse-charge supply the buyer accounts for the VAT so the invoice must carry the statutory wording and no VAT amount.",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "core",
         "depends": [
           "oe_projects",
@@ -297992,7 +297992,7 @@
         "version": "0.1.0",
         "display_name": "Team Visibility",
         "description": "Team-based entity visibility and access control within projects",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "core",
         "depends": [
           "oe_users",
@@ -299017,7 +299017,7 @@
         "version": "1.0.0",
         "display_name": "Temporary Works Register",
         "description": "Safety-critical governance register for construction temporary works (falsework, formwork, propping, excavation support, scaffold, facade retention, crane bases, dewatering and more). Each item runs a gated lifecycle - design brief, independent design check by category (0 to 3), Temporary Works Coordinator permit to load, inspection before use, and permit to strike or dismantle. The module derives per-status and per-category counts, the design-clearance progress, the overdue-to-load and overdue-to-strike lists, the per-item load and strike gate status, and the single most important safety signal: any item bearing load with no valid permit to load in force.",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "business",
         "depends": [
           "oe_projects"
@@ -300136,7 +300136,7 @@
         "version": "0.1.0",
         "display_name": "Main Contract Tender",
         "description": "Main contract tender priced from the bill of quantities: distribute, collect and compare bids, award the main contract and write the winning rates back into the BOQ",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "core",
         "depends": [
           "oe_projects",
@@ -303475,7 +303475,7 @@
         "version": "0.2.0",
         "display_name": "Project Timeline",
         "description": "Unified, cross-module project timeline over the existing activity-log store (no new table) - a newest-first, filterable feed of significant domain events rolled up to their umbrella project, the history of any single record, and an event-bus bridge subscriber that persists those events so the timeline survives a restart",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "core",
         "depends": [
           "oe_users",
@@ -303628,7 +303628,7 @@
         "version": "0.1.0",
         "display_name": "Transmittals",
         "description": "Formal document transmittal management with recipients, acknowledgements, and responses",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "core",
         "depends": [
           "oe_users",
@@ -304359,7 +304359,7 @@
         "version": "1.0.0",
         "display_name": "Regional Pack - United Kingdom",
         "description": "UK construction standards: JCT/NEC4 contract forms, NRM2 measurement rules, CIS tax deductions, Interim Valuations, VAT rates, and GBP.",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "regional",
         "depends": [],
         "auto_install": false,
@@ -304391,7 +304391,7 @@
         "version": "1.0.0",
         "display_name": "Direct Uploads",
         "description": "HMAC-signed direct PUT endpoint for LocalStorageBackend presigned URLs.",
-        "author": "OpenConstructionERP Core",
+        "author": "Vastukar",
         "category": "core",
         "depends": [],
         "auto_install": true,
@@ -304447,7 +304447,7 @@
         "version": "1.0.0",
         "display_name": "Regional Pack - California",
         "description": "California construction rules on top of the US pack: the district sales tax stack and the split between materials the contractor consumes and fixtures it sells, the state prevailing wage regime and its thresholds, the public and private retention caps, and the statutory payment and lien clocks.",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "regional",
         "depends": [
           "oe_us_pack"
@@ -304493,7 +304493,7 @@
         "version": "1.0.0",
         "display_name": "Regional Pack - United States",
         "description": "US construction standards: progress payment applications with a continuation sheet, CSI MasterFormat divisions, imperial units, USD, and state sales-tax examples.",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "regional",
         "depends": [],
         "auto_install": false,
@@ -304527,7 +304527,7 @@
         "version": "1.0.0",
         "display_name": "Regional Pack - Texas",
         "description": "Texas construction rules on top of the US pack: how a lump sum contract and a separated contract split the sales tax on materials, the locally determined prevailing wage, the public works retainage caps and their contract-value threshold, and the statutory payment and lien clocks.",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "regional",
         "depends": [
           "oe_us_pack"
@@ -304579,7 +304579,7 @@
         "version": "0.1.0",
         "display_name": "Users & Authentication",
         "description": "User management, JWT authentication, API keys, and RBAC",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "core",
         "depends": [],
         "auto_install": true,
@@ -306103,7 +306103,7 @@
         "version": "1.0.0",
         "display_name": "Validation Engine",
         "description": "Data quality validation with configurable rule sets (DIN 276, GAEB, NRM, MasterFormat, BOQ quality)",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "core",
         "depends": [
           "oe_projects",
@@ -306781,7 +306781,7 @@
         "version": "0.1.0",
         "display_name": "Value Realized",
         "description": "Composition layer that turns figures the platform already computes - approved-change cost and schedule exposure, the cost-recovery ledger, and admin hours given back by assisted actions - into a single project and portfolio value-realized summary, plus an adoption-vs-non-adoption benchmark on the firm's own projects. It reads the existing change, recovery and activity records; its only table is a small admin-tunable lookup of the hours-saved minute factors (oe_value_time_factor)",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "controls",
         "depends": [
           "oe_users",
@@ -307317,7 +307317,7 @@
         "version": "0.1.0",
         "display_name": "Variations & Site Measurements",
         "description": "Variations lifecycle: Notice -> VR -> VO -> site measurements -> daywork -> disruption/EOT claims -> Final Account",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "business",
         "depends": [
           "oe_users",
@@ -312299,7 +312299,7 @@
         "version": "0.1.0",
         "display_name": "Voice Capture",
         "description": "Turn a spoken or typed site note into a structured draft - a daily-diary note, a defect, or a task - that the worker reviews and confirms before it is saved. Records in the browser, transcribes and translates, and degrades gracefully with no AI keys.",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "core",
         "depends": [
           "oe_users",
@@ -312503,7 +312503,7 @@
         "version": "0.1.0",
         "display_name": "Waste Factors",
         "description": "Net-to-gross quantity adjustment with waste, lap and coverage factors",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "core",
         "depends": [],
         "auto_install": true,
@@ -312812,7 +312812,7 @@
         "version": "0.1.0",
         "display_name": "Webhook Leads",
         "description": "Secure incoming webhook endpoints that auto-create CRM leads from external sources (marketing forms, ad platforms, other CRMs). Per-source API key / HMAC / JWT auth, IP allowlisting, rate limiting, payload mapping, and full audit logging.",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "business",
         "depends": [
           "oe_crm"
@@ -313450,7 +313450,7 @@
         "version": "0.1.0",
         "display_name": "Bid Outcome Ledger",
         "description": "Record how each bid we submitted ended: won, lost or withdrawn, the winning and second price, the number of competitors, the money left on the table and the hit rate by client, trade and size",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "business",
         "depends": [
           "oe_users"
@@ -314053,7 +314053,7 @@
         "version": "1.0.0",
         "display_name": "WIP Report",
         "description": "Work in progress schedule with over and under billing, per project and for the portfolio, on the percentage-of-completion cost-to-cost method. Reads contract value and approved change orders, cost to date and estimate at completion from the cost-value reconciliation, and billings from progress claims and invoices; closes month-end snapshots, shows gross profit fade or gain against the previous close and the backlog, and exports to Excel and PDF.",
-        "author": "OpenConstructionERP Core Team",
+        "author": "Vastukar",
         "category": "business",
         "depends": [
           "oe_projects"

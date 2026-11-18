@@ -29,6 +29,7 @@ jobs:
             const allowLogins = new Set([
               'boikoartem',
               'datadrivenconstruction',
+              'taha-aalam',
               'dependabot[bot]',
               'github-actions[bot]',
               'web-flow',
@@ -36,6 +37,7 @@ jobs:
             const allowEmails = new Set([
               'info@datadrivenconstruction.io',
               '94158709+datadrivenconstruction@users.noreply.github.com',
+              'taha.aalam@gmail.com',
               'noreply@github.com',
             ]);
             const emailOk = (raw) => {

@@ -2898,7 +2898,7 @@ function DashboardPageInner() {
         >
           <img
             src="/brand/vastukar-logo.webp"
-            alt="Vastukar"
+            alt={t('app.name', { defaultValue: 'Vastukar' })}
             className="h-3.5 w-auto opacity-60 group-hover/ddc:opacity-100 transition-opacity"
           />
           <span className="hidden sm:inline">
