@@ -32,30 +32,61 @@ interface PerProjectShortcuts {
   starred: string[];
   recents: string[];
 }
-type Store = Record<string, PerProjectShortcuts>;
+/** In-memory store. A Map keeps project ids as keys without ever performing
+ *  a computed object-key write, so a crafted projectId (e.g. "__proto__")
+ *  cannot pollute anything - Map.set is a keyed store, not a property write. */
+type Store = Map<string, PerProjectShortcuts>;
 
 function readStore(): Store {
-  if (typeof window === 'undefined') return {};
+  if (typeof window === 'undefined') return new Map();
   try {
     const raw = window.localStorage.getItem(STORAGE_KEY);
-    if (!raw) return {};
-    const parsed = JSON.parse(raw);
-    if (!parsed || typeof parsed !== 'object' || Array.isArray(parsed)) return {};
-    // Null prototype: projectId comes from routes, so the persist callback's
-    // computed-key write must land as an ordinary own property and never
-    // reach Object.prototype. UNSAFE_SHORTCUT_KEYS is the readability guard;
-    // this is the structural one.
-    const store: Store = Object.assign(Object.create(null), parsed as Store);
-    return store;
+    if (!raw) return new Map();
+    const parsed = JSON.parse(raw) as unknown;
+    const out: Store = new Map();
+    const accept = (projectId: string, value: { starred?: unknown; recents?: unknown }) => {
+      if (!Array.isArray(value.starred) || !Array.isArray(value.recents)) return;
+      out.set(projectId, {
+        starred: value.starred.filter((s): s is string => typeof s === 'string'),
+        recents: value.recents.filter((s): s is string => typeof s === 'string'),
+      });
+    };
+    if (Array.isArray(parsed)) {
+      // Current format: an entries array of { projectId, starred, recents }.
+      for (const entry of parsed) {
+        if (!entry || typeof entry !== 'object') continue;
+        const e = entry as { projectId?: unknown; starred?: unknown; recents?: unknown };
+        if (typeof e.projectId !== 'string') continue;
+        accept(e.projectId, e);
+      }
+      return out;
+    }
+    if (parsed && typeof parsed === 'object') {
+      // Older builds persisted a plain object keyed by project id. Read that
+      // shape through Object.entries (a read, not a computed write) so no
+      // stored shortcut is lost across the upgrade.
+      for (const [projectId, value] of Object.entries(parsed as Record<string, unknown>)) {
+        if (!value || typeof value !== 'object') continue;
+        accept(projectId, value as { starred?: unknown; recents?: unknown });
+      }
+    }
+    return out;
   } catch {
-    return {};
+    return new Map();
   }
 }
 
 function writeStore(store: Store): void {
   if (typeof window === 'undefined') return;
   try {
-    window.localStorage.setItem(STORAGE_KEY, JSON.stringify(store));
+    // Persist an entries array: the shape on disk never carries dynamically
+    // computed object keys.
+    const entries = [...store.entries()].map(([projectId, value]) => ({
+      projectId,
+      starred: value.starred,
+      recents: value.recents,
+    }));
+    window.localStorage.setItem(STORAGE_KEY, JSON.stringify(entries));
   } catch {
     /* quota errors are non-fatal */
   }
@@ -82,7 +113,7 @@ export function useSmartViewShortcuts(
     if (!projectId) return { starred: [], recents: [] };
     if (UNSAFE_SHORTCUT_KEYS.has(projectId)) return { starred: [], recents: [] };
     const store = readStore();
-    return store[projectId] ?? { starred: [], recents: [] };
+    return store.get(projectId) ?? { starred: [], recents: [] };
   });
 
   // Re-read when the project changes so the chip strip refreshes.
@@ -96,7 +127,7 @@ export function useSmartViewShortcuts(
       return;
     }
     const store = readStore();
-    setState(store[projectId] ?? { starred: [], recents: [] });
+    setState(store.get(projectId) ?? { starred: [], recents: [] });
   }, [projectId]);
 
   const persist = useCallback(
@@ -104,7 +135,7 @@ export function useSmartViewShortcuts(
       setState(next);
       if (!projectId || UNSAFE_SHORTCUT_KEYS.has(projectId)) return;
       const store = readStore();
-      store[projectId] = next;
+      store.set(projectId, next);
       writeStore(store);
     },
     [projectId],

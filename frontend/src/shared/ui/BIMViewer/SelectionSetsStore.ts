@@ -91,15 +91,15 @@ function clampElementIds(ids: string[]): string[] {
 function readAll(): PersistedShape {
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
-    if (!raw) return {};
+    if (!raw) return new Map();
     const parsed = JSON.parse(raw) as unknown;
-    if (!parsed || typeof parsed !== 'object' || Array.isArray(parsed)) return {};
-    // Null prototype: modelId keys come from routes and localStorage, so a
-    // crafted key ("__proto__", "constructor") must land as an ordinary own
-    // property instead of reaching Object.prototype.
-    const out: PersistedShape = Object.create(null);
-    for (const [modelId, value] of Object.entries(parsed as Record<string, unknown>)) {
-      if (!Array.isArray(value)) continue;
+    // In-memory shape is a Map: model ids come from routes and localStorage,
+    // and Map.set is a keyed store rather than a computed object-key write,
+    // so a crafted model id ("__proto__", "constructor") cannot reach
+    // Object.prototype.
+    const out: PersistedShape = new Map();
+    const accept = (modelId: string, value: unknown) => {
+      if (!Array.isArray(value)) return;
       const sets: SelectionSet[] = [];
       for (const raw of value) {
         if (!raw || typeof raw !== 'object') continue;
@@ -127,19 +127,39 @@ function readAll(): PersistedShape {
               : undefined,
         });
       }
-      out[modelId] = sets;
+      out.set(modelId, sets);
+    };
+    if (Array.isArray(parsed)) {
+      // Current format: an entries array of { modelId, sets } buckets.
+      for (const bucket of parsed) {
+        if (!bucket || typeof bucket !== 'object') continue;
+        const b = bucket as { modelId?: unknown; sets?: unknown };
+        if (typeof b.modelId !== 'string') continue;
+        accept(b.modelId, b.sets);
+      }
+      return out;
+    }
+    if (!parsed || typeof parsed !== 'object') return new Map();
+    // Older builds persisted a plain object keyed by model id. Read that
+    // shape through Object.entries (a read, not a computed write) so no
+    // stored selection set is lost across the upgrade.
+    for (const [modelId, value] of Object.entries(parsed as Record<string, unknown>)) {
+      accept(modelId, value);
     }
     return out;
   } catch {
-    return {};
+    return new Map();
   }
 }
 
 function writeAll(data: PersistedShape): void {
   try {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+    // Persist an entries array of { modelId, sets } buckets: the shape on
+    // disk never carries dynamically computed object keys.
+    const buckets = [...data.entries()].map(([modelId, sets]) => ({ modelId, sets }));
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(buckets));
   } catch {
-    // Quota or serialisation error — best-effort. The in-memory copy still
+    // Quota or serialisation error - best-effort. The in-memory copy still
     // works for the current session.
   }
 }
@@ -196,7 +216,7 @@ export class SelectionSetsStore {
   /** Sets for the supplied model. Returns a defensive copy. */
   list(modelId: string): SelectionSet[] {
     const all = readAll();
-    const sets = all[modelId] ?? [];
+    const sets = all.get(modelId) ?? [];
     return sets.map((s) => ({ ...s, elementIds: [...s.elementIds] }));
   }
 
@@ -218,7 +238,7 @@ export class SelectionSetsStore {
     const note = validateNote(extras?.note);
     const folder = validateFolder(extras?.folder);
     const all = readAll();
-    const sets = all[modelId] ?? [];
+    const sets = all.get(modelId) ?? [];
     if (sets.length >= MAX_SETS_PER_MODEL) {
       throw new Error(
         `Cannot create more than ${MAX_SETS_PER_MODEL} selection sets per model. Delete an existing set first.`,
@@ -236,7 +256,7 @@ export class SelectionSetsStore {
       note,
       folder,
     };
-    all[modelId] = [...sets, set];
+    all.set(modelId, [...sets, set]);
     writeAll(all);
     this.notify();
     return { ...set, elementIds: [...set.elementIds] };
@@ -254,7 +274,7 @@ export class SelectionSetsStore {
     >,
   ): SelectionSet {
     const all = readAll();
-    for (const [modelId, sets] of Object.entries(all)) {
+    for (const [modelId, sets] of all) {
       const idx = sets.findIndex((s) => s.id === id);
       if (idx < 0) continue;
       const current = sets[idx]!;
@@ -279,7 +299,7 @@ export class SelectionSetsStore {
       };
       const nextSets = sets.slice();
       nextSets[idx] = updated;
-      all[modelId] = nextSets;
+      all.set(modelId, nextSets);
       writeAll(all);
       this.notify();
       return { ...updated, elementIds: [...updated.elementIds] };
@@ -292,10 +312,10 @@ export class SelectionSetsStore {
   delete(id: string): void {
     const all = readAll();
     let changed = false;
-    for (const [modelId, sets] of Object.entries(all)) {
+    for (const [modelId, sets] of all) {
       const next = sets.filter((s) => s.id !== id);
       if (next.length !== sets.length) {
-        all[modelId] = next;
+        all.set(modelId, next);
         changed = true;
       }
     }

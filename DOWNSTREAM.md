@@ -738,9 +738,10 @@ Clears the five failing check jobs on PR #13 so the branch ships green:
 - CodeQL: fixes the three alerts the PR diff re-surfaced (all three pre-date
   the PR on `main`, created 2026-11-10):
   `js/remote-property-injection` in the BIM smart-view shortcuts store and the
-  selection-sets store (both localStorage-backed maps keyed by route-derived
-  ids now use null-prototype objects, so a crafted key lands as an ordinary
-  own property and cannot reach `Object.prototype`), and `js/file-system-race`
+  selection-sets store (both are Map-based now; localStorage persists an
+  entries array, the old object-keyed payloads are read and migrated, and a
+  crafted route-derived key can never reach an object property write),
+  and `js/file-system-race`
   in the vite pdfjs-asset plugin (the directory listing is read once with
   dirent types instead of an existsSync/statSync pre-check followed by a
   separate read).
