@@ -56,7 +56,7 @@ export interface SelectionSet {
   folder?: string;
 }
 
-type PersistedShape = Record<string, SelectionSet[]>;
+type PersistedShape = Map<string, SelectionSet[]>;
 
 function randomId(): string {
   return uuid();
