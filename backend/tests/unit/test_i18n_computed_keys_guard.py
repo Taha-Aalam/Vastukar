@@ -71,18 +71,25 @@ def _tree(tmp_path: Path, sources: dict[str, str], en_keys: dict[str, str]) -> t
 
 
 def _i18n_ts(tmp_path: Path) -> str:
-    """A synthetic SUPPORTED_LANGUAGES fixture, so main() never opens the real one.
+    """A synthetic ENABLED_LOCALES fixture, so main() never opens the real one.
 
     main() reads --i18n-ts unconditionally, on every call, not only the ones
     that exercise in-progress/abandoned classification. Left at its default
     it is a path relative to the repo root, so it silently depends on
     whatever cwd pytest happened to start from, same failure shape as the
     --locales bug this file exists to close.
+
+    The shape has to be the allowlist's, not ``SUPPORTED_LANGUAGES``': since
+    the India rollout that name is a ``.filter()`` over this array, so the
+    guard parses ``ENABLED_LOCALES`` and a fixture written the old way reads
+    as an empty offer. The guard treats an empty offer as exit 2 rather than
+    a clean scan of nothing, which is how a stale fixture turned into
+    seventeen red tests instead of passing quietly.
     """
     path = tmp_path / "i18n.ts"
     if not path.exists():
         path.write_text(
-            "export const SUPPORTED_LANGUAGES = [\n  { code: 'en', label: 'English' },\n];\n",
+            "export const ENABLED_LOCALES: readonly string[] = [\n  'en', // English (International)\n];\n",
             encoding="utf-8",
         )
     return str(path)

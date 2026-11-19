@@ -19,7 +19,7 @@ values that happen to equal English (0-6, varying key to key and locale to
 locale - short technical nouns, codes, abbreviations coincide sometimes). A
 leak produces the same count in every affected locale, with translated ru
 the sole exception. Uniformity is the signal. Generalised threshold: flag any
-key identical to en.ts in at least 24 of the 28 non-en locales.
+key identical to en.ts in at least 24 of the non-en locales.
 
 This guard runs that scan across the WHOLE of en.ts on every run, not just a
 recheck of already-known debt, and requires every flagged key to land in
@@ -190,7 +190,7 @@ ALLOWLIST_PATH = "scripts/i18n_leak_allowlist.json"
 PENDING_PATH = "scripts/i18n_leak_pending_review.json"
 CLUSTER_SNAPSHOT_PATH = "scripts/i18n_leak_cluster_snapshot.json"
 
-THRESHOLD = 24  # hard count of locales rendering the en string, out of 42 non-en
+THRESHOLD = 24  # hard count of locales rendering the en string, out of the non-en bundles on disk
 CLUSTER_MIN_KEYS = 3  # locale-set coherence detector: >=N keys sharing one exact set
 
 # A locale part-way through its first translation pass, and the number of en
@@ -208,7 +208,7 @@ CLUSTER_MIN_KEYS = 3  # locale-set coherence detector: >=N keys sharing one exac
 #
 # So the coherence detector, and only that detector, computes its sets without
 # these locales. The threshold detector still sees them, because a key identical
-# to en in 24 of 28 locales is worth reading whoever is in the set.
+# to en in 24 of the non-en locales is worth reading whoever is in the set.
 #
 # The recorded count is a ratchet and it counts TRANSLATED keys, which may only
 # rise. Counting the leaked ones instead reads naturally and is wrong: en.ts
@@ -255,7 +255,13 @@ UNDER_TRANSLATION: dict[str, int] = {
 # or reading git history, which this guard does nowhere else. Neither was judged
 # worth it while the swap is still visible in the diff to anyone reading it. If
 # a swap ever does get through unnoticed, that judgement is the thing to revisit.
-PENDING_REVIEW_CEILING = 230
+#
+# 230 -> 244 on 2026-11-17: fourteen acronyms the threshold scan flagged once
+# the seven India bundles joined the population (MAT, AI, RFI, HVAC, NCR, CP,
+# kgCO2e, GIFA, OpenCDE API). Each differs in at least one locale (de renders
+# AI as KI, cs renders CP as KP), so none met the allowlist test; all fourteen
+# were filed unresolved in the same diff.
+PENDING_REVIEW_CEILING = 244
 
 import re
 

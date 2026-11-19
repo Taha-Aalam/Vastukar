@@ -70,13 +70,18 @@ function americanInstance() {
 }
 
 describe('en-US carries overrides and English answers the rest', () => {
-  it('is registered under the spelling i18next resolves, region upper case', () => {
-    const entry = SUPPORTED_LANGUAGES.find((l) => l.code === 'en-US');
-    expect(entry, 'en-US is not in SUPPORTED_LANGUAGES').toBeDefined();
-    // loadLocaleResource passes this exact string to addResourceBundle, and
-    // i18next looks the bundle up as 'en-US'. A lower-case region would register
-    // a bundle nothing ever reads.
-    expect(entry!.code).toBe('en-US');
+  it('is not offered any more, and every English region maps to plain en', () => {
+    // The India rollout hid en-GB and en-US behind the ENABLED_LOCALES
+    // allowlist: the picker offers one English, and matchSupportedLanguage
+    // answers every English region with it. The file stays on disk and keeps
+    // its override discipline (asserted below) so re-enabling the region is
+    // one allowlist code, not a rebuild.
+    expect(SUPPORTED_LANGUAGES.find((l) => l.code === 'en-US')).toBeUndefined();
+    expect(normalizePackLocale('en-US')).toBe('en');
+    // loadLocaleResource would pass this exact string to addResourceBundle the
+    // day the region is re-enabled, and i18next looks the bundle up as
+    // 'en-US'. A lower-case region would register a bundle nothing ever reads.
+    expect(normalizePackLocale('en-us')).toBe('en');
   });
 
   it('is an override file, not a copy of en.ts', () => {
@@ -155,10 +160,11 @@ describe('en-US carries overrides and English answers the rest', () => {
     expect(base.t('punch.header_subtitle')).toMatch(/\bsnags\b/);
   });
 
-  it('gives a pack that asked for American English the American locale', () => {
-    // commercial-denver names en-US in its manifest. Before this locale existed
-    // that request was answered with 'en'.
-    expect(normalizePackLocale('en-US')).toBe('en-US');
+  it('answers a pack that asked for American English with the offered English', () => {
+    // commercial-denver names en-US in its manifest. While en-US was offered it
+    // was answered with itself; the allowlist now answers it with plain 'en',
+    // because a pack must not resurrect a language the picker does not show.
+    expect(normalizePackLocale('en-US')).toBe('en');
     expect(SUPPORTED_LANGUAGES.some((l) => l.code === normalizePackLocale('en-US'))).toBe(true);
   });
 });

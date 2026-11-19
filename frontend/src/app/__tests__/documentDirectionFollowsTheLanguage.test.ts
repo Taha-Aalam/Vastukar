@@ -38,17 +38,18 @@ describe('document direction follows the active language', () => {
     await i18n.changeLanguage('en');
   });
 
-  it('offers exactly four right-to-left languages, and names them', () => {
-    // The population, printed beside the verdict: 44 languages offered, of
-    // which 4 are RTL. A suite that asserted only the four would not notice
-    // the denominator moving underneath it. The denominator moved here when
-    // English (UK) joined the picker, and again when Hungarian was offered,
-    // and this is the assertion that said so both times - which is the whole
-    // point of writing it as one string rather than as two independent
-    // expectations.
+  it('offers exactly one right-to-left language, and names it', () => {
+    // The population, printed beside the verdict: 11 languages offered, of
+    // which Urdu is RTL. A suite that asserted only the language would not
+    // notice the denominator moving underneath it. The denominator moved here
+    // when English (UK) joined the picker, again when Hungarian was offered,
+    // and once more when the India rollout narrowed the picker to the
+    // ENABLED_LOCALES allowlist — ar, fa and he keep their `dir` fields on the
+    // (hidden) registry entries, and re-enabling any of them brings it back
+    // into this assertion by existing.
     expect(
       `${RTL.length} of ${SUPPORTED_LANGUAGES.length} offered languages are RTL: ${RTL.join(', ')}`,
-    ).toBe('4 of 44 offered languages are RTL: ar, ur, fa, he');
+    ).toBe('1 of 11 offered languages are RTL: ur');
   });
 
   it('resolves rtl for every right-to-left language', () => {
@@ -60,7 +61,7 @@ describe('document direction follows the active language', () => {
     // to answer 'rtl' for everything - or for one language by accident - the
     // assertion above would still pass and this one would fail.
     const wrong = LTR.filter((code) => resolveDirection(code) !== 'ltr');
-    expect({ checked: LTR.length, wrong }).toEqual({ checked: 40, wrong: [] });
+    expect({ checked: LTR.length, wrong }).toEqual({ checked: 10, wrong: [] });
   });
 
   it('writes dir and lang onto <html> for each right-to-left language', () => {
@@ -72,11 +73,22 @@ describe('document direction follows the active language', () => {
   });
 
   it('returns the document to ltr for a control language', () => {
-    applyDocumentDirection('ar');
+    applyDocumentDirection('ur');
     expect(document.documentElement.dir).toBe('rtl');
-    applyDocumentDirection('de');
+    applyDocumentDirection('hi');
     expect(document.documentElement.dir).toBe('ltr');
-    expect(document.documentElement.lang).toBe('de');
+    expect(document.documentElement.lang).toBe('hi');
+  });
+
+  it('never flips the document for a language the allowlist hides', () => {
+    // Arabic declares dir: 'rtl' on its registry entry, but it is not offered:
+    // getLanguageByCode answers the first offered entry for a code outside the
+    // allowlist, so the direction a hidden language would carry is
+    // unreachable and the document stays ltr. The `lang` attribute still
+    // records the code it was handed — it is informational, and writing it is
+    // what applyDocumentDirection has always done with it.
+    applyDocumentDirection('ar');
+    expect(document.documentElement.dir).toBe('ltr');
   });
 
   it('updates the document when the language changes at runtime', async () => {

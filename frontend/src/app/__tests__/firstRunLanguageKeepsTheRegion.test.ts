@@ -4,6 +4,18 @@
 // Tests for first-run language selection: resolveInitialLanguage asks for the
 // full browser code before stripping the region, and detectCountry reads a
 // country from the region subtag or, failing that, from the resolved language.
+//
+// Since the India rollout the codes a first run can land on are the
+// ENABLED_LOCALES allowlist (eleven: en, hi, bn, ur and the seven phase-2
+// bundles), not every bundle on disk. The
+// region-keeping behaviour this file was written to protect still exists for
+// every language the allowlist offers — hi-IN opens in Hindi, not bare-hi
+// confusion — while every English region resolves to plain en and a browser
+// (or a stored preference) naming a now-hidden language falls back to English
+// through the same validation, which is the graceful fallback the rollout
+// promised. The bundles for pt-BR, de, fr and the rest stay on disk and stay
+// covered by the locale parity tests; re-enabling one in the allowlist
+// restores its first-run mapping with no further change.
 import { afterEach, describe, expect, it } from 'vitest';
 
 import { detectCountry, resolveInitialLanguage, SUPPORTED_LANGUAGES } from '../i18n';
@@ -46,38 +58,58 @@ afterEach(() => {
 });
 
 describe('resolveInitialLanguage', () => {
-  it('keeps a region the UI ships, so Brazil does not open in Portugal', () => {
-    // The regression this test exists for. The browser code was split on '-'
-    // and only the base kept, so pt-BR resolved to pt and a Brazilian first
-    // run opened in European Portuguese with pt-BR.ts sitting unused. Same
-    // for the three Spanish variants.
-    firstRunWith('pt-BR');
-    expect(resolveInitialLanguage()).toBe('pt-BR');
+  it('keeps the region of an offered language, so Indian Hindi does not open as bare hi confusion', () => {
+    // The descendant of the regression this file exists for: the browser code
+    // was once split on '-' and only the base kept, so pt-BR resolved to pt
+    // and a Brazilian first run opened in European Portuguese with pt-BR.ts
+    // sitting unused. The full-code-first lookup is unchanged; what it
+    // resolves into is now the allowlist. Every offered language still answers
+    // a regional browser with itself, region stripped to the base bundle.
+    firstRunWith('hi-IN');
+    expect(resolveInitialLanguage()).toBe('hi');
+    firstRunWith('bn-BD');
+    expect(resolveInitialLanguage()).toBe('bn');
+    firstRunWith('bn-IN');
+    expect(resolveInitialLanguage()).toBe('bn');
+    firstRunWith('ur-PK');
+    expect(resolveInitialLanguage()).toBe('ur');
   });
 
-  it('keeps every regional variant we actually ship', () => {
-    for (const code of ['pt-BR', 'es-MX', 'es-CL', 'es-CO', 'en-US']) {
-      firstRunWith(code);
-      expect(resolveInitialLanguage()).toBe(code);
-    }
-  });
-
-  it('normalises the region the way i18next spells it', () => {
-    // A browser is free to send 'pt-br'; the resource bundle is registered
-    // under 'pt-BR' and that is the only spelling that finds it.
-    firstRunWith('pt-br');
-    expect(resolveInitialLanguage()).toBe('pt-BR');
+  it('maps every English region to the unqualified entry the allowlist offers', () => {
+    // en-GB and en-US are no longer offered, so the day-first rule is
+    // deliberately inert: matchSupportedLanguage requires en-GB to be in the
+    // offered set before answering with it. An Indian, British or American
+    // browser all read the same interface English — and, the known cost of
+    // the decision, the same month-first dates the unqualified entry prints.
+    // Restoring the British reading needs en-GB back in the allowlist or the
+    // date order decoupled from the picker.
+    firstRunWith('en-IN');
+    expect(resolveInitialLanguage()).toBe('en');
+    firstRunWith('en-GB');
+    expect(resolveInitialLanguage()).toBe('en');
+    firstRunWith('en-US');
+    expect(resolveInitialLanguage()).toBe('en');
+    firstRunWith('en-AU');
+    expect(resolveInitialLanguage()).toBe('en');
+    // Case and trimming: a browser is free to send 'EN-us'.
     firstRunWith('EN-us');
-    expect(resolveInitialLanguage()).toBe('en-US');
+    expect(resolveInitialLanguage()).toBe('en');
   });
 
-  it('still falls back to the base language for a region we do not ship', () => {
-    // The behaviour that was already correct and must stay correct: there is
-    // no de-CH file, so a Swiss German browser gets German.
+  it('falls back to English for a language the tree ships but the product does not offer', () => {
+    // de-CH used to answer 'de' (the base), fr-CA 'fr', pt-BR 'pt-BR' itself.
+    // All three languages are hidden behind the allowlist now, and a first
+    // run must not open in a language the picker does not show: the allowlist
+    // is the one place visibility is decided, so every one of them resolves to
+    // English, exactly as if the language had never shipped.
     firstRunWith('de-CH');
-    expect(resolveInitialLanguage()).toBe('de');
+    expect(resolveInitialLanguage()).toBe('en');
     firstRunWith('fr-CA');
-    expect(resolveInitialLanguage()).toBe('fr');
+    expect(resolveInitialLanguage()).toBe('en');
+    firstRunWith('pt-BR');
+    expect(resolveInitialLanguage()).toBe('en');
+    firstRunWith('pt-br');
+    expect(resolveInitialLanguage()).toBe('en');
   });
 
   it('falls back to English for a language we do not ship at all', () => {
@@ -87,13 +119,27 @@ describe('resolveInitialLanguage', () => {
 
   it('lets a stored choice beat the browser, region and all', () => {
     firstRunWith('pt-BR');
+    window.localStorage.setItem('i18nextLng', 'hi');
+    expect(resolveInitialLanguage()).toBe('hi');
+  });
+
+  it('falls back to English when a stored choice names a now-hidden language', () => {
+    // The graceful-fallback promise of the rollout: a reader who chose German
+    // before the allowlist landed, or whose account locale is de, comes back
+    // to English — not to a language the picker cannot name and not to a
+    // broken boot. The stored value stays in localStorage untouched; the
+    // validation simply never accepts it.
+    firstRunWith('en');
     window.localStorage.setItem('i18nextLng', 'de');
-    expect(resolveInitialLanguage()).toBe('de');
+    expect(resolveInitialLanguage()).toBe('en');
   });
 });
 
 describe('detectCountry', () => {
   it('reads the region subtag when the browser sends one', () => {
+    // Region detection reads the browser, not the registry, so it is
+    // unaffected by which languages are offered: a Brazilian browser says
+    // Brazil whatever the picker shows.
     firstRunWith('pt-BR');
     expect(detectCountry()).toBe('br');
     firstRunWith('en-AU');
@@ -107,32 +153,47 @@ describe('detectCountry', () => {
     expect(detectCountry()).toBe('cn');
   });
 
-  it('falls back to the language country when the browser sends no region', () => {
-    // The half that matters for Europe: a bare 'de' or 'pl' carries no region
-    // at all, so region-only detection would answer null for most of the
-    // continent. The language is passed explicitly so the fallback half is
-    // deterministic rather than a property of whatever i18n booted into.
+  it('answers the country of the languages the allowlist offers', () => {
+    // The fallback half is deterministic because the language is passed
+    // explicitly. Every offered language names a country: plain English
+    // answers 'xx', the code this codebase uses for "not tied to a market",
+    // which resolveCountryOffer turns into no offer exactly as it does for
+    // null. India is deliberately not an English variant country here: an
+    // Indian English reader who stays on plain en gets no market steered from
+    // their language alone, though their browser region still says 'in' when
+    // it sends one.
+    firstRunWith('en');
+    expect(detectCountry('en')).toBe('xx');
+    firstRunWith('hi');
+    expect(detectCountry('hi')).toBe('in');
+    firstRunWith('bn');
+    expect(detectCountry('bn')).toBe('bd');
+    firstRunWith('ur');
+    expect(detectCountry('ur')).toBe('pk');
+  });
+
+  it('still names the country of a language the tree ships but the allowlist hides', () => {
+    // This asserted null for a while, with a comment calling the null a
+    // protection: "a hidden entry must not steer a market offer from the
+    // shadows". It was not a protection, it was the regression. A language's
+    // country is a fact about the language, and `countryOfLanguage` reads
+    // `ALL_LANGUAGES` for exactly that reason - a reader who chose German in
+    // the language step, or whose stored preference names it, must still be
+    // told where German is spoken. What the allowlist decides is whether the
+    // picker offers the language, which is a different question and is asked
+    // in a different place.
     firstRunWith('de');
     expect(detectCountry('de')).toBe('de');
     firstRunWith('pl');
     expect(detectCountry('pl')).toBe('pl');
     firstRunWith('ar');
     expect(detectCountry('ar')).toBe('sa');
-    // And the one that surprises people: bare English names no country. It
-    // used to answer 'gb', which read a preference out of a reader who had
-    // expressed none. Now the two English entries that DO name a region
-    // answer, and the unqualified one answers the code this codebase uses for
-    // "not tied to a market" - which resolveCountryOffer already turns into no
-    // offer, exactly as it does for null.
-    firstRunWith('en');
-    expect(detectCountry('en')).toBe('xx');
-    expect(detectCountry('en-GB')).toBe('gb');
-    expect(detectCountry('en-US')).toBe('us');
   });
 
   it('does not mistake a UN M49 region for a country code', () => {
-    // es-419 is Latin America, not a country. Answering '41' or '419' would
-    // be worse than answering the language's country.
+    // es-419 is Latin America, not a country. Answering '41' or '419' would be
+    // worse than answering Spain, which is what es resolves to through the
+    // registry's own entry for it.
     firstRunWith('es-419');
     expect(detectCountry('es')).toBe('es');
   });

@@ -91,6 +91,18 @@ export const FALLBACK_FIRST_DAY: Readonly<Record<string, CldrFirstDay>> = {
   fil: 7,
   ur: 7,
   he: 7,
+  // The seven languages the India rollout added. All Sunday-first, all read
+  // from ICU rather than assumed: `ta, te, mr, gu, kn, ml, pa` each answer
+  // `firstDay: 7`, so without rows here an engine with no `weekInfo` would
+  // start their weeks on Monday and every grid would sit one day off the
+  // dates printed above it.
+  ta: 7,
+  te: 7,
+  mr: 7,
+  gu: 7,
+  kn: 7,
+  ml: 7,
+  pa: 7,
   // Monday-first, and named rather than left to inherit, because its base
   // answers differently. Britain starts its week on Monday where unqualified
   // English is Sunday-first, so `en-GB` falling through to the `en` above

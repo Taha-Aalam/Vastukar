@@ -18,56 +18,27 @@ import { dateFnsLocaleFor, LANGUAGES_WITHOUT_DATE_FNS_LOCALE } from './dateFnsLo
 
 /** i18next code → the `code` field of the date-fns locale it must resolve to. */
 const EXPECTED: Record<string, string> = {
-  // Plain `en` names no region and date-fns ships no region-free English, so
-  // it lands on enUS, which is also what CLDR gives unqualified `en`. The two
-  // regional entries each get their own, and en-GB having its own is the
-  // point of offering it: without the entry it would inherit `en` and a
-  // British reader would be shown American dates by the date-fns path while
-  // the Intl path showed British ones.
+  // The offered set is the ENABLED_LOCALES allowlist: English, Hindi,
+  // Bengali, Urdu, and the seven phase 2 Indian languages. Plain `en` names
+  // no region and date-fns ships no region-free English, so it lands on enUS,
+  // which is also what CLDR gives unqualified `en`; the en-GB entry went with
+  // the regions when the allowlist answered every English region with plain
+  // en. Urdu, Marathi, Malayalam and Punjabi are the offered languages
+  // date-fns has no locale for — the gap LANGUAGES_WITHOUT_DATE_FNS_LOCALE
+  // records and this file watches. The full registry map is one git log
+  // away; the map in dateFnsLocale.ts is unchanged and still answers every
+  // code the tree ships.
   en: 'en-US',
-  'en-GB': 'en-GB',
-  'en-US': 'en-US',
-  de: 'de',
-  fr: 'fr',
-  es: 'es',
-  'es-MX': 'es',
-  'es-CL': 'es',
-  'es-CO': 'es',
-  pt: 'pt',
-  'pt-BR': 'pt-BR',
-  ru: 'ru',
-  zh: 'zh-CN',
-  ar: 'ar',
   hi: 'hi',
-  tr: 'tr',
-  it: 'it',
-  nl: 'nl',
-  pl: 'pl',
-  cs: 'cs',
-  ja: 'ja',
-  ko: 'ko',
-  sv: 'sv',
-  no: 'nb',
-  da: 'da',
-  fi: 'fi',
-  bg: 'bg',
-  hr: 'hr',
-  hu: 'hu',
-  id: 'id',
-  ro: 'ro',
-  th: 'th',
-  vi: 'vi',
-  ky: 'en-US',
-  et: 'et',
   bn: 'bn',
-  kk: 'kk',
-  fil: 'en-US',
   ur: 'en-US',
-  fa: 'fa-IR',
-  he: 'he',
-  el: 'el',
-  uk: 'uk',
-  uz: 'uz',
+  ta: 'ta',
+  te: 'te',
+  mr: 'en-US',
+  gu: 'gu',
+  kn: 'kn',
+  ml: 'en-US',
+  pa: 'en-US',
 };
 
 describe('date-fns locale resolution', () => {
@@ -86,19 +57,25 @@ describe('date-fns locale resolution', () => {
     expect(Object.keys(EXPECTED).sort()).toEqual(supported);
   });
 
-  it('falls back to English only for the three languages date-fns has no locale for', () => {
+  it('falls back to English only for the languages date-fns has no locale for', () => {
     // Asserted in both directions on purpose. The first half says the gap is
     // where we think it is; the second says nothing else quietly joined it,
     // which is the failure mode that put this defect in front of readers.
+    // The gap list spans the whole tree (fil, ky, ur plus the phase 2 trio
+    // mr, ml, pa), while the offered set is the allowlist — so the second
+    // half compares against the offered subset of the gaps.
     const gaps = [...LANGUAGES_WITHOUT_DATE_FNS_LOCALE];
     for (const code of gaps) {
       expect(dateFnsLocaleFor(code).code, `known gap "${code}"`).toBe('en-US');
     }
+    const offeredGaps = gaps
+      .filter((c) => SUPPORTED_LANGUAGES.some((l) => l.code === c))
+      .sort();
     const fallingBack = SUPPORTED_LANGUAGES.map((l) => l.code)
       .filter((c) => !c.startsWith('en'))
       .filter((c) => dateFnsLocaleFor(c).code === 'en-US')
       .sort();
-    expect(fallingBack).toEqual([...gaps].sort());
+    expect(fallingBack).toEqual(offeredGaps);
   });
 
   it('resolves a regional code through its base language', () => {

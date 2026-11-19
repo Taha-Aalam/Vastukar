@@ -45,19 +45,23 @@
 /**
  * Fold the non-ASCII digits and separators OUR OWN formatter can emit.
  *
- * `Intl.NumberFormat` picks the numbering system from the locale, and two of
+ * `Intl.NumberFormat` picks the numbering system from the locale, and three of
  * the languages this product ships are not Latin-digit: `bn` renders 1234.56
- * as `১,২৩৪.৫৬` and `fa` as `۱٬۲۳۴٫۵۶`, the latter with U+066B as the decimal
- * point and U+066C as the group separator. A figure copied off the screen and
- * pasted back into a field is a real path (it is why the clipboard parser
- * exists), and without this the parser rejects a number the product itself
- * wrote a moment earlier.
+ * as `১,২৩৪.৫৬`, `mr` as `१,२३४.५६`, and `fa` as `۱٬۲۳۴٫۵۶`, the last with
+ * U+066B as the decimal point and U+066C as the group separator. A figure
+ * copied off the screen and pasted back into a field is a real path (it is why
+ * the clipboard parser exists), and without this the parser rejects a number
+ * the product itself wrote a moment earlier.
  *
  * Deliberately limited to the systems our formatter can produce - `arab`,
- * `arabext` and `beng` - rather than every Unicode decimal digit. A wider
- * fold would start accepting scripts nothing in this product ever emits, and
- * the point of the strict grammar below is that the accepted set is known.
- * Note that `ar` itself is NOT in this list: it resolves to Latin digits.
+ * `arabext`, `beng` and `deva` - rather than every Unicode decimal digit. A
+ * wider fold would start accepting scripts nothing in this product ever emits,
+ * and the point of the strict grammar below is that the accepted set is known.
+ * Note that `ar` itself is NOT in this list: it resolves to Latin digits, and
+ * neither is `hi`, even though it shares Devanagari with `mr`: the numbering
+ * system is a property of the locale, not of the script, and `mr` is the one
+ * that resolves to `deva` and so the one whose formatted figures come back
+ * non-Latin.
  */
 function foldNonAsciiDigits(raw: string): string {
   let out = '';
@@ -66,6 +70,7 @@ function foldNonAsciiDigits(raw: string): string {
     if (c >= 0x0660 && c <= 0x0669) out += String.fromCharCode(48 + c - 0x0660);
     else if (c >= 0x06f0 && c <= 0x06f9) out += String.fromCharCode(48 + c - 0x06f0);
     else if (c >= 0x09e6 && c <= 0x09ef) out += String.fromCharCode(48 + c - 0x09e6);
+    else if (c >= 0x0966 && c <= 0x096f) out += String.fromCharCode(48 + c - 0x0966);
     else if (c === 0x066b) out += '.';
     else if (c === 0x066c) continue;
     else out += ch;

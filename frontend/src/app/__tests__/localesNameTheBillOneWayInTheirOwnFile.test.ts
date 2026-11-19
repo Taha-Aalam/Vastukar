@@ -147,6 +147,7 @@ const BASELINE: Record<(typeof NAMING_KEYS)[number], Record<string, string>> = {
     pl: 'przedmiar robót, the settled Polish trade term, against the catalogue Kosztorys',
     pt: 'mapa de quantidades against the catalogue Planilha Orçamentária',
     th: 'บัญชีแสดงปริมาณงาน against the catalogue บัญชีปริมาณงาน',
+    pa: 'ਮਾਤਰਾਵਾਂ ਦੇ ਬਿੱਲ, the catalogue term in the oblique case the sentence grammar requires',
   },
 };
 

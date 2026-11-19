@@ -17,9 +17,9 @@
  * - the **pack locale code** (``fr-CA``, ``en-GB``, ``pt``) is a key of the
  *   manifest's ``additional_locales`` map and the only thing the endpoint
  *   answers to. Fetch with this.
- * - the **UI language** is what ``normalizePackLocale`` resolves that code to
- *   (``fr-CA`` -> ``fr``, because there is no ``fr-CA`` in
- *   ``SUPPORTED_LANGUAGES``). Merge into this.
+ * - the **UI language** is the language now on screen (the pack's declared
+ *   default was already forced through ``normalizePackLocale`` at activation;
+ *   see ``usePartnerPackLocale``). Merge into this.
  *
  * Collapsing the two is what kills the feature: fetching ``/locale/fr`` for
  * batimatech-ca 404s, and merging ``fr-CA`` strings into a nonexistent ``fr-CA``
@@ -33,7 +33,7 @@
  * apply-once-at-activation model neither pack's second file could ever load.
  */
 
-import i18n, { normalizePackLocale } from '@/app/i18n';
+import i18n from '@/app/i18n';
 import { apiGet } from '@/shared/lib/api';
 
 import type { PartnerPackManifest } from './usePartnerPack';
@@ -99,16 +99,30 @@ export function packVocabularyFrom(payload: unknown): Record<string, string> {
  * Pick which locale file, if any, belongs to the language now on screen.
  *
  * ``codes`` is the manifest's ``additional_locales`` list exactly as the
- * backend sorted it. A pack may ship several files that normalize to the same
- * UI language, so the tie is broken deterministically: an exact code match
- * first, then the pack's declared default, then the first sorted candidate.
+ * backend sorted it. A pack may ship several files for the same language, so
+ * the tie is broken deterministically: an exact code match first, then the
+ * pack's declared default, then the first sorted candidate.
+ *
+ * The match is on the pack file's own BASE language, never on what
+ * ``normalizePackLocale`` resolves it into. Those two answers agreed while
+ * every base language was offered — ``fr-CA`` normalized to ``fr`` and served
+ * a French reader. They split the moment the India rollout narrowed
+ * ``SUPPORTED_LANGUAGES`` to the allowlist: ``fr-CA`` now normalizes to
+ * ``en``, and matching on the normalized value would merge the pack's French
+ * vocabulary into the English bundle — words a reader never asked for, under
+ * a language the picker does not even offer. A pack file speaks the language
+ * its code names; it serves that language and nothing else. ``fr-CA`` keeps
+ * serving ``fr`` if French is ever re-enabled, and serves nothing today,
+ * because no offered UI language is French. An ``en-CA`` file serves the
+ * English interface, exactly as it did.
  */
 export function resolvePackVocabularyCode(
   codes: readonly string[],
   defaultLocale: string,
   language: string,
 ): string | null {
-  const matches = codes.filter((code) => normalizePackLocale(code) === language);
+  const base = (code: string) => code.split('-')[0]!.toLowerCase();
+  const matches = codes.filter((code) => base(code) === base(language));
   if (matches.length === 0) return null;
   return (
     matches.find((code) => code === language) ??

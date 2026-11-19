@@ -84,6 +84,15 @@ describe('homeMarketForLanguage', () => {
     // FIEBDC-3 and Spanish site paperwork. Leading with them for a Mexican,
     // Chilean or Colombian reader would name a law that does not apply where
     // they work, which is worse than showing them nothing in particular.
+    //
+    // `es` still reaches Spain even though the allowlist no longer offers
+    // Spanish, because the country is a fact about the language rather than
+    // about the picker. This assertion read `toBeNull()` for a while, with a
+    // comment calling the stricter answer a protection; it was not, it was the
+    // regression. The lookup was reading `SUPPORTED_LANGUAGES`, so the
+    // eleven-language offer had quietly emptied it, and this test had been
+    // edited to match. `homeMarketForLanguage` reads `ALL_LANGUAGES` now, and
+    // `toBe('ES')` is what it answered before the allowlist existed.
     expect(homeMarketForLanguage('es', MARKETS)).toBe('ES');
     for (const code of ['es-MX', 'es-CL', 'es-CO']) {
       expect(homeMarketForLanguage(code, MARKETS), code).not.toBe('ES');

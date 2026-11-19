@@ -33,6 +33,7 @@ import {
   faIR,
   fi,
   fr,
+  gu,
   he,
   hi,
   hr,
@@ -41,6 +42,7 @@ import {
   it,
   ja,
   kk,
+  kn,
   ko,
   nb,
   nl,
@@ -50,6 +52,8 @@ import {
   ro,
   ru,
   sv,
+  ta,
+  te,
   th,
   tr,
   uk,
@@ -60,15 +64,17 @@ import {
 import i18next from 'i18next';
 
 /**
- * The three languages date-fns ships no locale for.
+ * The languages date-fns ships no locale for.
  *
  * Named here rather than left to the fallback so the gap is a decision with a
  * list, not an absence. The test beside this file asserts in both directions:
- * these three must resolve to en-US, and every other language must not.
+ * these must resolve to en-US, and every other offered language must not.
  * If date-fns adds one of them the test goes red and the entry moves up into
- * the map, which is the only way we would find out.
+ * the map, which is the only way we would find out. fil, ky and ur predate
+ * the India rollout; mr, ml and pa joined when phase 2 offered their bundles
+ * and date-fns turned out not to ship them.
  */
-export const LANGUAGES_WITHOUT_DATE_FNS_LOCALE = ['fil', 'ky', 'ur'] as const;
+export const LANGUAGES_WITHOUT_DATE_FNS_LOCALE = ['fil', 'ky', 'mr', 'ml', 'pa', 'ur'] as const;
 
 /**
  * i18next language code → date-fns `Locale`.
@@ -100,6 +106,7 @@ const DATE_FNS_LOCALE_MAP: Record<string, Locale> = {
   fa: faIR,
   fi,
   fr,
+  gu,
   he,
   hi,
   hr,
@@ -108,6 +115,7 @@ const DATE_FNS_LOCALE_MAP: Record<string, Locale> = {
   it,
   ja,
   kk,
+  kn,
   ko,
   nl,
   no: nb,
@@ -117,6 +125,8 @@ const DATE_FNS_LOCALE_MAP: Record<string, Locale> = {
   ro,
   ru,
   sv,
+  ta,
+  te,
   th,
   tr,
   uk,
