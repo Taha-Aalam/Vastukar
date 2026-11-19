@@ -16,7 +16,7 @@ manifest = ModuleManifest(
         "duplicate detection, daily summaries per site and haulier, reconciliation against haulier invoices and "
         "a disposal register for environmental reporting. Verified tickets feed the position actuals."
     ),
-    author="OpenConstructionERP Core Team",
+    author="Vastukar",
     category="field",
     depends=["oe_projects"],
     optional_depends=["oe_site_logistics", "oe_equipment", "oe_procurement", "oe_boq", "oe_costmodel"],

@@ -287,7 +287,7 @@ class WebhookService:
         """Send a ``ping`` to the endpoint once and return the delivery record. Never retried."""
         ping = {
             "event": "ping",
-            "message": "This is a test delivery from OpenConstructionERP.",
+            "message": "This is a test delivery from Vastukar.",
             "webhook_id": str(webhook.id),
             "timestamp": datetime.now(UTC).isoformat(),
         }

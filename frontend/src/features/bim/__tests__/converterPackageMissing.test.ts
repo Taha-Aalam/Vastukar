@@ -1,5 +1,5 @@
-// DDC-CWICR-OE: DataDrivenConstruction · OpenConstructionERP
-// Copyright (c) 2026 Artem Boiko / DataDrivenConstruction
+// DDC-CWICR-OE: Vastukar · Vastukar
+// Copyright (c) 2026 Artem Boiko / Vastukar
 /**
  * An install that fails because the converter release no longer offers the
  * pinned asset is reported by code, so the sentence is translated and names
@@ -26,7 +26,7 @@ describe('converterInstallMessage', () => {
     });
     expect(text).toContain('DDC-RVT-Converter-0.6.8-portable.zip');
     expect(text).toContain('v2026.10.0');
-    expect(text).toContain('Update OpenConstructionERP');
+    expect(text).toContain('Update Vastukar');
     expect(text).not.toContain('raw backend text');
   });
 

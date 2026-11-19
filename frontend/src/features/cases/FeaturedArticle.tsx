@@ -14,8 +14,8 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ArrowUpRight, Newspaper } from 'lucide-react';
 
-export const FEATURED_ARTICLE_URL = 'https://openconstructionerp.com/uberization-of-construction/';
-export const FEATURED_ARTICLE_COVER = 'https://openconstructionerp.com/uberization-of-construction/img/og-en.jpg';
+export const FEATURED_ARTICLE_URL = 'https://vastukar.com/uberization-of-construction/';
+export const FEATURED_ARTICLE_COVER = 'https://vastukar.com/uberization-of-construction/img/og-en.jpg';
 
 export function FeaturedArticle() {
   const { t } = useTranslation();

@@ -38,9 +38,9 @@ import type {
  */
 export const IATE_ALLOWED_PREFIXES: readonly string[] = [
   'https://iate.europa.eu/',
-  'https://datadrivenconstruction.io/',
-  'https://openconstructionerp.com/',
-  'https://github.com/datadrivenconstruction/',
+  'https://vastukar.com/',
+  'https://vastukar.com/',
+  'https://github.com/Taha-Aalam/',
   'https://raw.githubusercontent.com/datadrivenconstruction/',
 ];
 

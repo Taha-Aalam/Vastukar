@@ -255,7 +255,7 @@ const CONNECTORS: ConnectorDef[] = [
     setupSteps: [
       { text: 'Open your Teams channel' },
       { text: 'Click "..." → "Connectors" → "Incoming Webhook"' },
-      { text: 'Name it "OpenConstructionERP" and click "Create"' },
+      { text: 'Name it "Vastukar" and click "Create"' },
       { text: 'Copy the webhook URL' },
       { text: 'Paste it below' },
     ],
@@ -414,7 +414,7 @@ const CONNECTORS: ConnectorDef[] = [
       {
         key: 'webhook_url',
         label: 'Endpoint URL',
-        placeholder: 'https://your-server.com/webhooks/openconstructionerp',
+        placeholder: 'https://your-server.com/webhooks/vastukar',
       },
       {
         key: 'signing_secret',

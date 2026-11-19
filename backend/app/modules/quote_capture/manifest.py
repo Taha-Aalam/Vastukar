@@ -17,7 +17,7 @@ manifest = ModuleManifest(
         "a draft purchase order, with the trail of machine against human values. Works without AI on a rules "
         "parser; uses the configured AI provider when there is one."
     ),
-    author="OpenConstructionERP Core Team",
+    author="Vastukar",
     category="business",
     depends=["oe_projects", "oe_tendering"],
     optional_depends=["oe_ai", "oe_boq", "oe_procurement", "oe_supplier_catalogs"],

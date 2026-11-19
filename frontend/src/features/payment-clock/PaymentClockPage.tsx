@@ -15,7 +15,6 @@ import { Scale } from 'lucide-react';
 import { CollapsibleSection } from '@/shared/ui/CollapsibleSection';
 
 import { PaymentClockPanel } from './PaymentClockPanel';
-import { VideoHint } from '@/features/videos/VideoHint';
 
 function ModLink({ to, children }: { to: string; children: ReactNode }) {
   return (
@@ -37,7 +36,6 @@ export function PaymentClockPage() {
           defaultValue: 'How the payment clock works, and what it protects',
         })}
       >
-        <VideoHint topic="payment-notice" className="float-right ml-2" />
         <p className="text-xs text-content-tertiary">
           {t('payment_clock.flow_intro', {
             defaultValue:

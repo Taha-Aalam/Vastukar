@@ -14,7 +14,7 @@ manifest = ModuleManifest(
         "decision is a person's, an override needs a reason, every change is logged, and the decision and "
         "outcome feed the win-loss ledger."
     ),
-    author="OpenConstructionERP Core Team",
+    author="Vastukar",
     category="business",
     depends=["oe_projects", "oe_tendering", "oe_win_loss"],
     optional_depends=["oe_crm"],

@@ -339,8 +339,6 @@ export const TITLE_I18N_MAP: Record<string, string> = {
   'Project governance': 'governance.project.title',
   // Learning & admin
   'Cases': 'nav.cases',
-  'Videos': 'nav.videos',
-  'Courses and guides': 'nav.courses',
   'How it works': 'howto.page_title',
   'Inside track': 'inside.page_title',
   'Module Builder': 'nav.module_builder',
@@ -726,7 +724,7 @@ export const MIN_DESCRIPTION_LENGTH = 20;
 
 /** File name for the session error log both menus offer for download. */
 function errorLogFilename(): string {
-  return `openconstructionerp-log-${new Date().toISOString().slice(0, 10)}.json`;
+  return `vastukar-log-${new Date().toISOString().slice(0, 10)}.json`;
 }
 
 export function BugReportMenu() {
@@ -822,7 +820,7 @@ export function BugReportMenu() {
     setOpen(false);
     setDescription('');
     const { body, title } = buildBugReportUrl(trimmedDescription);
-    const subject = `OpenConstructionERP Issue - ${title}`;
+    const subject = `Vastukar Issue - ${title}`;
     // mailto bodies are also length-limited (~2000 chars in Chrome),
     // so we trim aggressively. The downloaded log JSON is the long form.
     const safeBody = body.length > 1500 ? `${body.slice(0, 1500)}\n\n_[truncated - attach the JSON log if needed]_` : body;
@@ -830,7 +828,7 @@ export function BugReportMenu() {
     // not hand a navigation to mailto: to the mail client, so assigning it
     // there did nothing at all. openLink sends it to the OS opener instead.
     openLink(
-      `mailto:info@datadrivenconstruction.io?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(safeBody)}`,
+      `mailto:info@vastukar.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(safeBody)}`,
     );
   };
 
@@ -844,7 +842,7 @@ export function BugReportMenu() {
       app_version: APP_VERSION,
       platform: navigator.userAgent.includes('Win') ? 'Windows' : navigator.userAgent.includes('Mac') ? 'macOS' : 'Linux',
     });
-    openLink(`https://openconstructionerp.com/contact.html?${params}`);
+    openLink(`https://vastukar.com/contact.html?${params}`);
   };
 
   const handleDownloadLog = () => {
@@ -897,7 +895,7 @@ export function BugReportMenu() {
       icon: MessageSquarePlus,
       iconColor: 'text-emerald-500',
       title: t('bug.channel_form', { defaultValue: 'Web feedback form' }),
-      desc: t('bug.channel_form_desc', { defaultValue: 'Richer fields and screenshots on openconstructionerp.com.' }),
+      desc: t('bug.channel_form_desc', { defaultValue: 'Richer fields and screenshots on vastukar.com.' }),
       onClick: handleFeedbackForm,
       requiresDescription: false,
     },
@@ -1136,7 +1134,7 @@ function HelpMenu() {
       feedback: 'true',
       app_version: APP_VERSION,
     });
-    openLink(`https://openconstructionerp.com/contact.html?${params}`);
+    openLink(`https://vastukar.com/contact.html?${params}`);
   };
 
   return (
@@ -1176,25 +1174,13 @@ function HelpMenu() {
             <GraduationCap size={14} className="text-oe-blue shrink-0" />
             <span className="flex-1 text-left">{t('howto.menu_item', { defaultValue: 'How it works' })}</span>
           </button>
-          <button
-            type="button"
-            role="menuitem"
-            onClick={() => {
-              setOpen(false);
-              navigate('/courses');
-            }}
-            className="flex w-full items-center gap-2.5 px-3 py-2 text-sm text-content-primary hover:bg-surface-secondary transition-colors"
-          >
-            <GraduationCap size={14} className="text-oe-blue shrink-0" />
-            <span className="flex-1 text-left">{t('nav.courses', { defaultValue: 'Courses and guides' })}</span>
-          </button>
           <div className="my-1 border-t border-border-light" role="separator" />
 
           {/* External resources. Documentation points at the official docs
               site so users land on the maintained guides, not the raw repo. */}
           <a
             role="menuitem"
-            href="https://openconstructionerp.com/docs"
+            href="https://vastukar.com/docs"
             target="_blank"
             rel="noopener noreferrer"
             onClick={() => setOpen(false)}
@@ -1206,7 +1192,7 @@ function HelpMenu() {
           </a>
           <a
             role="menuitem"
-            href="https://github.com/datadrivenconstruction/OpenConstructionERP"
+            href="https://github.com/Taha-Aalam/Vastukar"
             target="_blank"
             rel="noopener noreferrer"
             onClick={() => setOpen(false)}
@@ -1267,7 +1253,7 @@ function HelpMenu() {
               gives bug reporting a single, obvious home. */}
           <a
             role="menuitem"
-            href="mailto:info@datadrivenconstruction.io?subject=OpenConstructionERP%20Issue%20Report"
+            href="mailto:info@vastukar.com?subject=Vastukar%20Issue%20Report"
             onClick={() => setOpen(false)}
             className="flex w-full items-center gap-2.5 px-3 py-2 text-sm text-content-primary hover:bg-surface-secondary transition-colors"
           >
@@ -1361,7 +1347,7 @@ function LanguageSwitcher({
 /* ── User Menu ─────────────────────────────────────────────────────────── */
 
 /** GitHub repo slug for "Report a bug". Empty string = clipboard fallback. */
-const GITHUB_REPO = 'datadrivenconstruction/OpenConstructionERP';
+const GITHUB_REPO = 'Taha-Aalam/Vastukar';
 /** Hard ceiling for the GitHub issue body inside a URL. ~8KB is safe across browsers. */
 const MAX_BODY_BYTES = 7800;
 

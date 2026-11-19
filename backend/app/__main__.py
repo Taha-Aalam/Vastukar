@@ -39,7 +39,7 @@ def main() -> None:
         os.environ.setdefault("APP_ENV", "production")
         os.environ.setdefault("APP_DEBUG", "false")
 
-    print(f"Starting OpenConstructionERP on http://{host}:{port}")
+    print(f"Starting Vastukar on http://{host}:{port}")
 
     # Use direct app import for PyInstaller compatibility
     from app.core.server_loop import uvicorn_loop_option

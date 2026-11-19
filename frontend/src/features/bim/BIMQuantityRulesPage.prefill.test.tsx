@@ -237,7 +237,7 @@ describe('the rule editor property pickers', () => {
     expect(values()).toEqual([]);
   });
 
-  it('shows the header the model was exported with beside a DDC lowercase key', async () => {
+  it('shows the header the model was exported with beside a Vastukar lowercase key', async () => {
     mocks.fetchSmartViewProperties.mockResolvedValue({
       ...CATALOG,
       entries: [

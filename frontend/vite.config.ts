@@ -11,6 +11,7 @@ import { visualizer } from 'rollup-plugin-visualizer';
 import { VitePWA } from 'vite-plugin-pwa';
 import path from 'path';
 import { cpSync, existsSync, readFileSync, readdirSync, createReadStream, statSync } from 'fs';
+import type { Dirent } from 'fs';
 import type { Plugin } from 'vite';
 import { STATIC_ASSETS_CACHE, isStaticAssetRequest } from './src/pwa/staticAssetRoute';
 import { LOCALE_KEYS_CHUNK, isLocaleKeysId, localeKeyIndex } from './vite.locale-key-index';
@@ -156,15 +157,22 @@ function pdfjsAssets(): Plugin {
     generateBundle() {
       if (!version) return;
       for (const sub of pdfjsAssetDirs) {
-        const dir = path.join(pdfjsRoot, sub);
-        if (!existsSync(dir)) continue;
-        for (const name of readdirSync(dir)) {
-          const file = path.join(dir, name);
-          if (!keep(name) || statSync(file).isDirectory()) continue;
+        // Read the listing with dirent types instead of pre-checking the
+        // directory: existsSync followed by statSync/readFileSync is two
+        // separate filesystem operations, and the assets can legitimately
+        // change between the check and the use while pdfjs is rebuilt.
+        let entries: Dirent[];
+        try {
+          entries = readdirSync(path.join(pdfjsRoot, sub), { withFileTypes: true });
+        } catch {
+          continue; // this pdfjs sub-package has no built assets yet
+        }
+        for (const entry of entries) {
+          if (!keep(entry.name) || !entry.isFile()) continue;
           this.emitFile({
             type: 'asset',
-            fileName: `assets/pdfjs/${version}/${sub}/${name}`,
-            source: readFileSync(file),
+            fileName: `assets/pdfjs/${version}/${sub}/${entry.name}`,
+            source: readFileSync(path.join(pdfjsRoot, sub, entry.name)),
           });
         }
       }
@@ -250,10 +258,10 @@ export default defineConfig({
       devOptions: { enabled: false },
       includeAssets: ['favicon.svg', 'pwa/*.svg'],
       manifest: {
-        name: 'OpenConstructionERP',
-        short_name: 'OCERP',
+        name: 'Vastukar',
+        short_name: 'Vastukar',
         description:
-          'Open-source construction cost estimation, BIM takeoff, BOQ, tendering and field operations.',
+          'AI-powered construction cost estimation, BIM takeoff, BOQ, tendering and field operations.',
         theme_color: '#0284c7',
         background_color: '#f7fbff',
         display: 'standalone',

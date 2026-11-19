@@ -212,7 +212,7 @@ function baseCountry(flag: string | null | undefined, market: string | null | un
 }
 
 /** Where someone who may only view packs can get a copy they administer. */
-export const PACK_INSTALL_DOWNLOAD_URL = 'https://openconstructionerp.com/download';
+export const PACK_INSTALL_DOWNLOAD_URL = 'https://vastukar.com/download';
 
 /**
  * Whether this server is the public demo. Same shared ``['system-status']``

@@ -78,7 +78,7 @@ def buchungsstapel(
             str(settings.get("account_length") or 4),
             period[0].strftime("%Y%m%d"),
             period[1].strftime("%Y%m%d"),
-            _text(settings.get("batch_label") or "OpenConstructionERP", 30),
+            _text(settings.get("batch_label") or "Vastukar", 30),
             '""',
             "1",
             "0",

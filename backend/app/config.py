@@ -722,7 +722,7 @@ class Settings(BaseSettings):
     smtp_port: int = 587
     smtp_user: str = ""
     smtp_password: str = ""
-    smtp_from: str = "info@datadrivenconstruction.io"
+    smtp_from: str = "info@vastukar.com"
     smtp_tls: bool = True
     # Public URL used to build password-reset and notification links.
     # Falls back to the first CORS origin so dev installs work without
@@ -966,7 +966,7 @@ class Settings(BaseSettings):
                     f"Refusing to start: JWT_SECRET is a well-known weak default "
                     f"({secret!r}) but APP_ENV is {self.app_env!r}. Known-weak "
                     f"secrets are admin-forgeable by anyone who reads the public "
-                    f"OpenConstructionERP source. Set OE_JWT_SECRET to a fresh "
+                    f"Vastukar source. Set OE_JWT_SECRET to a fresh "
                     f"random value of at least {_JWT_SECRET_MIN_LENGTH} "
                     f"characters, e.g.\n"
                     f'  python -c "import secrets;print(secrets.token_urlsafe(32))"\n'

@@ -16,7 +16,7 @@ manifest = ModuleManifest(
         "P50, P90 band per element with outliers flagged; the open reference band covers types with "
         "no own history. Tenant scoped, with an anonymised export."
     ),
-    author="OpenConstructionERP Core Team",
+    author="Vastukar",
     category="estimation",
     depends=["oe_projects", "oe_boq", "oe_price_index", "oe_fx"],
     optional_depends=[],

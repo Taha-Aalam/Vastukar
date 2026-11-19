@@ -20,7 +20,7 @@ manifest = ModuleManifest(
         "behind it. The document itself is built by the EN 16931 engine; the "
         "platforms are adapters behind an interface."
     ),
-    author="OpenConstructionERP Core Team",
+    author="Vastukar",
     category="core",
     depends=["oe_finance", "oe_projects"],
     # Only markets whose pack ships an e-invoice mandate file see the module.

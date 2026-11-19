@@ -12,7 +12,7 @@ manifest = ModuleManifest(
         "Concrete maturity and strength, noise, dust, vibration, weather and water level on site: devices, "
         "a compact time series, limits from country data, alerts with acknowledgement, formwork strikes"
     ),
-    author="OpenConstructionERP Core Team",
+    author="Vastukar",
     category="business",
     depends=["oe_users", "oe_projects", "oe_notifications"],
     auto_install=True,

@@ -16,12 +16,12 @@ from __future__ import annotations
 
 from functools import lru_cache
 
-_LOGO_URL = "https://openconstructionerp.com/logo-128.png"
+_LOGO_URL = "https://vastukar.com/logo-128.png"
 
 #: The product name every outgoing email carries: the ``From:`` display name,
 #: the line beside the logo and the closing line of the footer. It is a brand,
 #: so it is never translated or shortened, in any language.
-BRAND_NAME = "OpenConstructionERP"
+BRAND_NAME = "Vastukar"
 _APP_NAME = BRAND_NAME
 
 # The footer line of mail that a person receives because they subscribed to
@@ -172,7 +172,7 @@ def template_password_reset(
     to copy-paste or forwarded-email attack paths.
     """
     greeting = f"Hi {recipient_name}," if recipient_name else "Hello,"
-    subject = "Reset your OpenConstructionERP password"
+    subject = "Reset your Vastukar password"
     body = (
         f"<p>{greeting}</p>"
         f"<p>We received a request to reset the password on your "

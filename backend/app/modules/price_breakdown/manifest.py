@@ -11,7 +11,7 @@ manifest = ModuleManifest(
     description=(
         "Unit-price analysis library: splits a position rate into labour, material, plant, subcontract and other, plus overhead, risk and profit markup."
     ),
-    author="OpenConstructionERP Core Team",
+    author="Vastukar",
     category="core",
     depends=[],  # pure library; boq and others depend on us, not the other way
     auto_install=True,

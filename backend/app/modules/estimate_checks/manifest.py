@@ -13,7 +13,7 @@ manifest = ModuleManifest(
         "subcontractor and markup ratios compared with the usual range of the company's past estimates, "
         "plus data quality checks. Findings can be accepted with a reason; thresholds are editable."
     ),
-    author="OpenConstructionERP Core Team",
+    author="Vastukar",
     category="estimation",
     depends=["oe_projects", "oe_boq"],
     optional_depends=["oe_costs"],

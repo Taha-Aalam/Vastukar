@@ -27,10 +27,10 @@ import { useReviewPromptStore } from '@/stores/useReviewPromptStore';
 
 /* ── review destinations ──────────────────────────────────────────────── */
 
-const REPO_URL = 'https://github.com/datadrivenconstruction/OpenConstructionERP';
+const REPO_URL = 'https://github.com/Taha-Aalam/Vastukar';
 
 const SHARE_TEXT =
-  'OpenConstructionERP - free open-source construction cost estimation platform (BOQ, BIM takeoff, AI). Self-hosted. AGPL-3.0.';
+  'Vastukar - free open-source construction cost estimation platform (BOQ, BIM takeoff, AI). Self-hosted. AGPL-3.0.';
 
 const LINKEDIN_URL = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(
   REPO_URL,
@@ -51,7 +51,7 @@ const X_URL = `https://twitter.com/intent/tweet?text=${encodeURIComponent(
  * Typed `string | null` so the row can be switched off again by setting this
  * to null, without touching the markup below.
  */
-const G2_REVIEW_URL: string | null = 'https://www.g2.com/products/openconstructionerp/reviews';
+const G2_REVIEW_URL: string | null = 'https://www.g2.com/products/vastukar/reviews';
 
 /* ── component ────────────────────────────────────────────────────────── */
 
@@ -86,7 +86,7 @@ export function ReviewPromptCard() {
   return (
     <div
       role="region"
-      aria-label={t('review_ask.aria_label', { defaultValue: 'Rate OpenConstructionERP' })}
+      aria-label={t('review_ask.aria_label', { defaultValue: 'Rate Vastukar' })}
       data-testid="review-prompt-card"
       className={clsx(
         'oe-dock-aware fixed bottom-4 right-4 z-[60] w-[min(22rem,calc(100vw-2rem))]',
@@ -110,7 +110,7 @@ export function ReviewPromptCard() {
         </div>
         <div className="min-w-0 flex-1">
           <p className="text-sm font-semibold text-content-primary">
-            {t('review_ask.title', { defaultValue: 'Enjoying OpenConstructionERP?' })}
+            {t('review_ask.title', { defaultValue: 'Enjoying Vastukar?' })}
           </p>
           <p className="mt-1 text-xs leading-relaxed text-content-secondary">
             {t('review_ask.body', {

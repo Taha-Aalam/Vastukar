@@ -370,7 +370,7 @@ export default function PropertySearchPanel({
       <p className="text-[10px] text-content-tertiary">
         {t('bim.property_search_hint', {
           defaultValue:
-            'Filter the full DDC dataframe (1000+ columns). Matches isolate in the 3D view.',
+            'Filter the full Vastukar dataframe (1000+ columns). Matches isolate in the 3D view.',
         })}
       </p>
 
@@ -429,7 +429,7 @@ export default function PropertySearchPanel({
       {/* Empty-schema hint — without this, the user just sees a disabled
           picker saying "No schema available" and assumes the panel is
           broken. The most common reason is a model imported without the
-          DDC Parquet sidecar (legacy upload path / converter unavailable).
+          Vastukar Parquet sidecar (legacy upload path / converter unavailable).
           Surface that explicitly so the user knows what to do next. */}
       {schema.length === 0 && !error && (
         <p
@@ -438,7 +438,7 @@ export default function PropertySearchPanel({
         >
           {t('bim.property_search_no_schema_hint', {
             defaultValue:
-              'This model has no DDC dataframe - re-import via the CAD/BIM converter to enable property search.',
+              'This model has no Vastukar dataframe - re-import via the CAD/BIM converter to enable property search.',
           })}
         </p>
       )}

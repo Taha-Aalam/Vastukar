@@ -1377,7 +1377,7 @@ function CadConverterSection({
         <div className="flex items-center gap-2">
           <HardHat size={18} className="text-oe-blue" />
           <h3 className="text-sm font-semibold text-content-primary">
-            {t('ai.cad_converters_title', { defaultValue: 'DDC Converter Modules' })}
+            {t('ai.cad_converters_title', { defaultValue: 'Vastukar Converter Modules' })}
           </h3>
           <Badge variant={installedCount > 0 ? 'success' : 'warning'} size="sm">
             {installedCount}/{totalCount} {t('ai.cad_installed', { defaultValue: 'installed' })}
@@ -1389,7 +1389,7 @@ function CadConverterSection({
       <div className="flex items-center gap-4 text-xs text-content-tertiary">
         {[
           { num: '1', label: t('ai.cad_step_upload', { defaultValue: 'Upload CAD/BIM file' }) },
-          { num: '2', label: t('ai.cad_step_convert', { defaultValue: 'Auto-convert via DDC' }) },
+          { num: '2', label: t('ai.cad_step_convert', { defaultValue: 'Auto-convert via Vastukar' }) },
           { num: '3', label: t('ai.cad_step_extract', { defaultValue: 'Get quantities & elements' }) },
         ].map((s, i) => (
           <div key={i} className="flex items-center gap-2">
@@ -1559,7 +1559,7 @@ function CadConverterSection({
         <Info size={14} className="shrink-0 mt-0.5 text-oe-blue-text" />
         <p className="text-xs text-oe-blue-text leading-relaxed">
           {t('ai.cad_module_info_extract', {
-            defaultValue: 'CAD/BIM files are converted using DDC converters and quantities are extracted directly - no AI API key required.',
+            defaultValue: 'CAD/BIM files are converted using Vastukar converters and quantities are extracted directly - no AI API key required.',
           })}
         </p>
       </div>
@@ -2670,7 +2670,7 @@ export function QuickEstimatePage() {
         >
           {t('cad_takeoff.intro_body', {
             defaultValue:
-              'Upload a CAD or BIM file and DDC converters extract its elements and quantities directly, with no AI key required. Group the results, match them against the cost database, and save the confirmed lines as a BOQ on any project.',
+              'Upload a CAD or BIM file and Vastukar converters extract its elements and quantities directly, with no AI key required. Group the results, match them against the cost database, and save the confirmed lines as a BOQ on any project.',
           })}
         </DismissibleInfo>
       ) : (
@@ -3325,7 +3325,7 @@ export function QuickEstimatePage() {
                             : t('ai.converters_none', { defaultValue: 'No converters installed - install below to enable CAD/BIM import' })}
                         </p>
                         <p className="text-xs text-content-tertiary mt-0.5">
-                          {fmtList((convertersData.converters ?? []).filter((c: ConverterFull) => c.installed).map((c: ConverterFull) => converterName(t, c))) || t('ai.converters_hint', { defaultValue: 'Scroll down to install DDC converters for RVT, IFC, DWG' })}
+                          {fmtList((convertersData.converters ?? []).filter((c: ConverterFull) => c.installed).map((c: ConverterFull) => converterName(t, c))) || t('ai.converters_hint', { defaultValue: 'Scroll down to install Vastukar converters for RVT, IFC, DWG' })}
                         </p>
                       </div>
                     </div>
@@ -3349,7 +3349,7 @@ export function QuickEstimatePage() {
                     disabled={isPending}
                   />
                 )}
-                {/* ── DDC Converter Modules ─────────────────────── */}
+                {/* ── Vastukar Converter Modules ─────────────────────── */}
                 {isCadRoute ? (
                   /* Full converter management UI on /data-explorer */
                   <CadConverterSection
@@ -3371,7 +3371,7 @@ export function QuickEstimatePage() {
                     <div className="flex items-center justify-between mb-2.5">
                       <h4 className="text-xs font-semibold text-content-primary flex items-center gap-1.5">
                         <HardHat size={13} />
-                        {t('ai.cad_converters_title', { defaultValue: 'DDC Converter Modules' })}
+                        {t('ai.cad_converters_title', { defaultValue: 'Vastukar Converter Modules' })}
                       </h4>
                       {convertersData && (
                         <Badge variant={convertersData.installed_count > 0 ? 'success' : 'warning'} size="sm">
@@ -3406,7 +3406,7 @@ export function QuickEstimatePage() {
                         <p>
                           {t('ai.cad_module_info_extract', {
                             defaultValue:
-                              'CAD/BIM files are converted using DDC converters and quantities are extracted directly - no AI API key required.',
+                              'CAD/BIM files are converted using Vastukar converters and quantities are extracted directly - no AI API key required.',
                           })}
                         </p>
                         <Link

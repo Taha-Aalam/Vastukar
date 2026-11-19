@@ -12,7 +12,7 @@ manifest = ModuleManifest(
         "Main contract tender priced from the bill of quantities: distribute, collect and compare bids, "
         "award the main contract and write the winning rates back into the BOQ"
     ),
-    author="OpenConstructionERP Core Team",
+    author="Vastukar",
     category="core",
     depends=["oe_projects", "oe_boq"],
     auto_install=True,

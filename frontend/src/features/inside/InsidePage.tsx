@@ -33,7 +33,7 @@ import { useInsideAccess } from './useInsideAccess';
 import { INSIDE_ROADMAP } from './roadmap';
 
 const PAYPAL_DONATE_URL = 'https://www.paypal.com/donate/?hosted_button_id=DWBCLNLY2VWAA';
-const GITHUB_SPONSORS_URL = 'https://github.com/sponsors/datadrivenconstruction';
+const GITHUB_SPONSORS_URL = 'https://github.com/sponsors/Taha-Aalam';
 
 export function InsidePage() {
   const { t } = useTranslation();

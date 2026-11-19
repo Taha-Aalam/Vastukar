@@ -11,7 +11,7 @@ manifest = ModuleManifest(
         "with market-specific titles, tax and consumer rules from the country pack, a payment schedule, "
         "reusable texts, a PDF built for the envelope window, and award to a client contract on acceptance."
     ),
-    author="OpenConstructionERP Core Team",
+    author="Vastukar",
     category="business",
     depends=["oe_boq", "oe_projects", "oe_contacts"],
     optional_depends=["oe_contracts", "oe_estimate_basis"],

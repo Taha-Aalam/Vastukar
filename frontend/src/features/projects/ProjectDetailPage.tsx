@@ -1281,14 +1281,14 @@ function ImportDialog({
                           ? mutation.error.message
                           : 'Import failed. Please try again.';
                       // Show a link when DDC converter is not found
-                      if (msg.includes('DDC converter') || msg.includes('no DDC converter')) {
+                      if (msg.includes('Vastukar converter') || msg.includes('no Vastukar converter')) {
                         return (
                           <div className="space-y-1.5">
                             <p>{t('import.cad_converter_missing', { defaultValue: 'CAD converter not installed.' })}</p>
                             <p className="text-xs text-semantic-error">
-                              Download DDC converters from{' '}
+                              Download Vastukar converters from{' '}
                               <a
-                                href="https://github.com/datadrivenconstruction/ddc-community-toolkit/releases"
+                                href="https://github.com/Taha-Aalam/ddc-community-toolkit/releases"
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="underline font-medium hover:text-semantic-error"
@@ -1343,7 +1343,7 @@ function ImportDialog({
                     {t('import.cad_elements_count', { defaultValue: '{{count}} CAD elements', count: result.cad_elements })}
                   </span>
                   <span className="text-oe-blue/60">
-                    {t('import.cad_extracted', { defaultValue: 'extracted from .{{format}} file via DDC converter', format: result.cad_format })}
+                    {t('import.cad_extracted', { defaultValue: 'extracted from .{{format}} file via Vastukar converter', format: result.cad_format })}
                   </span>
                 </div>
               )}

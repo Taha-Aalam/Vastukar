@@ -11,7 +11,7 @@ manifest = ModuleManifest(
     description=(
         "Formula-based quantity take-off library: every quantity keeps the formula that produced it, with presets for REB 23.003, OENORM A 2063, NRM and CESMM."
     ),
-    author="OpenConstructionERP Core Team",
+    author="Vastukar",
     category="core",
     depends=[],  # pure library; boq and others depend on us, not the other way
     auto_install=True,

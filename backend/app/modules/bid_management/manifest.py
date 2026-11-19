@@ -12,7 +12,7 @@ manifest = ModuleManifest(
         "Trade and supply packages to subcontractors and suppliers: invitations, Q&A, bid leveling with plugs, "
         "award to a subcontract agreement (subcontract package) or a purchase order (supply package)"
     ),
-    author="OpenConstructionERP Core Team",
+    author="Vastukar",
     category="business",
     depends=["oe_users", "oe_projects"],
     auto_install=True,

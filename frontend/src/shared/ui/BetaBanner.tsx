@@ -18,7 +18,7 @@ export function BetaBanner({
   moduleKey,
   title,
   description,
-  feedbackUrl = 'https://github.com/datadrivenconstruction/OpenConstructionERP/issues/new',
+  feedbackUrl = 'https://github.com/Taha-Aalam/Vastukar/issues/new',
   className = '',
 }: BetaBannerProps) {
   const { t } = useTranslation();

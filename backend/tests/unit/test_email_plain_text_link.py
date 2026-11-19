@@ -33,8 +33,8 @@ from app.core.email import (
 )
 from app.core.email.smtp import _html_to_text
 
-RESET_URL = "https://app.openconstructionerp.com/reset-password?token=abc123&uid=42"
-ACTION_URL = "https://app.openconstructionerp.com/go?id=7&ref=mail"
+RESET_URL = "https://app.vastukar.com/reset-password?token=abc123&uid=42"
+ACTION_URL = "https://app.vastukar.com/go?id=7&ref=mail"
 
 
 def _smtp_settings(**overrides) -> Settings:

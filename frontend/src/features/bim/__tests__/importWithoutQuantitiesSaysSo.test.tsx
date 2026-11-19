@@ -63,7 +63,7 @@ describe('QuantityWarningBanner', () => {
     );
     const banner = screen.getByTestId('bim-quantity-warning');
     expect(banner).toHaveTextContent('Imported without quantities');
-    expect(banner).toHaveTextContent('the DDC converter is not available on this server');
+    expect(banner).toHaveTextContent('the Vastukar converter is not available on this server');
   });
 
   it('stays away from a ready model', () => {

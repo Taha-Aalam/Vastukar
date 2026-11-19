@@ -15,7 +15,7 @@ manifest = ModuleManifest(
         "AI captions, tags, progress and hazard proposals that a person accepts or rejects; zip export with a "
         "JSON record per photo."
     ),
-    author="OpenConstructionERP Core Team",
+    author="Vastukar",
     category="field",
     depends=["oe_projects", "oe_documents", "oe_file_tags"],
     optional_depends=["oe_plan_room", "oe_geo_hub", "oe_ai"],

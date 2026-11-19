@@ -3461,7 +3461,7 @@ export function BIMViewer({
       )}
 
       {/* Placeholder geometry warning — shown when the backend used the
-          text-IFC fallback (DDC cad2data unavailable) and the on-screen
+          text-IFC fallback (Vastukar cad2data unavailable) and the on-screen
           model is a grid of 0.3×3.0×1.0 m boxes rather than the real
           geometry.  The banner is non-blocking (pointer-events: none on
           the wrapper, re-enabled on its own buttons) so the user can
@@ -3487,7 +3487,7 @@ export function BIMViewer({
               <span>
                 {t('bim.placeholder_banner.body', {
                   defaultValue:
-                    'install DDC IFC Converter for accurate meshes.',
+                    'install Vastukar IFC Converter for accurate meshes.',
                 })}
               </span>{' '}
               <a

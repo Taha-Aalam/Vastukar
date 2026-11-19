@@ -77,7 +77,7 @@ ALLOWED_UPSTREAMS: dict[str, str] = {
         "repoints one constant rather than shopping for a new vendor. That "
         "is the property CARTO turned out not to have."
     ),
-    "openconstructionerp.com": (
+    "vastukar.com": (
         "Our own project URL, sent as the User-Agent contact so an upstream "
         "operator can reach us before blocking us. Not a tile source."
     ),

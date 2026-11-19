@@ -14,7 +14,7 @@ manifest = ModuleManifest(
         "from them: actions, intervals, unit costs, year buckets, inflation from the price "
         "index, present value, written back to the asset register for whole-life cost"
     ),
-    author="OpenConstructionERP Core Team",
+    author="Vastukar",
     category="core",
     depends=["oe_projects"],
     optional_depends=["oe_inspections", "oe_bim_hub", "oe_price_index", "oe_carbon"],

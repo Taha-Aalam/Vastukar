@@ -482,14 +482,14 @@ def test_holder_is_newest_saved_profile_even_on_inactive_admin() -> None:
 
     old = ms.save_profile({SAVED_AT_KEY: "2026-01-01T00:00:00+00:00"}, {"primary": {"country": "DE"}})
     new = ms.save_profile({SAVED_AT_KEY: "2026-06-01T00:00:00+00:00"}, {"primary": {"country": "SA"}})
-    rows = [_admin("a@x.io", metadata=old), _admin("demo@openconstructionerp.com", active=False, metadata=new)]
+    rows = [_admin("a@x.io", metadata=old), _admin("demo@vastukar.com", active=False, metadata=new)]
     assert pick_holder(rows) == rows[1][0]
 
 
 def test_new_holder_skips_demo_admin() -> None:
     from app.core.market_router import pick_holder
 
-    rows = [_admin("demo@openconstructionerp.com"), _admin("boss@acme.io"), _admin("x@acme.io", active=False)]
+    rows = [_admin("demo@vastukar.com"), _admin("boss@acme.io"), _admin("x@acme.io", active=False)]
     assert pick_holder(rows) == rows[1][0]
     assert pick_holder(rows[:1]) == rows[0][0]
     assert pick_holder([]) is None

@@ -48,7 +48,7 @@ export const settingsGuide: ModuleGuideContent = {
       titleDefault: 'Integrations and converters',
       bodyKey: 'guide.settings.integrations.body',
       bodyDefault:
-        'The Integrations tab wires up Slack, Teams, Telegram and inbound webhooks so the platform can talk to the tools your team already uses. The Converters tab shows the installed DDC converter versions and their GitHub sources, which handle turning CAD and BIM files into estimable data.',
+        'The Integrations tab wires up Slack, Teams, Telegram and inbound webhooks so the platform can talk to the tools your team already uses. The Converters tab shows the installed Vastukar converter versions and their GitHub sources, which handle turning CAD and BIM files into estimable data.',
     },
     {
       icon: 'Database',

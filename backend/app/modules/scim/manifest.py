@@ -13,7 +13,7 @@ manifest = ModuleManifest(
         "their role through admin-mapped groups and removes access when they leave. Soft deactivation "
         "revokes sessions and API keys; the audit log records each change."
     ),
-    author="OpenConstructionERP Core Team",
+    author="Vastukar",
     category="core",
     depends=["oe_users"],
     auto_install=True,

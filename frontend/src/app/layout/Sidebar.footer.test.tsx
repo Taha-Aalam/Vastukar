@@ -2,7 +2,8 @@
 // Copyright (c) 2026 Artem Boiko / DataDrivenConstruction
 //
 // The footer of the sidebar: every button is there by default, a hidden one is
-// gone at once, and with nothing optional left only the version line stays.
+// gone at once, and with nothing optional left the footer is empty (the
+// version + licence line was removed from the UI in the Vastukar rebrand).
 
 import type { ReactNode } from 'react';
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
@@ -113,7 +114,6 @@ describe('the sidebar footer', () => {
     expect(button('About')).not.toBeNull();
     expect(link('GitHub repository')).not.toBeNull();
     expect(link('Telegram community')).not.toBeNull();
-    expect(screen.getByText(/^v\d/)).toBeTruthy();
   });
 
   it('drops Edit menu and GitHub the moment they are switched off', () => {
@@ -136,7 +136,7 @@ describe('the sidebar footer', () => {
     expect(button('Edit menu')).not.toBeNull();
   });
 
-  it('collapses cleanly when everything optional is hidden: no tiles, no empty grid, version stays', () => {
+  it('collapses cleanly when everything optional is hidden: no tiles, no empty grid, no version line', () => {
     hidden.list = ['/settings', '/users', '/about'];
     writeFooterPrefs({ editMenu: true, github: true, community: true });
     const { container } = renderSidebar();
@@ -146,8 +146,8 @@ describe('the sidebar footer', () => {
     expect(link('Telegram community')).toBeNull();
     expect(container.querySelectorAll('ul.grid-cols-2')).toHaveLength(0);
     expect(container.querySelectorAll('div.grid-cols-2')).toHaveLength(0);
-    expect(screen.getByText(/^v\d/)).toBeTruthy();
-    expect(screen.getByText('AGPL-3.0')).toBeTruthy();
+    expect(screen.queryByText(/^v\d/)).toBeNull();
+    expect(screen.queryByText('AGPL-3.0')).toBeNull();
   });
 
   it('collapses the icon-only footer too', () => {

@@ -46,8 +46,7 @@ export function PortalBrandHeader() {
       <span className="mt-2 block text-[11px] leading-none text-content-tertiary">
         by{' '}
         <span className="font-semibold tracking-tight">
-          Open<span className="text-oe-blue/80">Construction</span>
-          <span className="text-content-quaternary">ERP</span>
+          Vastukar
         </span>
       </span>
     </header>

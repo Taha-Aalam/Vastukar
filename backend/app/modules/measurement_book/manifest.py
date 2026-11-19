@@ -12,7 +12,7 @@ manifest = ModuleManifest(
         "Dated site measurements per BOQ position with dimensions, measured by and check-measured by, "
         "cumulative measured and checked quantities, and a running bill that feeds progress claims"
     ),
-    author="OpenConstructionERP Core Team",
+    author="Vastukar",
     category="business",
     depends=["oe_projects", "oe_boq", "oe_progress"],
     auto_install=True,

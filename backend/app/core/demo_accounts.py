@@ -26,9 +26,9 @@ from __future__ import annotations
 #: docstring. Mirrors the specs in ``app.main._seed_demo_account``.
 DEMO_ACCOUNT_EMAILS: frozenset[str] = frozenset(
     {
-        "demo@openconstructionerp.com",
-        "estimator@openconstructionerp.com",
-        "manager@openconstructionerp.com",
+        "demo@vastukar.com",
+        "estimator@vastukar.com",
+        "manager@vastukar.com",
     }
 )
 
@@ -36,12 +36,12 @@ DEMO_ACCOUNT_EMAILS: frozenset[str] = frozenset(
 #: The account that owns the showcase projects. Seeders used to take the first
 #: row with role ``admin``, which on a live installation is a real person, and
 #: could be one whose account had been deactivated.
-SHOWCASE_OWNER_EMAIL = "demo@openconstructionerp.com"
+SHOWCASE_OWNER_EMAIL = "demo@vastukar.com"
 
 
 #: The account behind the "Admin" tile on the login page. When it is and is
 #: not an administrator is decided in ``app.core.demo_admin``.
-DEMO_ADMIN_EMAIL = "demo@openconstructionerp.com"
+DEMO_ADMIN_EMAIL = "demo@vastukar.com"
 
 
 #: The ``ADMIN_EMAIL`` each seeder script under ``app/scripts`` registers.

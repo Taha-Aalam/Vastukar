@@ -48,7 +48,7 @@ describe('VIDEO_HINTS', () => {
     expect(hint?.video.language).toBe('en');
   });
 
-  it('every topic is placed on a screen', () => {
+  it('no topic is placed on a screen (video hints removed from the UI)', () => {
     const files = [
       'features/finance/RetentionLedgerTab.tsx',
       'features/finance/FinancePage.tsx',
@@ -65,7 +65,7 @@ describe('VIDEO_HINTS', () => {
         return '';
       }
     });
-    for (const topic of TOPICS) expect(text.some((s) => s.includes(`topic="${topic}"`)), topic).toBe(true);
+    for (const topic of TOPICS) expect(text.some((s) => s.includes(`topic="${topic}"`)), topic).toBe(false);
   });
 });
 

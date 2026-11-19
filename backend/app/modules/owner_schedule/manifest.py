@@ -14,7 +14,7 @@ manifest = ModuleManifest(
         "the priced schedule back into the owner's own file with the owner's rounding. Format profiles come from "
         "the platform, from packs and from the mapping wizard."
     ),
-    author="OpenConstructionERP Core Team",
+    author="Vastukar",
     category="estimation",
     depends=["oe_projects", "oe_boq"],
     auto_install=True,

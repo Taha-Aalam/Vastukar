@@ -12,7 +12,7 @@ manifest = ModuleManifest(
         "Read-only flat tables (CSV, Parquet, JSON) over projects, BOQ positions, invoices, purchase orders "
         "and schedule activities, for Excel, Power Query and any BI tool; optional PostgreSQL views for SQL access"
     ),
-    author="OpenConstructionERP Core Team",
+    author="Vastukar",
     category="integration",
     depends=["oe_users", "oe_projects"],
     auto_install=True,

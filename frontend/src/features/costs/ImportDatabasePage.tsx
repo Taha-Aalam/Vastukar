@@ -1878,7 +1878,7 @@ export function VectorDatabaseSection() {
                 vectors: (55719).toLocaleString(i18n.language),
               })}{' '}&middot;{' '}
               {vectorStatus?.backend === 'qdrant' ? '3072d embeddings (text-embedding-3-large)' : '384d embeddings (all-MiniLM-L6-v2)'}{' '}
-              &middot; {t('costs_import.by_ddc', { defaultValue: 'by Data Driven Construction' })}
+              &middot; {t('costs_import.by_ddc', { defaultValue: 'by Vastukar' })}
             </p>
           </div>
         </div>
@@ -2986,7 +2986,7 @@ export function ImportDatabasePage() {
         })}
       </DismissibleInfo>
 
-      {/* DDC CWICR Database -- 11 regional databases */}
+      {/* Vastukar CWICR Database -- 11 regional databases */}
       <Card padding="none">
         <div className="px-6 pt-5 pb-2">
           <div className="flex items-center gap-3 mb-1">
@@ -2999,7 +2999,7 @@ export function ImportDatabasePage() {
               </h3>
               <p className="text-xs text-content-tertiary">
                 {t('costs_import.cwicr_stats', {
-                  defaultValue: '{{items}} items per region · {{fields}} fields · {{databases}} databases · by Data Driven Construction',
+                  defaultValue: '{{items}} items per region · {{fields}} fields · {{databases}} databases · by Vastukar',
                   items: (55719).toLocaleString(i18n.language),
                   fields: 85,
                   databases: 48,

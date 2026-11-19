@@ -13,7 +13,7 @@ manifest = ModuleManifest(
         "correspondence, minutes and contracts. Answers cite document, revision, page or sheet and section, "
         "and say so plainly when the documents do not contain the answer"
     ),
-    author="OpenConstructionERP Core Team",
+    author="Vastukar",
     category="core",
     depends=["oe_users", "oe_projects", "oe_documents", "oe_file_search", "oe_rfi"],
     auto_install=True,

@@ -13,7 +13,7 @@ manifest = ModuleManifest(
         "category. Estimate and risk screens show how many past projects met the same situation. Entirely "
         "manual: people write and confirm every lesson."
     ),
-    author="OpenConstructionERP Core Team",
+    author="Vastukar",
     category="business",
     depends=["oe_projects"],
     optional_depends=["oe_risk", "oe_boq"],

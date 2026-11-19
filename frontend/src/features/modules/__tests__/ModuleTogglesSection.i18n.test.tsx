@@ -146,7 +146,7 @@ describe('module registry cards in German', () => {
     const english = englishNames.filter(
       // A name that reads the same in both languages (product and standard
       // names: "DDC cad2data - IFC Converter") is not evidence of a fallback.
-      (name) => text.includes(name) && de.translation[name] === undefined && !/DDC|GAEB/.test(name),
+      (name) => text.includes(name) && de.translation[name] === undefined && !/Vastukar|GAEB/.test(name),
     );
     expect(english).toEqual([]);
   });
@@ -194,7 +194,7 @@ describe('module registry cards in French', () => {
     const { container } = renderSectionFr();
     const text = container.textContent ?? '';
     const english = englishNames.filter(
-      (name) => text.includes(name) && fr.translation[name] === undefined && !/DDC|GAEB/.test(name),
+      (name) => text.includes(name) && fr.translation[name] === undefined && !/Vastukar|GAEB/.test(name),
     );
     expect(english).toEqual([]);
   });

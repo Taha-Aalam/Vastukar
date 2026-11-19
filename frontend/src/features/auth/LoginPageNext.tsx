@@ -182,8 +182,8 @@ export function LoginPageNext() {
   // random one per install, so any literal printed here would be wrong on every
   // install. The tiles sign in through /auth/demo-login/ instead.
   const demoAccounts = [
-    { email: 'demo@openconstructionerp.com', name: 'Admin', role: t('auth.demo_role_admin', 'Administrator'), color: 'bg-blue-500', letter: 'A' },
-    { email: 'manager@openconstructionerp.com', name: 'Michael Carter', role: t('auth.demo_role_manager', 'Manager'), color: 'bg-amber-500', letter: 'M' },
+    { email: 'demo@vastukar.com', name: 'Admin', role: t('auth.demo_role_admin', 'Administrator'), color: 'bg-blue-500', letter: 'A' },
+    { email: 'manager@vastukar.com', name: 'Michael Carter', role: t('auth.demo_role_manager', 'Manager'), color: 'bg-amber-500', letter: 'M' },
   ];
 
   const handleDemoLogin = async (demoEmail: string) => {
@@ -579,7 +579,7 @@ export function LoginPageNext() {
               Artem Boiko
             </a>{' '}
             · Vastukar
-            · <a href="mailto:info@datadrivenconstruction.io" className="hover:text-content-secondary transition-colors">info@datadrivenconstruction.io</a>
+            · <a href="mailto:info@vastukar.com" className="hover:text-content-secondary transition-colors">info@vastukar.com</a>
           </div>
         </div>
 
@@ -594,7 +594,7 @@ export function LoginPageNext() {
                   className="mt-2.5 text-xl font-medium tracking-[-0.02em] text-content-primary dark:text-white"
                   style={{ fontFamily: "'Plus Jakarta Sans', system-ui, sans-serif" }}
                 >
-                  Open<span className="text-oe-blue">Construction</span><span className="text-content-quaternary">ERP</span>
+                  Vastukar
                 </span>
               </div>
 
@@ -605,7 +605,7 @@ export function LoginPageNext() {
                   className="text-[15px] font-medium tracking-[-0.02em] text-content-primary dark:text-white"
                   style={{ fontFamily: "'Plus Jakarta Sans', system-ui, sans-serif" }}
                 >
-                  Open<span className="text-oe-blue">Construction</span><span className="text-content-quaternary dark:text-white/50">ERP</span>
+                  Vastukar
                 </span>
               </div>
 

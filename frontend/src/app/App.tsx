@@ -24,7 +24,6 @@ import { rulesTabFromParams } from '@/features/bim/quantityRuleLinks';
 import { NlRuleBuilderPanel } from '@/features/compliance';
 import { useModuleRouteElements } from '@/modules/ModuleRoutes';
 import { DatabaseSetupPage } from '@/features/setup';
-import { ModuleVideosSlot } from '@/features/videos/ModuleVideosSlot';
 import { Logo, SkeletonTable, ShortcutsDialog, CommandPalette, ToastContainer, DemoReadOnlyDialog, BackgroundInstallBanner, ErrorBoundary, NotFoundPage, ProductTour, OfflineBanner, DesktopPortBanner, PWAInstallPrompt } from '@/shared/ui';
 import { TableEnhancerHost } from '@/shared/ui/TableEnhancerHost';
 import { ChecksPanel } from '@/shared/ui/ChecksPanel';
@@ -884,15 +883,6 @@ const HowItWorksPage = lazy(() => import('@/features/help/HowItWorksPage'));
 const CasesPage = lazy(() =>
   import('@/features/cases').then((m) => ({ default: m.CasesPage }))
 );
-// Videos - tutorial and training videos. Lazy: the page is a list of posters,
-// and nothing on it is needed at boot.
-const VideosPage = lazy(() =>
-  import('@/features/videos').then((m) => ({ default: m.VideosPage }))
-);
-// Courses and guides of the Academy: a catalogue of links, loaded on demand.
-const CoursesPage = lazy(() =>
-  import('@/features/videos/CoursesPage').then((m) => ({ default: m.CoursesPage }))
-);
 // The case editor, split from the hub: most readers never author one.
 const CaseEditorPage = lazy(() =>
   import('@/features/cases').then((m) => ({ default: m.CaseEditorPage }))
@@ -1017,11 +1007,6 @@ function AppShell() {
       <ErrorBoundary scope="app">
         <AppLayout title={title}>
           <Suspense fallback={<PageLoadingInline />}>
-            {/* "Videos for this step": renders nothing on a screen with no
-                videos, and a failure in it must never take the page down. */}
-            <ErrorBoundary key={`videos:${location.pathname}`} fallback={null}>
-              <ModuleVideosSlot />
-            </ErrorBoundary>
             <ErrorBoundary key={location.pathname}>
               <PageTitleContext.Provider value={setTitle}>
                 <Outlet />
@@ -1187,7 +1172,7 @@ if (typeof window !== 'undefined' && typeof console !== 'undefined') {
   try {
     // eslint-disable-next-line no-console
     console.info(
-      `%c${DDC_ORIGIN}%c · DataDrivenConstruction · datadrivenconstruction.io`,
+      `%c${DDC_ORIGIN}%c · Vastukar · vastukar.com`,
       'color:#0071E3;font-weight:700',
       'color:#64748b',
     );
@@ -1744,8 +1729,6 @@ export default function App() {
             and the form has no business loading for the ones who do not.
             /cases/new is declared before the stepper for readability only -
             the router ranks a static segment above a dynamic one regardless. */}
-        <Route path="/videos" element={<P title="Videos"><VideosPage /></P>} />
-        <Route path="/courses" element={<P title="Courses and guides"><CoursesPage /></P>} />
         <Route path="/packs" element={<P title="Packs"><PacksPage /></P>} />
         <Route path="/packs/focus" element={<P title="Packs"><PackFocusPage /></P>} />
         <Route path="/packs/:slug" element={<P title="Packs"><PackDetailPage /></P>} />
@@ -1761,7 +1744,7 @@ export default function App() {
         <Route path="/inside" element={<P title="Inside track"><InsidePage /></P>} />
         <Route path="/project-intelligence" element={<P title="Project Intelligence"><ProjectIntelligencePage /></P>} />
         {/* Architecture Map — internal tool, admin-only. Surfaces module
-            dependency graph + DDC integrity audit; not for day-to-day use. */}
+            dependency graph + Vastukar integrity audit; not for day-to-day use. */}
         <Route
           path="/architecture"
           element={
@@ -1990,7 +1973,7 @@ export default function App() {
       {/* DDC-CWICR-OE */}
       <span aria-hidden="true" style={{ position: 'absolute', width: 0, height: 0, overflow: 'hidden' }}>
         {'\u200B\u200C\u200D\u200B\u200C\u200D\u200B'}
-        DataDrivenConstruction·CWICR·OpenConstructionERP·2026
+        Vastukar·CWICR·2026
       </span>
     </Suspense>
   );

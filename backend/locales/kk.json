@@ -17,7 +17,7 @@
   },
   "costs.catalog_name_unavailable": "Бұл атауды жаңа анықтамалық үшін пайдалануға болмайды. Басқа атау таңдаңыз.",
   "app": {
-    "name": "OpenConstructionERP",
+    "name": "Vastukar",
     "tagline": "Ашық бастапқы кодты құрылыс сметасын есептеу"
   },
   "nav": {
@@ -312,7 +312,7 @@
     "update": "Жаңарту"
   },
   "dashboard": {
-    "welcome": "OpenConstructionERP-ке қош келдіңіз",
+    "welcome": "Vastukar-ке қош келдіңіз",
     "subtitle": "Сіздің құрылыс сметалау жұмыс кеңістігіңіз",
     "recent_projects": "Соңғы Жобалар",
     "system_status": "Жүйе Мәртебесі",
@@ -1537,7 +1537,7 @@
         "no_data_heading": "Деректер жоқ",
         "no_data_body": "Бұл есеп бос деректер суретімен жасалған. Таңдалған жоба үшін бастапқы модульдердің (қаржы, кесте, қауіпсіздік және т.б.) деректер қайтарғанын тексеріңіз.",
         "no_data_body_short": "Бұл есеп бос деректер суретімен жасалған. Таңдалған жоба үшін бастапқы модульдердің деректер қайтарғанын тексеріңіз.",
-        "footer_generated_by": "{timestamp} уақытында OpenConstructionERP арқылы жасалған.",
+        "footer_generated_by": "{timestamp} уақытында Vastukar арқылы жасалған.",
         "worksheet_name": "Есеп",
         "pdf_subject": "Жоба есебі",
         "overall_progress": "Жалпы орындалу барысы",
@@ -1843,9 +1843,9 @@
     "notification_email": {
       "greeting": "Сәлеметсіз бе, {name}!",
       "greeting_generic": "Сәлеметсіз бе!",
-      "cta": "OpenConstructionERP жүйесінде ашу",
+      "cta": "Vastukar жүйесінде ашу",
       "footer": "Бұл хатты хабарландыру параметрлеріңізге сәйкес аласыз. Оларды профильде өзгерте аласыз.",
-      "digest_subject": "OpenConstructionERP: Хабарландырулар жиынтығы ({count})",
+      "digest_subject": "Vastukar: Хабарландырулар жиынтығы ({count})",
       "digest_heading": "Соңғы хабарландырулар:"
     },
     "tender_xlsx": {

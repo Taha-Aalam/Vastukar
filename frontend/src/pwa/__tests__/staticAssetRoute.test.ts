@@ -29,7 +29,7 @@ describe('isStaticAssetRequest', () => {
   it('leaves cross-origin images to the browser cache', () => {
     expect(match('https://i.ytimg.com/vi/abc/maxresdefault.jpg', 'image')).toBe(false);
     expect(match('https://i.ytimg.com/vi/abc/hqdefault.jpg', 'image')).toBe(false);
-    expect(match('https://openconstructionerp.com/uberization-of-construction/img/og-en.jpg', 'image')).toBe(false);
+    expect(match('https://vastukar.com/uberization-of-construction/img/og-en.jpg', 'image')).toBe(false);
     expect(match('https://fonts.gstatic.com/s/inter/v1/x.woff2', 'font')).toBe(false);
     expect(match('https://cdn.example.net/assets/x.js', 'script')).toBe(false);
   });
