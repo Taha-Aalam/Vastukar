@@ -112,7 +112,10 @@ def pip_trap(monkeypatch):
         raise AssertionError("the upgrade route reached pip")
 
     monkeypatch.setattr(main_module, "claim_upgrade", _no_pip)
-    monkeypatch.setattr(main_module, "run_upgrade", _no_pip)
+    # The worker now resolves the release wheel before calling pip. Trap the
+    # new entry point; the old name is kept trapped when a tree still has it.
+    monkeypatch.setattr(main_module, "run_release_upgrade", _no_pip, raising=False)
+    monkeypatch.setattr(main_module, "run_upgrade", _no_pip, raising=False)
 
 
 async def _demo_admin_headers() -> dict[str, str]:

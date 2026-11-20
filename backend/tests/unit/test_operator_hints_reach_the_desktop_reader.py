@@ -715,7 +715,9 @@ def test_the_embedder_card_drops_its_copy_box_rather_than_filling_it_with_a_dead
         print(f"    frozen   pip_command  -> {frozen['pip_command']!r}")
         print(f"    frozen   install_hint -> {frozen['install_hint']}")
 
-    assert ordinary["pip_command"] == "pip install --upgrade openconstructionerp[semantic]"
+    from app.core.release_install import RELEASES_URL  # noqa: PLC0415
+
+    assert ordinary["pip_command"] == f"Install the [semantic] extra from a release wheel: {RELEASES_URL}"
     assert "command above" in ordinary["install_hint"]
 
     assert frozen["pip_command"] == "", (

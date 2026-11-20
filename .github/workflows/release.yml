@@ -1,7 +1,10 @@
-# OpenConstructionERP Release Pipeline
+# Vastukar Release Pipeline
 #
 # Triggered on version tag push (e.g., v0.1.0).
-# Builds Docker image, pushes to GHCR, creates GitHub Release.
+# Builds the Docker image, pushes it to GHCR, builds the backend wheel and its
+# SHA-256 manifest, and attaches both to the GitHub Release. The wheel is the
+# asset the in-app and CLI upgrade paths download; PyPI is no longer published
+# to by this repository.
 
 name: Release
 
@@ -49,7 +52,7 @@ jobs:
 
       # GHCR rejects any tag whose repository path contains uppercase letters
       # ("repository name must be lowercase"), but ${{ github.repository }}
-      # preserves the original casing (datadrivenconstruction/OpenConstructionERP).
+      # preserves the original casing (Taha-Aalam/Vastukar).
       # Lowercase it once here and feed the result to every image tag below.
       - name: Compute lowercase image name
         id: image
@@ -78,7 +81,7 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
           labels: |
-            org.opencontainers.image.title=OpenConstructionERP
+            org.opencontainers.image.title=Vastukar
             org.opencontainers.image.version=${{ steps.version.outputs.version }}
             org.opencontainers.image.source=${{ github.server_url }}/${{ github.repository }}
             org.opencontainers.image.licenses=AGPL-3.0-or-later
@@ -133,14 +136,68 @@ jobs:
           echo "$CONTENT" > /tmp/release-notes.md
           echo "Extracted $(printf '%s\n' "$CONTENT" | grep -c . || true) non-empty lines of notes for $VERSION."
 
+      # ── Backend wheel + checksum ─────────────────────────────────────
+      # The upgrade path downloads the wheel attached to the LATEST RELEASE of
+      # this repository and installs it as a local file. Building it here, on
+      # the same tag that creates the release, is what makes that path work:
+      # no wheel, no upgrade. PyPI is deliberately not involved.
+      - name: Set up Node.js 24
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7
+        with:
+          node-version: '24'
+          cache: 'npm'
+          cache-dependency-path: frontend/package-lock.json
+
+      - name: Set up Python 3.12
+        uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7
+        with:
+          python-version: '3.12'
+
+      - name: Build frontend bundle into the wheel layout
+        env:
+          NODE_OPTIONS: --max-old-space-size=12288
+        run: |
+          cd frontend
+          npm ci
+          npm run build
+          python ../scripts/pack_frontend_dist.py dist
+
+      - name: Build backend wheel
+        run: |
+          python -m pip install --upgrade build
+          cd backend
+          python -m build --wheel --outdir ../dist/
+
+      - name: Check the wheel carries the UI, then publish its checksum
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -n "$(ls dist/*.whl 2>/dev/null)" || { echo "no wheel was built" >&2; exit 1; }
+          python - <<'PY'
+          import glob, zipfile
+          whl = sorted(glob.glob("dist/*.whl"))
+          assert len(whl) == 1, f"expected one wheel, found {whl}"
+          with zipfile.ZipFile(whl[0]) as z:
+              files = set(z.namelist())
+          assert "app/_frontend_dist/index.html" in files, (
+              "the built wheel has no bundled UI; the upgrade would install a headless server"
+          )
+          PY
+          cd dist
+          sha256sum *.whl > SHA256SUMS.txt
+          cat SHA256SUMS.txt
+
       - name: Create GitHub Release
         uses: softprops/action-gh-release@3bb12739c298aeb8a4eeaf626c5b8d85266b0e65 # v2
         with:
           tag_name: ${{ github.ref_name }}
-          name: "OpenConstructionERP ${{ github.ref_name }}"
+          name: "Vastukar ${{ github.ref_name }}"
           body_path: /tmp/release-notes.md
           draft: false
           prerelease: ${{ contains(github.ref_name, '-rc') || contains(github.ref_name, '-beta') || contains(github.ref_name, '-alpha') }}
           generate_release_notes: true
+          files: |
+            dist/*.whl
+            dist/SHA256SUMS.txt
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

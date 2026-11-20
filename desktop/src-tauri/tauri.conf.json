@@ -1,9 +1,9 @@
 {
   "$schema": "https://schema.tauri.app/config/2",
-  "productName": "OpenConstructionERP",
+  "productName": "Vastukar",
   "version": "19.3.1",
-  "identifier": "io.openconstructionerp.desktop",
-  "mainBinaryName": "OpenConstructionERP",
+  "identifier": "io.vastukar.desktop",
+  "mainBinaryName": "Vastukar",
   "build": {
     "frontendDist": "../../frontend/dist",
     "beforeBuildCommand": "",
@@ -15,7 +15,7 @@
       {
         "label": "main",
         "url": "splash.html",
-        "title": "OpenConstructionERP",
+        "title": "Vastukar",
         "width": 1280,
         "height": 800,
         "minWidth": 1024,
@@ -30,7 +30,7 @@
     "trayIcon": {
       "iconPath": "icons/icon.png",
       "iconAsTemplate": false,
-      "tooltip": "OpenConstructionERP"
+      "tooltip": "Vastukar"
     },
     "security": {
       "csp": null
@@ -40,11 +40,11 @@
     "active": true,
     "targets": "all",
     "createUpdaterArtifacts": false,
-    "publisher": "DataDrivenConstruction",
-    "copyright": "Copyright DataDrivenConstruction. Licensed under AGPL-3.0.",
+    "publisher": "Vastukar",
+    "copyright": "Copyright Vastukar. Licensed under AGPL-3.0.",
     "category": "Business",
     "shortDescription": "Open-source construction cost estimation and BOQ platform.",
-    "longDescription": "OpenConstructionERP is an open-source platform for construction cost estimation, bills of quantities, and data validation, with CAD/BIM quantity takeoff and multi-currency support across 29 locales. It runs fully local on an embedded database, so there is no Python install or extra setup to manage. Import, validate, estimate, and report from a single desktop app that works offline.",
+    "longDescription": "Vastukar is an open-source platform for construction cost estimation, bills of quantities, and data validation, with CAD/BIM quantity takeoff and multi-currency support across 29 locales. It runs fully local on an embedded database, so there is no Python install or extra setup to manage. Import, validate, estimate, and report from a single desktop app that works offline.",
     "licenseFile": "../../LICENSE",
     "icon": [
       "icons/32x32.png",

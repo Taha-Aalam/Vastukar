@@ -2098,6 +2098,7 @@ async def embedder_status() -> dict[str, Any]:
     install card instead of an error toast.
     """
     from app.config import get_settings  # noqa: PLC0415
+    from app.core.release_install import RELEASES_URL  # noqa: PLC0415
     from app.core.self_upgrade import DESKTOP_NO_EXTRA, repair_hint  # noqa: PLC0415
 
     s = get_settings()
@@ -2146,7 +2147,7 @@ async def embedder_status() -> dict[str, Any]:
         # So a bundle reading this really cannot get the encoder, and the empty
         # frozen branch is the point: a copy box is only honest where the thing
         # in it can be run. DESKTOP_NO_EXTRA carries the sentence instead.
-        "pip_command": repair_hint("pip install --upgrade openconstructionerp[semantic]", ""),
+        "pip_command": repair_hint(f"Install the [semantic] extra from a release wheel: {RELEASES_URL}", ""),
         "install_hint": repair_hint("Install it with the command above, then restart the backend.", DESKTOP_NO_EXTRA),
         # Which of the two cases this is, said as a value rather than left
         # for the reader to infer from the English prose above. The frontend
@@ -5331,8 +5332,8 @@ def _download_cwicr_from_github_sync(db_id: str) -> Path | None:
     github_path = _GITHUB_CWICR_FILES.get(db_id) or _GITHUB_CWICR_LANG_FILES.get(db_id)
     if not github_path:
         _LAST_DOWNLOAD_ERROR[db_id] = (
-            f"backend has no GitHub mapping for '{db_id}'. Upgrade with "
-            f"`pip install --upgrade openconstructionerp` (≥ v2.6.23 added "
+            f"backend has no GitHub mapping for '{db_id}'. Install a newer "
+            f"release wheel from this repository's releases (≥ v2.6.23 added "
             f"the 19 new regions; older backends know only the original 11)."
         )
         return None
