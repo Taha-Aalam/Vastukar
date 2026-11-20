@@ -911,7 +911,10 @@ Release side: `release.yml` builds the frontend, builds the backend wheel on the
 tag, writes `SHA256SUMS.txt` and attaches both to the GitHub Release.
 `pypi-publish.yml` is retired (dispatch-only notice, no publish job, no PyPI
 environment or token); the filename is kept because repository tests reference
-it. No release or tag was cut in this change.
+it. The wheel size gate that used to live in `pypi-publish.yml` moved into
+`release.yml` alongside the wheel build, and `scripts/check_pypi_runway.py` now
+extracts it from there; its unit test was updated. No release or tag was cut in
+this change.
 
 Files changed:
 
@@ -971,13 +974,22 @@ For a pixel-exact match the owner must regenerate the whole set from that source
 Signing (report only, no credentials touched): `desktop-release.yml` references
 `ARTIFACT_SIGNING_ENDPOINT`, `ARTIFACT_SIGNING_ACCOUNT`,
 `ARTIFACT_SIGNING_PROFILE`, `ARTIFACT_SIGNING_TENANT_ID`,
-`ARTIFACT_SIGNING_CLIENT_ID` and `ARTIFACT_SIGNING_CLIENT_SECRET` (an Azure
-Trusted Signing / code-signing account), and macOS currently uses ad-hoc
-signing with `signingIdentity: "-"`. `release-signing.yml` uses Sigstore/cosign
-keyless OIDC and its verification snippet still names the upstream repo. Before
-a signed Vastukar installer can ship, the owner must obtain their own signing
-credentials/identity and update those references; none were invented or
+`ARTIFACT_SIGNING_CLIENT_ID` and `ARTIFACT_SIGNING_CLIENT_SECRET` — the Azure
+Trusted Signing / code-signing account belonging to DataDrivenConstruction, the
+upstream owner, not to Vastukar. macOS currently uses ad-hoc signing with
+`signingIdentity: "-"`. `release-signing.yml` uses Sigstore/cosign keyless OIDC
+issued to the upstream GitHub identity, and its verification snippet still
+names `datadrivenconstruction/OpenConstructionERP`. Before a signed Vastukar
+installer can ship, the owner must obtain their own signing account/certificate
+and Azure credentials and repoint those references; none were invented or
 imported here.
+
+Out of scope but noted for the owner (documentation, not desktop code): upstream
+contact/help links remain in `docs/desktop/INSTALL.md`,
+`docs/desktop/WINDOWS_BLOCKED.md`, `docs/desktop/MACOS_NOTARIZATION.md` and
+`docs/desktop/WINDOWS_SIGNING.md` (plus their `.de.md`/`.ru.md` variants). The
+audit's entries 67–68 name only `desktop/src-tauri/*` and `desktop/README.md`,
+so these were left unchanged by instruction scope.
 
 Files changed:
 

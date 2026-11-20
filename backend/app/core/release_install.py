@@ -67,7 +67,10 @@ def fetch_latest_release(client: httpx.Client | None = None) -> dict[str, Any]:
 
     if client is not None:
         return _get(client)
-    with httpx.Client(timeout=30) as own:
+    # GitHub asset URLs redirect to release-assets.githubusercontent.com. httpx
+    # does not follow redirects unless asked, so without this every download
+    # would verify the body of a 302 instead of the wheel.
+    with httpx.Client(timeout=30, follow_redirects=True) as own:
         return _get(own)
 
 
@@ -188,7 +191,7 @@ def prepare_release_install(version: str | None = None) -> tuple[list[str], str,
     release = fetch_latest_release()
     asset = pick_wheel_asset(release, version)
     dest = Path(tempfile.mkdtemp(prefix="vastukar-release-"))
-    with httpx.Client(timeout=DOWNLOAD_TIMEOUT_SECONDS) as client:
+    with httpx.Client(timeout=DOWNLOAD_TIMEOUT_SECONDS, follow_redirects=True) as client:
         try:
             checksum = expected_checksum(client, release, asset)
             wheel = download_and_verify(client, asset, checksum, dest)

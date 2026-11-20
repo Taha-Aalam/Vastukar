@@ -2148,7 +2148,7 @@ async def embedder_status() -> dict[str, Any]:
         # frozen branch is the point: a copy box is only honest where the thing
         # in it can be run. DESKTOP_NO_EXTRA carries the sentence instead.
         "pip_command": repair_hint(f"Install the [semantic] extra from a release wheel: {RELEASES_URL}", ""),
-        "install_hint": repair_hint("Install it with the command above, then restart the backend.", DESKTOP_NO_EXTRA),
+        "install_hint": repair_hint("Install it from the release wheel linked above, then restart the backend.", DESKTOP_NO_EXTRA),
         # Which of the two cases this is, said as a value rather than left
         # for the reader to infer from the English prose above. The frontend
         # translates the sentence, and it can only do that if it is told the

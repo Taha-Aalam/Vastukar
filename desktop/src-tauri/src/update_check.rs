@@ -1006,9 +1006,10 @@ mod tests {
         let body = r#"{"tag_name":"v99.0.0","draft":false,"prerelease":false,
             "html_url":"https://example.invalid/please-run-this.exe"}"#;
         let offer = update_from_response(200, body, "15.0.0").expect("a newer version was offered");
-        assert!(
-            offer.url.starts_with("https://github.com/datadrivenconstruction/"),
-            "the button must not be able to point off github, got {}",
+        assert_eq!(
+            offer.url,
+            format!("https://github.com/{REPO}/releases/latest"),
+            "a hostile answer must fall back to this repository's own releases, got {}",
             offer.url
         );
     }
