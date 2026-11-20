@@ -233,8 +233,7 @@ def boot(data_dir: Path | str) -> bool:
         from app.core.self_upgrade import repair_hint  # noqa: PLC0415
 
         hint = repair_hint(
-            f"reinstall the package: {install_advice(force=True)}, "
-            "or install pixeltable-pgserver directly"
+            f"reinstall the package: {install_advice(force=True)}, or install pixeltable-pgserver directly"
         )
         emit_stage(
             "pg",

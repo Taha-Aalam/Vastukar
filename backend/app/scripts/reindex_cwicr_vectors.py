@@ -506,8 +506,7 @@ def _check_infrastructure() -> str | None:
     if backend == "qdrant":
         if not _installed("qdrant_client"):
             return "VECTOR_BACKEND=qdrant but qdrant-client is not installed. " + repair_hint(
-                "Install the client extra and start Qdrant, then rerun: "
-                f"{install_advice('semantic-clients')}"
+                f"Install the client extra and start Qdrant, then rerun: {install_advice('semantic-clients')}"
             )
     elif not _installed("lancedb"):
         return "the LanceDB vector store is not installed. " + repair_hint(
@@ -682,8 +681,8 @@ def main(argv: list[str] | None = None) -> int:
 
         print(
             "error: nothing was indexed. The embedding model may be missing or the vector store "
-            "may be unreachable. " + repair_hint(f"Install the [semantic] extra: {install_advice('semantic')}, "
-            "start the store, then rerun."),
+            "may be unreachable. "
+            + repair_hint(f"Install the [semantic] extra: {install_advice('semantic')}, start the store, then rerun."),
             file=sys.stderr,
         )
         return 1

@@ -89,18 +89,12 @@ def pick_wheel_asset(release: dict[str, Any], version: str | None = None) -> dic
     tag = release_version(release)
     if version and version.strip().lstrip("v") != tag:
         raise ReleaseInstallError(
-            f"Requested version {version} is not the latest release ({tag or 'unknown'}). "
-            f"See {RELEASES_URL}."
+            f"Requested version {version} is not the latest release ({tag or 'unknown'}). See {RELEASES_URL}."
         )
-    wheels = [
-        asset
-        for asset in (release.get("assets") or [])
-        if (asset.get("name") or "").lower().endswith(".whl")
-    ]
+    wheels = [asset for asset in (release.get("assets") or []) if (asset.get("name") or "").lower().endswith(".whl")]
     if not wheels:
         raise ReleaseInstallError(
-            f"The latest release ({tag or 'unknown'}) has no wheel asset attached. "
-            f"See {RELEASES_URL}."
+            f"The latest release ({tag or 'unknown'}) has no wheel asset attached. See {RELEASES_URL}."
         )
     return wheels[0]
 

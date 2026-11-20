@@ -18,10 +18,8 @@ import json
 import sys
 from pathlib import Path
 
-import httpx
 import pytest
 
-from app.core import release_install
 from app.core.release_install import (
     ReleaseInstallError,
     build_install_command,
@@ -92,7 +90,7 @@ class _StreamResponse:
     def iter_bytes(self):
         return iter(self._chunks)
 
-    def __enter__(self) -> "_StreamResponse":
+    def __enter__(self) -> _StreamResponse:
         return self
 
     def __exit__(self, *_exc: object) -> bool:
@@ -148,11 +146,7 @@ def test_a_checksum_mismatch_refuses_the_wheel(tmp_path: Path) -> None:
 def test_every_client_follows_redirects() -> None:
     """The source, not just a fake, must ask httpx to follow GitHub's 302."""
     source = (BACKEND / "app" / "core" / "release_install.py").read_text(encoding="utf-8")
-    clients = [
-        line.strip()
-        for line in source.splitlines()
-        if "httpx.Client(" in line
-    ]
+    clients = [line.strip() for line in source.splitlines() if "httpx.Client(" in line]
     assert clients, "no httpx.Client found; the probe has stopped seeing the source"
     for line in clients:
         assert "follow_redirects=True" in line, f"a release client does not follow redirects: {line}"

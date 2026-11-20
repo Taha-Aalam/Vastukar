@@ -987,8 +987,7 @@ class PointCloudService:
                             f"Viewing {exc.fmt.upper()} scans needs the optional {exc.reader} "
                             "reader. LAS, LAZ and COPC work out of the box; "
                             + repair_hint(
-                                f"install the 'pointcloud' extra ({install_advice('pointcloud')}) "
-                                "to add E57 support.",
+                                f"install the 'pointcloud' extra ({install_advice('pointcloud')}) to add E57 support.",
                                 DESKTOP_NO_EXTRA,
                             )
                         ),
