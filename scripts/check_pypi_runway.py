@@ -6,7 +6,7 @@ release once: 17.0.1 was tagged, built clean, passed every check and was
 refused at upload with ``400 Project size too large``, which leaves a public
 tag with no wheel on it and no way to take the tag back.
 
-``pypi-publish.yml`` measures both, and measures them honestly, but it runs on
+``release.yml`` measures both, and measures them honestly, but it runs on
 a tag. By the time it speaks the expensive part has already happened. The
 remedy is outside the repository as well: either old releases get deleted from
 PyPI, which is irreversible and breaks anyone pinned to them, or PyPI is asked
@@ -46,7 +46,9 @@ import urllib.request
 from pathlib import Path
 
 REPO = Path(__file__).resolve().parent.parent
-WORKFLOW = REPO / ".github" / "workflows" / "pypi-publish.yml"
+# PyPI publishing is retired; the size gate now lives in the release workflow
+# that builds the wheel attached to the GitHub Release.
+WORKFLOW = REPO / ".github" / "workflows" / "release.yml"
 STEP = "Check the wheel fits, per file and against the project total"
 HEREDOC = "python - <<'PY'"
 PROJECT = "openconstructionerp"

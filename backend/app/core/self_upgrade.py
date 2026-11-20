@@ -41,6 +41,7 @@ from __future__ import annotations
 
 import logging
 import os
+import shutil
 import subprocess  # noqa: S404 - this module's whole job is to run pip
 import sys
 import sysconfig
@@ -51,9 +52,12 @@ from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any
 
+from app.core.release_install import RELEASES_URL, prepare_release_install
+
 logger = logging.getLogger(__name__)
 
-RELEASES_URL = "https://github.com/Taha-Aalam/Vastukar/releases/latest"
+#: What the job reports before the worker has resolved the actual wheel path.
+RELEASE_INSTALL_LABEL = "vastukar-release-install"
 
 #: Shown verbatim to the user when a frozen build is asked to upgrade itself.
 FROZEN_REFUSAL = (
@@ -129,8 +133,8 @@ UPGRADE_DEMO_ACCOUNT = "demo_account"
 #: The refusal the route answers when the switch is off.
 DISABLED_REFUSAL = (
     "Updating from the browser is disabled on this install. To switch it on, set "
-    f"{RUNTIME_UPGRADE_ENV}=true in the server's environment and restart it. Or run "
-    "`pip install --upgrade openconstructionerp` from a shell on the server, then restart."
+    f"{RUNTIME_UPGRADE_ENV}=true in the server's environment and restart it. Or download "
+    f"the latest wheel from {RELEASES_URL} and install it from the downloaded file, then restart."
 )
 
 #: The refusal the route answers to a shared demo login.
@@ -353,7 +357,7 @@ def run_upgrade(job: UpgradeJob) -> UpgradeJob:
         job.status = FAILED
         job.error = (
             f"The upgrade did not finish within {UPGRADE_TIMEOUT_SECONDS} seconds and was stopped. "
-            "Run `pip install --upgrade openconstructionerp` from a shell to see where it stalls."
+            f"Re-run it from the latest wheel at {RELEASES_URL} to see where it stalls."
         )
         logger.warning("Upgrade job %s timed out after %ss", job.id, UPGRADE_TIMEOUT_SECONDS)
     except Exception as exc:  # noqa: BLE001 - reported through the job, not raised
@@ -364,6 +368,37 @@ def run_upgrade(job: UpgradeJob) -> UpgradeJob:
         _restore_missing_launchers(job)
         job.installed_version = _installed_version(job.running_version)
         job.finished_at = datetime.now(UTC).isoformat()
+    return job
+
+
+def run_release_upgrade(job: UpgradeJob, version: str | None = None, force: bool = False) -> UpgradeJob:
+    """Resolve the release wheel in the worker, then run the install.
+
+    Two things must hold. The download and checksum check stay off the request
+    thread (they are network and disk work and take minutes on a slow link), and
+    a failure before pip starts is still a *readable failed job* rather than an
+    exception vanishing into a background task nobody reads.
+
+    The gates that decide whether an upgrade may be attempted live in the
+    caller (``/api/system/upgrade``) and are unchanged: admin role,
+    ``ALLOW_RUNTIME_UPGRADE`` off by default, demo-account refusal, frozen-build
+    refusal and the embedded-PostgreSQL guard on a forced reinstall.
+    """
+    dest: Path | None = None
+    try:
+        command, _release_version, dest = prepare_release_install(version)
+        if force:
+            command.insert(-1, "--force-reinstall")
+        job.command = command
+        run_upgrade(job)
+    except Exception as exc:  # noqa: BLE001 - reported through the job, not raised
+        job.status = FAILED
+        job.error = str(exc)
+        job.finished_at = datetime.now(UTC).isoformat()
+        logger.exception("Upgrade job %s could not be prepared", job.id)
+    finally:
+        if dest is not None:
+            shutil.rmtree(dest, ignore_errors=True)
     return job
 
 

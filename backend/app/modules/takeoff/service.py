@@ -2357,14 +2357,15 @@ class TakeoffService:
         try:
             from app.core import pdf_reader  # noqa: PLC0415 - lazy so a broken wheel degrades to a clear 400
         except ImportError as exc:
-            # The bundle ships the PDF reader, and "reinstall openconstructionerp"
-            # is a pip command a frozen reader cannot run. Same reading, routed.
+            # The bundle ships the PDF reader, and the reinstall hint is a
+            # pip command a frozen reader cannot run. Same reading, routed.
             #
             # Only the reinstall goes inside the call. ``repair_hint`` replaces
             # the whole of its argument on a frozen build, so the fallback would
             # have been swallowed there - and the desktop reader, the one who
             # cannot run pip, is precisely the one for whom online analysis is
             # the remedy that still works. It is offered to both.
+            from app.core.release_install import install_advice  # noqa: PLC0415
             from app.core.self_upgrade import repair_hint  # noqa: PLC0415
 
             raise HTTPException(
@@ -2372,7 +2373,7 @@ class TakeoffService:
                 detail=(
                     "Vector recognition could not load its PDF reader (pypdfium2). It ships with "
                     "the platform, so this usually means a broken install. "
-                    + repair_hint("Reinstall openconstructionerp.")
+                    + repair_hint(f"Reinstall from this release: {install_advice(force=True)}")
                     + " Or use the online AI analysis instead."
                 ),
             ) from exc
@@ -2524,6 +2525,7 @@ class TakeoffService:
         try:
             from app.core import pdf_reader  # noqa: PLC0415 - lazy so a broken wheel degrades to a clear 400
         except ImportError as exc:
+            from app.core.release_install import install_advice  # noqa: PLC0415
             from app.core.self_upgrade import repair_hint  # noqa: PLC0415
 
             raise HTTPException(
@@ -2531,7 +2533,7 @@ class TakeoffService:
                 detail=(
                     "Symbol search could not load its PDF reader (pypdfium2). It ships with "
                     "the platform, so this usually means a broken install. "
-                    + repair_hint("Reinstall openconstructionerp.")
+                    + repair_hint(f"Reinstall from this release: {install_advice(force=True)}")
                 ),
             ) from exc
 

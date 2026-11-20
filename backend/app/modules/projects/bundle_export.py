@@ -855,6 +855,8 @@ async def preview_bundle(
 
 def _readme_md(manifest: BundleManifest, attachment_count: int) -> str:
     """Plain-text README packed inside the bundle for the recipient."""
+    from app.core.release_install import RELEASES_URL  # noqa: PLC0415
+
     lines = [
         "# Vastukar Project Bundle",
         "",
@@ -868,7 +870,8 @@ def _readme_md(manifest: BundleManifest, attachment_count: int) -> str:
         "",
         "## How to open",
         "",
-        "1. Install Vastukar - `pip install openconstructionerp` or download from vastukar.com.",
+        f"1. Install Vastukar - download the wheel attached to the latest release at {RELEASES_URL} "
+        "and install it from the downloaded file.",
         "2. Run `openconstructionerp serve` and sign in.",
         "3. Use **Files → Import project bundle** and select this `.ocep` file.",
         "",

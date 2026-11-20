@@ -214,11 +214,12 @@ def transform(
 
     # pyproj is not in requirements-desktop.lock, so a bundle reaches this and
     # has no pip to act on the advice with.
+    from app.core.release_install import install_advice  # noqa: PLC0415
     from app.core.self_upgrade import DESKTOP_NO_EXTRA, repair_hint  # noqa: PLC0415
 
     raise NotImplementedError(
         f"transform({src_epsg} -> {dst_epsg}) requires pyproj - "
-        + repair_hint("install openconstructionerp[geo] to enable it", DESKTOP_NO_EXTRA),
+        + repair_hint(f"install the [geo] extra: {install_advice('geo')}", DESKTOP_NO_EXTRA),
     )
 
 

@@ -1349,6 +1349,21 @@ const GITHUB_REPO = 'Taha-Aalam/Vastukar';
 const MAX_BODY_BYTES = 7800;
 
 /**
+ * Drop the address tail from a URL before it enters a public report.
+ *
+ * A route's query string and fragment are per-session addressing detail, not
+ * diagnostics: share/portal links carry `?token=…` and `?id=…`, and a fragment
+ * can name a private record. The error logger already strips these from the
+ * URL it captures, but the bug menu builds its own Page and Error page lines,
+ * so the rule has to be applied here too rather than assumed from upstream.
+ * The path itself is kept — it is what tells triage which screen to look at.
+ */
+function stripAddressTail(url: string): string {
+  const cut = url.search(/[?#]/);
+  return cut === -1 ? url : url.slice(0, cut);
+}
+
+/**
  * Route prefix → human component name, longest-prefix-wins.
  *
  * The bug report previously derived the "component" from a raw pathname,
@@ -1545,7 +1560,7 @@ function buildBugReportUrl(description: string): {
     '### Environment',
     `- App version: ${APP_VERSION}`,
     `- Component: ${component}`,
-    `- Page: ${window.location.pathname}${window.location.search}`,
+    `- Page: ${stripAddressTail(window.location.pathname + window.location.search + window.location.hash)}`,
     `- UI locale: ${uiLocale}`,
     `- User agent: ${navigator.userAgent}`,
     `- Build: ${APP_BUILD_FINGERPRINT}`,
@@ -1554,7 +1569,7 @@ function buildBugReportUrl(description: string): {
     // is filing from. Component/Page above name the current route and drive
     // the title, so when the two disagree triage needs to see it rather than
     // assume the stack belongs to the named surface (#391).
-    last ? `- Error page: ${last.url}` : '',
+    last ? `- Error page: ${stripAddressTail(last.url)}` : '',
     '',
     '### Last error captured',
     errorBlock,

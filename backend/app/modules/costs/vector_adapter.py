@@ -411,14 +411,13 @@ def _warn_missing_backend(operation: str) -> None:
     # lancedb, the store this extra exists for, is in requirements-desktop.lock,
     # so a bundle that reaches here is damaged rather than lean and gets the
     # repair wording. DESKTOP_NO_EXTRA would deny carrying what it carries.
+    from app.core.release_install import install_advice  # noqa: PLC0415
     from app.core.self_upgrade import repair_hint  # noqa: PLC0415
 
     logger.info(
         "cost-vector adapter: skipping %s - %s",
         operation,
-        repair_hint(
-            "install the [vector] extra (`pip install openconstructionerp[vector]`) to enable cost semantic indexing."
-        ),
+        repair_hint(f"install the [vector] extra ({install_advice('vector')}) to enable cost semantic indexing."),
     )
 
 

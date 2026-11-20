@@ -1,19 +1,14 @@
 # DDC-CWICR-OE: DataDrivenConstruction · OpenConstructionERP
 # Copyright (c) 2026 Artem Boiko / DataDrivenConstruction
-"""​‌‍⁠​‌‍⁠​‌‍⁠​‌‍⁠The version the banner names and the notes it shows must be one release.
+"""The version the banner names and the notes it shows come from one release.
 
-``GET /api/system/version-check`` reads two sources. The number comes from
-PyPI, which is the source of truth precisely because a hotfix can publish a
-wheel without a GitHub release object being created; the notes, the link and
-the date come from the newest GitHub release. In exactly the case that
-motivates the preference, those two are a release apart, and the endpoint used
-to publish them together: "15.1.0 is available", under it the notes for
-15.0.0, and a link to the 15.0.0 release page.
-
-For a desktop build that is not a cosmetic mismatch. The frozen bundle carries
-no pip, so the only remedy it can offer is "download the installer from the
-release page", and the page it was linking to is one that does not carry the
-build the reader was just told to install.
+``GET /api/system/version-check`` used to read two sources: a PyPI number and
+the newest GitHub release's metadata. The number could name a newer version
+than the release whose notes and installer were shown underneath it, and the
+PyPI project was the upstream package - so "update available" compared this
+fork against upstream. The source of truth is now the LATEST RELEASE of
+Taha-Aalam/Vastukar on GitHub, and the number, notes, link, date and assets all
+come from that one release object.
 
 These tests need no database and no authentication - the route touches
 neither - but they live in the PG lane because that is the lane the real gate
@@ -30,11 +25,11 @@ import pytest
 import pytest_asyncio
 from httpx import ASGITransport, AsyncClient
 
+from app.config import get_settings
 from app.core import update_check_policy
 from app.dependencies import get_current_user_id
 from app.main import create_app
 
-PYPI = "pypi.org"
 GITHUB = "api.github.com"
 
 
@@ -52,9 +47,9 @@ class _Response:
 class _FakeClient:
     """Stands in for ``httpx.AsyncClient`` inside the route only.
 
-    Routing is by substring of the URL because the route builds both URLs
-    itself, and a test that hard-codes them would pass while the endpoint asked
-    something else entirely.
+    Routing is by substring of the URL. Crucially, a request to any host other
+    than the ones in ``routes`` raises: if the route started asking PyPI again,
+    these tests would fail loudly rather than quietly accepting a second source.
     """
 
     routes: dict[str, _Response] = {}
@@ -75,7 +70,11 @@ class _FakeClient:
         raise AssertionError(f"the route asked for an unexpected URL: {url}")
 
 
-def _github_release(tag: str) -> _Response:
+def _github_release(
+    tag: str,
+    *,
+    assets: list[dict[str, Any]] | None = None,
+) -> _Response:
     return _Response(
         200,
         {
@@ -83,35 +82,27 @@ def _github_release(tag: str) -> _Response:
             "html_url": f"https://github.com/Taha-Aalam/Vastukar/releases/tag/{tag}",
             "body": f"## {tag.lstrip('v')}\n\nWhat this particular release changed.",
             "published_at": "2026-08-01T09:00:00Z",
+            "assets": assets or [],
         },
     )
 
 
-def _pypi_version(version: str) -> _Response:
-    return _Response(200, {"info": {"version": version}})
-
-
 @pytest_asyncio.fixture
 async def ask():
-    """Ask the endpoint once, with the two upstreams answering as told.
-
-    The app is built per test so the four-hour cache on ``app.state`` starts
-    empty, and the lifespan is deliberately not run: this route reads no
-    database, and starting one would tie a metadata test to a cluster.
-
-    The route answers signed-in callers only, and who is asking is not what
-    this file tests, so the caller is stood in for rather than signed in.
-
-    The client is constructed before ``httpx.AsyncClient`` is replaced, so the
-    transport this test speaks over stays real while the route gets the fake.
-    """
+    """Ask the endpoint once, with the release endpoint answering as told."""
 
     async def _ask(
-        monkeypatch: pytest.MonkeyPatch, routes: dict[str, _Response], *, disabled: bool = False
+        monkeypatch: pytest.MonkeyPatch,
+        routes: dict[str, _Response],
+        *,
+        disabled: bool = False,
+        running_version: str | None = None,
     ) -> dict[str, Any]:
-        # The machine running the suite may carry its own opt-out file or
-        # OE_DISABLE_UPDATE_CHECK, and neither may decide these tests.
         monkeypatch.setattr(update_check_policy, "update_check_disabled", lambda home=None: disabled)
+        if running_version is not None:
+            # create_app captures get_settings from the main module, so that is
+            # the reference to replace before the app is built.
+            monkeypatch.setattr("app.main.get_settings", lambda: _settings_at(running_version))
         app = create_app()
         app.dependency_overrides[get_current_user_id] = lambda: "version-check-reader"
         transport = ASGITransport(app=app)
@@ -125,83 +116,88 @@ async def ask():
     return _ask
 
 
-async def test_notes_are_dropped_when_they_describe_an_older_release(ask, monkeypatch: pytest.MonkeyPatch) -> None:
-    """PyPI is ahead of GitHub, which is the hotfix case, so the notes go."""
-    data = await ask(
-        monkeypatch,
-        {PYPI: _pypi_version("15.1.0"), GITHUB: _github_release("v15.0.0")},
-    )
-
-    assert data["latest_version"] == "15.1.0"
-    assert data["release_notes"] == ""
-    assert data["published_at"] == ""
-    # Whatever we link to, it must not be the page for the other version.
-    assert "15.0.0" not in data["release_url"]
+def _settings_at(version: str):
+    """A real Settings object with only the reported version changed."""
+    original = get_settings()
+    return original.model_copy(update={"app_version": version})
 
 
-async def test_notes_are_kept_when_the_release_names_the_same_version(ask, monkeypatch: pytest.MonkeyPatch) -> None:
-    """The ordinary release, where both sources agree, keeps everything."""
-    data = await ask(
-        monkeypatch,
-        {PYPI: _pypi_version("15.1.0"), GITHUB: _github_release("v15.1.0")},
-    )
+async def test_the_release_tag_names_the_latest_version(ask, monkeypatch: pytest.MonkeyPatch) -> None:
+    """Version comparison reads the mocked release payload directly."""
+    data = await ask(monkeypatch, {GITHUB: _github_release("v15.1.0")})
 
     assert data["latest_version"] == "15.1.0"
     assert "What this particular release changed." in data["release_notes"]
-    assert data["published_at"] == "2026-08-01T09:00:00Z"
     assert data["release_url"].endswith("/releases/tag/v15.1.0")
+    assert data["published_at"] == "2026-08-01T09:00:00Z"
 
 
-async def test_a_tag_written_shorter_than_the_wheel_still_matches(ask, monkeypatch: pytest.MonkeyPatch) -> None:
-    """``15.1`` and ``15.1.0`` are one release written by two tools.
-
-    Without the padding this is a false mismatch, and a false mismatch throws
-    away notes that were correct.
-    """
+async def test_a_newer_release_is_reported_as_available(ask, monkeypatch: pytest.MonkeyPatch) -> None:
+    """A release newer than the running version is an available update."""
     data = await ask(
         monkeypatch,
-        {PYPI: _pypi_version("15.1.0"), GITHUB: _github_release("v15.1")},
+        {GITHUB: _github_release("v15.1.0")},
+        running_version="15.0.9",
     )
 
+    assert data["current_version"] == "15.0.9"
+    assert data["latest_version"] == "15.1.0"
+    assert data["update_available"] is True
+
+
+async def test_an_equal_release_is_not_reported_as_available(ask, monkeypatch: pytest.MonkeyPatch) -> None:
+    """``15.1`` and ``15.1.0`` are one release written by two tools."""
+    data = await ask(
+        monkeypatch,
+        {GITHUB: _github_release("v15.1")},
+        running_version="15.1.0",
+    )
+
+    assert data["latest_version"] == "15.1"
+    assert data["update_available"] is False
     assert "What this particular release changed." in data["release_notes"]
 
 
-async def test_github_alone_still_answers_with_its_own_notes(ask, monkeypatch: pytest.MonkeyPatch) -> None:
-    """PyPI unreachable. The number then comes from the release we are quoting,
-    so the two agree by construction and nothing should be dropped."""
+async def test_assets_come_from_the_same_release(ask, monkeypatch: pytest.MonkeyPatch) -> None:
+    """The wheel offered for install is the one on the release we are naming."""
     data = await ask(
         monkeypatch,
-        {PYPI: _Response(503, {}), GITHUB: _github_release("v15.1.0")},
+        {
+            GITHUB: _github_release(
+                "v15.1.0",
+                assets=[
+                    {
+                        "name": "openconstructionerp-15.1.0-py3-none-any.whl",
+                        "browser_download_url": "https://github.com/Taha-Aalam/Vastukar/releases/download/v15.1.0/wheel.whl",
+                        "size": 123,
+                    }
+                ],
+            )
+        },
     )
 
-    assert data["latest_version"] == "15.1.0"
-    assert "What this particular release changed." in data["release_notes"]
+    assert data["assets"] == [
+        {
+            "name": "openconstructionerp-15.1.0-py3-none-any.whl",
+            "url": "https://github.com/Taha-Aalam/Vastukar/releases/download/v15.1.0/wheel.whl",
+            "size": 123,
+        }
+    ]
 
 
-async def test_pypi_alone_names_a_version_and_promises_nothing_else(ask, monkeypatch: pytest.MonkeyPatch) -> None:
-    """GitHub unreachable, so there is no release object to quote at all."""
-    data = await ask(
-        monkeypatch,
-        {PYPI: _pypi_version("15.1.0"), GITHUB: _Response(403, {})},
-    )
+async def test_an_unreachable_release_names_the_running_version(ask, monkeypatch: pytest.MonkeyPatch) -> None:
+    """No second source to fall back to: say what we have, promise nothing."""
+    data = await ask(monkeypatch, {GITHUB: _Response(503, {})})
 
-    assert data["latest_version"] == "15.1.0"
+    assert data["latest_version"] == data["current_version"]
+    assert data["update_available"] is False
     assert data["release_notes"] == ""
     assert data["release_url"].endswith("/releases")
 
 
 async def test_a_disabled_check_asks_nobody(ask, monkeypatch: pytest.MonkeyPatch) -> None:
-    """The launcher's "Turn off update checks" has to reach this route too.
-
-    Both upstreams would announce a far newer release, and the route swallows
-    upstream errors, so only an answer naming the running version proves the
-    route stayed off the network rather than asking and then saying nothing.
-    """
-    data = await ask(
-        monkeypatch,
-        {PYPI: _pypi_version("99.0.0"), GITHUB: _github_release("v99.0.0")},
-        disabled=True,
-    )
+    """The launcher's "Turn off update checks" has to reach this route too."""
+    data = await ask(monkeypatch, {GITHUB: _github_release("v99.0.0")}, disabled=True)
 
     assert data["check_disabled"] is True
     assert data["update_available"] is False
@@ -217,33 +213,15 @@ async def test_a_pressed_button_skips_the_cache(monkeypatch: pytest.MonkeyPatch)
     transport = ASGITransport(app=app)
     async with AsyncClient(transport=transport, base_url="http://test") as client:
         monkeypatch.setattr(httpx, "AsyncClient", _FakeClient)
-        _FakeClient.routes = {PYPI: _pypi_version("15.1.0"), GITHUB: _github_release("v15.1.0")}
+        _FakeClient.routes = {GITHUB: _github_release("v15.1.0")}
         first = (await client.get("/api/system/version-check")).json()
-        _FakeClient.routes = {PYPI: _pypi_version("15.2.0"), GITHUB: _github_release("v15.2.0")}
+        _FakeClient.routes = {GITHUB: _github_release("v15.2.0")}
         cached = (await client.get("/api/system/version-check")).json()
         fresh = (await client.get("/api/system/version-check", params={"force": "true"})).json()
 
     assert first["latest_version"] == "15.1.0"
     assert cached["latest_version"] == "15.1.0"
     assert fresh["latest_version"] == "15.2.0"
-
-
-async def test_the_desktop_hears_about_a_release_without_a_button(ask, monkeypatch: pytest.MonkeyPatch) -> None:
-    """The sidebar's notice is how a desktop user learns of a new version.
-
-    The launcher no longer asks GitHub on a healthy start, so this unforced
-    call, the one the sidebar makes after sign-in, is the only thing left that
-    tells the desktop about a release. It has to go out and say so.
-    """
-    monkeypatch.setenv("OE_DESKTOP", "1")
-    data = await ask(
-        monkeypatch,
-        {PYPI: _pypi_version("99.0.0"), GITHUB: _github_release("v99.0.0")},
-    )
-
-    assert data["update_available"] is True
-    assert data["latest_version"] == "99.0.0"
-    assert data.get("check_disabled", False) is False
 
 
 async def test_the_automatic_answer_is_held_for_a_day(monkeypatch: pytest.MonkeyPatch) -> None:
@@ -258,9 +236,9 @@ async def test_the_automatic_answer_is_held_for_a_day(monkeypatch: pytest.Monkey
 
     async with AsyncClient(transport=transport, base_url="http://test") as client:
         monkeypatch.setattr(httpx, "AsyncClient", _FakeClient)
-        _FakeClient.routes = {PYPI: _pypi_version("15.1.0"), GITHUB: _github_release("v15.1.0")}
+        _FakeClient.routes = {GITHUB: _github_release("v15.1.0")}
         await client.get("/api/system/version-check")
-        _FakeClient.routes = {PYPI: _pypi_version("15.2.0"), GITHUB: _github_release("v15.2.0")}
+        _FakeClient.routes = {GITHUB: _github_release("v15.2.0")}
         age_cache(23 * 60 * 60)
         within_the_day = (await client.get("/api/system/version-check")).json()
         age_cache(60 * 60 + 1)

@@ -39,11 +39,22 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { MemoryRouter } from 'react-router-dom';
 
 const openLink = vi.hoisted(() => vi.fn());
+// Default null: the existing tests exercise a quiet session. A test that needs
+// an error switches this on, so both URL-bearing lines in the report body can
+// be checked without changing the meaning of the other cases.
+const lastError = vi.hoisted(() => ({
+  value: null as { message: string; stack: string; at: string; url: string } | null,
+}));
 
 // Keep the real module; observe only the call that hands the report off.
 vi.mock('@/shared/lib/desktop', async (importOriginal) => {
   const actual = await importOriginal<typeof import('@/shared/lib/desktop')>();
   return { ...actual, openLink };
+});
+
+vi.mock('@/shared/lib/errorLogger', async (importOriginal) => {
+  const actual = await importOriginal<typeof import('@/shared/lib/errorLogger')>();
+  return { ...actual, getLastError: () => lastError.value };
 });
 
 import { BugReportMenu, MIN_DESCRIPTION_LENGTH } from './Header';
@@ -80,8 +91,12 @@ function type(text: string) {
   fireEvent.change(descriptionField(), { target: { value: text } });
 }
 
+const originalHref = window.location.pathname + window.location.search + window.location.hash;
+
 beforeEach(() => {
   openLink.mockClear();
+  lastError.value = null;
+  window.history.replaceState({}, '', originalHref);
 });
 
 describe('BugReportMenu - a report with no description cannot be sent', () => {
@@ -150,5 +165,49 @@ describe('BugReportMenu - a report with no description cannot be sent', () => {
     openMenu();
 
     expect(downloadChannel().disabled).toBe(false);
+  });
+});
+
+describe('BugReportMenu - a public report never carries a URL address tail', () => {
+  /**
+   * The report body is a GitHub issue anyone can read. A token-bearing share
+   * or portal route used to go out verbatim on the Page line, and the captured
+   * error's own URL went out on the Error page line. The logger masks its copy
+   * of the URL, but the menu assembles these two lines itself, so it has to do
+   * the stripping too. Both lines are asserted here, and the whole body is
+   * swept for the query keys and values so no third copy can slip through.
+   */
+  it('strips ?token=…&id=… and the fragment from every URL in the body', () => {
+    window.history.replaceState({}, '', '/portal/share/abc?token=SECRET123&id=42#private');
+    lastError.value = {
+      message: 'failed to load',
+      stack: 'Error: failed to load',
+      at: '2026-11-20T00:00:00Z',
+      url: '/projects/p-7?token=OTHERSECRET&id=99#detail',
+    };
+
+    openMenu();
+    type(REAL_DESCRIPTION);
+    fireEvent.click(githubChannel());
+
+    expect(openLink).toHaveBeenCalledTimes(1);
+    const url = new URL(openLink.mock.calls[0]![0] as string);
+    const body = url.searchParams.get('body') ?? '';
+
+    // The path survives; the address tail does not.
+    expect(body).toContain('- Page: /portal/share/abc');
+    expect(body).toContain('- Error page: /projects/p-7');
+    for (const leak of [
+      'token=',
+      'SECRET123',
+      'OTHERSECRET',
+      'id=42',
+      'id=99',
+      '#private',
+      '#detail',
+      '?',
+    ]) {
+      expect(body, `report body leaked ${leak}`).not.toContain(leak);
+    }
   });
 });
