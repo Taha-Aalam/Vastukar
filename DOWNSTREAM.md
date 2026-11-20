@@ -768,6 +768,8 @@ strings (API / data-format / package versions), detection logic and the
 licence/attribution files are untouched. The accompanying report-only audit of
 every remaining outward pointer is posted on the pull request.
 
+Full audit document (Part 2): [docs/upstream-pointer-audit.md](docs/upstream-pointer-audit.md).
+
 What changed:
 
 1. Sidebar: removed the GitHub and Community (Telegram) footer entries, the
