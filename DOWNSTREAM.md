@@ -758,3 +758,109 @@ Files changed in this step:
 - frontend/src/features/modules/RequestCustomModuleDialog.tsx (alt through t('app.name'))
 - frontend/src/shared/ui/BIMViewer/SelectionSetsStore.ts
 - frontend/vite.config.ts
+
+
+## Divergences — upstream-facing surface removal + India default market
+
+Removes the upstream-facing surfaces the owner called out, and makes India the
+default market. Display removal only: backend endpoints, functional version
+strings (API / data-format / package versions), detection logic and the
+licence/attribution files are untouched. The accompanying report-only audit of
+every remaining outward pointer is posted on the pull request.
+
+What changed:
+
+1. Sidebar: removed the GitHub and Community (Telegram) footer entries, the
+   "+ Add module" developer-guide tile and the "Request a custom module" tile.
+   The developer-guide page stays (it has other entry points); the
+   RequestCustomModuleDialog was removed because the sidebar tile was its only
+   entry point. The footer show/hide prefs lost their github/community items.
+2. Support Us: removed SupportUsButton and its "Help Vastukar grow" modal, the
+   ReviewPromptCard (same star/review surface) and the useReviewPromptStore
+   that only they consumed, plus every mount point (Header, AppLayout).
+3. Version / update UI: removed UpdateChecker (sidebar card + badge, Settings
+   and About inline notices, About "Check for updates"), the About and
+   ClassicAuth version lines, the dashboard "Welcome to v…" dialog and the
+   dashboard API-status version detail, and the WhatsNewCard release banner.
+   The backend /api/system/version-check endpoint is left in place.
+4. Logo click: the sidebar brand/wordmark now navigates client-side to the home
+   route ("/") instead of opening vastukar.com. Login/register wordmarks were
+   already non-linked.
+5. Default market: a first run with no stored preference and no detected
+   country now defaults to India (country "in", the India preset, HI_MUMBAI
+   cost base, govt-building-delhi demo) instead of the United States. Changed
+   DEFAULT_COUNTRY_PACK, LANG_TO_REGION.en, the getSuggestedRegion fallback,
+   the suggestDataSetup locale guess, LANG_TO_DEMO.en / DEFAULT_DEMO, and the
+   dashboard cases-card no-answer fallback. Detection (browser region, chosen
+   language's country, applied pack) and explicit choices still outrank it.
+
+Locale rule: every removed key was dropped from ALL 45 bundles in
+frontend/src/app/locales/ (regional variants carry only diffs, so per-file
+counts differ). The whatsnew.* keyspace was deliberately KEPT: it is pinned by
+profileMenuClaims.test.ts and its banner is gone, so the keys are inert. Two
+stale allowlist entries (update.installer_size, update.method_pip) were removed
+from scripts/i18n_leak_allowlist.json.
+
+Removed locale keys (116), by namespace:
+
+- `about.*` (7): `about.check_updates`, `about.check_updates_available`, `about.check_updates_checking`, `about.check_updates_current`, `about.check_updates_disabled`, `about.check_updates_failed`, `about.check_updates_hint`
+- `dashboard.*` (4): `dashboard.update_continue`, `dashboard.update_rerun_setup`, `dashboard.update_welcome_body`, `dashboard.update_welcome_title`
+- `modules.*` (24): `modules.request_card_community_body`, `modules.request_card_community_bullet1`, `modules.request_card_community_bullet2`, `modules.request_card_community_bullet3`, `modules.request_card_community_cta`, `modules.request_card_community_tag`, `modules.request_card_community_title`, `modules.request_card_private_body`, `modules.request_card_private_bullet1`, `modules.request_card_private_bullet2`, `modules.request_card_private_bullet3`, `modules.request_card_private_cta`, `modules.request_card_private_tag`, `modules.request_card_private_title`, `modules.request_chip_analytics`, `modules.request_chip_data`, `modules.request_chip_integration`, `modules.request_chip_tools`, `modules.request_examples_label`, `modules.request_eyebrow`, `modules.request_footer_diy`, `modules.request_footer_diy_cta`, `modules.request_hero_subtitle`, `modules.request_hero_title`
+- `nav.*` (4): `nav.add_module`, `nav.add_module_hint`, `nav.request_custom_module`, `nav.request_custom_module_hint`
+- `review_ask.*` (9): `review_ask.aria_label`, `review_ask.body`, `review_ask.g2`, `review_ask.github`, `review_ask.later`, `review_ask.linkedin`, `review_ask.never`, `review_ask.title`, `review_ask.x`
+- `settings.*` (1): `settings.update_available_inline`
+- `sidebar.*` (4): `sidebar.community_title`, `sidebar.github_repo`, `sidebar.join_telegram`, `sidebar.telegram_community`
+- `support.*` (27): `support.action_case_study_body`, `support.action_case_study_tag`, `support.action_case_study_title`, `support.action_donate_body`, `support.action_donate_title`, `support.action_review_body`, `support.action_review_tag`, `support.action_review_title`, `support.action_share_body`, `support.action_share_title`, `support.action_star_body`, `support.action_star_title`, `support.button_aria`, `support.button_label`, `support.button_tooltip`, `support.donate_github`, `support.donate_paypal`, `support.donate_perk_line`, `support.inside_track_link`, `support.modal_subtitle`, `support.modal_title`, `support.see_contributors`, `support.share_copied`, `support.share_copy`, `support.share_linkedin`, `support.share_twitter`, `support.thanks`
+- `update.*` (36): `update.apply_now`, `update.apply_now_button`, `update.changes_count`, `update.changes_count_short`, `update.currently_on`, `update.details`, `update.download_installer`, `update.download_installer_hint`, `update.error`, `update.error_hint`, `update.got_it`, `update.group_fixed`, `update.group_new`, `update.group_polished`, `update.how_to_update`, `update.installed`, `update.installer_size`, `update.method_installer`, `update.method_installer_advice`, `update.method_pip`, `update.method_pip_sub`, `update.method_source`, `update.method_source_sub`, `update.more_count`, `update.new_available`, `update.one_click_sub`, `update.one_click_title`, `update.open_details`, `update.open_release_page`, `update.popup_title`, `update.release_notes`, `update.running`, `update.runtime_blocked_demo`, `update.runtime_blocked_disabled`, `update.show_log`, `update.whats_new`
+
+Files changed in this step:
+
+- DOWNSTREAM.md
+- frontend/src/app/App.tsx (comment only)
+- frontend/src/app/layout/AppLayout.tsx
+- frontend/src/app/layout/CustomBranding.tsx
+- frontend/src/app/layout/Header.tsx
+- frontend/src/app/layout/Sidebar.tsx
+- frontend/src/app/layout/Sidebar.footer.test.tsx
+- frontend/src/app/layout/Sidebar.learn.test.tsx
+- frontend/src/app/layout/Sidebar.menuModes.test.tsx
+- frontend/src/app/layout/Sidebar.packMenu.test.tsx
+- frontend/src/app/layout/Sidebar.pinned.test.tsx
+- frontend/src/app/layout/Sidebar.quantityRules.test.tsx
+- frontend/src/app/layout/Sidebar.workspace.test.tsx
+- frontend/src/features/about/AboutPage.tsx
+- frontend/src/features/auth/ClassicAuth.tsx
+- frontend/src/features/dashboard/DashboardMarketCasesCard.tsx
+- frontend/src/features/dashboard/DashboardPage.tsx
+- frontend/src/features/onboarding/OnboardingWizard.tsx
+- frontend/src/features/onboarding/__tests__/StepFinish.workspace.test.tsx
+- frontend/src/features/onboarding/__tests__/browserRegionDefaults.test.ts
+- frontend/src/features/onboarding/__tests__/countryOffer.test.ts
+- frontend/src/features/onboarding/countryOffer.ts (comment only)
+- frontend/src/features/onboarding/countryPacks.ts
+- frontend/src/features/settings/SettingsPage.tsx
+- frontend/src/features/settings/SidebarFooterCard.tsx
+- frontend/src/shared/lib/footerPrefs.ts
+- frontend/src/shared/ui/HeaderNewsButton.tsx (comment only)
+- frontend/src/shared/ui/ProductTour.tsx (comment only)
+- scripts/i18n_leak_allowlist.json
+- frontend/src/app/locales/{ar,bg,bn,cs,da,de,el,en-US,en,es-CL,es-CO,es-MX,es,
+  et,fa,fi,fil,fr,he,hi,hr,hu,id,it,ja,kk,ko,ky,mn,nl,no,pl,pt-BR,pt,ro,ru,sv,
+  th,tr,uk,ur,uz,vi,zh}.ts (45 bundles; en-GB.ts carried none of the keys)
+
+Files deleted in this step:
+
+- frontend/src/app/layout/SupportUsButton.tsx
+- frontend/src/app/layout/SupportUsButton.test.tsx
+- frontend/src/features/modules/RequestCustomModuleDialog.tsx
+- frontend/src/features/modules/__tests__/RequestCustomModuleDialog.test.tsx
+- frontend/src/shared/ui/ReviewPromptCard.tsx
+- frontend/src/shared/ui/ReviewPromptCard.test.tsx
+- frontend/src/shared/ui/UpdateChecker.tsx
+- frontend/src/shared/ui/WhatsNewCard.tsx
+- frontend/src/shared/ui/__tests__/checkForUpdatesButton.test.tsx
+- frontend/src/shared/ui/__tests__/updateBadge.test.tsx
+- frontend/src/shared/ui/__tests__/updateNotice.test.tsx
+- frontend/src/shared/ui/__tests__/whatsNewCardDismiss.test.tsx
+- frontend/src/stores/useReviewPromptStore.ts
+- frontend/src/stores/useReviewPromptStore.test.ts

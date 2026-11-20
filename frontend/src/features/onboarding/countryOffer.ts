@@ -90,11 +90,10 @@ export function resolveCountryOffer(
   const pack = packs.find((p) => packCountryCode(p) === code && isCountrysOwnPack(p));
   if (pack) return { kind: 'pack', pack };
 
-  // Never fall through to DEFAULT_COUNTRY_PACK here. It is the first entry of
-  // COUNTRY_PACKS, which is the United States, so a country we cannot resolve
-  // would silently become a confident offer of the US preset to a reader in
-  // Nigeria. "Did not resolve" and "resolved to us" have to stay different
-  // answers.
+  // Never fall through to DEFAULT_COUNTRY_PACK here. It is the India preset,
+  // so a country we cannot resolve would silently become a confident offer of
+  // the default (India) preset to a reader in Nigeria. "Did not resolve" and
+  // "resolved to the default" have to stay different answers.
   const presetId = PRESET_ID_BY_COUNTRY[code] ?? code;
   const preset = COUNTRY_PACKS.find((p) => p.id === presetId);
   if (preset) return { kind: 'preset', preset };

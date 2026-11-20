@@ -311,20 +311,23 @@ export const COUNTRY_PACKS: CountryPack[] = [
 export type CountryPackId = (typeof COUNTRY_PACKS)[number]['id'];
 
 /**
- * The default Country Pack (United States) — a guaranteed-present fallback so
- * callers never have to handle ``undefined`` from an empty list under
- * ``noUncheckedIndexedAccess``.
+ * The default Country Pack (India) — Vastukar's home market. A guaranteed-
+ * present fallback so callers never have to handle ``undefined`` from an
+ * empty list under ``noUncheckedIndexedAccess``. A first run with no stored
+ * preference and no detected country lands here rather than on the United
+ * States; an explicit choice or a detected country still outranks it.
  */
-export const DEFAULT_COUNTRY_PACK: CountryPack = COUNTRY_PACKS[0] ?? {
-  id: 'us',
-  labelKey: 'onboarding.pack_us',
-  labelDefault: 'United States',
-  flagId: 'us',
-  locale: 'en',
-  region: 'USA_USD',
-  demoId: 'medical-us',
-  classification: 'MasterFormat',
-};
+export const DEFAULT_COUNTRY_PACK: CountryPack =
+  COUNTRY_PACKS.find((p) => p.id === 'in') ?? COUNTRY_PACKS[0] ?? {
+    id: 'in',
+    labelKey: 'onboarding.pack_in',
+    labelDefault: 'India / South Asia',
+    flagId: 'in',
+    locale: 'hi',
+    region: 'HI_MUMBAI',
+    demoId: 'govt-building-delhi',
+    classification: 'CWICR',
+  };
 
 /** Look up a Country Pack by id. */
 export function getCountryPack(id: string): CountryPack | undefined {

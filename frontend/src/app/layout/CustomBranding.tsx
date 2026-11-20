@@ -124,15 +124,13 @@ export function CustomBranding({ iconified }: CustomBrandingProps) {
       );
     }
     return (
-      <a
-        href="https://vastukar.com/?utm_source=app"
-        target="_blank"
-        rel="noopener noreferrer"
+      <Link
+        to="/"
         className="hover:opacity-80 transition-opacity"
         title="Vastukar"
       >
         <Logo size="sm" />
-      </a>
+      </Link>
     );
   }
 
@@ -203,10 +201,8 @@ export function CustomBranding({ iconified }: CustomBrandingProps) {
               </span>
             </button>
           ) : (
-            <a
-              href="https://vastukar.com/?utm_source=app"
-              target="_blank"
-              rel="noopener noreferrer"
+            <Link
+              to="/"
               className="flex items-center gap-1 hover:opacity-80 transition-opacity"
               title="Vastukar"
             >
@@ -224,7 +220,7 @@ export function CustomBranding({ iconified }: CustomBrandingProps) {
               >
                 Vastukar
               </span>
-            </a>
+            </Link>
           )}
         </div>
 

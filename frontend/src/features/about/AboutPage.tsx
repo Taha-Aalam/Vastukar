@@ -18,8 +18,6 @@ import clsx from 'clsx';
 import { Card, Button, Badge, Breadcrumb, DismissibleInfo, IntroRichText } from '@/shared/ui';
 import { SUPPORTED_LANGUAGES } from '@/app/i18n';
 import { PageHeader } from '@/shared/ui/PageHeader';
-import { APP_VERSION } from '@/shared/lib/version';
-import { CheckForUpdatesButton, UpdateInlineNotice } from '@/shared/ui/UpdateChecker';
 import { Changelog, getRecentReleases } from './Changelog';
 import { ThirdPartyLicenses } from './ThirdPartyLicenses';
 import { CONTRIBUTORS, SPONSORS, acknowledgedUrl, type Acknowledged } from './acknowledgments';
@@ -223,23 +221,17 @@ export function AboutPage() {
             {t('about.tagline', { defaultValue: 'The #1 open-source platform for construction cost estimation, project management and resource control' })}
           </p>
           <div className="mt-3 flex items-center justify-center lg:justify-start gap-3 text-sm text-content-tertiary">
-            <span className="font-mono">v{APP_VERSION}</span>
-            <span>&middot;</span>
             <span>2026</span>
             <span>&middot;</span>
             <Badge variant="blue" size="sm">AGPL-3.0</Badge>
           </div>
         </div>
 
-        {/* ── Right column — update notification + recent releases ──
-            UpdateInlineNotice renders one line when an update is on offer
-            and not dismissed; the recent-releases
-            mini-list lives below it so the right column visually matches
-            the left identity block's height on wide screens. */}
+        {/* ── Right column — recent releases ──
+            The recent-releases mini-list shows the last few published
+            versions with their dates so the release cadence is visible
+            without scrolling into the Changelog further down. */}
         <div className="flex flex-col gap-3">
-          <UpdateInlineNotice />
-          <CheckForUpdatesButton />
-
           {/* Recent releases — last 3 published versions with date so
               users can see the cadence at a glance without scrolling
               into the Changelog further down. */}

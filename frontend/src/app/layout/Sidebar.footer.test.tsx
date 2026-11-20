@@ -2,8 +2,10 @@
 // Copyright (c) 2026 Artem Boiko / DataDrivenConstruction
 //
 // The footer of the sidebar: every button is there by default, a hidden one is
-// gone at once, and with nothing optional left the footer is empty (the
-// version + licence line was removed from the UI in the Vastukar rebrand).
+// gone at once, and with nothing optional left the footer is empty. The
+// GitHub / Community links and the version + licence line were removed from
+// the UI in the Vastukar upstream-surface cleanup, and nothing external
+// replaces them.
 
 import type { ReactNode } from 'react';
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
@@ -36,13 +38,6 @@ vi.mock('react-i18next', () => ({
 
 vi.mock('@/shared/lib/useI18nReady', () => ({ useI18nReady: () => 0 }));
 vi.mock('./CustomBranding', () => ({ CustomBranding: () => null }));
-vi.mock('@/shared/ui/UpdateChecker', () => ({
-  UpdateNotification: () => null,
-  UpdateBadge: () => null,
-}));
-vi.mock('@/features/modules/RequestCustomModuleDialog', () => ({
-  RequestCustomModuleDialog: () => null,
-}));
 vi.mock('@/shared/hooks/useSidebarBadges', () => ({
   useSidebarBadges: () => ({ tasks: 0, rfi: 0, safety: 0 }),
 }));
@@ -106,22 +101,21 @@ beforeEach(() => {
 afterEach(() => cleanup());
 
 describe('the sidebar footer', () => {
-  it('shows every button by default', () => {
+  it('shows every button by default, and no GitHub or Community links', () => {
     renderSidebar();
     expect(button('Settings')).not.toBeNull();
     expect(button('Users')).not.toBeNull();
     expect(button('Edit menu')).not.toBeNull();
     expect(button('About')).not.toBeNull();
-    expect(link('GitHub repository')).not.toBeNull();
-    expect(link('Telegram community')).not.toBeNull();
+    expect(link('GitHub repository')).toBeNull();
+    expect(link('Telegram community')).toBeNull();
+    expect(link('Community')).toBeNull();
   });
 
-  it('drops Edit menu and GitHub the moment they are switched off', () => {
+  it('drops Edit menu the moment it is switched off', () => {
     renderSidebar();
-    act(() => writeFooterPrefs({ ...DEFAULT_FOOTER_PREFS, editMenu: true, github: true }));
+    act(() => writeFooterPrefs({ ...DEFAULT_FOOTER_PREFS, editMenu: true }));
     expect(button('Edit menu')).toBeNull();
-    expect(link('GitHub repository')).toBeNull();
-    expect(link('Telegram community')).not.toBeNull();
     // The other tiles are untouched.
     expect(button('Settings')).not.toBeNull();
     expect(button('About')).not.toBeNull();
@@ -138,7 +132,7 @@ describe('the sidebar footer', () => {
 
   it('collapses cleanly when everything optional is hidden: no tiles, no empty grid, no version line', () => {
     hidden.list = ['/settings', '/users', '/about'];
-    writeFooterPrefs({ editMenu: true, github: true, community: true });
+    writeFooterPrefs({ editMenu: true });
     const { container } = renderSidebar();
     expect(button('Settings')).toBeNull();
     expect(button('Edit menu')).toBeNull();
@@ -150,11 +144,9 @@ describe('the sidebar footer', () => {
     expect(screen.queryByText('AGPL-3.0')).toBeNull();
   });
 
-  it('collapses the icon-only footer too', () => {
+  it('has no external links in the icon-only footer either', () => {
     useSidebarCollapseStore.getState().setIconified(true);
     renderSidebar();
-    expect(link('GitHub repository')).not.toBeNull();
-    act(() => writeFooterPrefs({ editMenu: false, github: true, community: true }));
     expect(link('GitHub repository')).toBeNull();
     expect(link('Telegram community')).toBeNull();
   });

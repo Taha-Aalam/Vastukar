@@ -2,12 +2,11 @@
 // Copyright (c) 2026 Artem Boiko / DataDrivenConstruction
 /**
  * The sign-in pages in the Classic interface style: a calm side panel with
- * plain facts and a footer with version, links and the operator. Both render
+ * plain facts and a footer with links and the operator. Both render
  * on every look but are shown by CSS only under html[data-look="classic"]
  * (index.css, "Classic auth"), where the decorative standard panel is hidden.
  */
 import { useTranslation } from 'react-i18next';
-import { APP_VERSION } from '@/shared/lib/version';
 import { useBrandingStore } from '@/stores/useBrandingStore';
 
 export function ClassicAuthAside() {
@@ -36,8 +35,6 @@ export function ClassicAuthFooter() {
   const operator = useBrandingStore((s) => s.companyName);
   return (
     <footer className="oe-auth-classic-only oe-auth-footer">
-      <span className="tabular-nums">v{APP_VERSION}</span>
-      <span aria-hidden>·</span>
       <a href="https://vastukar.com/docs" target="_blank" rel="noopener noreferrer">
         {t('auth_classic.docs', { defaultValue: 'Docs' })}
       </a>

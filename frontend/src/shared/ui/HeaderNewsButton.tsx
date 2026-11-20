@@ -15,8 +15,8 @@
  * not duplicate a consent dialog here.
  *
  * A small dot marks an unacknowledged feature release, using the same
- * `oe.last_seen_version` flag as the WhatsNewCard so the two stay in sync -
- * opening the popup here also clears the dashboard card.
+ * `oe.last_seen_version` flag - opening the popup here acknowledges the
+ * current feature release.
  *
  * Icon-only to match the other header controls (notifications, help); the
  * label rides in the tooltip and aria-label.
@@ -33,7 +33,7 @@ import { APP_VERSION, isNewerFeatureRelease } from '@/shared/lib/version';
 import { openLink } from '@/shared/lib/desktop';
 import { useFocusTrap } from '@/shared/hooks/useFocusTrap';
 
-/** Shared with WhatsNewCard: which release the user has acknowledged. */
+/** Which release the user has acknowledged. */
 const LAST_SEEN_KEY = 'oe.last_seen_version';
 
 /**

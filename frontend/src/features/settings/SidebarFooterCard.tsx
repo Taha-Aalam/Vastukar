@@ -5,9 +5,9 @@
  * button at the foot of the left menu. Everything is shown by default.
  *
  * Settings, Users and About are menu routes, so they use the same per-user
- * hidden list as the "Edit menu" editor; Edit menu, GitHub and Community are
- * kept on this device (`shared/lib/footerPrefs.ts`). Settings can never be
- * lost: the profile menu in the header always links to it.
+ * hidden list as the "Edit menu" editor; Edit menu is kept on this device
+ * (`shared/lib/footerPrefs.ts`). Settings can never be lost: the profile
+ * menu in the header always links to it.
  */
 import { useTranslation } from 'react-i18next';
 import { Card, CardHeader, CardContent } from '@/shared/ui';
@@ -27,8 +27,6 @@ const ROWS: FooterRow[] = [
   { id: 'users', route: '/users', labelKey: 'sidebar.admin_grid.users', fallback: 'Users' },
   { id: 'editMenu', pref: 'editMenu', labelKey: 'sidebar.edit_menu', fallback: 'Edit menu' },
   { id: 'about', route: '/about', labelKey: 'sidebar.admin_grid.about', fallback: 'About' },
-  { id: 'github', pref: 'github', labelKey: '', fallback: 'GitHub' },
-  { id: 'community', pref: 'community', labelKey: 'sidebar.community_title', fallback: 'Community' },
 ];
 
 export function SidebarFooterCard() {
