@@ -49,10 +49,6 @@ vi.mock('react-i18next', () => ({
 // Surfaces around the menu that make their own calls and decide nothing here.
 vi.mock('@/shared/lib/useI18nReady', () => ({ useI18nReady: () => 0 }));
 vi.mock('./CustomBranding', () => ({ CustomBranding: () => null }));
-vi.mock('@/shared/ui/UpdateChecker', () => ({ UpdateNotification: () => null, UpdateBadge: () => null }));
-vi.mock('@/features/modules/RequestCustomModuleDialog', () => ({
-  RequestCustomModuleDialog: () => null,
-}));
 vi.mock('@/shared/hooks/useSidebarBadges', () => ({
   useSidebarBadges: () => ({ tasks: 0, rfi: 0, safety: 0 }),
 }));
@@ -107,13 +103,13 @@ const tokenFor = (userId: string) => `header.${btoa(JSON.stringify({ sub: userId
 
 const nav = () => screen.getByRole('navigation', { name: 'Main navigation' });
 
-/** Menu rows in document order. The two tiles at the foot of the list
- *  (manage modules, developer guide) are not screens and are left out. */
+/** Menu rows in document order. The manage-modules tile at the foot of the
+ *  list is not a screen and is left out. */
 function menuHrefs(root: HTMLElement = nav()): string[] {
   return within(root)
     .getAllByRole('link')
     .map((a) => a.getAttribute('href') ?? '')
-    .filter((href) => href !== '/modules' && href !== '/modules/developer-guide');
+    .filter((href) => href !== '/modules');
 }
 
 /** The rows drawn as the current screen. */

@@ -44,7 +44,7 @@
  * ProductTour uses storage key `oe.tour_completed` — note the dot —
  * and `data-testid` selectors so the two systems do not interfere.
  * The one-shot migration from the legacy key lives in
- * `App.tsx`. The "Take a quick tour" CTA in WhatsNewCard and the Help
+ * `App.tsx`. The "Take a quick tour" CTA in the Help
  * menu both target ProductTour via the `oe:start-tour` event.
  */
 
@@ -69,7 +69,7 @@ import { useMeOnboardingQueryKey } from '@/app/layout/meOnboardingQuery';
  *  global tour (tourId === 'global') so legacy installs keep working. */
 export const TOUR_COMPLETED_KEY = 'oe.tour_completed';
 
-/** Window event that any external trigger (e.g. WhatsNewCard "Take a
+/** Window event that any external trigger (e.g. the Help menu "Take a
  *  quick tour" button, Help menu item, per-module ModuleHelpButton) can
  *  dispatch to (re-)start.  The event detail may carry a `tourId` to
  *  pick a registered tour playlist; omitting it launches the global

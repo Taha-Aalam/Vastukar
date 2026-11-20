@@ -4,9 +4,8 @@ import { lazy, Suspense, useCallback, useEffect, useMemo, useRef, useState, type
 import { useTranslation } from 'react-i18next';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
-import { apiGet, apiPost, apiDelete, type Page } from '@/shared/lib/api';
+import { apiGet, apiPost, type Page } from '@/shared/lib/api';
 import { fetchProjectList } from '@/shared/lib/projectList';
-import { APP_VERSION } from '@/shared/lib/version';
 import { useToastStore } from '@/stores/useToastStore';
 import { useProjectContextStore } from '@/stores/useProjectContextStore';
 import { useAuthStore } from '@/stores/useAuthStore';
@@ -53,7 +52,6 @@ import { Card, CardHeader, CardContent, Button, Badge, Skeleton, ActivityFeed as
 import { dashboardGuide } from './dashboardGuide';
 import { pricedPositions, type PositionCounts } from './pricedPositions';
 import { MultiCurrencyTotal } from '@/shared/ui/MultiCurrencyTotal';
-import { WhatsNewCard } from '@/shared/ui/WhatsNewCard';
 import { CompactProjectCard } from './components/CompactProjectCard';
 import { type ProjectPin } from './components/DashboardProjectsMap';
 import { DateDisplay } from '@/shared/ui/DateDisplay';
@@ -2141,7 +2139,6 @@ function DashboardPageInner() {
 
   const [showAllActivity, setShowAllActivity] = useState(false);
   const [customizing, setCustomizing] = useState(false);
-  const [showUpdateWelcome, setShowUpdateWelcome] = useState(false);
   const [marketCasesExpanded, setMarketCasesExpanded] = useState(() =>
     localStorage.getItem('oe_dashboard_cases_collapsed') !== 'true',
   );
@@ -2289,21 +2286,8 @@ function DashboardPageInner() {
         navigate('/onboarding', { replace: true });
         return;
       }
-      // Server says completed — sync localStorage and check version.
+      // Server says completed — sync localStorage.
       localStorage.setItem('oe_onboarding_completed', 'true');
-      const completedVersion = localStorage.getItem('oe_onboarding_completed_version');
-      if (completedVersion && APP_VERSION) {
-        const cv = completedVersion.split('.').map((x) => parseInt(x, 10) || 0);
-        const av = APP_VERSION.split('.').map((x) => parseInt(x, 10) || 0);
-        const majorMinorChanged =
-          (av[0] ?? 0) > (cv[0] ?? 0) ||
-          ((av[0] ?? 0) === (cv[0] ?? 0) && (av[1] ?? 0) > (cv[1] ?? 0));
-        if (majorMinorChanged) {
-          setShowUpdateWelcome(true);
-        }
-      } else if (!completedVersion) {
-        localStorage.setItem('oe_onboarding_completed_version', APP_VERSION);
-      }
     } catch { /* storage unavailable */ }
   }, [navigate, onboardingState]);
 
@@ -2773,11 +2757,6 @@ function DashboardPageInner() {
           active (env OE_PARTNER_PACK or first installed). Dismissable
           per session; reappears on next browser launch. */}
       <PartnerLogoBadge variant="dashboard" />
-      {/* "What's new in vX.Y.Z" release-notes card. Self-gates on a
-          localStorage `oe_whats_new_seen_<version>` flag so it only
-          appears once per release per browser. Sits above the hero so
-          the user sees release highlights before the dashboard hero. */}
-      <WhatsNewCard />
       {/* ─── 1. Hero · row A - greeting + primary actions ────────────────
           Compressed from the previous 6-row hero (audit 2026-05-11): the
           greeting and the 3 CTAs share a single line on desktop; row B
@@ -3011,77 +2990,6 @@ function DashboardPageInner() {
       </div>
     </div>
 
-      {/* Update welcome dialog — shown when the app version has changed
-          since the user last completed onboarding. Offers to re-run the
-          setup wizard or just continue with the new version. */}
-      {showUpdateWelcome && (
-        <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm animate-fade-in"
-          role="dialog"
-          aria-modal="true"
-          aria-labelledby="update-welcome-title"
-          onKeyDown={(e) => {
-            if (e.key === 'Escape') {
-              try {
-                localStorage.setItem('oe_onboarding_completed_version', APP_VERSION);
-              } catch { /* ignore */ }
-              setShowUpdateWelcome(false);
-            }
-          }}
-        >
-          <div className="relative w-full max-w-lg mx-4 rounded-2xl bg-surface-primary shadow-2xl border border-border-light overflow-hidden">
-            <div className="absolute inset-0 bg-gradient-to-br from-oe-blue/5 via-transparent to-purple-500/5 pointer-events-none" />
-            <div className="relative px-8 py-8 text-center">
-              <div className="flex justify-center mb-4">
-                <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-oe-blue-subtle">
-                  <Sparkles size={28} className="text-oe-blue" />
-                </div>
-              </div>
-              <h2 id="update-welcome-title" className="text-xl font-bold text-content-primary">
-                {t('dashboard.update_welcome_title', {
-                  defaultValue: 'Welcome to v{{version}}',
-                  version: APP_VERSION,
-                })}
-              </h2>
-              <p className="mt-2 text-sm text-content-secondary leading-relaxed max-w-sm mx-auto">
-                {t('dashboard.update_welcome_body', {
-                  defaultValue: 'The platform has been updated with new features and improvements. You can re-run the setup wizard to configure new options, or continue working right away.',
-                })}
-              </p>
-              <div className="mt-6 flex flex-col sm:flex-row gap-3 justify-center">
-                <Button
-                  variant="secondary"
-                  onClick={() => {
-                    try {
-                      localStorage.removeItem('oe_onboarding_completed');
-                      localStorage.removeItem('oe_onboarding_completed_version');
-                      localStorage.removeItem('oe_lang_explicit');
-                    } catch { /* ignore */ }
-                    // Clear the server flag first: it, not this browser, decides whether the wizard shows.
-                    void apiDelete('/v1/users/me/onboarding/complete/').catch(() => {}).finally(() => {
-                      navigate('/onboarding', { replace: true });
-                    });
-                  }}
-                >
-                  {t('dashboard.update_rerun_setup', { defaultValue: 'Re-run setup' })}
-                </Button>
-                <Button
-                  variant="primary"
-                  autoFocus
-                  onClick={() => {
-                    try {
-                      localStorage.setItem('oe_onboarding_completed_version', APP_VERSION);
-                    } catch { /* ignore */ }
-                    setShowUpdateWelcome(false);
-                  }}
-                >
-                  {t('dashboard.update_continue', { defaultValue: 'Continue' })}
-                </Button>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
     </DashboardRollupProvider>
   );
 }
@@ -3488,7 +3396,7 @@ function SystemStatus() {
     {
       name: t('dashboard.api_server', { defaultValue: 'API Server' }),
       status: apiStatus,
-      detail: status?.api?.version ? `v${status.api.version}` : '',
+      detail: '',
       icon: <Zap size={13} />,
       delay: 400,
     },

@@ -36,7 +36,6 @@ import { APP_VERSION, APP_BUILD_FINGERPRINT } from '@/shared/lib/version';
 import { useToastStore } from '@/stores/useToastStore';
 import { useI18nReady } from '@/shared/lib/useI18nReady';
 import { isTauri, openAppInBrowser, openLink } from '@/shared/lib/desktop';
-import { SupportUsButton } from './SupportUsButton';
 import { SubscribeButton } from './SubscribeButton';
 import { ProjectJourneyButton } from './ProjectJourney';
 import { PresenceAvatarStack } from '@/features/global_presence';
@@ -610,10 +609,9 @@ export function Header({ title, onMenuClick }: HeaderProps) {
         <div className="hidden sm:block h-4 w-px bg-border-light/70" aria-hidden />
 
         {/* ── Zone 3 (Notifications + Subscribe + Bug + Help) ──────
-            Order: NotificationBell · What's new · SupportUs · Subscribe · BugReport · Help.
-            The "ask the user for something" CTAs (Support / Subscribe) stay
-            adjacent; Bug + Help sit on the right edge so a user filing a
-            report doesn't have to scan past the marketing CTAs. */}
+            Order: NotificationBell · What's new · Subscribe · BugReport · Help.
+            Bug + Help sit on the right edge so a user filing a report
+            doesn't have to scan past the marketing CTAs. */}
         {/* Only while the Learn card is hidden from the menu: its way back,
             at every width. */}
         <LearnTopBarButton />
@@ -630,7 +628,6 @@ export function Header({ title, onMenuClick }: HeaderProps) {
             had no room for these three next to the project picker, and the
             right cluster ran off screen. */}
         <div className="hidden 2xl:block"><ModuleBuilderButton /></div>
-        <div className="hidden 2xl:block"><SupportUsButton /></div>
         <div className="hidden 2xl:block"><SubscribeButton /></div>
         <BugReportMenu />
         <HelpMenu />

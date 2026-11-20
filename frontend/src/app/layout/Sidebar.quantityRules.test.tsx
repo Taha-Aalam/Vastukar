@@ -39,13 +39,6 @@ vi.mock('@/shared/lib/useI18nReady', () => ({ useI18nReady: () => 0 }));
 vi.mock('./CustomBranding', () => ({ CustomBranding: () => null }));
 // Each notice renders its own name, so a test can read which one the sidebar
 // chose without the version check behind them (pinned in updateBadge.test.tsx).
-vi.mock('@/shared/ui/UpdateChecker', () => ({
-  UpdateNotification: () => 'update-card',
-  UpdateBadge: () => 'update-badge',
-}));
-vi.mock('@/features/modules/RequestCustomModuleDialog', () => ({
-  RequestCustomModuleDialog: () => null,
-}));
 vi.mock('@/shared/hooks/useSidebarBadges', () => ({
   useSidebarBadges: () => ({ tasks: 0, rfi: 0, safety: 0 }),
 }));

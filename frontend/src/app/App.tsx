@@ -1303,7 +1303,7 @@ export default function App() {
           active; auto-starts on the dashboard the first time a user
           logs in (gated by `oe.tour_completed` in localStorage) and
           listens for the `oe:start-tour` window event so the
-          WhatsNewCard / Help menu can (re-)launch it on demand.
+          Help menu can (re-)launch it on demand.
 
           UX-audit collapse: the older `OnboardingTour` (storage key
           `oe_tour_completed`, no dot) used to be mounted here in
