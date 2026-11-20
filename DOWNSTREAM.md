@@ -1005,3 +1005,78 @@ Files changed:
 - desktop/build-sidecar.sh
 - desktop/pyinstaller.spec
 - DOWNSTREAM.md
+
+## Addendum (same PR) — printed install hints
+
+Owner decision: every string **printed to users** that instructs installing the
+package from PyPI now points at Fix 2's real install path. A single helper,
+`app.core.release_install.install_advice(extra=None, force=False)`, produces the
+wording: download the wheel attached to the latest `Taha-Aalam/Vastukar` GitHub
+release, check it against that release's `SHA256SUMS.txt`, then install the
+downloaded file with `pip install --upgrade <downloaded-wheel[extra].whl>`. It
+names no index-resolvable package, so following it cannot install upstream.
+
+Honesty check: extras were the one index-only shape. They are preserved as an
+extra on the local wheel path, and that was verified end to end rather than by
+parser inspection alone: a minimal wheel with `Provides-Extra: semantic` and a
+`Requires-Dist: …; extra == "semantic"` dependency, installed with
+`pip install --dry-run --no-index "<wheel>.whl[semantic]"`, failed with
+"Could not find a version that satisfies the requirement … (from
+tinyprobe[semantic])" — i.e. pip did resolve the extra from the local wheel;
+the same wheel without the suffix installed cleanly. A reviewer's contrary
+result came from a dry run with `--no-deps`, which suppresses exactly the
+resolution being tested, and is recorded as refuted-with-evidence. No hint had
+to be deleted for lack of a working equivalent. Two adjacent pieces of wording
+were dropped as no longer meaningful: `--no-cache-dir` on a reinstall (a local
+wheel does not consult the index cache), and the bare "or download from
+vastukar.com" alternative in the exported bundle README (it named no working
+source; the release URL replaces it).
+
+The 38 backend locale resources under
+`backend/app/modules/cost_match/messages/*.json` also printed the old command
+in the `match.semantic.not_installed` value in every language. That value now
+names the release URL and the local-wheel install command in a language-neutral
+form — translating the new sentence into 38 languages by machine would not be
+trustworthy, so the command itself is inserted verbatim and the surrounding
+localized sentence is left intact. Locale key names are unchanged by the
+standing downstream rule.
+
+Sites rewritten (old form → `install_advice(...)` for the named extra):
+
+- `backend/app/cli.py`: force-reinstall repair hint; "For production use";
+  dynamic `[extra]` install and force-reinstall hints; `--no-cache-dir`
+  reinstall; `[cv]` install and force-reinstall; the startup force-reinstall
+  hint.
+- `backend/app/main.py`: embedded vector backend `[vector]` hint.
+- `backend/app/core/embedded_pg.py`: package reinstall hint.
+- `backend/app/core/embedding_installer.py` (2 sites): `[semantic]` hints.
+- `backend/app/core/storage.py`: `[s3]` hint.
+- `backend/app/modules/admin/router.py` (2 sites): `[vector]` install/reinstall.
+- `backend/app/modules/costs/vector_adapter.py`: `[vector]` hint.
+- `backend/app/modules/costs/router.py` (3 sites): `[semantic]` hints; the
+  demo-mode refusal now names `RELEASES_URL` with no pip command, so a frozen
+  reader is never handed one.
+- `backend/app/modules/costs/qdrant_adapter.py` (3 sites): `[semantic-clients]`
+  and `[semantic]` hints.
+- `backend/app/modules/costs/parquet_lookup.py`: `[semantic]` hint.
+- `backend/app/modules/match_elements/qdrant_supervisor.py`:
+  `[semantic-clients]` hint.
+- `backend/app/modules/pointcloud/service.py`: `[pointcloud]` hint.
+- `backend/app/modules/geo_hub/coord_transforms.py`: `[geo]` hint.
+- `backend/app/modules/takeoff/service.py` (2 sites): generic "Reinstall
+  openconstructionerp" → release-wheel reinstall.
+- `backend/app/scripts/reindex_cwicr_vectors.py` (4 sites): `[semantic]`,
+  `[semantic-clients]` and `[vector]` operator instructions.
+
+Third-party install hints (`pip install trimesh`, `sentence-transformers`,
+`pdfplumber`, `openpyxl`, `python-pkcs11`, …) are unchanged: they do not name
+the package and are not a PyPI destination for it. Comments and docstrings that
+mention the old command are history, not instructions, and are unchanged by
+instruction. Package metadata (pyproject extras) is the package's identity, not
+a destination, and is unchanged.
+
+Tests updated to assert the new wording; the operator-hint census learned that
+a command assembled by `install_advice()` is no longer a literal string and
+gains a direct check that every helper call site is routed through
+`repair_hint`. A new AST test fails if any non-docstring string literal under
+`backend/app` contains both "pip install" and the package name.

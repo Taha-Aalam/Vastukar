@@ -12,8 +12,10 @@ sweep that stops an index reference creeping back into the upgrade path.
 
 from __future__ import annotations
 
-import sys
+import ast
 import hashlib
+import json
+import sys
 from pathlib import Path
 
 import httpx
@@ -154,6 +156,78 @@ def test_every_client_follows_redirects() -> None:
     assert clients, "no httpx.Client found; the probe has stopped seeing the source"
     for line in clients:
         assert "follow_redirects=True" in line, f"a release client does not follow redirects: {line}"
+
+
+def _docstring_lines(tree: ast.AST) -> set[int]:
+    lines: set[int] = set()
+    for node in ast.walk(tree):
+        if not isinstance(node, ast.Module | ast.ClassDef | ast.FunctionDef | ast.AsyncFunctionDef):
+            continue
+        body = getattr(node, "body", [])
+        if body and isinstance(body[0], ast.Expr) and isinstance(body[0].value, ast.Constant):
+            if isinstance(body[0].value.value, str):
+                const = body[0].value
+                lines.update(range(const.lineno, getattr(const, "end_lineno", const.lineno) + 1))
+    return lines
+
+
+def test_no_printed_string_instructs_a_pypi_install_of_the_package() -> None:
+    """Every user-facing install instruction names the release wheel instead.
+
+    Comments and docstrings are history, not instructions, and pyproject extras
+    are the package's identity, so only string literals that can reach a user
+    are scanned. Third-party packages (`pip install trimesh`) are out of scope;
+    the pair "pip install" + the package name is what used to send readers to
+    the upstream distribution.
+    """
+    offenders: list[str] = []
+    for path in sorted((BACKEND / "app").rglob("*.py")):
+        source = path.read_text(encoding="utf-8")
+        if "pip install" not in source.lower():
+            continue
+        tree = ast.parse(source)
+        docstrings = _docstring_lines(tree)
+        for node in ast.walk(tree):
+            if not isinstance(node, ast.Constant | ast.JoinedStr):
+                continue
+            if node.lineno in docstrings:
+                continue
+            if isinstance(node, ast.Constant):
+                pieces = [node.value] if isinstance(node.value, str) else []
+            else:
+                pieces = [p.value for p in node.values if isinstance(p, ast.Constant) and isinstance(p.value, str)]
+            for text in pieces:
+                low = text.lower()
+                if "pip install" in low and "openconstructionerp" in low:
+                    offenders.append(f"{path.relative_to(BACKEND).as_posix()}:{node.lineno}: {text.strip()[:90]}")
+    # Locale resources carry printed copy too, and no Python AST can see them.
+    # One of the 38 cost-match bundles said "pip install
+    # openconstructionerp[semantic]" in every language, which the .py scan
+    # above could never have caught.
+    for path in sorted((BACKEND / "app").rglob("*.json")):
+        text = path.read_text(encoding="utf-8")
+        if "pip install" not in text.lower():
+            continue
+        try:
+            payload = json.loads(text)
+        except json.JSONDecodeError:
+            continue  # a malformed resource is another test's problem, not this one's
+
+        def visit(node):
+            if isinstance(node, dict):
+                for value in node.values():
+                    visit(value)
+            elif isinstance(node, list):
+                for value in node:
+                    visit(value)
+            elif isinstance(node, str):
+                low = node.lower()
+                if "pip install" in low and "openconstructionerp" in low:
+                    offenders.append(f"{path.relative_to(BACKEND).as_posix()}: {node[:90]}")
+
+        visit(payload)
+
+    assert not offenders, "printed PyPI install instruction(s) remain:\n" + "\n".join(offenders)
 
 
 @pytest.mark.parametrize("relative", [str(p.relative_to(ROOT)) for p in UPGRADE_PATH_FILES])

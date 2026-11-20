@@ -93,7 +93,7 @@ from app.core.module_loader import module_loader
 # the thing this constant exists to remove, so the statement is somewhere a test
 # can execute it.
 from app.core.postgres_migrator import UNVALIDATED_CONSTRAINTS_SQL
-from app.core.release_install import GITHUB_REPO, RELEASES_API_URL, RELEASES_URL
+from app.core.release_install import GITHUB_REPO, RELEASES_API_URL, RELEASES_URL, install_advice
 from app.core.self_upgrade import (
     DEMO_ACCOUNT_REFUSAL,
     DISABLED_REFUSAL,
@@ -881,7 +881,7 @@ def _init_vector_db() -> None:
             logger.warning(
                 "LanceDB init failed (%s). Semantic search is disabled. %s",
                 error,
-                repair_hint("Install the embedded vector backend with: pip install openconstructionerp[vector]"),
+                repair_hint(f"Install the embedded vector backend with: {install_advice('vector')}"),
             )
     except Exception as exc:  # noqa: BLE001 - intentional: never fatal
         # Includes ImportError (missing optional extras), native crashes

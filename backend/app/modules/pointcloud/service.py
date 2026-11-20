@@ -975,6 +975,7 @@ class PointCloudService:
                 # to act on it with. DESKTOP_NO_EXTRA rather than the repair
                 # wording: pye57 is not in requirements-desktop.lock, so a bundle
                 # without the reader is lean rather than damaged.
+                from app.core.release_install import install_advice  # noqa: PLC0415
                 from app.core.self_upgrade import DESKTOP_NO_EXTRA, repair_hint  # noqa: PLC0415
 
                 raise HTTPException(
@@ -986,8 +987,8 @@ class PointCloudService:
                             f"Viewing {exc.fmt.upper()} scans needs the optional {exc.reader} "
                             "reader. LAS, LAZ and COPC work out of the box; "
                             + repair_hint(
-                                "install the 'pointcloud' extra "
-                                "(pip install openconstructionerp[pointcloud]) to add E57 support.",
+                                f"install the 'pointcloud' extra ({install_advice('pointcloud')}) "
+                                "to add E57 support.",
                                 DESKTOP_NO_EXTRA,
                             )
                         ),

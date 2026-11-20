@@ -71,6 +71,7 @@ import zipfile
 from dataclasses import dataclass
 from pathlib import Path
 
+from app.core.release_install import install_advice
 from app.core.self_upgrade import repair_hint
 
 logger = logging.getLogger(__name__)
@@ -204,7 +205,7 @@ class QdrantHealth:
 _MISSING_CLIENT_HINT = (
     "The vector client library is not part of this installation. "
     + repair_hint(
-        "Install the client extra to enable it: pip install openconstructionerp[semantic-clients]. "
+        f"Install the client extra to enable it: {install_advice('semantic-clients')}. "
         "That extra is the client alone and carries no embedding model, so it is a "
         "small install; the container image and the desktop build ship it already."
     )

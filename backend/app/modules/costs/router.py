@@ -2227,6 +2227,7 @@ async def qdrant_smoke_search(
         # The CWICR store's encoder is FlagEmbedding, which is deliberately not
         # in requirements-desktop.lock, so a bundle genuinely cannot switch this
         # on and DESKTOP_NO_EXTRA is the truthful wording.
+        from app.core.release_install import install_advice  # noqa: PLC0415
         from app.core.self_upgrade import DESKTOP_NO_EXTRA, repair_hint  # noqa: PLC0415
 
         raise HTTPException(
@@ -2234,7 +2235,7 @@ async def qdrant_smoke_search(
             detail=(
                 "Semantic search is not available on this deployment. "
                 + repair_hint(
-                    "Install the optional extra: pip install openconstructionerp[semantic]",
+                    f"Install the optional extra: {install_advice('semantic')}",
                     DESKTOP_NO_EXTRA,
                 )
             ),
@@ -3278,12 +3279,14 @@ async def install_v3_catalogue(
     # demo ships its own small reference cost index; loading additional cost
     # databases is a self-host feature.
     if _demo_mode_enabled():
+        from app.core.release_install import RELEASES_URL  # noqa: PLC0415
+
         raise HTTPException(
             status.HTTP_403_FORBIDDEN,
             "Installing cost databases is disabled on the public demo. Each "
             "catalogue is 400+ MB and the demo runs on a small shared box. To "
-            "load this region or your own cost data, download and run "
-            "Vastukar on your own machine: pip install openconstructionerp.",
+            "load this region or your own cost data, install Vastukar from its "
+            f"own releases: {RELEASES_URL}",
         )
 
     from app.modules.costs.qdrant_adapter import describe_server_write_mismatch
@@ -3450,13 +3453,14 @@ async def semantic_search(
         # damaged bundle rather than a lean one. Note this is the opposite
         # constant from the CWICR/Qdrant handler above, which reaches for
         # FlagEmbedding: the two look alike and need different advice.
+        from app.core.release_install import install_advice  # noqa: PLC0415
         from app.core.self_upgrade import repair_hint  # noqa: PLC0415
 
         raise HTTPException(
             status_code=503,
             detail=(
                 "Semantic search is not available on this deployment. "
-                + repair_hint("Install the optional extra: pip install openconstructionerp[semantic]")
+                + repair_hint(f"Install the optional extra: {install_advice('semantic')}")
             ),
             headers={"X-Semantic-State": str(state["state"])},
         ) from exc

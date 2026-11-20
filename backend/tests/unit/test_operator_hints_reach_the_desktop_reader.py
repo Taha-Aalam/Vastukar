@@ -75,9 +75,12 @@ _LOCK = _BACKEND / "requirements-desktop.lock"
 _PYPROJECT = _BACKEND / "pyproject.toml"
 
 #: Below this the census has stopped seeing the tree and its silence means
-#: nothing. The measured figure is 34; the floor leaves room to remove a site
-#: without editing this file, and none to lose the corpus.
-_MIN_POPULATION = 25
+#: nothing. The measured figure was 34 while every hint carried its own literal
+#: pip command; after the release-wheel change the shared ``install_advice``
+#: helper assembles that command, so the literal-string census legitimately
+#: sees 21 sites. The floor leaves room to remove a couple without editing this
+#: file, and the companion test below checks the helper call sites directly.
+_MIN_POPULATION = 18
 
 _PIP_INSTALL = re.compile(
     r"(?:pip3?|python\s+-m\s+pip|uv\s+pip)\s+install\b|\buv\s+add\b|\bpoetry\s+add\b",
@@ -335,6 +338,43 @@ def _describe(rows: list[dict], lock: set[str]) -> str:
     return "\n".join(lines)
 
 
+def test_every_release_wheel_advice_call_is_routed_through_repair_hint() -> None:
+    """The shared helper assembles the command, so read its call sites directly.
+
+    The literal-string census above cannot see a command that is built by a
+    function call. This checks the other half: every place that prints the
+    release-wheel advice still goes through ``repair_hint`` (or a local wrapper),
+    which is what keeps a frozen reader from being handed a pip command.
+    """
+    offenders: list[str] = []
+    seen = 0
+    for path in sorted(_APP.rglob("*.py")):
+        source = path.read_text(encoding="utf-8")
+        if "install_advice(" not in source:
+            continue
+        tree = ast.parse(source)
+        ranges = _routed_line_ranges(tree)
+        routers = _router_names(tree) | {"_install_advice"}
+        # A local wrapper (cli.py's _install_advice) delegates to repair_hint
+        # at its callers, so its own body counts as routed too.
+        ranges += [
+            (fn.lineno, getattr(fn, "end_lineno", fn.lineno))
+            for fn in ast.walk(tree)
+            if isinstance(fn, ast.FunctionDef | ast.AsyncFunctionDef) and fn.name in routers
+        ]
+        for node in ast.walk(tree):
+            if not isinstance(node, ast.Call):
+                continue
+            name = node.func.id if isinstance(node.func, ast.Name) else getattr(node.func, "attr", None)
+            if name != "install_advice":
+                continue
+            seen += 1
+            if not any(lo <= node.lineno <= hi for lo, hi in ranges):
+                offenders.append(f"{path.relative_to(_BACKEND).as_posix()}:{node.lineno}")
+    assert seen >= 10, f"only {seen} release-wheel advice calls found; the detector went blind"
+    assert not offenders, f"unrouted release-wheel advice: {offenders}"
+
+
 def test_every_install_instruction_that_names_a_package_is_routed_through_repair_hint() -> None:
     vocab = _Vocabulary()
     rows = _census(_APP, vocab)
@@ -545,7 +585,7 @@ _RUNTIME_SITES = [
         "app/core/embedding_installer.py::_message_for",
         _install_advice_from_message_for,
         "DESKTOP_REPAIR",
-        "pip install openconstructionerp[semantic]",
+        "<downloaded-wheel[semantic].whl>",
     ),
     (
         "app/modules/dwg_takeoff/dxf_processor.py::_require_ezdxf",
@@ -563,7 +603,7 @@ _RUNTIME_SITES = [
         "app/modules/costs/qdrant_adapter.py::_encoder_missing_message",
         _install_advice_from_cwicr_encoder,
         "DESKTOP_NO_EXTRA",
-        "pip install openconstructionerp[semantic]",
+        "<downloaded-wheel[semantic].whl>",
     ),
 ]
 
@@ -672,7 +712,7 @@ def test_the_two_import_time_hints_word_themselves_for_the_build_they_load_in(
     assert "pip install" not in frozen_card, f"a marketplace card offered pip to a frozen reader: {frozen_card}"
     assert DESKTOP_REPAIR in frozen_card
 
-    assert "pip install openconstructionerp[semantic-clients]" in ordinary_client
+    assert "<downloaded-wheel[semantic-clients].whl>" in ordinary_client
     assert "pip install" not in frozen_client, f"the client hint offered pip to a frozen reader: {frozen_client}"
     assert DESKTOP_REPAIR in frozen_client
 

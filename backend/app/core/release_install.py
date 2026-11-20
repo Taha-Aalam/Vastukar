@@ -206,3 +206,26 @@ def _remove_download_dir(dest: Path) -> None:
     import shutil
 
     shutil.rmtree(dest, ignore_errors=True)
+
+
+def install_advice(extra: str | None = None, *, force: bool = False) -> str:
+    """The one printed instruction for installing this fork from its releases.
+
+    Used by every user-facing hint that used to say "pip install
+    openconstructionerp". It names the real source (the owner's latest GitHub
+    release), the checksum the release publishes, and the install command with
+    a *local wheel path* - the same mechanism :func:`prepare_release_install`
+    and the apply-update route use. An ``extra`` is expressed as an extra on
+    the local wheel path, which pip resolves from the wheel's own metadata;
+    with no wheel this was index-only and pointed at the upstream package.
+
+    The command deliberately carries no package name that pip could resolve on
+    an index, so following the advice cannot install the upstream distribution.
+    """
+    flags = "--upgrade --force-reinstall" if force else "--upgrade"
+    suffix = f"[{extra}]" if extra else ""
+    return (
+        f"Download the wheel attached to the latest release at {RELEASES_URL}, "
+        f"check it against that release's SHA256SUMS.txt, then install the "
+        f"downloaded file: pip install {flags} <downloaded-wheel{suffix}.whl>"
+    )
