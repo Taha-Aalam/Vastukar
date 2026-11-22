@@ -315683,10 +315683,10 @@
     },
     {
       "name": "modules",
-      "ts_files": 38,
+      "ts_files": 36,
       "css_files": 0,
-      "test_files": 14,
-      "total_files": 39
+      "test_files": 13,
+      "total_files": 37
     },
     {
       "name": "ncr",
@@ -318227,7 +318227,7 @@
     "total_schemas": 4718,
     "total_python_files": 3342,
     "frontend_features": 237,
-    "frontend_ts_files": 4148,
+    "frontend_ts_files": 4146,
     "frontend_backend_mapped": 213
   },
   "frontend_backend_mapping": {
