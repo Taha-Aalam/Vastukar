@@ -33,8 +33,8 @@ OPT_OUT_FILE = "no-update-check"
 _TRUTHY = frozenset({"1", "true", "yes", "on"})
 
 #: How long an automatic answer is held before the internet is asked again: a
-#: day. The web UI holds its copy for the same window
-#: (``VERSION_CHECK_TTL_MS`` in ``frontend/src/shared/ui/UpdateChecker.tsx``).
+#: day. The web UI that used to mirror this window was removed with the
+#: upstream-facing surfaces, so the server is now the only owner of the TTL.
 #: About's "Check for updates" button skips it.
 VERSION_CHECK_TTL_S = 24 * 60 * 60
 
