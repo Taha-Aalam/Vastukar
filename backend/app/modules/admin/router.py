@@ -298,6 +298,7 @@ def require_vector_backend() -> None:
     # Both branches take the repair wording rather than the no-extra one,
     # because lancedb is in requirements-desktop.lock, so a bundle without a
     # working one is damaged rather than merely lean.
+    from app.core.release_install import install_advice  # noqa: PLC0415
     from app.core.self_upgrade import repair_hint  # noqa: PLC0415
 
     if importlib.util.find_spec("lancedb") is None:
@@ -306,7 +307,7 @@ def require_vector_backend() -> None:
             detail={
                 "code": "vector_extra_missing",
                 "message": "lancedb not installed. "
-                + repair_hint("Install the [vector] extra: pip install openconstructionerp[vector]."),
+                + repair_hint(f"Install the [vector] extra: {install_advice('vector')}"),
             },
         )
     try:
@@ -317,7 +318,7 @@ def require_vector_backend() -> None:
             detail={
                 "code": "vector_extra_broken",
                 "message": f"lancedb is installed but will not load: {type(exc).__name__}: {exc}. "
-                + repair_hint("Reinstall it: pip install --force-reinstall openconstructionerp[vector]."),
+                + repair_hint(f"Reinstall it: {install_advice('vector', force=True)}"),
             },
         ) from exc
 

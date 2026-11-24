@@ -1,4 +1,4 @@
-// OpenConstructionERP Desktop, Tauri v2 application.
+// Vastukar Desktop, Tauri v2 application.
 //
 // Manages the FastAPI backend as a sidecar process.
 // The React frontend loads in a native webview window.
@@ -1009,7 +1009,7 @@ fn set_backend_silent_notice(handle: &tauri::AppHandle, shown: bool) {
         let text = js_escape(
             "The application backend has not answered for about two minutes. It may be working \
 through a long operation, such as a large import, and this notice will disappear as soon as it \
-responds. If the window stays unusable, close it and start OpenConstructionERP again.",
+responds. If the window stays unusable, close it and start Vastukar again.",
         );
         format!(
             "(function(){{\
@@ -1059,8 +1059,8 @@ const LIVENESS_SILENT_STRIKES: u32 = 12;
 /// What to say when a server this machine was running has gone.
 const LOCAL_BACKEND_LOST_DETAIL: &str =
     "Nothing is listening on the local address any more, so this window can no longer load or \
-save anything. Please close it and start OpenConstructionERP again. If this keeps happening, \
-send the log file to info@datadrivenconstruction.io. Installation help: https://openconstructionerp.com/install-help";
+save anything. Please close it and start Vastukar again. If this keeps happening, \
+send the log file to info@vastukar.com. Installation help: https://vastukar.com/contact";
 
 /// What to say when a server somewhere else has gone.
 ///
@@ -1072,7 +1072,7 @@ fn remote_backend_lost_detail(url: &str) -> String {
     format!(
         "The server at {url} is no longer answering, so this window can no longer load or save \
 anything. Check that the server is running and that this computer can still reach it, then \
-start OpenConstructionERP again. You can also switch back to a server on this computer from \
+start Vastukar again. You can also switch back to a server on this computer from \
 the tray icon menu."
     )
 }
@@ -1411,7 +1411,7 @@ fn show_main_window(handle: &tauri::AppHandle) {
     }
 }
 
-/// Ports an already-running OpenConstructionERP backend is likely to be on.
+/// Ports an already-running Vastukar backend is likely to be on.
 ///
 /// Checked in order before we spawn our own sidecar. This is what lets the
 /// desktop app coexist with a developer backend or a CLI ``openconstructionerp
@@ -1912,7 +1912,7 @@ recognised as its own; starting a server instead",
     match attached_port {
         Some(existing) => {
             log_line(&format!(
-                "found an existing OpenConstructionERP backend on port {existing}; attaching instead of starting a second one"
+                "found an existing Vastukar backend on port {existing}; attaching instead of starting a second one"
             ));
             BackendSource::AlreadyRunning {
                 base_url: format!("http://127.0.0.1:{existing}/"),
@@ -2252,7 +2252,7 @@ fn new_shutdown_token() -> String {
 /// simply did not say it.
 fn startup_timeout_message(stage: Option<&(String, String)>, kind: &TimeoutKind) -> String {
     let tail = "Please close this window and try again. If the problem persists, please send the \
-log file to info@datadrivenconstruction.io. Installation help: https://openconstructionerp.com/install-help";
+log file to info@vastukar.com. Installation help: https://vastukar.com/contact";
 
     // Said before anything is asked about the stage, because this is the one
     // case where there cannot be a stage: nothing was ever reported. It is a
@@ -2435,7 +2435,7 @@ server is running and reachable from here."
         // because the address is almost right and the user is about to stare at
         // it looking for a typo that is not there.
         return Err(
-            "Something answered at that address, but it is not an OpenConstructionERP server. \
+            "Something answered at that address, but it is not a Vastukar server. \
 Check that the address is complete, including any folder the server is published under."
                 .to_string(),
         );
@@ -2579,7 +2579,7 @@ fn report_remote_unreachable(
     reason: &str,
 ) {
     let message = format!(
-        "Could not reach the OpenConstructionERP server at {base_url}, which is configured in \
+        "Could not reach the Vastukar server at {base_url}, which is configured in \
 {}. {reason} Use the button below to run a server on this computer instead.",
         source.describe()
     );
@@ -3646,7 +3646,7 @@ fn legacy_leftovers_sentence(root: &str, found: &LegacyLeftovers) -> String {
         " Earlier versions of this application unpacked themselves into {root} and did not \
 clear up after themselves, leaving {floor}{} folders there that hold {floor}{}. Their names \
 begin with {EXTRACTION_PREFIX}, no program is running out of the ones counted here, and \
-deleting them with OpenConstructionERP closed frees that space. This version unpacks into a \
+deleting them with Vastukar closed frees that space. This version unpacks into a \
 folder it clears up on its own, so they will not come back.",
         found.directories,
         human_bytes(found.bytes)
@@ -3732,7 +3732,7 @@ fn cause_is_a_full_disk(cause: &str) -> bool {
 fn full_disk_message(notes: &str) -> String {
     format!(
         "The drive ran out of space while the application was starting, so its backend could \
-not finish. Free some space and start OpenConstructionERP again.{notes}"
+not finish. Free some space and start Vastukar again.{notes}"
     )
 }
 
@@ -3767,7 +3767,7 @@ fn out_of_space_message(dir: &str, free: u64) -> String {
     format!(
         "There is not enough free space to start the application. It unpacks itself into \
 {dir} every time it starts, which needs about {}, and the drive holding that folder has \
-{} free. Free some space on that drive and start OpenConstructionERP again.",
+{} free. Free some space on that drive and start Vastukar again.",
         human_bytes(EXTRACTION_ESTIMATED_BYTES),
         human_bytes(free)
     )
@@ -4034,7 +4034,7 @@ the application."
                     "sidecar",
                     &format!(
                         "The backend component could not be started ({e}). Some antivirus \
-tools block newly installed programs; allow OpenConstructionERP and try again."
+tools block newly installed programs; allow Vastukar and try again."
                     ),
                 );
                 return;
@@ -4277,7 +4277,7 @@ before it finished starting.",
                             // (the splash shows an Open-log button).
                             let detail = format!(
                                 "{core} Open the log file for the full details, and if \
-this keeps happening send it to info@datadrivenconstruction.io. Installation help: https://openconstructionerp.com/install-help"
+this keeps happening send it to info@vastukar.com. Installation help: https://vastukar.com/contact"
                             );
                             // The database step was set active before the
                             // process was spawned, and bootStage back-fills
@@ -4309,7 +4309,7 @@ this keeps happening send it to info@datadrivenconstruction.io. Installation hel
                                     &handle_evt,
                                     &lost_flag,
                                     "The application backend stopped, restarting",
-                                    "OpenConstructionERP is starting the backend again. Your saved work is kept. This window will reload in a moment.",
+                                    "Vastukar is starting the backend again. Your saved work is kept. This window will reload in a moment.",
                                 );
                                 std::thread::sleep(std::time::Duration::from_secs(3));
                                 handle_evt.restart();
@@ -4330,8 +4330,8 @@ this keeps happening send it to info@datadrivenconstruction.io. Installation hel
                                 &format!(
                                     "The backend exited unexpectedly (exit code {:?}), so \
 this window can no longer load or save anything. Please close it and start \
-OpenConstructionERP again. If this keeps happening, send the log file to \
-info@datadrivenconstruction.io. Installation help: https://openconstructionerp.com/install-help",
+Vastukar again. If this keeps happening, send the log file to \
+info@vastukar.com. Installation help: https://vastukar.com/contact",
                                     payload.code
                                 ),
                             );
@@ -4357,8 +4357,8 @@ info@datadrivenconstruction.io. Installation help: https://openconstructionerp.c
                     &lost_flag,
                     "The connection to the application backend was lost",
                     "The launcher can no longer see the backend it started, so this \
-window may stop working. Please close it and start OpenConstructionERP again. If this keeps \
-happening, send the log file to info@datadrivenconstruction.io. Installation help: https://openconstructionerp.com/install-help",
+window may stop working. Please close it and start Vastukar again. If this keeps \
+happening, send the log file to info@vastukar.com. Installation help: https://vastukar.com/contact",
                 );
             }
         });
@@ -4449,7 +4449,7 @@ happening, send the log file to info@datadrivenconstruction.io. Installation hel
                         &format!(
                             "The backend started, but {reason}, so the app cannot open. \
 Please close this window and try again. If the problem persists, please send the log file to \
-info@datadrivenconstruction.io. Installation help: https://openconstructionerp.com/install-help"
+info@vastukar.com. Installation help: https://vastukar.com/contact"
                         ),
                     );
                 }
@@ -4521,7 +4521,7 @@ fn main() {
     // even if building the Tauri app itself (WebView2 missing, etc.) blows up
     // before any window appears.
     log_line(&format!(
-        "=== OpenConstructionERP desktop launcher starting (v{}) ===",
+        "=== Vastukar desktop launcher starting (v{}) ===",
         env!("CARGO_PKG_VERSION")
     ));
 
@@ -4649,7 +4649,7 @@ fn main() {
                         // panic, keeping the no-panic startup contract.
                         tauri::image::Image::new_owned(vec![0, 0, 0, 0], 1, 1)
                     }))
-                    .tooltip("OpenConstructionERP")
+                    .tooltip("Vastukar")
                     .menu(&menu)
                     // Keep the existing left-click-to-show behaviour. The menu
                     // shows on right-click; suppressing menu-on-left-click means
@@ -4685,7 +4685,7 @@ fn main() {
                     log_line(&format!("warning: tray menu build failed (non-fatal): {e}"));
                     // Fall back to the plain icon-only tray (left-click shows).
                     TrayIconBuilder::new()
-                        .tooltip("OpenConstructionERP")
+                        .tooltip("Vastukar")
                         .on_tray_icon_event(|tray, event| {
                             if let TrayIconEvent::Click {
                                 button: MouseButton::Left,
@@ -4790,7 +4790,7 @@ fn main() {
                             "sidecar",
                             &format!(
                                 "The backend could not be started ({e}). Close anything else \
-that is running and start OpenConstructionERP again."
+that is running and start Vastukar again."
                             ),
                         );
                     }
@@ -5151,15 +5151,15 @@ fn show_startup_failure_dialog(message: &str) {
         .map(|p| format!("\n\nA full diagnostic log was written to:\n{}", p.display()))
         .unwrap_or_default();
     let body = format!(
-        "OpenConstructionERP could not start.\n\n{message}{log_hint}\n\n\
-If this keeps happening, please send the log file to info@datadrivenconstruction.io. Installation help: https://openconstructionerp.com/install-help"
+        "Vastukar could not start.\n\n{message}{log_hint}\n\n\
+If this keeps happening, please send the log file to info@vastukar.com. Installation help: https://vastukar.com/contact"
     );
 
     let to_wide = |s: &str| -> Vec<u16> {
         s.encode_utf16().chain(std::iter::once(0)).collect::<Vec<u16>>()
     };
     let body_w = to_wide(&body);
-    let title_w = to_wide("OpenConstructionERP failed to start");
+    let title_w = to_wide("Vastukar failed to start");
 
     // SAFETY: both buffers are valid, NUL-terminated UTF-16; a null HWND is the
     // documented way to show an owner-less message box.
@@ -5583,7 +5583,7 @@ RuntimeError: locale catalogue missing",
             server_config::ChoiceSource::AdminFile,
         ] {
             let message = format!(
-                "Could not reach the OpenConstructionERP server at {}, which is configured in \
+                "Could not reach the Vastukar server at {}, which is configured in \
 {}. {} Use the button below to run a server on this computer instead.",
                 "https://erp.example.com/",
                 source.describe(),
@@ -5646,7 +5646,7 @@ other explanation"
             "https://example.invalid/|calc",
             "http://example.invalid/?a=1&b=2",
             "https://example.invalid/^calc",
-            "mailto:info@datadrivenconstruction.io?subject=a&body=b",
+            "mailto:info@vastukar.com?subject=a&body=b",
             "https://example.invalid/a%20b?q=%D0%BC%D0%B5%D1%82%D1%80",
             "https://example.invalid/?a=%CD%&b=%USERNAME%",
             "https://example.invalid/?a=%RANDOM%&b=%TIME%&c=%DATE%",
@@ -5973,14 +5973,14 @@ Content-Length: {}\r\nConnection: close\r\n\r\n{}",
         let message = startup_timeout_message(None, &TimeoutKind::TookTooLong);
         assert!(message.contains("did not start in time"), "got: {message}");
         assert!(
-            message.contains("info@datadrivenconstruction.io"),
+            message.contains("info@vastukar.com"),
             "got: {message}"
         );
         assert!(
-            message.contains("https://openconstructionerp.com/install-help"),
+            message.contains("https://vastukar.com/contact"),
             "got: {message}"
         );
-        assert!(LOCAL_BACKEND_LOST_DETAIL.contains("https://openconstructionerp.com/install-help"));
+        assert!(LOCAL_BACKEND_LOST_DETAIL.contains("https://vastukar.com/contact"));
     }
 
     #[test]

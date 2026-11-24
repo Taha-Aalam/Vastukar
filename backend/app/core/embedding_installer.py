@@ -564,12 +564,13 @@ def install_embedding_model(*, repo_id: str | None = None, force: bool = False) 
         # lock resolves through [semantic-encoder]. A bundle that reaches here
         # is therefore damaged rather than lean, so the frozen wording is the
         # repair one; DESKTOP_NO_EXTRA would claim the build never carried it.
+        from app.core.release_install import install_advice  # noqa: PLC0415
         from app.core.self_upgrade import repair_hint  # noqa: PLC0415
 
         raise RuntimeError(
             "The semantic search library is not part of this installation, so "
             "downloading encoder weights would fetch something nothing here "
-            "can load. " + repair_hint("Install the extra first: pip install openconstructionerp[semantic].")
+            "can load. " + repair_hint(f"Install the extra first: {install_advice('semantic')}")
         )
 
     existing = find_installed_model(repo)
@@ -922,10 +923,11 @@ def _message_for(state: str, repo: str, enabled: bool, locked: bool = False) -> 
     if state == STATE_LIBRARY_MISSING:
         # Same reasoning as install_embedding_model above: sentence-transformers
         # is in the desktop lock, so a bundle missing it is damaged, not lean.
+        from app.core.release_install import install_advice  # noqa: PLC0415
         from app.core.self_upgrade import repair_hint  # noqa: PLC0415
 
         return "Semantic search is not part of this installation. Everything else works without it. " + repair_hint(
-            "Install the extra to enable it: pip install openconstructionerp[semantic]."
+            f"Install the extra to enable it: {install_advice('semantic')}"
         )
     if state == STATE_DISABLED:
         return (

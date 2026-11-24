@@ -229,11 +229,11 @@ def boot(data_dir: Path | str) -> bool:
         # cannot import it is damaged rather than merely lean. DESKTOP_REPAIR
         # and not DESKTOP_NO_EXTRA: the latter would tell the reader this build
         # never carried the package, which is the opposite of what is wrong.
+        from app.core.release_install import install_advice  # noqa: PLC0415
         from app.core.self_upgrade import repair_hint  # noqa: PLC0415
 
         hint = repair_hint(
-            "reinstall the package: pip install --upgrade --force-reinstall "
-            "openconstructionerp, or install pixeltable-pgserver directly"
+            f"reinstall the package: {install_advice(force=True)}, or install pixeltable-pgserver directly"
         )
         emit_stage(
             "pg",

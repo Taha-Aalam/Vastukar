@@ -711,11 +711,12 @@ def _get_client() -> Any:
         # requirements-desktop.lock resolves [semantic-clients] whole, so a
         # bundle without qdrant-client is damaged rather than lean. The default
         # repair wording; DESKTOP_NO_EXTRA would deny shipping what it ships.
+        from app.core.release_install import install_advice  # noqa: PLC0415
         from app.core.self_upgrade import repair_hint  # noqa: PLC0415
 
         raise RuntimeError(
             "qdrant-client is not installed. "
-            + repair_hint("Install the [semantic-clients] extra: pip install openconstructionerp[semantic-clients]")
+            + repair_hint(f"Install the [semantic-clients] extra: {install_advice('semantic-clients')}")
         ) from exc
 
     target = resolve_cwicr_target()
@@ -739,10 +740,11 @@ def _encoder_missing_message() -> str:
     really does lack it, which makes ``DESKTOP_NO_EXTRA`` the honest wording
     here rather than an invitation to reinstall and arrive at the same place.
     """
+    from app.core.release_install import install_advice  # noqa: PLC0415
     from app.core.self_upgrade import DESKTOP_NO_EXTRA, repair_hint  # noqa: PLC0415
 
     return "CWICR encoder unavailable: the [semantic] extra is not installed. " + repair_hint(
-        "Run: pip install openconstructionerp[semantic]", DESKTOP_NO_EXTRA
+        f"Run: {install_advice('semantic')}", DESKTOP_NO_EXTRA
     )
 
 
@@ -796,12 +798,13 @@ def _get_encoder() -> Any:
             from FlagEmbedding import BGEM3FlagModel
         except ImportError as exc:  # pragma: no cover
             _encoder = False  # genuinely missing package → hard-disable
+            from app.core.release_install import install_advice  # noqa: PLC0415
             from app.core.self_upgrade import DESKTOP_NO_EXTRA, repair_hint  # noqa: PLC0415
 
             raise RuntimeError(
                 "FlagEmbedding is not installed. "
                 + repair_hint(
-                    "Install the [semantic] extra: pip install openconstructionerp[semantic]",
+                    f"Install the [semantic] extra: {install_advice('semantic')}",
                     DESKTOP_NO_EXTRA,
                 )
             ) from exc

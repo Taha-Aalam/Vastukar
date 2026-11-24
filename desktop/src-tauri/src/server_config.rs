@@ -1,4 +1,4 @@
-// OpenConstructionERP Desktop, choosing which application server this window
+// Vastukar Desktop, choosing which application server this window
 // talks to.
 //
 // The launcher has always answered that question the same way: probe loopback,
@@ -6,7 +6,7 @@
 // on a machine where nobody has said otherwise, and this file changes nothing
 // about it. What it adds is the "otherwise": a place for an answer that names a
 // server somewhere else, so an office that already runs one central
-// OpenConstructionERP does not have to run a second copy on every desk.
+// Vastukar does not have to run a second copy on every desk.
 //
 // The default is untouched on purpose. A first run asks no question and shows
 // no chooser; a user who never goes looking for this will never learn it

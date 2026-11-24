@@ -495,22 +495,22 @@ def _check_infrastructure() -> str | None:
     # entered with ``python -m``, where pip does exist: a remedy that decides
     # what to say by reading its own install cannot be wrong later, and a
     # carve-out for one directory is how the next one gets missed.
+    from app.core.release_install import install_advice  # noqa: PLC0415
     from app.core.self_upgrade import repair_hint  # noqa: PLC0415
 
     if not (_installed("sentence_transformers") or _installed("fastembed")):
         return "no embedding model is installed. " + repair_hint(
-            "Install the semantic extra and rerun: pip install openconstructionerp[semantic]"
+            f"Install the semantic extra and rerun: {install_advice('semantic')}"
         )
     backend = os.environ.get("VECTOR_BACKEND", "lancedb").strip().lower()
     if backend == "qdrant":
         if not _installed("qdrant_client"):
             return "VECTOR_BACKEND=qdrant but qdrant-client is not installed. " + repair_hint(
-                "Install the client extra and start Qdrant, then rerun: "
-                "pip install openconstructionerp[semantic-clients]"
+                f"Install the client extra and start Qdrant, then rerun: {install_advice('semantic-clients')}"
             )
     elif not _installed("lancedb"):
         return "the LanceDB vector store is not installed. " + repair_hint(
-            "Install the vector extra and rerun: pip install openconstructionerp[vector]"
+            f"Install the vector extra and rerun: {install_advice('vector')}"
         )
     return None
 
@@ -676,11 +676,13 @@ def main(argv: list[str] | None = None) -> int:
 
     indexed = int(result.get("indexed", 0))
     if indexed == 0:
+        from app.core.release_install import install_advice  # noqa: PLC0415
         from app.core.self_upgrade import repair_hint  # noqa: PLC0415
 
         print(
             "error: nothing was indexed. The embedding model may be missing or the vector store "
-            "may be unreachable. " + repair_hint("Install openconstructionerp[semantic], start the store, then rerun."),
+            "may be unreachable. "
+            + repair_hint(f"Install the [semantic] extra: {install_advice('semantic')}, start the store, then rerun."),
             file=sys.stderr,
         )
         return 1

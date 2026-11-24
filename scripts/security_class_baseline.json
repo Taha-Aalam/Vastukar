@@ -365,6 +365,7 @@
   "outbound_url_safety": [
     "backend/app/core/email/smtp.py",
     "backend/app/core/embedding_installer.py",
+    "backend/app/core/release_install.py",
     "backend/app/core/translation/downloader.py",
     "backend/app/main.py",
     "backend/app/modules/accounting_sync/providers/base.py",

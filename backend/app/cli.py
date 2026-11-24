@@ -417,7 +417,7 @@ def _setup_env(data_dir: Path, host: str, port: int) -> None:
                 _red(_u("✗ ", "X "))
                 + "Embedded PostgreSQL could not start (already retried a few times). "
                 + _repair_hint(
-                    "Reinstall the package (pip install --upgrade --force-reinstall openconstructionerp), ",
+                    f"Reinstall the package ({_install_advice(force=True)}), ",
                     "Reinstall the app from its installer, ",
                 )
                 + "run 'openconstructionerp doctor' for details, or "
@@ -509,6 +509,13 @@ def _no_extra_hint(pip_advice: str) -> str:
     return repair_hint(pip_advice, DESKTOP_NO_EXTRA)
 
 
+def _install_advice(extra: str | None = None, *, force: bool = False) -> str:
+    """The release-wheel install instruction, lazily imported like the hints above."""
+    from app.core.release_install import install_advice  # noqa: PLC0415
+
+    return install_advice(extra, force=force)
+
+
 def check_python_version() -> Check:
     ver = sys.version_info
     if (ver.major, ver.minor) < MIN_PYTHON:
@@ -538,7 +545,7 @@ def check_package_installed() -> Check:
             "running from source checkout (not pip-installed)",
             # A bundle that cannot read its own version is not a source
             # checkout and has nothing to install itself from.
-            _repair_hint("For production use: pip install openconstructionerp"),
+            _repair_hint(f"For production use: {_install_advice()}"),
         )
 
 
@@ -820,7 +827,7 @@ def check_core_tabular_deps() -> list[Check]:
     # Both are base dependencies, so a bundle missing one is damaged rather than
     # merely lean, and repair is the honest advice there.
     hint = _repair_hint(
-        "Cost database import requires pandas + pyarrow. Reinstall with: pip install --upgrade openconstructionerp"
+        "Cost database import requires pandas + pyarrow. Reinstall from the latest release wheel for this install."
     )
     out: list[Check] = []
     for mod in ("pandas", "pyarrow"):
@@ -1000,7 +1007,7 @@ def check_optional_extras(data_dir: Path | None = None) -> list[Check]:
                 label,
                 "warn",
                 missing_msg,
-                _no_extra_hint(f"pip install 'openconstructionerp[{extra}]'"),
+                _no_extra_hint(_install_advice(extra)),
             )
         err = _import_error(mod)
         if err is None:
@@ -1009,7 +1016,7 @@ def check_optional_extras(data_dir: Path | None = None) -> list[Check]:
             label,
             "error",
             f"present but will not import: {err}",
-            _repair_hint(f"pip install --force-reinstall 'openconstructionerp[{extra}]'"),
+            _repair_hint(_install_advice(extra, force=True)),
         )
 
     out: list[Check] = []
@@ -1066,7 +1073,7 @@ def check_optional_extras(data_dir: Path | None = None) -> list[Check]:
                 "PDF takeoff",
                 "error" if both_gone else "warn",
                 f"PDF reader will not import: {broken}",
-                _repair_hint("pip install --force-reinstall --no-cache-dir openconstructionerp"),
+                _repair_hint(_install_advice(force=True)),
             )
         )
 
@@ -1154,7 +1161,7 @@ def check_optional_extras(data_dir: Path | None = None) -> list[Check]:
                 cv_label,
                 "warn",
                 "not installed (geometry detection still works; dimension-text reading disabled)",
-                _no_extra_hint("pip install 'openconstructionerp[cv]'"),
+                _no_extra_hint(_install_advice("cv")),
             )
         )
     elif (cv_err := _import_error("paddleocr")) is not None:
@@ -1163,7 +1170,7 @@ def check_optional_extras(data_dir: Path | None = None) -> list[Check]:
                 cv_label,
                 "error",
                 f"present but will not import: {cv_err}",
-                _repair_hint("pip install --force-reinstall 'openconstructionerp[cv]'"),
+                _repair_hint(_install_advice("cv", force=True)),
             )
         )
     elif not _present("paddle") and not _engine_distribution_installed():
@@ -1692,7 +1699,7 @@ def cmd_init_db(args: argparse.Namespace) -> None:
             _dim(
                 f"  {_u('\u2192', '->')} "
                 + _repair_hint(
-                    "pip install --upgrade --force-reinstall openconstructionerp",
+                    _install_advice(force=True),
                     "Reinstall the app from its installer",
                 )
             )
@@ -1768,22 +1775,26 @@ def cmd_version(_args: argparse.Namespace) -> None:
 
 
 def cmd_upgrade(args: argparse.Namespace) -> None:
-    """Pip-upgrade openconstructionerp inside *this* interpreter's environment.
+    """Install the owner's latest release wheel in *this* interpreter's venv.
 
     Issue #96: users who installed via the Windows installer get a launcher
     (``start.bat``) that points at a private venv under
-    ``%LOCALAPPDATA%\\Vastukar\\venv``. Running ``pip install
-    --upgrade openconstructionerp`` in any other shell upgrades the user's
-    GLOBAL Python - the venv keeps its old wheel, and the launcher keeps
-    reporting the old version even though pip claims success. This command
-    avoids the trap by always invoking ``sys.executable -m pip`` so the
-    upgrade lands in the same env that ``serve`` runs in.
+    ``%LOCALAPPDATA%\\Vastukar\\venv``. Installing into any other interpreter
+    changes the wrong Python - the venv keeps its old wheel, and the launcher
+    keeps reporting the old version. This command always uses ``sys.executable``
+    so the wheel lands in the same env that ``serve`` runs in.
+
+    The wheel is downloaded from the latest GitHub release of this repository,
+    verified against that release's published checksum, and installed as a
+    local file. Nothing here resolves the upstream package on PyPI.
     """
+    import shutil
     import subprocess
 
     # Imported here, not at module scope: this file keeps its top-level imports
     # to the standard library so the CLI starts fast.
-    from app.core.self_upgrade import RELEASES_URL, is_frozen_build
+    from app.core.release_install import RELEASES_URL, prepare_release_install
+    from app.core.self_upgrade import is_frozen_build
 
     print()
     print(_bold(_u("Vastukar \u2014 upgrade", "Vastukar - upgrade")))
@@ -1831,25 +1842,30 @@ def cmd_upgrade(args: argparse.Namespace) -> None:
         print(_dim("Close the app (or stop `openconstructionerp serve`), then run this again."))
         sys.exit(1)
 
-    target = "openconstructionerp"
-    if args.version:
-        target = f"openconstructionerp=={args.version}"
-
     print(_dim(f"Interpreter: {sys.executable}"))
-    print(_dim(f"Installing:  {target}"))
+    print(_dim(f"Release:     {RELEASES_URL}"))
     print()
 
-    cmd = [sys.executable, "-m", "pip", "install", "--upgrade", target]
     try:
+        cmd, _released, scratch = prepare_release_install(args.version)
+    except Exception as exc:  # noqa: BLE001 - an operator at a shell can read this
+        print(_red(f"Could not prepare the release wheel: {exc}"))
+        sys.exit(1)
+
+    try:
+        print(_dim(f"Installing:  {cmd[-1]}"))
+        print()
         result = subprocess.run(cmd, check=False)
     except FileNotFoundError as exc:
         print(_red(f"pip not found in this interpreter: {exc}"))
         sys.exit(1)
+    finally:
+        shutil.rmtree(scratch, ignore_errors=True)
 
     if result.returncode != 0:
         print()
         print(_red(_bold(f"  Upgrade failed (exit {result.returncode})")))
-        print(_dim("Try: python -m pip install --upgrade openconstructionerp"))
+        print(_dim(f"Try again from {RELEASES_URL}"))
         sys.exit(result.returncode)
 
     new_version = _resolve_version()

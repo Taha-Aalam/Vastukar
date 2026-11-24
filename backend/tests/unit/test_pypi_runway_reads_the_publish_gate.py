@@ -3,11 +3,13 @@
 """​‌‍⁠​‌‍⁠​‌‍⁠​‌‍⁠The pre-tag PyPI check can still find the gate it runs.
 
 ``scripts/check_pypi_runway.py`` does not carry its own copy of the size
-arithmetic. It pulls the Python out of the publish workflow's size step and
+arithmetic. It pulls the Python out of the release workflow's size step and
 runs that, so the two can never disagree. The price is a dependency on the
 step's shape: its name, the heredoc that opens it and the indentation it sits
 at. Rename the step or reindent the job and the pre-tag check stops working,
 and it stops on the one day somebody runs it, a few minutes before a tag.
+PyPI publishing is retired; the gate lives in ``release.yml`` now, which is
+where the wheel attached to the GitHub Release is built.
 
 So this pins the extraction without touching the network: the step is found,
 the source parses, and it is the gate rather than some neighbouring step.

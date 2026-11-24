@@ -866,3 +866,217 @@ Files deleted in this step:
 - frontend/src/shared/ui/__tests__/whatsNewCardDismiss.test.tsx
 - frontend/src/stores/useReviewPromptStore.ts
 - frontend/src/stores/useReviewPromptStore.test.ts
+
+## Divergences — owner decisions from the upstream-pointer audit (TOP 1–3)
+
+Implements the three highest-attention owner decisions in
+`docs/upstream-pointer-audit.md`. Behaviour and destinations only: package
+names, import paths, API routes, database names, environment variables and the
+licence/attribution files are unchanged.
+
+### FIX 1 — Report a Bug: trim the address tail
+
+`buildBugReportUrl` now strips everything from `?` or `#` onward from both URLs
+it writes into the public issue body (the `Page` line and the `Error page`
+line). The path itself stays. The user agent, app version, component, UI locale,
+build fingerprint, captured-at and the already-anonymized error text are
+untouched, as is the GitHub channel itself.
+
+Files changed:
+
+- frontend/src/app/layout/Header.tsx
+- frontend/src/app/layout/BugReportMenu.test.tsx (new case: `?token=…&id=…#frag`
+  on both the current page and the captured error; asserts no query key, value
+  or fragment survives anywhere in the body)
+
+### FIX 2 — Upgrade channel: own GitHub releases instead of upstream PyPI
+
+Version check (`GET /api/system/version-check`) now reads only the latest
+release of `Taha-Aalam/Vastukar`; the PyPI lookup for the upstream package is
+gone. The 24-hour cache, `force=true`, the opt-out and the admin state are
+unchanged. Apply-update (`POST /api/system/upgrade`) and `openconstructionerp
+upgrade` now download the wheel attached to that release, verify its checksum
+and install the downloaded file with the same interpreter. Every existing gate
+is unchanged: admin role, `ALLOW_RUNTIME_UPGRADE` off by default, demo-account
+refusal, frozen-build refusal and the embedded-PostgreSQL guard on forced
+reinstalls.
+
+Checksum mechanism: the release workflow attaches `SHA256SUMS.txt` in
+`sha256sum` format; the installer downloads that manifest from the same release,
+matches the wheel's filename, and compares SHA-256 before pip is invoked. If no
+manifest is published it falls back to GitHub's per-asset `sha256:` digest, and
+if neither exists it installs unverified. A mismatch aborts before pip starts.
+
+Release side: `release.yml` builds the frontend, builds the backend wheel on the
+tag, writes `SHA256SUMS.txt` and attaches both to the GitHub Release.
+`pypi-publish.yml` is retired (dispatch-only notice, no publish job, no PyPI
+environment or token); the filename is kept because repository tests reference
+it. The wheel size gate that used to live in `pypi-publish.yml` moved into
+`release.yml` alongside the wheel build, and `scripts/check_pypi_runway.py` now
+extracts it from there; its unit test was updated. No release or tag was cut in
+this change.
+
+Files changed:
+
+- backend/app/core/release_install.py (new)
+- backend/app/core/self_upgrade.py
+- backend/app/main.py
+- backend/app/cli.py
+- backend/app/modules/costs/router.py
+- backend/tests/pg/test_version_check_release_metadata.py
+- backend/tests/unit/test_upgrade_path_has_no_pypi_reference.py (new)
+- backend/tests/unit/test_operator_hints_reach_the_desktop_reader.py
+- backend/tests/integration/test_system_upgrade_auth.py
+- .github/workflows/release.yml
+- .github/workflows/pypi-publish.yml
+
+### FIX 3 — Desktop shell: Vastukar brand and own release/support destinations
+
+Destination substitutions (old → new):
+
+- `datadrivenconstruction/OpenConstructionERP` → `Taha-Aalam/Vastukar`
+  (update checker repo constant, API URL by interpolation, release URLs, notice
+  text and test payloads).
+- `OpenConstructionERP-Desktop` → `Vastukar-Desktop` (update-check UA token).
+- `info@datadrivenconstruction.io` → `info@vastukar.com` (startup-failure and
+  help dialogs plus their tests).
+- `https://openconstructionerp.com/install-help` → `https://vastukar.com/contact`
+  (startup-failure and help dialogs, desktop README, and their tests).
+- Product name in window title, tray tooltip, installer strings, binary
+  metadata and user-visible dialog/log strings → `Vastukar`.
+
+`desktop/src-tauri/tauri.conf.json`: `productName` → `Vastukar`,
+`identifier` → `io.vastukar.desktop`, `mainBinaryName` → `Vastukar`, window
+title and tray tooltip → `Vastukar`, publisher/copyright/description strings →
+Vastukar. **Identifier migration flag:** changing `io.openconstructionerp.desktop`
+to `io.vastukar.desktop` changes the OS-level app identity. Windows treats the
+new value as a different app (separate install, Start-menu entry and registry
+tree), and macOS treats it as a different bundle id, so existing installs do
+not upgrade in place; the owner needs a migration/uninstall note for existing
+users. A Tauri build rewrites `gen/schemas/capabilities.json`; that generated
+file was not hand-edited here.
+
+The frontend desktop bridge (`frontend/src/shared/lib/desktop.ts`,
+`frontend/src/features/file-manager/lib/tauri.ts`) has no upstream destination
+or name outside the excluded `DDC-CWICR-OE` code-comment headers, so it was not
+changed and web-app behaviour is unchanged. Internal filesystem identifiers
+(`%LOCALAPPDATA%\OpenConstructionERP\extract`, `/etc/openconstructionerp`,
+`openconstructionerp-server` sidecar name, CLI command names) are unchanged by
+the standing rule.
+
+Branding assets: `desktop/src-tauri/icons/` already carries the Vastukar-style
+blue bar-chart mark with no upstream wordmark, and the flat source PNG exists at
+`frontend/public/brand/vastukar-logo.png`; no binary artwork was changed here.
+For a pixel-exact match the owner must regenerate the whole set from that source
+(`32x32.png`, `64x64.png`, `128x128.png`, `128x128@2x.png`, `icon.png`,
+`icon.ico`, `icon.icns`, the Square*/Store logos, and the ios/android trees).
+
+Signing (report only, no credentials touched): `desktop-release.yml` references
+`ARTIFACT_SIGNING_ENDPOINT`, `ARTIFACT_SIGNING_ACCOUNT`,
+`ARTIFACT_SIGNING_PROFILE`, `ARTIFACT_SIGNING_TENANT_ID`,
+`ARTIFACT_SIGNING_CLIENT_ID` and `ARTIFACT_SIGNING_CLIENT_SECRET` — the Azure
+Trusted Signing / code-signing account belonging to DataDrivenConstruction, the
+upstream owner, not to Vastukar. macOS currently uses ad-hoc signing with
+`signingIdentity: "-"`. `release-signing.yml` uses Sigstore/cosign keyless OIDC
+issued to the upstream GitHub identity, and its verification snippet still
+names `datadrivenconstruction/OpenConstructionERP`. Before a signed Vastukar
+installer can ship, the owner must obtain their own signing account/certificate
+and Azure credentials and repoint those references; none were invented or
+imported here.
+
+Out of scope but noted for the owner (documentation, not desktop code): upstream
+contact/help links remain in `docs/desktop/INSTALL.md`,
+`docs/desktop/WINDOWS_BLOCKED.md`, `docs/desktop/MACOS_NOTARIZATION.md` and
+`docs/desktop/WINDOWS_SIGNING.md` (plus their `.de.md`/`.ru.md` variants). The
+audit's entries 67–68 name only `desktop/src-tauri/*` and `desktop/README.md`,
+so these were left unchanged by instruction scope.
+
+Files changed:
+
+- desktop/src-tauri/tauri.conf.json
+- desktop/src-tauri/Cargo.toml
+- desktop/src-tauri/src/update_check.rs
+- desktop/src-tauri/src/main.rs
+- desktop/src-tauri/src/server_config.rs
+- desktop/src-tauri/capabilities/default.json
+- desktop/src-tauri/windows/hooks.nsh
+- desktop/src-tauri/windows/installer.nsi
+- desktop/README.md
+- desktop/build-sidecar.sh
+- desktop/pyinstaller.spec
+- DOWNSTREAM.md
+
+## Addendum (same PR) — printed install hints
+
+Owner decision: every string **printed to users** that instructs installing the
+package from PyPI now points at Fix 2's real install path. A single helper,
+`app.core.release_install.install_advice(extra=None, force=False)`, produces the
+wording: download the wheel attached to the latest `Taha-Aalam/Vastukar` GitHub
+release, check it against that release's `SHA256SUMS.txt`, then install the
+downloaded file with `pip install --upgrade <downloaded-wheel[extra].whl>`. It
+names no index-resolvable package, so following it cannot install upstream.
+
+Honesty check: extras were the one index-only shape. They are preserved as an
+extra on the local wheel path, and that was verified end to end rather than by
+parser inspection alone: a minimal wheel with `Provides-Extra: semantic` and a
+`Requires-Dist: …; extra == "semantic"` dependency, installed with
+`pip install --dry-run --no-index "<wheel>.whl[semantic]"`, failed with
+"Could not find a version that satisfies the requirement … (from
+tinyprobe[semantic])" — i.e. pip did resolve the extra from the local wheel;
+the same wheel without the suffix installed cleanly. A reviewer's contrary
+result came from a dry run with `--no-deps`, which suppresses exactly the
+resolution being tested, and is recorded as refuted-with-evidence. No hint had
+to be deleted for lack of a working equivalent. Two adjacent pieces of wording
+were dropped as no longer meaningful: `--no-cache-dir` on a reinstall (a local
+wheel does not consult the index cache), and the bare "or download from
+vastukar.com" alternative in the exported bundle README (it named no working
+source; the release URL replaces it).
+
+The 38 backend locale resources under
+`backend/app/modules/cost_match/messages/*.json` also printed the old command
+in the `match.semantic.not_installed` value in every language. That value now
+names the release URL and the local-wheel install command in a language-neutral
+form — translating the new sentence into 38 languages by machine would not be
+trustworthy, so the command itself is inserted verbatim and the surrounding
+localized sentence is left intact. Locale key names are unchanged by the
+standing downstream rule.
+
+Sites rewritten (old form → `install_advice(...)` for the named extra):
+
+- `backend/app/cli.py`: force-reinstall repair hint; "For production use";
+  dynamic `[extra]` install and force-reinstall hints; `--no-cache-dir`
+  reinstall; `[cv]` install and force-reinstall; the startup force-reinstall
+  hint.
+- `backend/app/main.py`: embedded vector backend `[vector]` hint.
+- `backend/app/core/embedded_pg.py`: package reinstall hint.
+- `backend/app/core/embedding_installer.py` (2 sites): `[semantic]` hints.
+- `backend/app/core/storage.py`: `[s3]` hint.
+- `backend/app/modules/admin/router.py` (2 sites): `[vector]` install/reinstall.
+- `backend/app/modules/costs/vector_adapter.py`: `[vector]` hint.
+- `backend/app/modules/costs/router.py` (3 sites): `[semantic]` hints; the
+  demo-mode refusal now names `RELEASES_URL` with no pip command, so a frozen
+  reader is never handed one.
+- `backend/app/modules/costs/qdrant_adapter.py` (3 sites): `[semantic-clients]`
+  and `[semantic]` hints.
+- `backend/app/modules/costs/parquet_lookup.py`: `[semantic]` hint.
+- `backend/app/modules/match_elements/qdrant_supervisor.py`:
+  `[semantic-clients]` hint.
+- `backend/app/modules/pointcloud/service.py`: `[pointcloud]` hint.
+- `backend/app/modules/geo_hub/coord_transforms.py`: `[geo]` hint.
+- `backend/app/modules/takeoff/service.py` (2 sites): generic "Reinstall
+  openconstructionerp" → release-wheel reinstall.
+- `backend/app/scripts/reindex_cwicr_vectors.py` (4 sites): `[semantic]`,
+  `[semantic-clients]` and `[vector]` operator instructions.
+
+Third-party install hints (`pip install trimesh`, `sentence-transformers`,
+`pdfplumber`, `openpyxl`, `python-pkcs11`, …) are unchanged: they do not name
+the package and are not a PyPI destination for it. Comments and docstrings that
+mention the old command are history, not instructions, and are unchanged by
+instruction. Package metadata (pyproject extras) is the package's identity, not
+a destination, and is unchanged.
+
+Tests updated to assert the new wording; the operator-hint census learned that
+a command assembled by `install_advice()` is no longer a literal string and
+gains a direct check that every helper call site is routed through
+`repair_hint`. A new AST test fails if any non-docstring string literal under
+`backend/app` contains both "pip install" and the package name.

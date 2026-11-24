@@ -2098,6 +2098,7 @@ async def embedder_status() -> dict[str, Any]:
     install card instead of an error toast.
     """
     from app.config import get_settings  # noqa: PLC0415
+    from app.core.release_install import RELEASES_URL  # noqa: PLC0415
     from app.core.self_upgrade import DESKTOP_NO_EXTRA, repair_hint  # noqa: PLC0415
 
     s = get_settings()
@@ -2146,8 +2147,10 @@ async def embedder_status() -> dict[str, Any]:
         # So a bundle reading this really cannot get the encoder, and the empty
         # frozen branch is the point: a copy box is only honest where the thing
         # in it can be run. DESKTOP_NO_EXTRA carries the sentence instead.
-        "pip_command": repair_hint("pip install --upgrade openconstructionerp[semantic]", ""),
-        "install_hint": repair_hint("Install it with the command above, then restart the backend.", DESKTOP_NO_EXTRA),
+        "pip_command": repair_hint(f"Install the [semantic] extra from a release wheel: {RELEASES_URL}", ""),
+        "install_hint": repair_hint(
+            "Install it from the release wheel linked above, then restart the backend.", DESKTOP_NO_EXTRA
+        ),
         # Which of the two cases this is, said as a value rather than left
         # for the reader to infer from the English prose above. The frontend
         # translates the sentence, and it can only do that if it is told the
@@ -2226,6 +2229,7 @@ async def qdrant_smoke_search(
         # The CWICR store's encoder is FlagEmbedding, which is deliberately not
         # in requirements-desktop.lock, so a bundle genuinely cannot switch this
         # on and DESKTOP_NO_EXTRA is the truthful wording.
+        from app.core.release_install import install_advice  # noqa: PLC0415
         from app.core.self_upgrade import DESKTOP_NO_EXTRA, repair_hint  # noqa: PLC0415
 
         raise HTTPException(
@@ -2233,7 +2237,7 @@ async def qdrant_smoke_search(
             detail=(
                 "Semantic search is not available on this deployment. "
                 + repair_hint(
-                    "Install the optional extra: pip install openconstructionerp[semantic]",
+                    f"Install the optional extra: {install_advice('semantic')}",
                     DESKTOP_NO_EXTRA,
                 )
             ),
@@ -3277,12 +3281,14 @@ async def install_v3_catalogue(
     # demo ships its own small reference cost index; loading additional cost
     # databases is a self-host feature.
     if _demo_mode_enabled():
+        from app.core.release_install import RELEASES_URL  # noqa: PLC0415
+
         raise HTTPException(
             status.HTTP_403_FORBIDDEN,
             "Installing cost databases is disabled on the public demo. Each "
             "catalogue is 400+ MB and the demo runs on a small shared box. To "
-            "load this region or your own cost data, download and run "
-            "Vastukar on your own machine: pip install openconstructionerp.",
+            "load this region or your own cost data, install Vastukar from its "
+            f"own releases: {RELEASES_URL}",
         )
 
     from app.modules.costs.qdrant_adapter import describe_server_write_mismatch
@@ -3449,13 +3455,14 @@ async def semantic_search(
         # damaged bundle rather than a lean one. Note this is the opposite
         # constant from the CWICR/Qdrant handler above, which reaches for
         # FlagEmbedding: the two look alike and need different advice.
+        from app.core.release_install import install_advice  # noqa: PLC0415
         from app.core.self_upgrade import repair_hint  # noqa: PLC0415
 
         raise HTTPException(
             status_code=503,
             detail=(
                 "Semantic search is not available on this deployment. "
-                + repair_hint("Install the optional extra: pip install openconstructionerp[semantic]")
+                + repair_hint(f"Install the optional extra: {install_advice('semantic')}")
             ),
             headers={"X-Semantic-State": str(state["state"])},
         ) from exc
@@ -5331,8 +5338,8 @@ def _download_cwicr_from_github_sync(db_id: str) -> Path | None:
     github_path = _GITHUB_CWICR_FILES.get(db_id) or _GITHUB_CWICR_LANG_FILES.get(db_id)
     if not github_path:
         _LAST_DOWNLOAD_ERROR[db_id] = (
-            f"backend has no GitHub mapping for '{db_id}'. Upgrade with "
-            f"`pip install --upgrade openconstructionerp` (≥ v2.6.23 added "
+            f"backend has no GitHub mapping for '{db_id}'. Install a newer "
+            f"release wheel from this repository's releases (≥ v2.6.23 added "
             f"the 19 new regions; older backends know only the original 11)."
         )
         return None

@@ -1,7 +1,10 @@
-# OpenConstructionERP Release Pipeline
+# Vastukar Release Pipeline
 #
 # Triggered on version tag push (e.g., v0.1.0).
-# Builds Docker image, pushes to GHCR, creates GitHub Release.
+# Builds the Docker image, pushes it to GHCR, builds the backend wheel and its
+# SHA-256 manifest, and attaches both to the GitHub Release. The wheel is the
+# asset the in-app and CLI upgrade paths download; PyPI is no longer published
+# to by this repository.
 
 name: Release
 
@@ -49,7 +52,7 @@ jobs:
 
       # GHCR rejects any tag whose repository path contains uppercase letters
       # ("repository name must be lowercase"), but ${{ github.repository }}
-      # preserves the original casing (datadrivenconstruction/OpenConstructionERP).
+      # preserves the original casing (Taha-Aalam/Vastukar).
       # Lowercase it once here and feed the result to every image tag below.
       - name: Compute lowercase image name
         id: image
@@ -78,7 +81,7 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
           labels: |
-            org.opencontainers.image.title=OpenConstructionERP
+            org.opencontainers.image.title=Vastukar
             org.opencontainers.image.version=${{ steps.version.outputs.version }}
             org.opencontainers.image.source=${{ github.server_url }}/${{ github.repository }}
             org.opencontainers.image.licenses=AGPL-3.0-or-later
@@ -133,14 +136,254 @@ jobs:
           echo "$CONTENT" > /tmp/release-notes.md
           echo "Extracted $(printf '%s\n' "$CONTENT" | grep -c . || true) non-empty lines of notes for $VERSION."
 
+      # ── Backend wheel + checksum ─────────────────────────────────────
+      # The upgrade path downloads the wheel attached to the LATEST RELEASE of
+      # this repository and installs it as a local file. Building it here, on
+      # the same tag that creates the release, is what makes that path work:
+      # no wheel, no upgrade. PyPI is deliberately not involved.
+      - name: Set up Node.js 24
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7
+        with:
+          node-version: '24'
+          cache: 'npm'
+          cache-dependency-path: frontend/package-lock.json
+
+      - name: Set up Python 3.12
+        uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7
+        with:
+          python-version: '3.12'
+
+      - name: Build frontend bundle into the wheel layout
+        env:
+          NODE_OPTIONS: --max-old-space-size=12288
+        run: |
+          cd frontend
+          npm ci
+          npm run build
+          python ../scripts/pack_frontend_dist.py dist
+
+      - name: Build backend wheel
+        run: |
+          python -m pip install --upgrade build
+          cd backend
+          python -m build --wheel --outdir ../dist/
+
+      - name: Check the wheel fits, per file and against the project total
+        shell: bash
+        run: |
+          python - <<'PY'
+          import glob, json, os, sys, urllib.error, urllib.request
+          from datetime import datetime, timezone
+
+          # PyPI rejects any single file over 100 MiB, and it rejects it at
+          # upload, which here is after the tag is already public. Nothing
+          # asserted the size before, so the first release to cross the line
+          # would have found out the expensive way. This step runs immediately
+          # after the build and before anything is published.
+          #
+          # The number: the hard cap is 100 MiB = 104857600 bytes. A wheel built
+          # from a clean tree at 16.8.1 is about 85.8 MiB, and the trend across
+          # 16.1.0 to 16.8.0 was 85.4 MB to 88.2 MB in eight days, roughly
+          # 0.35 MB a day, driven by the bundled frontend and the regional packs.
+          # 95 MiB sits about 9 MiB above today's wheel and 5 MiB below the cap:
+          # at the observed rate that is roughly a month of warning, which is
+          # enough time to shrink something deliberately rather than in a panic
+          # on a tag that cannot be taken back.
+          #
+          # If this fails, do not just raise the number. Look at what grew first:
+          # `python -c "import zipfile,collections;..."` over the wheel usually
+          # shows one directory that doubled. Raising the limit past 100 MiB
+          # cannot work at all, so the headroom is the whole point of it.
+          # 18.6.0 (2026-10-15): the wheel reached 99.4 MiB, mostly the 43 bundled
+          # locale chunks of about 1.3 MiB each, and the budget was raised to 99.7
+          # for that one release. 18.6.1 packs the catalogues against one shared
+          # key list (frontend/vite.locale-key-index.ts), which takes roughly 14 MiB
+          # out of the wheel, and the budget is back at 95.
+          # 18.8.3 (2026-10-25): large frontend assets ship xz-packed
+          # (scripts/pack_frontend_dist.py), the wheel fell to about 75 MiB and the
+          # budget is that plus 6.
+          # 19.1.1: back to 95; project space is freed by removing old releases.
+          LIMIT_MIB = 95
+          HARD_CAP_MIB = 100
+
+          whl = sorted(glob.glob("dist/*.whl"))
+          assert len(whl) == 1, f"expected exactly one wheel in dist/, found {whl}"
+          size = os.path.getsize(whl[0])
+          mib = size / 1048576
+          print(f"wheel {whl[0]} is {size:,} bytes ({mib:.1f} MiB)")
+          if mib > LIMIT_MIB:
+              sys.exit(
+                  f"ERROR: wheel is {mib:.1f} MiB, over the {LIMIT_MIB} MiB budget. "
+                  f"PyPI's hard limit is {HARD_CAP_MIB} MiB per file and it is enforced "
+                  f"at upload, after this tag is public. Find what grew and drop it; "
+                  f"raising the budget only moves the wall closer."
+              )
+          print(f"OK: {LIMIT_MIB - mib:.1f} MiB of headroom under the {LIMIT_MIB} MiB budget")
+
+          # Second wall, and the one that actually stopped a release. PyPI caps
+          # the TOTAL stored size of a project as well as each file, and the two
+          # limits share the phrase "size limit" while meaning different things.
+          # Everything above this line measures one wheel. 17.0.1 passed all of
+          # it, built cleanly, and was refused at upload with
+          #   400 Project size too large. Limit for project
+          #   'openconstructionerp' total size is 10 GB.
+          # after 336 versions had accumulated 10164 MiB. The step was green and
+          # honest; the defect was simply not inside what it measured. So this
+          # widens the existing check rather than adding a second one beside it.
+          #
+          # The limit is 10 GiB, not a decimal 10 GB, and that is measured rather
+          # than assumed: 16.9.0's 85.49 MiB upload SUCCEEDED at a stored total of
+          # 10164 MiB, which a 9537 MiB decimal cap would have refused, and
+          # 17.0.1's 85.9 MiB was refused, putting the wall under 10250 MiB.
+          #
+          # Failing here still leaves a public tag with no wheel, which is why the
+          # real fix is to run this before tagging. It is much better than a 400:
+          # it names both numbers and says how much has to come off.
+          PROJECT = "openconstructionerp"
+          LIMIT_BYTES = 10 * 1024**3
+
+          try:
+              with urllib.request.urlopen(
+                  f"https://pypi.org/pypi/{PROJECT}/json", timeout=60
+              ) as r:
+                  meta = json.load(r)
+          except (urllib.error.URLError, TimeoutError, json.JSONDecodeError) as exc:
+              # Do not fail the release because PyPI was unreachable for a moment.
+              # An unmeasured total is reported as unmeasured, never as fine.
+              print(f"::warning::could not read the PyPI project total ({exc}); "
+                    f"the project-size wall was NOT checked for this release")
+          else:
+              stored = sum(f["size"] for fs in meta["releases"].values() for f in fs)
+              versions = len(meta["releases"])
+              after = stored + size
+              print(
+                  f"PyPI project total: {stored/1048576:,.0f} MiB across {versions} "
+                  f"versions; limit {LIMIT_BYTES/1048576:,.0f} MiB; "
+                  f"headroom {(LIMIT_BYTES - stored)/1048576:,.1f} MiB"
+              )
+              if after > LIMIT_BYTES:
+                  sys.exit(
+                      f"ERROR: this {mib:.1f} MiB wheel does not fit. The project "
+                      f"holds {stored/1048576:,.0f} MiB of a {LIMIT_BYTES/1048576:,.0f} "
+                      f"MiB limit, leaving {(LIMIT_BYTES - stored)/1048576:,.1f} MiB, so "
+                      f"{(after - LIMIT_BYTES)/1048576:,.1f} MiB has to come off the wheel "
+                      f"or space has to be freed on PyPI. Shrinking the wheel is the half "
+                      f"that does not need a PyPI account; raising the project limit or "
+                      f"removing old releases is the half that does."
+                  )
+              left = LIMIT_BYTES - after
+              print(f"OK: fits, with {left/1048576:,.1f} MiB left after this upload")
+
+              # How much warning that headroom is worth depends entirely on how
+              # fast we release, so measure the cadence instead of assuming it.
+              #
+              # This used to warn only when less than one more wheel fit. That is
+              # a true statement but it arrives too late to act on. Freeing space
+              # means deleting old releases, which breaks anyone pinned to them,
+              # or asking PyPI to raise the project limit, which is a support
+              # request answered by a person on their own schedule. Neither is
+              # something to start on the release that fails.
+              #
+              # The threshold is therefore stated in days rather than wheels,
+              # because days are what the remedy needs and wheels only stand in
+              # for them. Fourteen days is the number, and it is chosen against
+              # the slower of the two remedies: a support request is answered by
+              # a volunteer on their own schedule, so a week is optimistic.
+              #
+              # Counting wheels instead would set the lead time by accident. At
+              # 17.8.3 the project had room for 5.8 of them, which is a month if
+              # releases are monthly and under four days at the rate they were
+              # actually going out that week. A wheel count cannot tell those
+              # apart; that is the whole reason the cadence is measured below.
+              #
+              # There is no second threshold on the wheel count, and there was
+              # one until it was checked. It read "under two wheels, warn
+              # whatever the arithmetic says", to cover a quiet spell driving
+              # the measured rate toward zero and the day estimate toward
+              # infinity. That cannot happen. The rate below adds one for the
+              # release being published right now, in every window including
+              # the three day one, so it can never come out below a third of a
+              # release a day. Days are therefore never more than three times
+              # the wheel count, under two wheels is always under six days, and
+              # the day threshold has already fired. A guard that cannot fire,
+              # justified by a paragraph that is false, is worse than no guard.
+              #
+              # Take the fastest rate sustained over any recent window rather
+              # than one average, because the averaging window decides the
+              # answer and a single long one hides exactly the burst that
+              # empties the quota. Measured against the index as it stood when
+              # 17.8.3 published: the last fourteen wheels average 0.6 a day and
+              # put the runway at nine days, while the three day window gives
+              # 1.33 a day and just under four. Understating the rate is the
+              # dangerous direction for a warning about running out, so the
+              # windows disagreeing means take the worst and name which it was.
+              now = datetime.now(timezone.utc)
+              ages = sorted(
+                  (now - datetime.fromisoformat(f["upload_time_iso_8601"].replace("Z", "+00:00"))).total_seconds() / 86400
+                  for fs in meta["releases"].values()
+                  for f in fs
+                  if f["filename"].endswith(".whl")
+              )
+              WARN_DAYS = 14
+
+              fits = left / size
+              runway = f"{fits:.1f} more wheels this size"
+              rates = [
+                  # The +1 is the release being published right now, which is not
+                  # on the index yet when this runs on a tag. Re-running this
+                  # script by hand after a release counts that wheel twice and
+                  # reads high; subtract it if you are checking between tags.
+                  ((sum(1 for a in ages if a <= w) + 1) / w, w)
+                  for w in (3, 7, 14, 30)
+              ]
+              per_day, window = max(rates)
+              days = fits / per_day if per_day > 0 else float("inf")
+              if per_day > 0:
+                  runway += (
+                      f", about {days:.0f} days at {per_day:.2f} releases a "
+                      f"day, the fastest of the last 3, 7, 14 and 30 day windows "
+                      f"(the {window} day one)"
+                  )
+              print(f"room for {runway}")
+              if days < WARN_DAYS:
+                  print(
+                      f"::warning::PyPI project storage is running out: room for {runway}. "
+                      f"The wheel cannot shrink enough to matter here, so this needs "
+                      f"either old releases deleted, which breaks anyone pinned to them, "
+                      f"or a support request to raise the project limit. Both want a "
+                      f"human and neither is instant."
+                  )
+          PY
+      - name: Check the wheel carries the UI, then publish its checksum
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -n "$(ls dist/*.whl 2>/dev/null)" || { echo "no wheel was built" >&2; exit 1; }
+          python - <<'PY'
+          import glob, zipfile
+          whl = sorted(glob.glob("dist/*.whl"))
+          assert len(whl) == 1, f"expected one wheel, found {whl}"
+          with zipfile.ZipFile(whl[0]) as z:
+              files = set(z.namelist())
+          assert "app/_frontend_dist/index.html" in files, (
+              "the built wheel has no bundled UI; the upgrade would install a headless server"
+          )
+          PY
+          cd dist
+          sha256sum *.whl > SHA256SUMS.txt
+          cat SHA256SUMS.txt
+
       - name: Create GitHub Release
         uses: softprops/action-gh-release@3bb12739c298aeb8a4eeaf626c5b8d85266b0e65 # v2
         with:
           tag_name: ${{ github.ref_name }}
-          name: "OpenConstructionERP ${{ github.ref_name }}"
+          name: "Vastukar ${{ github.ref_name }}"
           body_path: /tmp/release-notes.md
           draft: false
           prerelease: ${{ contains(github.ref_name, '-rc') || contains(github.ref_name, '-beta') || contains(github.ref_name, '-alpha') }}
           generate_release_notes: true
+          files: |
+            dist/*.whl
+            dist/SHA256SUMS.txt
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

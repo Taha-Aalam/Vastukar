@@ -93,17 +93,19 @@ from app.core.module_loader import module_loader
 # the thing this constant exists to remove, so the statement is somewhere a test
 # can execute it.
 from app.core.postgres_migrator import UNVALIDATED_CONSTRAINTS_SQL
+from app.core.release_install import GITHUB_REPO, RELEASES_API_URL, RELEASES_URL, install_advice
 from app.core.self_upgrade import (
     DEMO_ACCOUNT_REFUSAL,
     DISABLED_REFUSAL,
     FROZEN_REFUSAL,
+    RELEASE_INSTALL_LABEL,
     UPGRADE_DEMO_ACCOUNT,
     UPGRADE_DISABLED,
     claim_upgrade,
     current_upgrade,
     is_frozen_build,
     repair_hint,
-    run_upgrade,
+    run_release_upgrade,
     runtime_upgrade_enabled,
     runtime_upgrade_refusal,
 )
@@ -879,7 +881,7 @@ def _init_vector_db() -> None:
             logger.warning(
                 "LanceDB init failed (%s). Semantic search is disabled. %s",
                 error,
-                repair_hint("Install the embedded vector backend with: pip install openconstructionerp[vector]"),
+                repair_hint(f"Install the embedded vector backend with: {install_advice('vector')}"),
             )
     except Exception as exc:  # noqa: BLE001 - intentional: never fatal
         # Includes ImportError (missing optional extras), native crashes
@@ -3580,18 +3582,18 @@ def create_app() -> FastAPI:
         Signed-in callers only: the update notice lives inside the signed-in
         shell, and nothing before sign-in asks for it.
 
-        Source of truth is **PyPI** (more reliable than GitHub releases -
-        Trusted-Publisher OIDC always produces a wheel, GitHub release
-        creation is sometimes skipped on hotfixes). Falls back to GitHub
-        releases if PyPI is unreachable. Both lookups are cached on
-        ``app.state`` for a day (``VERSION_CHECK_TTL_S``), so the automatic
-        check asks the internet at most once a day and never burns the
-        unauthenticated GitHub rate limit.
+        The source of truth is the **latest GitHub release** of this repository.
+        The release tag names the version, and the notes, link, publication date
+        and assets all come from that same release object. Consulting the
+        upstream package's PyPI index here compared the fork against upstream
+        releases, so "update available" could point at software that would
+        replace this install with upstream; that lookup is gone.
 
-        ``release_notes``, ``release_url``, ``published_at`` and ``assets``
-        are answered only when the GitHub release they were read from names
-        the same version as ``latest_version``. Two sources that can
-        legitimately be a release apart must not be spliced into one sentence.
+        The lookup is cached on ``app.state`` for a day
+        (``VERSION_CHECK_TTL_S``), so the automatic check asks the internet at
+        most once a day and never burns the unauthenticated GitHub rate limit.
+        When GitHub cannot be reached the answer falls back to the running
+        version and carries no release metadata rather than guessing.
 
         ``force=true`` skips the day-long cache. It is what About's "Check for
         updates" button sends: a person who pressed it is owed today's answer,
@@ -3608,7 +3610,7 @@ def create_app() -> FastAPI:
         from app.core.update_check_policy import VERSION_CHECK_TTL_S, update_check_disabled
 
         current = settings.app_version
-        repo = "Taha-Aalam/Vastukar"
+        repo = GITHUB_REPO
         cache_key = "_version_check_cache"
 
         # Turned off by the user from the desktop launcher's notice or by an
@@ -3627,7 +3629,7 @@ def create_app() -> FastAPI:
                 "assets": [],
                 "self_upgrade_supported": not is_frozen_build(),
                 "upgrade_command": repair_hint(
-                    "pip install --upgrade openconstructionerp",
+                    f"Download the latest wheel from {RELEASES_URL} and install it from the downloaded file",
                     "Download and run the latest installer",
                 ),
                 **await _runtime_upgrade_state(_user_id),
@@ -3648,18 +3650,8 @@ def create_app() -> FastAPI:
 
         try:
             async with httpx.AsyncClient(timeout=10) as client:
-                pypi = await client.get(
-                    "https://pypi.org/pypi/openconstructionerp/json",
-                )
-                if pypi.status_code == 200:
-                    latest = pypi.json().get("info", {}).get("version") or None
-        except Exception:  # noqa: BLE001 - graceful degradation
-            pass
-
-        try:
-            async with httpx.AsyncClient(timeout=10) as client:
                 gh = await client.get(
-                    f"https://api.github.com/repos/{repo}/releases/latest",
+                    RELEASES_API_URL,
                     headers={"Accept": "application/vnd.github.v3+json"},
                 )
                 if gh.status_code == 200:
@@ -3682,7 +3674,7 @@ def create_app() -> FastAPI:
                         if not name or not url:
                             continue
                         gh_assets.append({"name": name, "url": url, "size": int(asset.get("size") or 0)})
-                    if not latest:
+                    if gh_tag:
                         latest = gh_tag
         except Exception:  # noqa: BLE001
             pass
@@ -3690,20 +3682,13 @@ def create_app() -> FastAPI:
         if not latest:
             latest = current
 
-        # The number and the notes have to describe the same release. PyPI is
-        # the source of truth for the number, and the reason it is - a hotfix
-        # publishes a wheel without a GitHub release object being created - is
-        # exactly the case where the newest release here describes an OLDER
-        # version than the one we are about to name. Pairing them files 15.0.0's
-        # notes under the heading "15.1.0 is available", and on a desktop build
-        # it sends the reader to a page that does not carry the build they were
-        # just told to install. So when they disagree we keep the number, drop
-        # what we cannot stand behind, and point at the release list, which is
-        # somewhere to go rather than somewhere wrong.
-        # The installers are gated here for the same reason and more sharply.
-        # Notes filed under the wrong heading mislead; an installer offered
-        # under the wrong heading is downloaded and run, and the reader ends up
-        # with the version they were just told to move off.
+        # The number and the notes describe the same release object by
+        # construction now - both come from the latest GitHub release. The old
+        # two-source version could name a PyPI number and quote an older
+        # GitHub release under it, which on a desktop build sent the reader to
+        # a page without the build they were told to install. That mismatch is
+        # no longer possible; the metadata is published only when a release tag
+        # was actually read and agrees with the number we are naming.
         if gh_tag and _same_version(gh_tag, latest):
             release_url = gh_url or f"https://github.com/{repo}/releases/latest"
             release_notes = gh_notes
@@ -3733,11 +3718,11 @@ def create_app() -> FastAPI:
             # the wrong computer. The client picks.
             "assets": assets,
             "self_upgrade_supported": not frozen,
-            # Both spellings kept exactly as they were; only the decision moves.
-            # This was the second hand-written copy of "which advice does this
-            # install understand", and a copy is how the wording drifts.
+            # One hand-written copy of "which advice does this install
+            # understand"; repair_hint keeps the frozen-build spelling beside
+            # it so the two cannot drift apart.
             "upgrade_command": repair_hint(
-                "pip install --upgrade openconstructionerp",
+                f"Download the latest wheel from {RELEASES_URL} and install it from the downloaded file",
                 "Download and run the latest installer",
             ),
         }
@@ -3787,7 +3772,12 @@ def create_app() -> FastAPI:
         force: bool = False,
         user_id: str = Depends(get_current_user_id),
     ) -> JSONResponse:
-        """Start ``pip install --upgrade openconstructionerp`` in this venv.
+        """Install the wheel attached to the latest release of this repository.
+
+        The worker downloads that wheel, verifies its published checksum and
+        installs it as a local file with the same interpreter that serves the
+        API. No PyPI lookup and no package-index install is involved, so the
+        upgrade cannot replace this fork with the upstream distribution.
 
         Returns ``202`` with a job id as soon as the work is scheduled;
         poll ``GET /api/system/upgrade/status`` for the outcome and the
@@ -3827,9 +3817,7 @@ def create_app() -> FastAPI:
         logins shared by everyone the demo is shown to, and the demo admin
         needs no password wherever the demo login is offered.
         """
-        import sys
-
-        # A frozen build would feed the pip command below back into its own CLI
+        # A frozen build would feed a pip command back into its own CLI
         # instead of upgrading anything (issue #403), so point at the installer,
         # which is the route that actually works there. First, because no
         # switch makes pip exist in the bundle.
@@ -3843,11 +3831,11 @@ def create_app() -> FastAPI:
                 detail=DEMO_ACCOUNT_REFUSAL if refusal == UPGRADE_DEMO_ACCOUNT else DISABLED_REFUSAL,
             )
 
-        target = "openconstructionerp"
-        if version and version.replace(".", "").replace("-", "").isalnum():
-            target = f"openconstructionerp=={version}"
-
-        cmd = [sys.executable, "-m", "pip", "install", "--upgrade", target]
+        # The real command is resolved inside the worker once the wheel has
+        # been downloaded and verified. Until then the job carries an honest
+        # label rather than a pip command that might suggest a package index.
+        requested = version.strip().lstrip("v") if version else None
+        label = [RELEASE_INSTALL_LABEL, requested or "latest"]
         if force:
             # ``--force-reinstall`` does not stop at our own package. It
             # reinstalls the whole dependency set, and that set contains
@@ -3856,8 +3844,8 @@ def create_app() -> FastAPI:
             # postmaster is a torn install on Windows, where the running image
             # is locked and pip fails halfway, and a mixed one everywhere else.
             #
-            # The plain upgrade above is left alone: it only moves what changed,
-            # and the ordinary case moves pure Python.
+            # The plain upgrade is left alone: it only moves what changed, and
+            # the ordinary case moves pure Python.
             from app.core import embedded_pg as _embedded_pg
 
             if _embedded_pg.is_running():
@@ -3866,14 +3854,12 @@ def create_app() -> FastAPI:
                     detail=(
                         "A forced reinstall would replace the PostgreSQL binaries this "
                         "application is currently running from. Stop the application "
-                        "first and run `pip install --force-reinstall --upgrade "
-                        "openconstructionerp` from your shell, or upgrade without the "
-                        "force option, which does not touch them."
+                        f"first and reinstall from the latest wheel at {RELEASES_URL}, "
+                        "or upgrade without the force option, which does not touch them."
                     ),
                 )
-            cmd.insert(-1, "--force-reinstall")
 
-        job, started = claim_upgrade(cmd, settings.app_version)
+        job, started = claim_upgrade(label, settings.app_version)
         if not started:
             # Already running. Hand back the one in flight rather than a second
             # pip against the same site-packages, and say so in the status code
@@ -3886,7 +3872,7 @@ def create_app() -> FastAPI:
             if hasattr(app.state, "_version_check_cache"):
                 del app.state._version_check_cache
 
-        task = asyncio.create_task(asyncio.to_thread(run_upgrade, job))
+        task = asyncio.create_task(asyncio.to_thread(run_release_upgrade, job, requested, force))
         # Held on app.state because the event loop keeps only a weak reference
         # to a running task, and a collected one would abandon the upgrade.
         app.state._upgrade_task = task
