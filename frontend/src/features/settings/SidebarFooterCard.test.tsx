@@ -28,28 +28,23 @@ beforeEach(() => {
 afterEach(() => cleanup());
 
 describe('<SidebarFooterCard>', () => {
-  it('lists the six footer buttons, all switched on by default', () => {
+  it('lists the four footer buttons, all switched on by default', () => {
     render(<SidebarFooterCard />);
-    expect(screen.getAllByRole('switch')).toHaveLength(6);
-    for (const label of ['Settings', 'Users', 'Edit menu', 'About', 'GitHub', 'Community']) {
+    expect(screen.getAllByRole('switch')).toHaveLength(4);
+    for (const label of ['Settings', 'Users', 'Edit menu', 'About']) {
       expect(sw(label)).toHaveAttribute('aria-checked', 'true');
     }
   });
 
-  it('keeps Edit menu, GitHub and Community on this device and shows the change at once', () => {
+  it('keeps Edit menu on this device and shows the change at once', () => {
     render(<SidebarFooterCard />);
-    fireEvent.click(sw('GitHub'));
-    expect(sw('GitHub')).toHaveAttribute('aria-checked', 'false');
     fireEvent.click(sw('Edit menu'));
-    expect(JSON.parse(localStorage.getItem(FOOTER_PREFS_KEY)!)).toEqual({
-      editMenu: true,
-      github: true,
-      community: false,
-    });
-    expect(readFooterPrefs().github).toBe(true);
+    expect(sw('Edit menu')).toHaveAttribute('aria-checked', 'false');
+    expect(JSON.parse(localStorage.getItem(FOOTER_PREFS_KEY)!)).toEqual({ editMenu: true });
+    expect(readFooterPrefs().editMenu).toBe(true);
     expect(hidden.set).not.toHaveBeenCalled();
-    fireEvent.click(sw('GitHub'));
-    expect(sw('GitHub')).toHaveAttribute('aria-checked', 'true');
+    fireEvent.click(sw('Edit menu'));
+    expect(sw('Edit menu')).toHaveAttribute('aria-checked', 'true');
   });
 
   it('hides Settings, Users and About through the per-user hidden list and restores them', () => {
@@ -72,8 +67,8 @@ describe('<SidebarFooterCard>', () => {
   });
 
   it('ignores a damaged stored value and falls back to everything shown', () => {
-    localStorage.setItem(FOOTER_PREFS_KEY, '{"github":"yes","editMenu":42}');
+    localStorage.setItem(FOOTER_PREFS_KEY, '{"editMenu":42,"github":"yes"}');
     resetFooterPrefsCache();
-    expect(readFooterPrefs()).toEqual({ editMenu: false, github: false, community: false });
+    expect(readFooterPrefs()).toEqual({ editMenu: false });
   });
 });

@@ -76,7 +76,6 @@ import { PageHeader } from '@/shared/ui/PageHeader';
 import { settingsGuide } from './settingsGuide';
 import { useTabKeyboardNav } from '@/shared/hooks/useTabKeyboardNav';
 import { DashboardLayoutManager } from '@/features/dashboard/DashboardLayoutManager';
-import { UpdateInlineNotice } from '@/shared/ui/UpdateChecker';
 import { apiGet, apiPatch, apiPost, apiPut, apiDelete } from '@/shared/lib/api';
 import { SUPPORTED_LANGUAGES } from '@/app/i18n';
 import { sortLanguagesByName } from '@/shared/lib/languageOrder';
@@ -1715,10 +1714,6 @@ export function SettingsPage() {
 
   return (
     <div className="space-y-5 animate-fade-in">
-      {/* Update notification, one line. The sidebar carries the full card;
-          both follow the same per-version dismissal. */}
-      <UpdateInlineNotice className="mb-4" />
-
       <Breadcrumb items={[{ label: t('nav.settings', 'Settings') }]} />
 
       {/* Page header */}

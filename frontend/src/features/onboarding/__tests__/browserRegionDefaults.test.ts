@@ -118,6 +118,15 @@ describe('the setup wizard defaults', () => {
     expect(wizardFor('en-US').data).toEqual({ region: 'USA_USD', packId: 'us' });
   });
 
+  it('defaults a regionless English first run to India, not the United States', () => {
+    // A bare `en` browser names no country (`xx`), so nothing is detected and
+    // the default market answers: the India preset and the Mumbai base.
+    browser('en');
+    expect(detectCountryForLanguage('en')).toBe('xx');
+    expect(suggestDataSetup('xx', 'en')).toEqual({ region: 'HI_MUMBAI', packId: 'in' });
+    expect(suggestDataSetup(null, 'en')).toEqual({ region: 'HI_MUMBAI', packId: 'in' });
+  });
+
   it('offers Germany to de-DE', () => {
     expect(wizardFor('de-DE').data).toEqual({ region: 'DE_BERLIN', packId: 'de' });
   });

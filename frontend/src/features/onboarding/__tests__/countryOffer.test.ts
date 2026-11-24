@@ -159,11 +159,10 @@ describe('resolveCountryOffer, on the packs the wheel ships', () => {
     expect(resolveCountryOffer('ru', without)?.kind).toBe('preset');
   });
 
-  it('answers null rather than defaulting to the United States', () => {
-    // DEFAULT_COUNTRY_PACK is COUNTRY_PACKS[0], the US preset, and reaching
-    // for it here would hand a confident American offer to a reader in
-    // Nigeria. "Did not resolve" must stay distinguishable from "resolved
-    // to us".
+  it('answers null rather than defaulting to the default market (India)', () => {
+    // DEFAULT_COUNTRY_PACK is the India preset, and reaching for it here
+    // would hand a confident Indian offer to a reader in Nigeria. "Did not
+    // resolve" must stay distinguishable from "resolved to the default".
     expect(resolveCountryOffer('ng', WHEEL_PACKS)).toBeNull();
     expect(resolveCountryOffer(null, WHEEL_PACKS)).toBeNull();
     expect(resolveCountryOffer(undefined, WHEEL_PACKS)).toBeNull();

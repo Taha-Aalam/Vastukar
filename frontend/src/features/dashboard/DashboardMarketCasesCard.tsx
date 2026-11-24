@@ -161,10 +161,13 @@ export function DashboardMarketCasesCard() {
   // the pick lapses with it, so the card re-leads with the new home rather
   // than staying on a market chosen under the old one.
   const [pick, setPick] = useState<{ home: string | null; market: string } | null>(null);
+  // With no pack, browser region, language or nearest-market answer, the card
+  // leads with the default market (India) rather than whichever market happens
+  // to hold the most cases. A stored chip pick still wins while it is valid.
   const selected =
     pick && pick.home === resolution.market
       ? pick.market
-      : (resolution.market ?? shelf[0]?.market ?? null);
+      : (resolution.market ?? (markets.includes('IN') ? 'IN' : shelf[0]?.market) ?? null);
 
   const offers = useMarketPackOffers(markets);
   const cases = useMemo(() => casesForMarket(PLAYBOOKS, selected, positionOf), [selected]);

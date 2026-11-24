@@ -13,13 +13,13 @@
  */
 import { useSyncExternalStore } from 'react';
 
-export const FOOTER_ITEMS = ['editMenu', 'github', 'community'] as const;
+export const FOOTER_ITEMS = ['editMenu'] as const;
 export type FooterItem = (typeof FOOTER_ITEMS)[number];
 
 /** `true` means the button is hidden. Everything is shown by default. */
 export type FooterPrefs = Record<FooterItem, boolean>;
 
-export const DEFAULT_FOOTER_PREFS: FooterPrefs = { editMenu: false, github: false, community: false };
+export const DEFAULT_FOOTER_PREFS: FooterPrefs = { editMenu: false };
 export const FOOTER_PREFS_KEY = 'oe_sidebar_footer_v1';
 
 /** The footer tiles that are menu routes, hidden through the per-user hidden list. */
@@ -32,8 +32,6 @@ function sanitize(raw: unknown): FooterPrefs {
   const src = (raw && typeof raw === 'object' ? raw : {}) as Partial<Record<FooterItem, unknown>>;
   return {
     editMenu: src.editMenu === true,
-    github: src.github === true,
-    community: src.community === true,
   };
 }
 

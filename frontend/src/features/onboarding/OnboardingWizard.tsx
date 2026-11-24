@@ -337,7 +337,7 @@ const LANG_TO_REGION: Record<string, string> = {
   zh: 'ZH_SHANGHAI',
   ar: 'AR_DUBAI',
   hi: 'HI_MUMBAI',
-  en: 'USA_USD',
+  en: 'HI_MUMBAI',
   tr: 'TR_ISTANBUL',
   it: 'IT_ROME',
   ja: 'JA_TOKYO',
@@ -361,11 +361,11 @@ const LANG_TO_REGION: Record<string, string> = {
 
 const LANG_TO_DEMO: Record<string, string> = {
   de: 'residential-berlin',
-  en: 'medical-us',
+  en: 'govt-building-delhi',
   fr: 'school-paris',
   ar: 'warehouse-dubai',
 };
-const DEFAULT_DEMO = 'office-london';
+const DEFAULT_DEMO = 'govt-building-delhi';
 
 // ── CWICR Database definitions ──────────────────────────────────────────────
 
@@ -1075,7 +1075,7 @@ export async function startBackgroundOnboardingProvision(opts: {
 function getSuggestedRegion(lang?: string): string {
   const code = lang || i18n.language || 'en';
   const base = code.split('-')[0] ?? 'en';
-  return LANG_TO_REGION[base] ?? 'ENG_TORONTO';
+  return LANG_TO_REGION[base] ?? 'HI_MUMBAI';
 }
 
 /**
@@ -1114,7 +1114,14 @@ export function suggestDataSetup(
   const base = lang.split('-')[0] ?? 'en';
   // Country before language: a country's own base names its market, the
   // language only guesses one (Arabic would otherwise always mean the UAE).
-  const byLocale = COUNTRY_PACKS.find((p) => p.locale === base);
+  // A language that declares no market of its own (plain `en` is `xx`) must
+  // not guess a pack from the locale either — the default market (India)
+  // answers instead, via the region match or DEFAULT_COUNTRY_PACK below.
+  const langCountry = SUPPORTED_LANGUAGES.find((l) => l.code === base)?.country;
+  const byLocale =
+    langCountry && langCountry !== 'xx'
+      ? COUNTRY_PACKS.find((p) => p.locale === base)
+      : undefined;
   const byRegion = COUNTRY_PACKS.find((p) => p.region === region);
   const pick = ownBase ? (byRegion ?? byLocale) : (byLocale ?? byRegion);
   return { region, packId: (pick ?? DEFAULT_COUNTRY_PACK).id };
