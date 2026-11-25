@@ -10981,7 +10981,7 @@ const resource = {
     "login.hero_desc": "BOQ profesional, jadwal 4D, model biaya 5D, dan tender - semua dalam satu platform bertenaga AI.",
     "login.hero_highlight": "yang baru",
     "login.hero_title": "Estimasi biaya konstruksi,",
-    "dashboard.open_source_badge": "ERP konstruksi bertenaga AI pertama yang dibangun dari awal untuk India.",
+    "dashboard.open_source_badge": "ERP konstruksi pertama yang dirancang dari awal untuk era agen: ERP konstruksi untuk tim manusia dan agen AI mereka.",
     "login.learn_more": "Pelajari lebih lanjut tentang platform",
     "login.privacy": "Semua data diproses dan disimpan secara lokal di mesin Anda. Tidak ada yang dikirim ke server eksternal. Anda memiliki data Anda, selalu.",
     "login.privacy_ai": "Jika Anda menggunakan alat AI bawaan, beberapa data mungkin dikirim ke penyedia AI yang Anda konfigurasi (OpenAI, Anthropic, dll.). Anda mengontrol penyedia mana yang digunakan dan data apa yang dibagikan.",
@@ -18519,7 +18519,7 @@ const resource = {
     "propdev.phone": "Telepon",
     // --- /propdev ---
     // --- LoginPage i18n backfill ---
-    "login.hero_tagline": "ERP konstruksi bertenaga AI pertama yang dibangun dari awal untuk India.",
+    "login.hero_tagline": "ERP konstruksi pertama yang dirancang dari awal untuk era agen: ERP konstruksi untuk tim manusia dan agen AI mereka.",
     "login.stat_costs": "item biaya",
     "login.stat_langs": "bahasa",
     "login.stat_regions": "wilayah",
@@ -26586,7 +26586,7 @@ const resource = {
     "about.svc_workshop_desc": "Sesi praktik: estimasi, BIM-to-BOQ, pengambilan AI, pipeline GAEB. Direkam untuk perpustakaan tim Anda.",
     "about.svc_workshop_tagline": "1-3 HARI · ON-SITE ATAU REMOTE",
     "about.svc_workshop_title": "Workshop",
-    "about.tagline": "ERP konstruksi bertenaga AI pertama yang dibangun dari awal untuk India.",
+    "about.tagline": "ERP konstruksi pertama yang dirancang dari awal untuk era agen: ERP konstruksi untuk tim manusia dan agen AI mereka.",
     "accommodation.assign.checkout_before_checkin": "Check-out harus setelah check-in.",
     "accommodation.assign.conflict_hint": "Sesuaikan check-in atau check-out sehingga masa inap tidak lagi tumpang tindih, lalu buat pemesanan.",
     "accommodation.assign.conflict_title": "Tanggal-tanggal ini tumpang tindih dengan pemesanan yang ada",

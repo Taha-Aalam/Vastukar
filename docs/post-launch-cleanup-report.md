@@ -196,7 +196,7 @@ no display string among them is rendered by the app.
 The brief's plain-language "first-ranked" wording does not exist in this
 tree; the shipped variants used the `#1` glyph. Replaced all of them with exactly:
 
-> The first AI-powered construction ERP built from the ground up for India.
+> The first construction ERP designed from the ground up for the agentic era: a construction ERP for human teams and their AI agents.
 
 Changed `about.tagline`, `dashboard.open_source_badge`, the new
 `login.hero_tagline` (replacing three `login.hero_h_*` keys), the inline
@@ -283,3 +283,92 @@ login-and-market-defaults`), 1440×900:
 `after-dashboard-market.png` shows `data-market="IN"`, `data-source="default"`
 ("Cases by market / India"). The "before" dashboard shows "All cases for
 United States (10)" matched to the browser region.
+
+
+## Follow-up Part A — humanized tagline (owner decision)
+
+Supersedes the Item 6 line. Replaced it verbatim with:
+
+> The first construction ERP designed from the ground up for the agentic era: a construction ERP for human teams and their AI agents.
+
+Applied in exactly the Item 6 surfaces: `about.tagline`,
+`dashboard.open_source_badge` and `login.hero_tagline` in all 50 base bundles
+(with the `en-US` overlay inheriting), the inline `defaultValue`s in
+`AboutPage.tsx`, `LoginPage.tsx` and `DashboardPage.tsx`, the `description`
+and `twitter:description` metadata in `index.html`, and the DashboardPage
+loading-state snapshot. The ten Indian languages were re-translated by hand
+in the bundles' existing style (Latin AI/ERP, natural local phrasing); the
+colon is rendered with local punctuation where appropriate. All other bundles
+were re-translated through the repository's `translate_a/t` pipeline and
+checked for ASCII apostrophes, invisible characters and script mixing. Key
+sets are unchanged — only values changed — so key parity holds.
+
+Files changed in Part A:
+
+Locale bundles (50 base bundles plus the `en-US` overlay):
+- frontend/src/app/locales/ar.ts
+- frontend/src/app/locales/bg.ts
+- frontend/src/app/locales/bn.ts
+- frontend/src/app/locales/cs.ts
+- frontend/src/app/locales/da.ts
+- frontend/src/app/locales/de.ts
+- frontend/src/app/locales/el.ts
+- frontend/src/app/locales/en.ts
+- frontend/src/app/locales/es-CL.ts
+- frontend/src/app/locales/es-CO.ts
+- frontend/src/app/locales/es-MX.ts
+- frontend/src/app/locales/es.ts
+- frontend/src/app/locales/et.ts
+- frontend/src/app/locales/fa.ts
+- frontend/src/app/locales/fi.ts
+- frontend/src/app/locales/fil.ts
+- frontend/src/app/locales/fr.ts
+- frontend/src/app/locales/gu.ts
+- frontend/src/app/locales/he.ts
+- frontend/src/app/locales/hi.ts
+- frontend/src/app/locales/hr.ts
+- frontend/src/app/locales/hu.ts
+- frontend/src/app/locales/id.ts
+- frontend/src/app/locales/it.ts
+- frontend/src/app/locales/ja.ts
+- frontend/src/app/locales/kk.ts
+- frontend/src/app/locales/kn.ts
+- frontend/src/app/locales/ko.ts
+- frontend/src/app/locales/ky.ts
+- frontend/src/app/locales/ml.ts
+- frontend/src/app/locales/mn.ts
+- frontend/src/app/locales/mr.ts
+- frontend/src/app/locales/nl.ts
+- frontend/src/app/locales/no.ts
+- frontend/src/app/locales/pa.ts
+- frontend/src/app/locales/pl.ts
+- frontend/src/app/locales/pt-BR.ts
+- frontend/src/app/locales/pt.ts
+- frontend/src/app/locales/ro.ts
+- frontend/src/app/locales/ru.ts
+- frontend/src/app/locales/sv.ts
+- frontend/src/app/locales/ta.ts
+- frontend/src/app/locales/te.ts
+- frontend/src/app/locales/th.ts
+- frontend/src/app/locales/tr.ts
+- frontend/src/app/locales/uk.ts
+- frontend/src/app/locales/ur.ts
+- frontend/src/app/locales/uz.ts
+- frontend/src/app/locales/vi.ts
+- frontend/src/app/locales/zh.ts
+
+Other files:
+- DOWNSTREAM.md
+- docs/post-launch-cleanup-report.md
+- frontend/index.html
+- frontend/src/features/about/AboutPage.tsx
+- frontend/src/features/auth/LoginPage.tsx
+- frontend/src/features/dashboard/DashboardPage.tsx
+- frontend/src/tests/__snapshots__/visual-regression.test.tsx.snap
+
+Grep evidence: zero occurrences of the superseded India line; zero
+occurrences of the un-humanized draft variant using an em dash after
+"agentic era"; 12 occurrences of the approved line across 8 files (the three
+English bundle keys, the three inline defaults, two meta descriptions, this
+report and DOWNSTREAM.md — the translated bundles carry in-language values).
+All 19 i18n/locale guards pass on this tree.

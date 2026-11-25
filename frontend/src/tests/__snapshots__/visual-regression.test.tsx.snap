@@ -976,7 +976,7 @@ exports[`Visual Regression - DashboardPage > renders loading/skeleton state 1`] 
           />
         </span>
         <span>
-          The first AI-powered construction ERP built from the ground up for India.
+          The first construction ERP designed from the ground up for the agentic era: a construction ERP for human teams and their AI agents.
         </span>
         <svg
           class="lucide lucide-external-link text-content-quaternary group-hover/oss:text-oe-blue transition-colors"

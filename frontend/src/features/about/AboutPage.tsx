@@ -195,7 +195,7 @@ export function AboutPage() {
           </div>
           <h2 className="text-3xl font-bold text-content-primary tracking-tight">Vastukar</h2>
           <p className="mt-2 text-base text-content-secondary">
-            {t('about.tagline', { defaultValue: 'The first AI-powered construction ERP built from the ground up for India.' })}
+            {t('about.tagline', { defaultValue: 'The first construction ERP designed from the ground up for the agentic era: a construction ERP for human teams and their AI agents.' })}
           </p>
           <div className="mt-3 flex items-center justify-center lg:justify-start gap-3 text-sm text-content-tertiary">
             <span>2026</span>

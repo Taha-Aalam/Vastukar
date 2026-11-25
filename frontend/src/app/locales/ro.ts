@@ -11233,7 +11233,7 @@ const resource = {
     "login.hero_desc": "BOQ profesional, programare 4D, model de cost 5D și licitații - totul într-o singură platformă cu AI.",
     "login.hero_highlight": "reimaginată",
     "login.hero_title": "Estimarea costurilor în construcții,",
-    "dashboard.open_source_badge": "Primul ERP de construcție bazat pe inteligență artificială construit de la zero pentru India.",
+    "dashboard.open_source_badge": "Primul ERP de construcție conceput de la zero pentru era agentică: un ERP de construcție pentru echipele umane și agenții lor AI.",
     "login.learn_more": "Aflați mai multe despre platformă",
     "login.privacy": "Toate datele sunt procesate și stocate local pe mașina dvs. Nimic nu este trimis către servere externe. Dvs. dețineți datele, întotdeauna.",
     "login.privacy_ai": "Dacă utilizați instrumentele AI integrate, anumite date pot fi trimise către furnizorul AI configurat (OpenAI, Anthropic etc.). Dvs. controlați ce furnizor să utilizați și ce date să partajați.",
@@ -18880,7 +18880,7 @@ const resource = {
     "propdev.phone": "Telefon",
     // --- /propdev ---
     // --- LoginPage i18n backfill ---
-    "login.hero_tagline": "Primul ERP de construcție bazat pe inteligență artificială construit de la zero pentru India.",
+    "login.hero_tagline": "Primul ERP de construcție conceput de la zero pentru era agentică: un ERP de construcție pentru echipele umane și agenții lor AI.",
     "login.stat_costs": "articole de cost",
     "login.stat_langs": "limbi",
     "login.stat_regions": "regiuni",
@@ -27045,7 +27045,7 @@ const resource = {
     "about.svc_workshop_desc": "Sesiuni practice: estimare, BIM-to-BOQ, extracție IA, conducte GAEB. Înregistrate pentru biblioteca echipei dvs.",
     "about.svc_workshop_tagline": "1-3 ZILE · PE LOC SAU DE LA DISTANȚĂ",
     "about.svc_workshop_title": "Ateliere",
-    "about.tagline": "Primul ERP de construcție bazat pe inteligență artificială construit de la zero pentru India.",
+    "about.tagline": "Primul ERP de construcție conceput de la zero pentru era agentică: un ERP de construcție pentru echipele umane și agenții lor AI.",
     "about.ddc_flagship_label": "Produse emblematice",
     "accommodation.assign.checkout_before_checkin": "Plecarea trebuie să fie după sosire.",
     "accommodation.assign.conflict_hint": "Ajustați sosirea sau plecarea astfel încât sejurul să nu se mai suprapună, apoi creați rezervarea.",

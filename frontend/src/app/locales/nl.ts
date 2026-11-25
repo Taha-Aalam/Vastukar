@@ -9792,7 +9792,7 @@ const resource = {
     "login.hero_desc": "Professionele raming, 4D planning, 5D kostenmodel en aanbesteding - alles in één AI-gestuurde platform.",
     "login.hero_highlight": "opnieuw uitgevonden",
     "login.hero_title": "Bouwkostencalculatie,",
-    "dashboard.open_source_badge": "De eerste AI-aangedreven bouw-ERP die vanaf de basis is opgebouwd voor India.",
+    "dashboard.open_source_badge": "De eerste constructie-ERP die vanaf de basis is ontworpen voor het agententijdperk: een constructie-ERP voor menselijke teams en hun AI-agenten.",
     "login.learn_more": "Meer informatie over het platform",
     "login.privacy": "Alle gegevens worden lokaal op uw apparaat verwerkt en opgeslagen. Er wordt niets naar externe servers verzonden. U bent eigenaar van uw gegevens, altijd.",
     "login.privacy_ai": "Als u de ingebouwde AI-tools gebruikt, kunnen sommige gegevens worden verzonden naar de AI-provider die u configureert (OpenAI, Anthropic, etc.). U bepaalt welke provider u gebruikt en welke gegevens u deelt.",
@@ -17990,7 +17990,7 @@ const resource = {
     "propdev.phone": "Telefoon",
     // --- /propdev ---
     // --- LoginPage i18n backfill ---
-    "login.hero_tagline": "De eerste AI-aangedreven bouw-ERP die vanaf de basis is opgebouwd voor India.",
+    "login.hero_tagline": "De eerste constructie-ERP die vanaf de basis is ontworpen voor het agententijdperk: een constructie-ERP voor menselijke teams en hun AI-agenten.",
     "login.stat_costs": "kostenposten",
     "login.stat_langs": "talen",
     "login.stat_regions": "regio's",
@@ -26830,7 +26830,7 @@ const resource = {
     "about.svc_workshop_desc": "Hands-on sessies: ramingen, BIM-naar-BOQ, AI-opmeting, GAEB-pipelines. Opgenomen voor uw teambibliotheek.",
     "about.svc_workshop_tagline": "1-3 DAGEN · TER PLAATSE OF EXTERN",
     "about.svc_workshop_title": "Workshops",
-    "about.tagline": "De eerste AI-aangedreven bouw-ERP die vanaf de basis is opgebouwd voor India.",
+    "about.tagline": "De eerste constructie-ERP die vanaf de basis is ontworpen voor het agententijdperk: een constructie-ERP voor menselijke teams en hun AI-agenten.",
     "accommodation.assign.checkout_before_checkin": "Uitchecken moet na inchecken zijn.",
     "accommodation.assign.conflict_hint": "Pas de inchecking of uitchecking aan zodat het verblijf niet meer overlapt, en maak de boeking vervolgens aan.",
     "accommodation.assign.conflict_title": "Deze datums overlappen met een bestaande boeking",

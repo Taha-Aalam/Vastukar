@@ -12646,7 +12646,7 @@ const resource = {
     "dashboard.no_projects": "Хараахан төсөл алга",
     "dashboard.no_projects_desc": "Үүсгэх таны эхний төсөл хүртэл get эхэлсэн",
     "dashboard.not_configured": "Тохируулагдаагүй",
-    "dashboard.open_source_badge": "Энэтхэгт зориулж анхнаасаа хиймэл оюун ухаанаар ажилладаг барилгын ERP.",
+    "dashboard.open_source_badge": "Анхны барилгын ERP нь агентын эрин үед зориулагдсан: хүний багууд болон тэдний хиймэл оюун ухааны агентуудад зориулсан барилгын ERP.",
     "dashboard.over_budget": "дээгүүр төсөв",
     "dashboard.portfolio_overview": "Портфолиогийн тойм",
     "dashboard.project_overview": "Төсөл Overview",
@@ -18934,7 +18934,7 @@ const resource = {
     "propdev.phone": "Утас",
     // --- /propdev ---
     // --- LoginPage i18n backfill ---
-    "login.hero_tagline": "Энэтхэгт зориулж анхнаасаа хиймэл оюун ухаанаар ажилладаг барилгын ERP.",
+    "login.hero_tagline": "Анхны барилгын ERP нь агентын эрин үед зориулагдсан: хүний багууд болон тэдний хиймэл оюун ухааны агентуудад зориулсан барилгын ERP.",
     "login.stat_costs": "өртгийн зүйл",
     "login.stat_langs": "хэл",
     "login.stat_regions": "бүс",
@@ -26731,7 +26731,7 @@ const resource = {
     "about.svc_workshop_desc": "Төрөл үе сургалтууд: сметаны анхыхыг, BIM-аас BOQ, AI takeoff, GAEB pipelines. Таны баг номын сан илүүлэхийн үзүүлэлтүүд.",
     "about.svc_workshop_tagline": "1-3 ӨДӨР · ТУ-Н ГАЗАР ЭСВ ХОЛОД",
     "about.svc_workshop_title": "Семинарууд",
-    "about.tagline": "Энэтхэгт зориулж анхнаасаа хиймэл оюун ухаанаар ажилладаг барилгын ERP.",
+    "about.tagline": "Анхны барилгын ERP нь агентын эрин үед зориулагдсан: хүний багууд болон тэдний хиймэл оюун ухааны агентуудад зориулсан барилгын ERP.",
     "accommodation.assign.checkout_before_checkin": "Гарах өмнө орох болох ёстой.",
     "accommodation.assign.conflict_hint": "Орох эсвэл гарах нь удахгүй байлгатайгаа үргэлжлэхээ зогсоно уу, дараа нь захиалсан үүсгэнэ.",
     "accommodation.assign.conflict_title": "Энэ үед өнөө захиалгатай давхцаж байна",

@@ -10981,7 +10981,7 @@ const resource = {
     "login.hero_desc": "BOQ chuyên nghiệp, lịch 4D, mô hình chi phí 5D và đấu thầu - tất cả trong một nền tảng do AI vận hành.",
     "login.hero_highlight": "tái định nghĩa",
     "login.hero_title": "Dự toán chi phí xây dựng,",
-    "dashboard.open_source_badge": "ERP xây dựng được hỗ trợ bởi AI đầu tiên được xây dựng ngay từ đầu cho Ấn Độ.",
+    "dashboard.open_source_badge": "ERP xây dựng đầu tiên được thiết kế từ đầu cho kỷ nguyên đại lý: ERP xây dựng dành cho đội ngũ con người và các đại lý AI của họ.",
     "login.learn_more": "Tìm hiểu thêm về nền tảng",
     "login.privacy": "Tất cả dữ liệu được xử lý và lưu trữ cục bộ trên máy của bạn. Không có gì được gửi đến máy chủ bên ngoài. Bạn sở hữu dữ liệu của mình, luôn luôn.",
     "login.privacy_ai": "Nếu bạn sử dụng các công cụ AI tích hợp, một số dữ liệu có thể được gửi đến nhà cung cấp AI bạn cấu hình (OpenAI, Anthropic, v.v.). Bạn kiểm soát nhà cung cấp nào sử dụng và dữ liệu nào chia sẻ.",
@@ -18528,7 +18528,7 @@ const resource = {
     "propdev.phone": "Điện thoại",
     // --- /propdev ---
     // --- LoginPage i18n backfill ---
-    "login.hero_tagline": "ERP xây dựng được hỗ trợ bởi AI đầu tiên được xây dựng ngay từ đầu cho Ấn Độ.",
+    "login.hero_tagline": "ERP xây dựng đầu tiên được thiết kế từ đầu cho kỷ nguyên đại lý: ERP xây dựng dành cho đội ngũ con người và các đại lý AI của họ.",
     "login.stat_costs": "hạng mục chi phí",
     "login.stat_langs": "ngôn ngữ",
     "login.stat_regions": "khu vực",
@@ -26650,7 +26650,7 @@ const resource = {
     "about.svc_workshop_desc": "Các phiên thực tế: ước tính, BIM-to-BOQ, lấy AI, đường ống GAEB. Được ghi lại cho thư viện nhóm của bạn.",
     "about.svc_workshop_tagline": "1-3 NGÀY · TẠI CHỖ HOẶC TỪ XA",
     "about.svc_workshop_title": "Các hội thảo",
-    "about.tagline": "ERP xây dựng được hỗ trợ bởi AI đầu tiên được xây dựng ngay từ đầu cho Ấn Độ.",
+    "about.tagline": "ERP xây dựng đầu tiên được thiết kế từ đầu cho kỷ nguyên đại lý: ERP xây dựng dành cho đội ngũ con người và các đại lý AI của họ.",
     "accommodation.assign.checkout_before_checkin": "Thanh toán phải nằm sau nhận phòng.",
     "accommodation.assign.conflict_hint": "Điều chỉnh thời gian nhận phòng hoặc thanh toán để lưu trú không còn chồng chéo, sau đó tạo đặt phòng.",
     "accommodation.assign.conflict_title": "Các ngày này trùng với đặt phòng hiện có",

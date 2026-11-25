@@ -1256,7 +1256,7 @@ contact URL, startup docs log and demo read-only download text were also
 removed; AGPL source endpoint and contact email remain.
 
 Item 6 — replaced the `#1 AI-powered ...` tagline variants with exactly
-"The first AI-powered construction ERP built from the ground up for India."
+"The first construction ERP designed from the ground up for the agentic era: a construction ERP for human teams and their AI agents."
 in `about.tagline`, `dashboard.open_source_badge`, the new `login.hero_tagline`,
 all inline defaults, `index.html` meta/twitter descriptions, and all 50
 bundles. The ten Indian languages were translated in the bundles' existing

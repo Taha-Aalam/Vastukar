@@ -11075,7 +11075,7 @@ const resource = {
     "login.hero_desc": "BOQ ระดับมืออาชีพ ตารางเวลา 4D โมเดลต้นทุน 5D และการประกวดราคา ทั้งหมดอยู่ในแพลตฟอร์มที่ขับเคลื่อนด้วย AI",
     "login.hero_highlight": "รูปแบบใหม่",
     "login.hero_title": "การประมาณราคาก่อสร้าง",
-    "dashboard.open_source_badge": "ERP การก่อสร้างที่ขับเคลื่อนด้วย AI เครื่องแรกที่สร้างขึ้นตั้งแต่ต้นจนจบสำหรับอินเดีย",
+    "dashboard.open_source_badge": "ERP การก่อสร้างตัวแรกที่ออกแบบตั้งแต่ต้นจนจบสำหรับยุคตัวแทน: ERP การก่อสร้างสำหรับทีมงานมนุษย์และตัวแทน AI",
     "login.learn_more": "เรียนรู้เพิ่มเติมเกี่ยวกับแพลตฟอร์ม",
     "login.privacy": "ข้อมูลทั้งหมดประมวลผลและจัดเก็บในเครื่องของคุณ ไม่มีอะไรส่งไปยังเซิร์ฟเวอร์ภายนอก คุณเป็นเจ้าของข้อมูลเสมอ",
     "login.privacy_ai": "หากคุณใช้เครื่องมือ AI ในตัว ข้อมูลบางส่วนอาจถูกส่งไปยังผู้ให้บริการ AI ที่คุณกำหนด (OpenAI, Anthropic ฯลฯ) คุณควบคุมว่าจะใช้ผู้ให้บริการรายใดและจะแบ่งปันข้อมูลใด",
@@ -18666,7 +18666,7 @@ const resource = {
     "propdev.phone": "โทรศัพท์",
     // --- /propdev ---
     // --- LoginPage i18n backfill ---
-    "login.hero_tagline": "ERP การก่อสร้างที่ขับเคลื่อนด้วย AI เครื่องแรกที่สร้างขึ้นตั้งแต่ต้นจนจบสำหรับอินเดีย",
+    "login.hero_tagline": "ERP การก่อสร้างตัวแรกที่ออกแบบตั้งแต่ต้นจนจบสำหรับยุคตัวแทน: ERP การก่อสร้างสำหรับทีมงานมนุษย์และตัวแทน AI",
     "login.stat_costs": "รายการต้นทุน",
     "login.stat_langs": "ภาษา",
     "login.stat_regions": "ภูมิภาค",
@@ -26642,7 +26642,7 @@ const resource = {
     "about.svc_workshop_desc": "Hands-on sessions: การประมาณ, BIM-to-BOQ, AI takeoff, GAEB pipelines Recorded สำหรับไลบรารี่ทีมของคุณ",
     "about.svc_workshop_tagline": "1-3 วัน · ON-SITE หรือ REMOTE",
     "about.svc_workshop_title": "Workshops",
-    "about.tagline": "ERP การก่อสร้างที่ขับเคลื่อนด้วย AI เครื่องแรกที่สร้างขึ้นตั้งแต่ต้นจนจบสำหรับอินเดีย",
+    "about.tagline": "ERP การก่อสร้างตัวแรกที่ออกแบบตั้งแต่ต้นจนจบสำหรับยุคตัวแทน: ERP การก่อสร้างสำหรับทีมงานมนุษย์และตัวแทน AI",
     "accommodation.assign.checkout_before_checkin": "Check-out ต้องหลัง check-in",
     "accommodation.assign.conflict_hint": "ปรับ check-in หรือ check-out เพื่อไม่ให้การพักอยู่ทับซ้อนกัน แล้วสร้างการจอง",
     "accommodation.assign.conflict_title": "วันที่เหล่านี้ทับซ้อนกับการจองที่มีอยู่",

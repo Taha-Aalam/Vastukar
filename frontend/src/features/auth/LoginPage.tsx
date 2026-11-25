@@ -567,7 +567,7 @@ export function LoginPage() {
         {/* Marketing headline - kept as h2 because the form panel below has the
             authoritative h1 (visually hidden, always present in DOM). */}
         <h2 className="text-[32px] xl:text-[36px] font-semibold text-content-primary leading-[1.08] tracking-[-0.025em] animate-stagger-in" style={{ animationDelay: '60ms' }}>
-          {t('login.hero_tagline', { defaultValue: 'The first AI-powered construction ERP built from the ground up for India.' })}
+          {t('login.hero_tagline', { defaultValue: 'The first construction ERP designed from the ground up for the agentic era: a construction ERP for human teams and their AI agents.' })}
         </h2>
 
         {/* Subhead */}

@@ -11147,7 +11147,7 @@ const resource = {
     "login.hero_desc": "Profesionální rozpočet, 4D harmonogram, 5D model nákladů a výběrová řízení - vše v jedné AI řízené platformě.",
     "login.hero_highlight": "přepracovaná",
     "login.hero_title": "Stavební kalkulace,",
-    "dashboard.open_source_badge": "První stavební ERP s umělou inteligencí vytvořené od základů pro Indii.",
+    "dashboard.open_source_badge": "První konstrukční ERP navržené od základů pro éru agentů: konstrukční ERP pro lidské týmy a jejich AI agenty.",
     "login.learn_more": "Více o platformě",
     "login.privacy": "Veškerá data jsou zpracovávána a ukládána lokálně na vašem počítači. Na externí servery se nic neodesílá. Vaše data patří vám, vždy.",
     "login.privacy_ai": "Pokud používáte vestavěné AI nástroje, některá data mohou být odeslána poskytovateli AI, kterého nastavíte (OpenAI, Anthropic atd.). Vy rozhodujete, kterého poskytovatele použijete a jaká data sdílíte.",
@@ -18845,7 +18845,7 @@ const resource = {
     "propdev.phone": "Telefon",
     // --- /propdev ---
     // --- LoginPage i18n backfill ---
-    "login.hero_tagline": "První stavební ERP s umělou inteligencí vytvořené od základů pro Indii.",
+    "login.hero_tagline": "První konstrukční ERP navržené od základů pro éru agentů: konstrukční ERP pro lidské týmy a jejich AI agenty.",
     "login.stat_costs": "nákladových položek",
     "login.stat_langs": "jazyků",
     "login.stat_regions": "regionů",
@@ -27200,7 +27200,7 @@ const resource = {
     "about.svc_workshop_desc": "Praktické sesemi: odhad, BIM-to-BOQ, AI takeoff, GAEB pipeline. Zaznamenáno pro knihovnu vašeho týmu.",
     "about.svc_workshop_tagline": "1-3 DNY · NA MÍSTĚ NEBO VZDÁLENĚ",
     "about.svc_workshop_title": "Workshopy",
-    "about.tagline": "První stavební ERP s umělou inteligencí vytvořené od základů pro Indii.",
+    "about.tagline": "První konstrukční ERP navržené od základů pro éru agentů: konstrukční ERP pro lidské týmy a jejich AI agenty.",
     "about.ddc_flagship_label": "Vlajkové produkty",
     "accommodation.assign.checkout_before_checkin": "Check-out musí být po check-in.",
     "accommodation.assign.conflict_hint": "Upravte check-in nebo check-out tak, aby se pobyt již nepřekrýval, poté vytvořte rezervaci.",

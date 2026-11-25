@@ -2880,7 +2880,7 @@ function DashboardPageInner() {
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
             <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
           </span>
-          <span>{t('dashboard.open_source_badge', { defaultValue: 'The first AI-powered construction ERP built from the ground up for India.' })}</span>
+          <span>{t('dashboard.open_source_badge', { defaultValue: 'The first construction ERP designed from the ground up for the agentic era: a construction ERP for human teams and their AI agents.' })}</span>
           <ExternalLink size={11} className="text-content-quaternary group-hover/oss:text-oe-blue transition-colors" />
         </a>
 

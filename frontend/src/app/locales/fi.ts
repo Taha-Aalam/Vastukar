@@ -10864,7 +10864,7 @@ const resource = {
     "login.hero_desc": "Ammattimainen määräluettelo, 4D-aikataulutus, 5D-kustannusmalli ja tarjouskilpailu - kaikki yhdessä tekoälyllä toimivassa alustassa.",
     "login.hero_highlight": "uudelleenajateltuna",
     "login.hero_title": "Rakennuskustannuslaskenta,",
-    "dashboard.open_source_badge": "Ensimmäinen tekoälyllä toimiva ERP, joka on rakennettu alusta alkaen Intialle.",
+    "dashboard.open_source_badge": "Ensimmäinen rakentamisen ERP, joka on suunniteltu alusta alkaen agenttien aikakaudelle: rakentamisen ERP ihmisryhmille ja niiden tekoälyagenteille.",
     "login.learn_more": "Lue lisää alustasta",
     "login.privacy": "Kaikki tiedot käsitellään ja tallennetaan paikallisesti koneellesi. Mitään ei lähetetä ulkoisille palvelimille. Sinä omistat tietosi, aina.",
     "login.privacy_ai": "Jos käytät sisäänrakennettuja tekoälytyökaluja, joitakin tietoja voidaan lähettää määrittämällesi tekoälypalveluntarjoajalle (OpenAI, Anthropic jne.). Sinä päätät mitä palveluntarjoajaa käytät ja mitä tietoja jaat.",
@@ -18602,7 +18602,7 @@ const resource = {
     "propdev.phone": "Puhelin",
     // --- /propdev ---
     // --- LoginPage i18n backfill ---
-    "login.hero_tagline": "Ensimmäinen tekoälyllä toimiva ERP, joka on rakennettu alusta alkaen Intialle.",
+    "login.hero_tagline": "Ensimmäinen rakentamisen ERP, joka on suunniteltu alusta alkaen agenttien aikakaudelle: rakentamisen ERP ihmisryhmille ja niiden tekoälyagenteille.",
     "login.stat_costs": "kustannusriviä",
     "login.stat_langs": "kieltä",
     "login.stat_regions": "aluetta",
@@ -26763,7 +26763,7 @@ const resource = {
     "about.svc_workshop_desc": "Hands-on istunnot: estimointi, BIM-to-BOQ, tekoälyn mittaus, GAEB-putkistot. Nauhoitettu ryhmän kirjastoa varten.",
     "about.svc_workshop_tagline": "1-3 PÄIVÄÄ - PAIKAN PÄÄLLÄ TAI ETÄÄLTÄ",
     "about.svc_workshop_title": "Työpajat",
-    "about.tagline": "Ensimmäinen tekoälyllä toimiva ERP, joka on rakennettu alusta alkaen Intialle.",
+    "about.tagline": "Ensimmäinen rakentamisen ERP, joka on suunniteltu alusta alkaen agenttien aikakaudelle: rakentamisen ERP ihmisryhmille ja niiden tekoälyagenteille.",
     "about.ddc_flagship_label": "Lippulaivatuotteet",
     "accommodation.assign.checkout_before_checkin": "Kirjautuminen ulos on oltava kirjautumisen jälkeen.",
     "accommodation.assign.conflict_hint": "Säädä kirjautumista tai uloskirjautumista niin, ettei oleskelu enää peitä toisiaan, ja luo sitten varaus.",

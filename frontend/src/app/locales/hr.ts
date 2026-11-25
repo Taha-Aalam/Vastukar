@@ -11077,7 +11077,7 @@ const resource = {
     "login.hero_desc": "Profesionalni BOQ, 4D raspored, 5D model troškova i nadmetanje - sve u jednoj platformi s AI.",
     "login.hero_highlight": "redefinirana",
     "login.hero_title": "Procjena građevinskih troškova,",
-    "dashboard.open_source_badge": "Prvi građevinski ERP koji pokreće AI izgrađen od temelja za Indiju.",
+    "dashboard.open_source_badge": "Prvi konstrukcijski ERP dizajniran iz temelja za agencijsko doba: građevinski ERP za ljudske timove i njihove AI agente.",
     "login.learn_more": "Saznajte više o platformi",
     "login.privacy": "Svi podaci se obrađuju i pohranjuju lokalno na vašem računalu. Ništa se ne šalje vanjskim poslužiteljima. Vi ste vlasnik svojih podataka, uvijek.",
     "login.privacy_ai": "Ako koristite ugrađene AI alate, neki podaci mogu biti poslani AI pružatelju kojeg konfigurirate (OpenAI, Anthropic itd.). Vi kontrolirate kojeg pružatelja koristiti i koje podatke dijeliti.",
@@ -18661,7 +18661,7 @@ const resource = {
     "propdev.phone": "Telefon",
     // --- /propdev ---
     // --- LoginPage i18n backfill ---
-    "login.hero_tagline": "Prvi građevinski ERP koji pokreće AI izgrađen od temelja za Indiju.",
+    "login.hero_tagline": "Prvi konstrukcijski ERP dizajniran iz temelja za agencijsko doba: građevinski ERP za ljudske timove i njihove AI agente.",
     "login.stat_costs": "stavki troškova",
     "login.stat_langs": "jezika",
     "login.stat_regions": "regija",
@@ -26968,7 +26968,7 @@ const resource = {
     "about.svc_workshop_desc": "Praktične sjednice: procjena, BIM-na-BOQ, AI odmjeravanja, GAEB cjevovodi. Snimljeno za knjižnicu vaše grupe.",
     "about.svc_workshop_tagline": "1-3 DANA · NA MJESTU RADA ILI DALJINSKI",
     "about.svc_workshop_title": "Radionice",
-    "about.tagline": "Prvi građevinski ERP koji pokreće AI izgrađen od temelja za Indiju.",
+    "about.tagline": "Prvi konstrukcijski ERP dizajniran iz temelja za agencijsko doba: građevinski ERP za ljudske timove i njihove AI agente.",
     "about.ddc_flagship_label": "Glavni proizvodi",
     "accommodation.assign.checkout_before_checkin": "Odjava mora biti nakon prijave.",
     "accommodation.assign.conflict_hint": "Prilagodite prijavu ili odjavu kako boravak više ne bi preklapao, zatim kreirajte rezervaciju.",
