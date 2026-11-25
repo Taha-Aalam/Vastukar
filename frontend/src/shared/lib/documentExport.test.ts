@@ -6,30 +6,41 @@
 
 import { describe, it, expect } from 'vitest';
 
-import { SUPPORTED_LANGUAGES } from '@/app/i18n';
 import {
   DIARY_DOCUMENT_LOCALES,
   PURCHASING_DOCUMENT_LOCALES,
   REGISTER_DOCUMENT_LOCALES,
+  REGISTER_RENDERABLE,
   defaultDocumentLocale,
   documentLocaleEnglishName,
   documentLocaleName,
 } from './documentExport';
 
-// Bengali is a backend language no bundled PDF face can draw, so the server answers it
-// in English and the menu does not offer it. Urdu is set in runs of faces and is offered.
+/** The one backend language no bundled PDF face can draw. */
 const NOT_RENDERABLE = new Set(['bn']);
 
-// The interface also ships regional variants of a language (en-GB, pt-BR ...);
-// a document language is the base language.
-const BASE_INTERFACE_LANGUAGES = SUPPORTED_LANGUAGES.map((l) => l.code).filter((c) => !c.includes('-'));
-
 describe('document languages', () => {
-  it('offers every interface language the server renders, once each, and nothing else', () => {
-    const expected = BASE_INTERFACE_LANGUAGES.filter((c) => !NOT_RENDERABLE.has(c));
-    expect([...REGISTER_DOCUMENT_LOCALES].sort()).toEqual([...expected].sort());
+  it('offers every language the server renders, once each, and nothing else', () => {
+    // The document languages are the BACKEND's set, not the interface offer.
+    // They were briefly narrowed to `SUPPORTED_LANGUAGES`, which cut the menu
+    // from thirty-seven languages to three and made Turkish, German, French and
+    // every other export unreachable — while the backend went on rendering them
+    // and seven feature suites went on asserting their Turkish downloads. The
+    // two questions are separate: the offer decides which languages the picker
+    // shows, and a document's language is chosen for whoever receives it.
+    expect([...REGISTER_DOCUMENT_LOCALES].sort()).toEqual([...REGISTER_RENDERABLE].sort());
     expect(new Set(REGISTER_DOCUMENT_LOCALES).size).toBe(REGISTER_DOCUMENT_LOCALES.length);
     expect(REGISTER_DOCUMENT_LOCALES[0]).toBe('en');
+    // Bengali is the one backend language no bundled PDF face can draw: the
+    // server answers it in English and the menu does not offer it.
+    expect(REGISTER_DOCUMENT_LOCALES).not.toContain('bn');
+    for (const code of NOT_RENDERABLE) {
+      expect(REGISTER_DOCUMENT_LOCALES, `${code} cannot be rendered`).not.toContain(code);
+    }
+    // The recipient-facing languages stay reachable whatever the picker offers.
+    for (const code of ['de', 'tr', 'fr', 'es', 'ru']) {
+      expect(REGISTER_DOCUMENT_LOCALES, `${code} is still a document language`).toContain(code);
+    }
   });
 
   it('prints the diary in the same languages as the registers', () => {
@@ -50,6 +61,12 @@ describe('document languages', () => {
     expect(documentLocaleName('en')).toBe('English');
     expect(documentLocaleName('de')).toBe('Deutsch');
     expect(documentLocaleName('tr')).toBe('Türkçe');
+    // zh is hidden behind the allowlist, but its entry is still in the
+    // registry, so its own name comes from there: 简体中文, which says which
+    // Chinese it is, where the runtime's Intl.DisplayNames answers the vaguer
+    // 中文. Before the allowlist this test asserted the runtime's answer
+    // because the picker entry was out of reach; it is in reach now, and the
+    // registry is the better source for a name.
     expect(documentLocaleName('zh')).toBe('简体中文');
     expect(documentLocaleName('he')).toBe('עברית');
   });
@@ -68,13 +85,20 @@ describe('document languages', () => {
   });
 
   it('starts on the interface language when the document exists in it, else English', () => {
+    // The menu starts on the reader's own language whenever the server can
+    // render it, whatever the picker happens to offer: a German or Turkish
+    // reader still exports a German or Turkish register. `bn` and `sw` fall
+    // back to English because no document exists in them.
     expect(defaultDocumentLocale(REGISTER_DOCUMENT_LOCALES, 'de-AT')).toBe('de');
     expect(defaultDocumentLocale(REGISTER_DOCUMENT_LOCALES, 'TR')).toBe('tr');
+    expect(defaultDocumentLocale(REGISTER_DOCUMENT_LOCALES, 'ur-PK')).toBe('ur');
+    expect(defaultDocumentLocale(REGISTER_DOCUMENT_LOCALES, 'hi-IN')).toBe('hi');
     expect(defaultDocumentLocale(REGISTER_DOCUMENT_LOCALES, 'bn')).toBe('en');
     expect(defaultDocumentLocale(REGISTER_DOCUMENT_LOCALES, 'sw')).toBe('en');
     expect(defaultDocumentLocale(REGISTER_DOCUMENT_LOCALES, null)).toBe('en');
     expect(defaultDocumentLocale(PURCHASING_DOCUMENT_LOCALES, 'ja')).toBe('ja');
     expect(defaultDocumentLocale(PURCHASING_DOCUMENT_LOCALES, 'bn')).toBe('en');
     expect(defaultDocumentLocale(PURCHASING_DOCUMENT_LOCALES, 'ar-EG')).toBe('ar');
+    expect(defaultDocumentLocale(PURCHASING_DOCUMENT_LOCALES, 'ur-PK')).toBe('ur');
   });
 });

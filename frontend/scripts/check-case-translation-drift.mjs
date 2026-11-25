@@ -167,17 +167,25 @@ function playbookSources(args) {
  * cannot have gone stale, and counting it as drift would make the number
  * meaningless. */
 /* Which languages the product actually offers. A locale file can exist for a
- * language that is not in SUPPORTED_LANGUAGES, in which case nobody can select
- * it and nobody is reading a stale translation in it. Parsed from the `code:`
- * field only: the entries also carry name, flag and country, and scraping
- * every quoted string reports 114 languages instead of 42. */
+ * language that is not in the allowlist, in which case nobody can select it
+ * and nobody is reading a stale translation in it.
+ * Parsed from `ENABLED_LOCALES`, a plain string array with one quoted code
+ * per line plus an optional `// தமிழ் Tamil` comment; lines are cut at `//`
+ * first so a name in a comment cannot be read as a code. This used to scrape
+ * the `code:` field of SUPPORTED_LANGUAGES, which is a `.filter()` over the
+ * allowlist now and holds no `code:` field at all. */
 function offeredLanguages() {
   const src = readFileSync(join(FRONTEND_ROOT, 'src/app/i18n.ts'), 'utf8');
-  const start = src.indexOf('export const SUPPORTED_LANGUAGES');
+  const start = src.indexOf('export const ENABLED_LOCALES');
   if (start < 0) return null;
   const end = src.indexOf('\n];', start);
-  const block = src.slice(start, end < 0 ? undefined : end);
-  const codes = [...block.matchAll(/\bcode:\s*'([A-Za-z-]+)'/g)].map((m) => m[1]);
+  if (end < 0) return null;
+  const block = src
+    .slice(start, end)
+    .split('\n')
+    .map((line) => line.split('//')[0])
+    .join('\n');
+  const codes = [...block.matchAll(/'([a-z]{2,3}(?:-[A-Za-z0-9]+)?)'/g)].map((m) => m[1]);
   return codes.length ? new Set(codes) : null;
 }
 

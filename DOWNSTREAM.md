@@ -1080,3 +1080,128 @@ a command assembled by `install_advice()` is no longer a literal string and
 gains a direct check that every helper call site is routed through
 `repair_hint`. A new AST test fails if any non-docstring string literal under
 `backend/app` contains both "pip install" and the package name.
+
+## Divergences — India language rollout (phase 1: offered set)
+
+Vastukar is a product for India, so the interface is offered only in English
+and the Indian languages whose bundles are complete. Phase 1 does not delete
+or edit any locale file: all 45 bundles stay in the tree, stay imported by the
+fallback aggregator, and stay covered by every locale parity test, so an
+upstream sync lands the same way it always did and a hidden bundle does not
+rot while it waits. Visibility is decided by one exported allowlist,
+`ENABLED_LOCALES` in `frontend/src/app/i18n.ts`, which filters the full
+registry (`ALL_LANGUAGES`) into `SUPPORTED_LANGUAGES` — the list every
+consumer already read, so the picker, the login/register/about statistics
+(previously "44 languages", computed from the registry length), the settings
+and profile language options, the project-language form, the document-export
+menus, pack-locale normalisation and account-language sync all narrow to
+English (en), Hindi (hi), Bengali (bn) and Urdu (ur) at once. en-GB and en-US
+map to plain `en` (the day-first date rule is deliberately inert while the
+British entry is not offered — restoring it needs the allowlist entry or a
+date-order decoupling from the picker). A saved preference in a hidden
+language falls back to English through the validation that already existed in
+`resolveInitialLanguage` and `accountLanguageToApply`; the runtime loader
+refuses hidden codes even on direct request. Hard-coded "44 languages" claims
+were replaced with the enabled set in `frontend/index.html` (meta, og, twitter
+descriptions), `README.md` and `docs/architecture/OVERVIEW.md`. Tests that
+hard-coded the old visible set were re-pointed at the allowlist with their
+protective intent kept and the reason recorded in place:
+`scripts/check_validation_message_locale_coverage.py` now parses
+`ENABLED_LOCALES` for its report, and the vitest suites listed below pin the
+new mapping (pack locales and English regions resolving to `en`, hidden
+languages falling back to English at first run and at boot, the refused
+runtime load, the single right-to-left language, the narrowed document
+menus).
+
+Files changed in this step:
+
+- DEVELOPING.md
+- docs/india-rollout/screenshots/phase1-language-picker.png
+- docs/india-rollout/screenshots/phase1-login-4-languages.png
+- docs/india-rollout/screenshots/phase1-login-hindi.png
+- README.md
+- docs/architecture/OVERVIEW.md
+- frontend/index.html
+- frontend/src/app/i18n.ts
+- frontend/src/app/i18n-fallbacks.ts
+- frontend/src/app/__tests__/documentDirectionFollowsTheLanguage.test.ts
+- frontend/src/app/__tests__/enUSFallsBackToEnglish.test.ts
+- frontend/src/app/__tests__/everyOfferedLanguageIsInTheFallbackAggregator.test.ts
+- frontend/src/app/__tests__/firstRunLanguageKeepsTheRegion.test.ts
+- frontend/src/app/__tests__/i18nStartupLocaleGate.test.tsx
+- frontend/src/app/__tests__/normalizePackLocale.test.ts
+- frontend/src/app/__tests__/regionalVariantLoadsItsBaseLanguage.test.ts
+- frontend/src/features/cases/homeMarket.test.ts
+- frontend/src/features/projects/projectLanguages.test.ts
+- frontend/src/features/videos/academyCatalog.test.ts
+- frontend/src/shared/hooks/partnerPackVocabulary.test.ts
+- frontend/src/shared/hooks/partnerPackVocabulary.ts
+- frontend/src/shared/lib/dateFnsLocale.test.ts
+- frontend/src/shared/lib/documentExport.test.ts
+- frontend/src/shared/lib/documentExport.ts
+- frontend/src/shared/lib/languageOrder.test.ts
+- frontend/src/shared/lib/parseDecimal.roundtrip.test.ts
+- frontend/src/shared/lib/weekStart.test.ts
+- scripts/check_validation_message_locale_coverage.py
+
+## Divergences — India language rollout (phase 2: seven new Indian-language bundles)
+
+Tamil, Telugu, Marathi, Gujarati, Kannada, Malayalam and Punjabi join the
+offered set. Each bundle (`frontend/src/app/locales/<code>.ts`) was built with
+the repository's own `scripts/i18n_new_locale.py` pipeline — the target key set
+is the union corpus minus the plural categories each language does not have,
+which is 66,830 keys per language (58,013 sourced from en.ts, 8,692 from case
+playbooks, 3 from inline `<Trans>`/`defaultValue` English at the call site, and
+122 keys with no English anywhere in the tree pivot-translated from fully
+translated sibling locales; 1 en.ts key is blank in English on purpose and ships
+blank). Values
+were machine translated in scripted batches with
+`scripts/translate_locale_gtx.py` against Google's public `translate_a`
+endpoints (`translate_a/t` bulk, `translate_a/single` per-string retry, no API
+key): interpolation placeholders ({{name}}), i18next <Trans> tags, URLs, the
+brand name Vastukar, keyboard shortcuts and the technical tokens BOQ/BIM/ERP
+are sentinel-protected and verified to survive verbatim; a string whose reply
+fails validation or reads identical to English stays English and is counted
+(1.4–2.2% per language, threshold 10%). `scripts/pivot_locale_gtx.py` covers
+the no-English tail; `scripts/review_first_list.py` emits the 200
+highest-visibility keys per language for native-speaker review before the
+language is called final (`docs/india-rollout/review-first/<code>.md`). The
+bundles pass every locale gate: `i18n_new_locale.py verify` (shape, no
+duplicates, CRLF), `check_locale_english_placeholder` (highest of the seven is
+2.23%), mojibake, mixed-script, escapes, lost-escape, umlaut-folding and the
+stripped/lost-diacritics baselines, plus the placeholder-parity and
+bill-vocabulary vitest suites over all 50 aggregated locales.
+
+Files changed in this step:
+
+- DOWNSTREAM.md
+- DEVELOPING.md
+- README.md
+- docs/architecture/OVERVIEW.md
+- frontend/index.html
+- frontend/src/app/i18n.ts
+- frontend/src/app/i18n-fallbacks.ts
+- frontend/src/app/locales/ta.ts
+- frontend/src/app/locales/te.ts
+- frontend/src/app/locales/mr.ts
+- frontend/src/app/locales/gu.ts
+- frontend/src/app/locales/kn.ts
+- frontend/src/app/locales/ml.ts
+- frontend/src/app/locales/pa.ts
+- frontend/src/app/__tests__/documentDirectionFollowsTheLanguage.test.ts
+- frontend/src/app/__tests__/everyOfferedLanguageIsInTheFallbackAggregator.test.ts
+- frontend/src/app/__tests__/localesNameTheBillOneWayInTheirOwnFile.test.ts
+- frontend/src/features/projects/projectLanguages.test.ts
+- frontend/src/shared/lib/dateFnsLocale.test.ts
+- frontend/src/shared/lib/dateFnsLocale.ts
+- frontend/src/shared/lib/weekStart.test.ts
+- scripts/translate_locale_gtx.py
+- scripts/pivot_locale_gtx.py
+- scripts/review_first_list.py
+- docs/india-rollout/review-first/ta.md
+- docs/india-rollout/review-first/te.md
+- docs/india-rollout/review-first/mr.md
+- docs/india-rollout/review-first/gu.md
+- docs/india-rollout/review-first/kn.md
+- docs/india-rollout/review-first/ml.md
+- docs/india-rollout/review-first/pa.md

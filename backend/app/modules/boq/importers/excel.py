@@ -596,6 +596,70 @@ _HEADERS_BY_LANGUAGE: dict[str, dict[str, tuple[str, ...]]] = {
         "unit_rate": ("দর", "একক দর"),
         "total": ("মোট", "মোট টাকা"),
     },
+    # The seven Indian bundles this branch adds. Every word below is the one
+    # the shipped bundle already uses for that column, not a fresh
+    # translation: ``boq.ordinal``, ``boq.description``, ``boq.unit``,
+    # ``boq.quantity``, ``boq.unit_rate`` and ``boq.cost_breakdown_total``,
+    # read out of the locale file, so a bill printed by this product and a
+    # bill this importer reads use the same six headings. The ordinal also
+    # takes the import preview's own "pos. / code" heading, which is the
+    # label the app writes over that column itself.
+    "ta": {
+        "ordinal": ("போஸ்.", "போஸ். / குறியீடு"),
+        "description": ("விளக்கம்",),
+        "unit": ("அலகு",),
+        "quantity": ("அளவு",),
+        "unit_rate": ("அலகு வீதம்",),
+        "total": ("மொத்தம்",),
+    },
+    "te": {
+        "ordinal": ("పోస్.", "పోస్. / కోడ్"),
+        "description": ("వివరణ",),
+        "unit": ("యూనిట్",),
+        "quantity": ("పరిమాణం",),
+        "unit_rate": ("యూనిట్ రేటు",),
+        "total": ("మొత్తం",),
+    },
+    "mr": {
+        "ordinal": ("स्थान", "स्थान / कोड"),
+        "description": ("वर्णन",),
+        "unit": ("युनिट",),
+        "quantity": ("प्रमाण",),
+        "unit_rate": ("युनिट दर",),
+        "total": ("एकूण",),
+    },
+    "gu": {
+        "ordinal": ("પોસ.", "પોસ. / કોડ"),
+        "description": ("વર્ણન",),
+        "unit": ("એકમ",),
+        "quantity": ("જથ્થો",),
+        "unit_rate": ("એકમ દર",),
+        "total": ("કુલ",),
+    },
+    "kn": {
+        "ordinal": ("ಪೋಸ್", "ಪೋಸ್ / ಕೋಡ್"),
+        "description": ("ವಿವರಣೆ",),
+        "unit": ("ಘಟಕ",),
+        "quantity": ("ಪ್ರಮಾಣ",),
+        "unit_rate": ("ಘಟಕ ದರ",),
+        "total": ("ಒಟ್ಟು",),
+    },
+    "ml": {
+        "ordinal": ("പോസ്.", "പോസ്. / കോഡ്"),
+        "description": ("വിവരണം",),
+        "unit": ("യൂണിറ്റ്",),
+        "quantity": ("അളവ്",),
+        "unit_rate": ("യൂണിറ്റ് നിരക്ക്",),
+        "total": ("ആകെ",),
+    },
+    "pa": {
+        "ordinal": ("ਪੋਸ.", "ਪੋਸ. / ਕੋਡ"),
+        "description": ("ਵਰਣਨ",),
+        "unit": ("ਯੂਨਿਟ",),
+        "quantity": ("ਮਾਤਰਾ",),
+        "unit_rate": ("ਯੂਨਿਟ ਦਰ",),
+        "total": ("ਕੁੱਲ",),
+    },
     # Urdu "شرح" means rate but Persian "شرح" means description, so Urdu
     # carries only the loanword for rate and the shared spelling is Persian's.
     "ur": {

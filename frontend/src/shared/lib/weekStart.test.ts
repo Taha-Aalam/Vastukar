@@ -35,6 +35,9 @@
  * region-neutral and `en-GB` became an entry a reader picks for themselves,
  * which resolves to itself and so cannot disagree with itself.
  */
+import { readdirSync } from 'node:fs';
+import { resolve } from 'node:path';
+
 import { afterAll, describe, expect, it } from 'vitest';
 import i18next from 'i18next';
 
@@ -72,6 +75,24 @@ const DAY_NAME: Record<number, string> = {
 const CODES = SUPPORTED_LANGUAGES.map((l) => l.code);
 
 /**
+ * Every base language the tree ships a bundle for, whether or not the
+ * allowlist offers it. The expressiveness half of this suite (the Saturday
+ * premise, the no-collapse assertion) measures the helper across everything
+ * the tree ships, because the offered set — English, Hindi, Bengali, Urdu —
+ * answers Sunday for all four and cannot prove a map that can say
+ * "Saturday". The correctness half keeps measuring the offered set, which is
+ * what users get.
+ */
+const SHIPPED_BASE_CODES = [
+  ...new Set(
+    readdirSync(resolve(__dirname, '../../app/locales'))
+      .filter((f) => f.endsWith('.ts'))
+      .map((f) => f.replace(/\.ts$/, '').split('-')[0]!),
+  ),
+];
+const SHIPPED_TAGS = SHIPPED_BASE_CODES.map((code) => LOCALE_MAP[code] ?? code);
+
+/**
  * The locale tag each offered language actually resolves to.
  *
  * Read through `LOCALE_MAP` rather than by calling `getIntlLocale` in a loop,
@@ -89,8 +110,12 @@ describe('week start, over every offered language', () => {
     expect(CODES.length, 'SUPPORTED_LANGUAGES came back empty').toBeGreaterThan(0);
     expect(
       CODES.length,
-      `only ${CODES.length} languages parsed, the platform ships far more`,
-    ).toBeGreaterThanOrEqual(40);
+      `only ${CODES.length} languages parsed, the allowlist offers four`,
+    ).toBeGreaterThanOrEqual(4);
+    expect(
+      SHIPPED_BASE_CODES.length,
+      'the tree ships locale files the census cannot see',
+    ).toBeGreaterThanOrEqual(46);
     expect(new Set(CODES).size, 'duplicate language codes').toBe(CODES.length);
   });
 
@@ -100,7 +125,7 @@ describe('week start, over every offered language', () => {
     // languages on Saturday, the census below would keep passing while
     // testing nothing, and we would never learn the collapse had become
     // harmless. Better to go red and be told.
-    const saturday = CODES.filter((c) => cldrFirstDay(c) === 6);
+    const saturday = SHIPPED_BASE_CODES.filter((c) => cldrFirstDay(c) === 6);
     expect(
       saturday.length,
       'no offered language starts on Saturday any more, so this suite no longer proves anything',
@@ -139,10 +164,10 @@ describe('week start, over every offered language', () => {
     // The collapse this replaced returned only 0 or 1. Reintroducing it in
     // any form, here or at a call site, makes this red without depending on
     // which particular languages ICU puts on Saturday.
-    const distinct = new Set(CODES.map((c) => weekStartsOnFor(c)));
+    const distinct = new Set(SHIPPED_TAGS.map((c) => weekStartsOnFor(c)));
     expect(
       distinct.size,
-      `helper produced only ${distinct.size} distinct week starts across ${CODES.length} languages`,
+      `helper produced only ${distinct.size} distinct week starts across ${SHIPPED_TAGS.length} shipped languages`,
     ).toBeGreaterThan(2);
     expect([...distinct].sort(), 'no language mapped to Saturday').toContain(6);
   });

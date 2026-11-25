@@ -104,6 +104,11 @@ CATEGORIES: dict[str, tuple[str, ...]] = {
     "fi": ("one", "other"),
     "fil": ("one", "other"),
     "fr": ("one", "many", "other"),
+    # The seven languages added with the India rollout. All seven return
+    # exactly ("one", "other") from Intl.PluralRules, which is the same API the
+    # rest of this table was generated from; these rows were produced by the
+    # regeneration snippet in the docstring rather than written by hand.
+    "gu": ("one", "other"),
     "he": ("one", "two", "other"),
     "hi": ("one", "other"),
     "hr": ("one", "few", "other"),
@@ -112,17 +117,23 @@ CATEGORIES: dict[str, tuple[str, ...]] = {
     "it": ("one", "many", "other"),
     "ja": ("other",),
     "kk": ("one", "other"),
+    "kn": ("one", "other"),
     "ko": ("other",),
     "ky": ("one", "other"),
+    "ml": ("one", "other"),
     "mn": ("one", "other"),
+    "mr": ("one", "other"),
     "nl": ("one", "other"),
     "no": ("one", "other"),
+    "pa": ("one", "other"),
     "pl": ("one", "few", "many", "other"),
     "pt": ("one", "many", "other"),
     "pt-BR": ("one", "many", "other"),
     "ro": ("one", "few", "other"),
     "ru": ("one", "few", "many", "other"),
     "sv": ("one", "other"),
+    "ta": ("one", "other"),
+    "te": ("one", "other"),
     "th": ("other",),
     "tr": ("one", "other"),
     # Ukrainian takes the same four categories as Russian, so a counted key

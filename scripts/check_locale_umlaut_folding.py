@@ -95,6 +95,17 @@ _ALLOWED_PAIRS = {
         "orthography; the ss spelling is the German one. Both are correct, and "
         "which to prefer is an audience question, not a defect."
     ),
+    ("kn.ts", "Kostenschaetzung"): (
+        "DIN 276's third cost stage, and the two spellings come from two "
+        "different ENGLISH sources rather than from a fold applied to one: "
+        "cost_control.stage_estimate_hint writes the umlaut (Kostenschätzung) "
+        "and the din-276 playbook's report step writes the folded "
+        "Kostenschaetzung. Both are left in Latin script inside otherwise "
+        "Kannada sentences because they are the standard's own stage names, "
+        "the same reason Kostengruppe and Vorplanung are. Aligning them would "
+        "mean editing an English playbook and its key in the same pass, which "
+        "is out of scope for a locale fix."
+    ),
 }
 
 _WORD = re.compile(r"[0-9A-Za-zÀ-ɏ]+")

@@ -14,7 +14,6 @@ import { existsSync, readFileSync, readdirSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { matchRoutes, type RouteObject } from 'react-router-dom';
 import { describe, expect, it } from 'vitest';
-import { SUPPORTED_LANGUAGES } from '@/app/i18n';
 import { getAllModuleRoutes } from '@/modules/_registry';
 import { PLAYBOOKS } from '@/features/cases/playbooks';
 import { modulesForPlaybook } from '@/features/cases/playbookModules';
@@ -135,11 +134,25 @@ describe('the video catalogue', () => {
     expect(start[0]!.status).toBe('published');
   });
 
-  it('speaks a language the interface offers, the same as its series', () => {
-    const offered = new Set<string>(SUPPORTED_LANGUAGES.map((l) => l.code));
+  it('speaks a language the tree ships a bundle for, the same as its series', () => {
+    // The interface's offered set is the ENABLED_LOCALES allowlist now — four
+    // languages, of which the published channel speaks one — so "offered"
+    // would cut the catalogue down by hand every time the allowlist moved.
+    // The invariant that survives the rollout is disk truth: a video may only
+    // name a language the tree ships a bundle for, because both the reader's
+    // language filter and the English fallback under it resolve into what
+    // i18n can register. A typo'd language tag on a video still goes red.
+    const localesDir = resolve(ROOT, 'frontend/src/app/locales');
+    // Catalogue languages can be regional ('pt-BR'): a document language is
+    // the base language, the same collapse the interface applies.
+    const shipped = new Set(
+      readdirSync(localesDir)
+        .filter((f) => f.endsWith('.ts'))
+        .map((f) => f.replace(/\.ts$/, '').split('-')[0]!),
+    );
     const series = new Map(ACADEMY_CATALOG.series.map((s) => [s.id, s]));
     for (const v of videos) {
-      expect(offered.has(v.language), `${v.id} language ${v.language}`).toBe(true);
+      expect(shipped.has(v.language.split('-')[0]!), `${v.id} language ${v.language}`).toBe(true);
       expect(v.language, v.id).toBe(series.get(v.series)!.language);
     }
   });

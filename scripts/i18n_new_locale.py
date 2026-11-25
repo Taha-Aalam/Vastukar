@@ -343,8 +343,19 @@ def escape(value: str) -> str:
     # renders as a visible backslash-t instead of a tab. Walk the string
     # once so an existing escape pair is recognized and left alone before
     # the general backslash-doubling rule can reach it.
+    #
+    # `\uXXXX` is the same case and was missing from ALREADY_ESCAPED, because
+    # its escape is five characters wide rather than one and cannot be a dict
+    # key: en.ts writes the ellipsis, the degree sign and the arrow as
+    # `\u2026`, `\u00B0F` and `\u2192`, so those reach the batch as one
+    # literal backslash plus the digits, and the general rule below added a
+    # second one. The bundle then carried `\\u2192` and rendered a visible
+    # backslash-u-2192 where the arrow belongs. Handled here, before the
+    # general rule, so every locale assembled from a batch inherits the fix
+    # rather than needing the file repaired afterwards.
     RAW = {"\n": "\\n", "\t": "\\t", "\r": "\\r"}
     ALREADY_ESCAPED = {"n": "\\n", "t": "\\t", "r": "\\r", '"': '\\"'}
+    UNICODE_ESCAPE = re.compile(r"\\u[0-9A-Fa-f]{4}")
     out = []
     i = 0
     while i < len(value):
@@ -355,6 +366,9 @@ def escape(value: str) -> str:
         elif ch == "\\" and value[i + 1 : i + 2] in ALREADY_ESCAPED:
             out.append(ALREADY_ESCAPED[value[i + 1]])
             i += 2
+        elif ch == "\\" and UNICODE_ESCAPE.match(value, i):
+            out.append(value[i : i + 6])
+            i += 6
         elif ch == "\\":
             out.append("\\\\")
             i += 1
@@ -750,6 +764,25 @@ SIBLING_NON_SHAPES: list[tuple[str, str, str]] = [
     ),
 ]
 
+#: escape() cases that have to stay correct. The `\uXXXX` rows are the ones that
+#: matter here: en.ts spells the ellipsis, the degree sign and the arrow as
+#: escapes, so every locale carrying one of those sentences passes them through
+#: the batch as a literal backslash plus four hex digits. escape() did not
+#: recognize that shape, doubled the backslash, and the bundle rendered
+#: `\u2026` as visible text. A narrowed rule would let the general backslash
+#: branch take it again, so it is asserted rather than trusted.
+ESCAPE_CASES: list[tuple[str, str, str]] = [
+    ("unicode escape is left single", "Search\\u2026", "Search\\u2026"),
+    ("leading unicode escape", "\\u2026 and more", "\\u2026 and more"),
+    ("uppercase hex digits survive", "Temp (\\u00B0F)", "Temp (\\u00B0F)"),
+    ("arrow mid-sentence", "a \\u2192 b", "a \\u2192 b"),
+    ("existing newline pair stays canonical", "line\\nbreak", "line\\nbreak"),
+    ("a real control character is escaped", "tab\there", "tab\\there"),
+    ("a quote is escaped", 'say "hi"', 'say \\"hi\\"'),
+    ("a real backslash is still doubled", "C:\\zebra", "C:\\\\zebra"),
+    ("too few hex digits is not a \\uXXXX", "\\u12", "\\\\u12"),
+]
+
 
 def cmd_selftest() -> int:
     """Pin the field arrangements english_sources() has to read English out of.
@@ -771,10 +804,20 @@ def cmd_selftest() -> int:
         if got is not None:
             print(f"FAIL {name}: {key} should not resolve, got {got!r}")
             failures += 1
+    for name, value, want in ESCAPE_CASES:
+        got = escape(value)
+        if got != want:
+            print(f"FAIL escape: {name}: {value!r} -> {got!r}, expected {want!r}")
+            failures += 1
+    checked = len(SIBLING_SHAPES) + len(SIBLING_NON_SHAPES) + len(ESCAPE_CASES)
     if failures:
-        print(f"{failures} of {len(SIBLING_SHAPES) + len(SIBLING_NON_SHAPES)} sibling shape(s) wrong")
+        print(f"{failures} of {checked} selftest case(s) wrong")
         return 1
-    print(f"OK {len(SIBLING_SHAPES)} sibling shape(s) resolve, {len(SIBLING_NON_SHAPES)} correctly do not")
+    print(
+        f"OK {len(SIBLING_SHAPES)} sibling shape(s) resolve, "
+        f"{len(SIBLING_NON_SHAPES)} correctly do not, "
+        f"{len(ESCAPE_CASES)} escape case(s) round-trip"
+    )
     return 0
 
 

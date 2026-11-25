@@ -2255,5 +2255,117 @@
     ],
     "key_count_at_seed": 8,
     "note": "site sensors units and frequency bands, 19.3.0"
+  },
+  {
+    "locale_set": [
+      "ml"
+    ],
+    "key_count_at_seed": 29
+  },
+  {
+    "locale_set": [
+      "kn",
+      "ta"
+    ],
+    "key_count_at_seed": 22
+  },
+  {
+    "locale_set": [
+      "ta"
+    ],
+    "key_count_at_seed": 14
+  },
+  {
+    "locale_set": [
+      "pa"
+    ],
+    "key_count_at_seed": 10
+  },
+  {
+    "locale_set": [
+      "mr"
+    ],
+    "key_count_at_seed": 7
+  },
+  {
+    "locale_set": [
+      "gu",
+      "kn",
+      "ml",
+      "mr",
+      "pa",
+      "ta",
+      "te"
+    ],
+    "key_count_at_seed": 6
+  },
+  {
+    "locale_set": [
+      "ml",
+      "te"
+    ],
+    "key_count_at_seed": 5
+  },
+  {
+    "locale_set": [
+      "kn"
+    ],
+    "key_count_at_seed": 4
+  },
+  {
+    "locale_set": [
+      "te"
+    ],
+    "key_count_at_seed": 4
+  },
+  {
+    "locale_set": [
+      "ta",
+      "te"
+    ],
+    "key_count_at_seed": 4
+  },
+  {
+    "locale_set": [
+      "gu",
+      "mr",
+      "pa",
+      "pt"
+    ],
+    "key_count_at_seed": 3
+  },
+  {
+    "locale_set": [
+      "gu",
+      "mr",
+      "pa",
+      "pt",
+      "pt-BR"
+    ],
+    "key_count_at_seed": 3
+  },
+  {
+    "locale_set": [
+      "nl",
+      "pt",
+      "pt-BR",
+      "ta"
+    ],
+    "key_count_at_seed": 3
+  },
+  {
+    "locale_set": [
+      "ml",
+      "ta"
+    ],
+    "key_count_at_seed": 3
+  },
+  {
+    "locale_set": [
+      "kn",
+      "ml",
+      "ta"
+    ],
+    "key_count_at_seed": 3
   }
 ]

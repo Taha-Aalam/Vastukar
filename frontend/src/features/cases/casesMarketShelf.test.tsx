@@ -224,9 +224,16 @@ beforeEach(() => {
 
 describe("market shelf order", () => {
   it("leads with the reader's own market, marks it, and keeps every other market", () => {
-    renderHub("de");
+    // The test drove German until the India rollout hid de behind
+    // ENABLED_LOCALES: a German interface is no longer a state the product
+    // can be in, so it drives Hindi now — the registry declares India for hi
+    // and the catalogue carries Indian cases. The behaviour pinned here
+    // (lead with the reader's market, mark exactly one tile, keep every
+    // market, rank the rest by size) is unchanged, and the German drive
+    // returns the day de re-enters the allowlist.
+    renderHub("hi");
     const shelf = tiles();
-    expect(marketOf(shelf[0]!)).toBe("DE");
+    expect(marketOf(shelf[0]!)).toBe("IN");
     expect(shelf[0]!.getAttribute("data-home")).toBe("true");
     expect(shelf[0]!.textContent).toContain("Your market");
     // One home market, not one per language the reader might also speak.

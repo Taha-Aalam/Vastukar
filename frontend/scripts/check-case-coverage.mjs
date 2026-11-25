@@ -334,18 +334,26 @@ function parseLocales(files) {
   return out;
 }
 
-/* Which languages the product offers. Parsed from the `code:` field of
- * SUPPORTED_LANGUAGES only: the entries also carry name, flag and country,
- * and scraping every quoted string reports 114 languages instead of 42.
+/* Which languages the product offers. Parsed from `ENABLED_LOCALES`, the
+ * allowlist: a plain string array, one quoted code per line, each optionally
+ * followed by a `// தமிழ் Tamil` comment. Lines are cut at `//` first so a
+ * name in a comment cannot be read as a code. This used to scrape the `code:`
+ * field of the SUPPORTED_LANGUAGES literal, which no longer exists — that
+ * export is a `.filter()` over the allowlist now.
  * Null when the block cannot be found, and the caller stops on null: a
  * fallback to "every file on disk" would gate the locales this tree says
  * not to touch. */
 function offeredLanguages(src) {
-  const start = src.indexOf('export const SUPPORTED_LANGUAGES');
+  const start = src.indexOf('export const ENABLED_LOCALES');
   if (start < 0) return null;
   const end = src.indexOf('\n];', start);
-  const block = src.slice(start, end < 0 ? undefined : end);
-  const codes = [...block.matchAll(/\bcode:\s*'([A-Za-z-]+)'/g)].map((m) => m[1]);
+  if (end < 0) return null;
+  const block = src
+    .slice(start, end)
+    .split('\n')
+    .map((line) => line.split('//')[0])
+    .join('\n');
+  const codes = [...block.matchAll(/'([a-z]{2,3}(?:-[A-Za-z0-9]+)?)'/g)].map((m) => m[1]);
   return codes.length ? codes : null;
 }
 
@@ -497,6 +505,14 @@ function buildManifest(analysis, prior) {
     .sort();
   const manifest = {
     note: MANIFEST_NOTE,
+    // Carried forward, not regenerated. This is a dated, human-written record of
+    // who raised a floor by hand and why, and it is the only place that
+    // decision is written down; everything else here is measured. Building the
+    // manifest from a fixed key list used to drop it silently on every
+    // --update, because nothing reads the field and so nothing noticed. It is
+    // preserved verbatim, and its absence is not an error: a manifest that
+    // never had one is simply a manifest that never needed one.
+    ...(prior && prior.raised_by_hand ? { raised_by_hand: prior.raised_by_hand } : {}),
     updated: new Date().toISOString().slice(0, 10),
     measured_at: analysis.sha,
     playbooks: analysis.playbooks.length,
@@ -796,7 +812,8 @@ function selftest() {
       `cases.${slug}.step.one.why`,
     ];
     const locale = (keys) => `const resource = {\n  "translation": {\n${keys.map((k) => `    "${k}": "v",`).join('\n')}\n  },\n};\n`;
-    const i18nOf = (codes) => `export const SUPPORTED_LANGUAGES = [\n${codes.map((c) => `  { code: '${c}', name: '${c}' },`).join('\n')}\n];\n`;
+    const i18nOf = (codes) =>
+      `export const ENABLED_LOCALES: readonly string[] = [\n${codes.map((c) => `  '${c}', // ${c}`).join('\n')}\n];\n`;
     const write = (name, keys) => writeFileSync(join(locs, `${name}.ts`), locale(keys), 'utf8');
 
     writeFileSync(join(data, 'a.playbook.ts'), playbook('a', true), 'utf8');
@@ -910,12 +927,23 @@ function selftest() {
     const orphan = { ...floor };
     delete orphan.measured_at;
     if (!evaluate(commit, orphan).failures.some((f) => f.kind === 'provenance')) return fail('a floor without measured_at was accepted');
+
+    /* 9. --update must carry raised_by_hand forward. It is the only written
+     *    record of a floor raised by hand, nothing reads it, and the manifest
+     *    is otherwise rebuilt from a fixed key list - so dropping it is silent
+     *    and irreversible in the diff. Asserted by text so a future field
+     *    reshuffle cannot quietly leave it behind. */
+    const recorded = { ...floor, raised_by_hand: 'raised by hand at abc1234 for a reason worth keeping' };
+    const rebuilt = buildManifest(commit, recorded).manifest;
+    if (rebuilt.raised_by_hand !== recorded.raised_by_hand) return fail('--update dropped raised_by_hand');
+    if ('raised_by_hand' in buildManifest(commit, floor).manifest) return fail('--update invented a raised_by_hand that was never recorded');
   } finally {
     rmSync(tmp, { recursive: true, force: true });
   }
   console.log(
     'selftest ok: the check fails on a lost key, a case without strings, lost catalogue text, a regional variant behind its base, ' +
-      'an unrecorded locale and a floor with no measured_at; --update refuses to raise a number and reads the commit, not the disk'
+      'an unrecorded locale and a floor with no measured_at; --update refuses to raise a number, reads the commit rather than the ' +
+      'disk, and carries raised_by_hand forward without inventing one'
   );
   return 0;
 }
