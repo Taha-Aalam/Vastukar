@@ -976,7 +976,7 @@ exports[`Visual Regression - DashboardPage > renders loading/skeleton state 1`] 
           />
         </span>
         <span>
-          Open-source construction ERP
+          The first AI-powered construction ERP built from the ground up for India.
         </span>
         <svg
           class="lucide lucide-external-link text-content-quaternary group-hover/oss:text-oe-blue transition-colors"
