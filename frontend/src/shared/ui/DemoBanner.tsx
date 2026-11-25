@@ -95,31 +95,6 @@ export function DemoBanner() {
         </code>
         <span className="hidden items-center gap-2.5 md:flex">
           <span className="opacity-80">{t('demo_banner.strip_or_download')}</span>
-          <a
-            href="https://vastukar.com/download"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-1 underline underline-offset-2 hover:text-amber-900 dark:hover:text-amber-50"
-          >
-            <Download size={12} className="shrink-0" />
-            Windows
-          </a>
-          <a
-            href="https://vastukar.com/download"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="underline underline-offset-2 hover:text-amber-900 dark:hover:text-amber-50"
-          >
-            macOS
-          </a>
-          <a
-            href="https://vastukar.com/download"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="underline underline-offset-2 hover:text-amber-900 dark:hover:text-amber-50"
-          >
-            Linux
-          </a>
         </span>
         <button
           type="button"

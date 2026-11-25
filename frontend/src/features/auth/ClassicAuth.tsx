@@ -35,16 +35,8 @@ export function ClassicAuthFooter() {
   const operator = useBrandingStore((s) => s.companyName);
   return (
     <footer className="oe-auth-classic-only oe-auth-footer">
-      <a href="https://vastukar.com/docs" target="_blank" rel="noopener noreferrer">
-        {t('auth_classic.docs', { defaultValue: 'Docs' })}
-      </a>
-      <span aria-hidden>·</span>
       <a href="/api/health" target="_blank" rel="noopener noreferrer">
         {t('auth_classic.status', { defaultValue: 'Status' })}
-      </a>
-      <span aria-hidden>·</span>
-      <a href="https://vastukar.com/privacy" target="_blank" rel="noopener noreferrer">
-        {t('auth_classic.privacy', { defaultValue: 'Privacy' })}
       </a>
       {operator && (
         <>

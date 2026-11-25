@@ -1222,52 +1222,6 @@ function DataPackagesTab() {
         </>
       )}
 
-      {/* Community / Build Your Own */}
-      <div className="mt-12">
-        <Card>
-          <div className="relative overflow-hidden">
-            <div className="absolute inset-0 bg-gradient-to-br from-purple-500/[0.05] via-indigo-500/[0.03] to-blue-500/[0.05]" />
-            <div className="relative p-6">
-              <div className="flex items-center gap-2 mb-3">
-                <Plug size={20} className="text-purple-500" />
-                <h2 className="text-lg font-semibold text-content-primary">
-                  {t('modules.community_title', { defaultValue: 'Build Your Own Module' })}
-                </h2>
-              </div>
-              <p className="text-sm text-content-secondary leading-relaxed mb-4">
-                {t('modules.community_desc', { defaultValue: 'Vastukar has a modular plugin architecture. Anyone can create custom modules - cost databases, regional standards, CAD converters, analytics dashboards, integrations with external systems, or any other functionality.' })}
-              </p>
-              <div className="flex flex-wrap gap-3">
-                <a
-                  href="mailto:info@vastukar.com?subject=Vastukar%20Module%20Proposal"
-                  className="inline-flex items-center gap-2 rounded-lg bg-purple-600 px-4 py-2 text-sm font-medium text-white hover:bg-purple-700 transition-colors"
-                >
-                  <Package size={16} />
-                  {t('modules.community_submit_email', { defaultValue: 'Submit Module via Email' })}
-                </a>
-                <a
-                  href="https://github.com/Taha-Aalam/Vastukar/issues/new?title=Module%20Proposal:%20&labels=module-proposal"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 rounded-lg border border-border-light bg-surface-secondary px-4 py-2 text-sm font-medium text-content-primary hover:bg-surface-secondary/80 transition-colors"
-                >
-                  <Info size={16} />
-                  {t('modules.community_submit_github', { defaultValue: 'Propose on GitHub' })}
-                </a>
-                <a
-                  href="https://t.me/vastukar"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 rounded-lg border border-border-light bg-surface-secondary px-4 py-2 text-sm font-medium text-content-primary hover:bg-surface-secondary/80 transition-colors"
-                >
-                  <Globe size={16} />
-                  {t('modules.community_telegram', { defaultValue: 'Discuss in Telegram' })}
-                </a>
-              </div>
-            </div>
-          </div>
-        </Card>
-      </div>
       <ConfirmDialog {...confirmProps} />
     </div>
   );

@@ -10,58 +10,35 @@
 // (an offline desktop install, a blocked host) the frame falls back to a drawn
 // panel, so the card never shows a broken image.
 
-import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { ArrowUpRight, Newspaper } from 'lucide-react';
-
-export const FEATURED_ARTICLE_URL = 'https://vastukar.com/uberization-of-construction/';
-export const FEATURED_ARTICLE_COVER = 'https://vastukar.com/uberization-of-construction/img/og-en.jpg';
+import { Newspaper } from 'lucide-react';
 
 export function FeaturedArticle() {
   const { t } = useTranslation();
-  const [coverFailed, setCoverFailed] = useState(false);
-
   const title = t('sidebar.video_news.title', { defaultValue: 'Uberization of Construction' });
   const subtitle = t('sidebar.video_news.subtitle', {
     defaultValue: 'Open data, transparency, and the idea behind the platform',
   });
-  const read = t('sidebar.video_news.read', { defaultValue: 'Read the article' });
   const eyebrow = t('cases.featured_article.eyebrow', { defaultValue: 'Featured article' });
   const label = t('cases.featured_article.label', {
-    defaultValue: 'Featured article: {{title}}. Read the article, opens in a new tab',
+    defaultValue: 'Featured article: {{title}}.',
     title,
   });
 
   return (
-    <a
-      href={FEATURED_ARTICLE_URL}
-      target="_blank"
-      rel="noopener noreferrer"
+    <div
       data-testid="cases-featured-article"
       aria-label={label}
       className="group flex flex-col overflow-hidden rounded-2xl border border-border-light bg-surface-elevated shadow-sm ring-1 ring-black/5 transition-shadow hover:shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-oe-blue dark:ring-white/5 sm:flex-row"
     >
       <div className="relative aspect-[1200/630] w-full shrink-0 overflow-hidden bg-gradient-to-br from-oe-blue/25 via-oe-blue/10 to-sky-400/10 sm:w-64 md:w-80">
-        {coverFailed ? (
-          <div aria-hidden="true" className="absolute inset-0 flex items-center justify-center">
-            <div className="absolute -left-6 -top-8 h-32 w-32 rounded-full bg-oe-blue/20 blur-2xl" />
-            <div className="absolute -bottom-10 right-0 h-32 w-32 rounded-full bg-sky-400/20 blur-2xl" />
-            <span className="relative flex h-14 w-14 items-center justify-center rounded-2xl bg-surface-primary/80 text-oe-blue shadow-sm ring-1 ring-oe-blue/20 dark:text-sky-300">
-              <Newspaper size={26} strokeWidth={1.8} />
-            </span>
-          </div>
-        ) : (
-          <img
-            src={FEATURED_ARTICLE_COVER}
-            alt=""
-            width={1200}
-            height={630}
-            decoding="async"
-            referrerPolicy="no-referrer"
-            onError={() => setCoverFailed(true)}
-            className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-[1.02] motion-reduce:transition-none"
-          />
-        )}
+        <div aria-hidden="true" className="absolute inset-0 flex items-center justify-center">
+          <div className="absolute -left-6 -top-8 h-32 w-32 rounded-full bg-oe-blue/20 blur-2xl" />
+          <div className="absolute -bottom-10 right-0 h-32 w-32 rounded-full bg-sky-400/20 blur-2xl" />
+          <span className="relative flex h-14 w-14 items-center justify-center rounded-2xl bg-surface-primary/80 text-oe-blue shadow-sm ring-1 ring-oe-blue/20 dark:text-sky-300">
+            <Newspaper size={26} strokeWidth={1.8} />
+          </span>
+        </div>
       </div>
       <div className="flex min-w-0 flex-1 flex-col justify-center gap-1.5 p-4 sm:p-5">
         <span className="inline-flex items-center gap-1.5 text-2xs font-semibold uppercase tracking-wide text-oe-blue dark:text-sky-300">
@@ -70,11 +47,7 @@ export function FeaturedArticle() {
         </span>
         <span className="text-lg font-semibold leading-snug tracking-tight text-content-primary">{title}</span>
         <span className="text-sm leading-relaxed text-content-secondary">{subtitle}</span>
-        <span className="mt-1 inline-flex items-center gap-1 text-sm font-semibold text-oe-blue group-hover:underline dark:text-sky-300">
-          {read}
-          <ArrowUpRight size={15} className="shrink-0" aria-hidden="true" />
-        </span>
       </div>
-    </a>
+    </div>
   );
 }

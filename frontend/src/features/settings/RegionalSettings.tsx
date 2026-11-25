@@ -776,6 +776,26 @@ export function RegionalSettings({ animationDelay = '0ms' }: { animationDelay?: 
               <DollarSign size={14} className="text-content-tertiary" />
               {t('settings.currency', { defaultValue: 'Currency' })}
             </label>
+            {/* Quick switch for the two default currencies. The full picker
+                below still handles every other ISO code and custom values. */}
+            <div className="mb-2 flex gap-2" role="group" aria-label={t('settings.currency', { defaultValue: 'Currency' })}>
+              {(['INR', 'USD'] as const).map((code) => (
+                <button
+                  key={code}
+                  type="button"
+                  onClick={() => handleChange('currency_code', code)}
+                  aria-pressed={currency === code}
+                  className={clsx(
+                    'rounded-lg border px-3 py-1.5 text-xs font-medium transition-colors',
+                    currency === code
+                      ? 'border-oe-blue bg-oe-blue/10 text-oe-blue'
+                      : 'border-border text-content-secondary hover:bg-surface-secondary',
+                  )}
+                >
+                  {code === 'INR' ? '₹ INR' : '$ USD'}
+                </button>
+              ))}
+            </div>
             <SearchableSelect
               value={showCustomCurrency ? CUSTOM_CURRENCY_SENTINEL : currency}
               options={currencyOptions}

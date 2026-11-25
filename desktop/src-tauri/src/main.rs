@@ -1060,7 +1060,7 @@ const LIVENESS_SILENT_STRIKES: u32 = 12;
 const LOCAL_BACKEND_LOST_DETAIL: &str =
     "Nothing is listening on the local address any more, so this window can no longer load or \
 save anything. Please close it and start Vastukar again. If this keeps happening, \
-send the log file to info@vastukar.com. Installation help: https://vastukar.com/contact";
+send the log file to info@vastukar.com.";
 
 /// What to say when a server somewhere else has gone.
 ///
@@ -2252,7 +2252,7 @@ fn new_shutdown_token() -> String {
 /// simply did not say it.
 fn startup_timeout_message(stage: Option<&(String, String)>, kind: &TimeoutKind) -> String {
     let tail = "Please close this window and try again. If the problem persists, please send the \
-log file to info@vastukar.com. Installation help: https://vastukar.com/contact";
+log file to info@vastukar.com.";
 
     // Said before anything is asked about the stage, because this is the one
     // case where there cannot be a stage: nothing was ever reported. It is a
@@ -4277,7 +4277,7 @@ before it finished starting.",
                             // (the splash shows an Open-log button).
                             let detail = format!(
                                 "{core} Open the log file for the full details, and if \
-this keeps happening send it to info@vastukar.com. Installation help: https://vastukar.com/contact"
+this keeps happening send it to info@vastukar.com."
                             );
                             // The database step was set active before the
                             // process was spawned, and bootStage back-fills
@@ -4331,7 +4331,7 @@ this keeps happening send it to info@vastukar.com. Installation help: https://va
                                     "The backend exited unexpectedly (exit code {:?}), so \
 this window can no longer load or save anything. Please close it and start \
 Vastukar again. If this keeps happening, send the log file to \
-info@vastukar.com. Installation help: https://vastukar.com/contact",
+info@vastukar.com.",
                                     payload.code
                                 ),
                             );
@@ -4358,7 +4358,7 @@ info@vastukar.com. Installation help: https://vastukar.com/contact",
                     "The connection to the application backend was lost",
                     "The launcher can no longer see the backend it started, so this \
 window may stop working. Please close it and start Vastukar again. If this keeps \
-happening, send the log file to info@vastukar.com. Installation help: https://vastukar.com/contact",
+happening, send the log file to info@vastukar.com.",
                 );
             }
         });
@@ -4449,7 +4449,7 @@ happening, send the log file to info@vastukar.com. Installation help: https://va
                         &format!(
                             "The backend started, but {reason}, so the app cannot open. \
 Please close this window and try again. If the problem persists, please send the log file to \
-info@vastukar.com. Installation help: https://vastukar.com/contact"
+info@vastukar.com."
                         ),
                     );
                 }
@@ -5152,7 +5152,7 @@ fn show_startup_failure_dialog(message: &str) {
         .unwrap_or_default();
     let body = format!(
         "Vastukar could not start.\n\n{message}{log_hint}\n\n\
-If this keeps happening, please send the log file to info@vastukar.com. Installation help: https://vastukar.com/contact"
+If this keeps happening, please send the log file to info@vastukar.com."
     );
 
     let to_wide = |s: &str| -> Vec<u16> {
@@ -5976,11 +5976,8 @@ Content-Length: {}\r\nConnection: close\r\n\r\n{}",
             message.contains("info@vastukar.com"),
             "got: {message}"
         );
-        assert!(
-            message.contains("https://vastukar.com/contact"),
-            "got: {message}"
-        );
-        assert!(LOCAL_BACKEND_LOST_DETAIL.contains("https://vastukar.com/contact"));
+        assert!(!message.contains("Installation help:"), "got: {message}");
+        assert!(!LOCAL_BACKEND_LOST_DETAIL.contains("Installation help:"));
     }
 
     #[test]

@@ -1120,7 +1120,6 @@ const resource = {
     "branding.title": "Customize branding",
     "about.svc_workshop_desc": "Hands-on sessions: estimating, BIM-to-bid schedule, AI takeoff, GAEB pipelines. Recorded for your team library.",
     "about.docs_pop_bim": "Import BIM (RVT/IFC) → Bid Schedule",
-    "about.license_commercial_short": "Need a commercial license (without AGPL obligations) or an enterprise SLA?",
     "ai.apply_cwicr_rates_hint": "Save {{count}} line(s) with the regional cost-database rate ({{region}}) instead of the AI estimate. The catalog code is recorded on each position.",
     "ai.tab_excel": "Spreadsheet with Bid Schedule data",
     "ai.tab_pdf": "Bid schedule sheets, specs, tender docs",

@@ -14,7 +14,6 @@ import {
   Info,
   Lock,
   Rocket,
-  Server,
   Users,
   type LucideIcon,
 } from 'lucide-react';
@@ -24,8 +23,6 @@ import { useDemoProjects } from '@/shared/ui/DemoSwitcherBar';
 import { DEMO_PROFILES } from '@/shared/lib/demoProfiles';
 import { fmtList, fmtNumber } from '@/shared/lib/formatters';
 import { MODULE_EXPLANATIONS } from './moduleExplanations';
-
-const PRICING_URL = 'https://vastukar.com/pricing';
 
 interface Card {
   id: string;
@@ -115,17 +112,6 @@ export function DemoQuickStart() {
       }),
       action: validate,
       to: '/validation',
-    },
-    {
-      id: 'install',
-      icon: Server,
-      title: t('howto.demo.install_title', { defaultValue: 'Get your own install' }),
-      body: t('howto.demo.install_body', {
-        defaultValue: 'Self-host it free under AGPL-3.0, or take a commercial licence with support.',
-      }),
-      action: t('howto.demo.action_pricing', { defaultValue: 'See pricing' }),
-      to: PRICING_URL,
-      external: true,
     },
   ];
 

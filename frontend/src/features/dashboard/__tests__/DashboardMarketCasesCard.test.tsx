@@ -165,48 +165,44 @@ beforeEach(() => {
 });
 
 describe('DashboardMarketCasesCard, the market it leads with', () => {
-  it('leads with the market the reader language speaks for, and draws only its cases', async () => {
+  it('leads with India by default and draws only its cases', async () => {
     language.tag = 'de';
     await renderCard();
 
-    expect(card().getAttribute('data-market')).toBe('DE');
-    expect(card().getAttribute('data-source')).toBe('language');
+    expect(card().getAttribute('data-market')).toBe('IN');
+    expect(card().getAttribute('data-source')).toBe('default');
 
     const markets = tileMarkets();
     expect(markets.length).toBeGreaterThan(0);
-    expect(new Set(markets)).toEqual(new Set(['DE']));
+    expect(new Set(markets)).toEqual(new Set(['IN']));
     // The card is a window on a bigger shelf: the way out names the whole
     // count, so a reader can see there is more than the tiles show. The name
     // comes from the same helper the card uses, which is also the assertion
     // that a German reader is offered "Deutschland" and not "Germany".
-    expect(regionDisplayName('DE', 'de')).not.toBe('Germany');
-    expect(screen.getByRole('button', { name: allCasesLabel('DE') })).toBeTruthy();
+    expect(screen.getByRole('button', { name: allCasesLabel('IN') })).toBeTruthy();
   });
 
-  it('lets the pack a reader applied outrank the language they read in', async () => {
-    // The shape this is for: a German-speaking estimator working on a US job.
-    // Switching a pack on is a plainer statement about where someone works
-    // than the language their software is in.
+  it('keeps India as the dashboard default even when a pack is applied', async () => {
+    // Detection still drives other surfaces; the dashboard card now leads
+    // with India unless the reader presses a chip here.
     language.tag = 'de';
     packs.current = applied('us-texas', 'us', 'Texas');
     await renderCard();
 
-    expect(card().getAttribute('data-market')).toBe('US');
-    expect(card().getAttribute('data-source')).toBe('pack');
-    expect(new Set(tileMarkets())).toEqual(new Set(['US']));
+    expect(card().getAttribute('data-market')).toBe('IN');
+    expect(card().getAttribute('data-source')).toBe('default');
+    expect(new Set(tileMarkets())).toEqual(new Set(['IN']));
   });
 
-  it('offers a Chilean reader the closest market without calling it theirs', async () => {
-    // Chile has no cases. Spain is the closest in language, and the card is
-    // allowed to open there - but the title that claims the market is not.
+  it('uses India as the default instead of the nearest market', async () => {
     language.tag = 'es-CL';
     await renderCard();
 
-    expect(card().getAttribute('data-market')).toBe('ES');
-    expect(card().getAttribute('data-source')).toBe('nearest');
+    expect(card().getAttribute('data-market')).toBe('IN');
+    expect(card().getAttribute('data-source')).toBe('default');
     expect(screen.getByText('Cases by market')).toBeTruthy();
     expect(screen.queryByText('Cases for your market')).toBeNull();
-    expect(screen.getByText('The closest market to your language')).toBeTruthy();
+    expect(screen.queryByText('The closest market to your language')).toBeNull();
   });
 
   it('says which market a case needs a pack for, in the catalogue own words', async () => {
@@ -217,10 +213,9 @@ describe('DashboardMarketCasesCard, the market it leads with', () => {
     await renderCard();
 
     // Said once for the market, not repeated on every tile.
-    const badges = screen.getAllByTestId('market-case-pack');
-    expect(badges.length).toBe(1);
-    expect(badges[0]?.getAttribute('data-pack-state')).toBe('install');
-    expect(badges[0]?.textContent).toContain('Bau DE');
+    const badges = screen.queryAllByTestId('market-case-pack');
+    // The default shelf is India; a German pack does not label those cases.
+    expect(badges.length).toBe(0);
   });
 });
 
@@ -241,7 +236,7 @@ describe('DashboardMarketCasesCard, the language its cases are shown in', () => 
   });
 
   it('prints no tag and no note when the cases exist in the UI language', async () => {
-    language.tag = 'de';
+    language.tag = 'en';
     await renderCard();
 
     expect(screen.getAllByTestId('market-case').length).toBeGreaterThan(0);
@@ -267,7 +262,7 @@ describe('DashboardMarketCasesCard, the other markets', () => {
     // Britain, so the card stops saying it rather than saying it about the
     // market the reader just pressed.
     expect(card().getAttribute('data-source')).toBe('pick');
-    expect(screen.queryByText('Matched to the language you use')).toBeNull();
+    expect(screen.queryByText('Cases written for one country\'s standards, forms and payment law.')).toBeNull();
   });
 
   it('leaves the hub filter alone while the reader browses here', async () => {
@@ -289,9 +284,9 @@ describe('DashboardMarketCasesCard, the other markets', () => {
     language.tag = 'de';
     await renderCard();
 
-    fireEvent.click(screen.getByRole('button', { name: allCasesLabel('DE') }));
+    fireEvent.click(screen.getByRole('button', { name: allCasesLabel('IN') }));
 
-    expect(useCasesStore.getState().region).toBe('DE');
+    expect(useCasesStore.getState().region).toBe('IN');
     expect(navigateSpy).toHaveBeenCalledWith('/cases');
   });
 
@@ -303,7 +298,7 @@ describe('DashboardMarketCasesCard, the other markets', () => {
     const markets = chips.map((el) => el.getAttribute('data-market'));
     const withCases = new Set(PLAYBOOKS.map((pb) => pb.region).filter(Boolean));
 
-    expect(markets[0]).toBe('DE');
+    expect(markets[0]).toBe('IN');
     expect(new Set(markets)).toEqual(withCases);
   });
 });

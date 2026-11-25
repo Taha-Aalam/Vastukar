@@ -18,14 +18,11 @@
 import { useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useQueryClient } from '@tanstack/react-query';
-import { Download, Info } from 'lucide-react';
+import { Info } from 'lucide-react';
 import clsx from 'clsx';
 
 import { useFocusTrap } from '@/shared/hooks/useFocusTrap';
 import { useDemoReadOnlyStore } from '@/stores/useDemoReadOnlyStore';
-
-/** Where the real builds live. Already the download link used elsewhere in the app. */
-const DOWNLOAD_URL = 'https://vastukar.com/download';
 
 /**
  * The install options, in the order a visitor is likely to want them.
@@ -186,21 +183,6 @@ export function DemoReadOnlyDialog() {
           >
             {t('demo_read_only.keep_looking', { defaultValue: 'Keep looking around' })}
           </button>
-          <a
-            href={DOWNLOAD_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            data-testid="demo-read-only-download"
-            className={clsx(
-              'flex-1 inline-flex items-center justify-center gap-2 rounded-lg px-4 py-2.5',
-              'text-sm font-medium transition-all',
-              'bg-oe-blue text-white hover:bg-oe-blue-hover active:bg-oe-blue-active',
-              'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-oe-blue focus-visible:ring-offset-2',
-            )}
-          >
-            <Download size={16} />
-            {t('demo_read_only.get_it', { defaultValue: 'Get it for your machine' })}
-          </a>
         </div>
       </div>
     </div>

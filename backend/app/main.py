@@ -2002,7 +2002,6 @@ def create_app() -> FastAPI:
         description="Open-source modular platform for construction cost estimation",
         contact={
             "name": "Vastukar",
-            "url": "https://vastukar.com",
             "email": "info@vastukar.com",
         },
         license_info={
@@ -5368,7 +5367,7 @@ def create_app() -> FastAPI:
             )
             if _cli_data_dir:
                 logger.info("Data directory: %s", _cli_data_dir)
-            logger.info("Press Ctrl+C to stop. Docs: https://vastukar.com/docs")
+            logger.info("Press Ctrl+C to stop.")
         else:
             logger.info("Application started successfully")
 

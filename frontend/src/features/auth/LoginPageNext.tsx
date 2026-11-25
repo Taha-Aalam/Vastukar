@@ -579,7 +579,6 @@ export function LoginPageNext() {
               Artem Boiko
             </a>{' '}
             · Vastukar
-            · <a href="mailto:info@vastukar.com" className="hover:text-content-secondary transition-colors">info@vastukar.com</a>
           </div>
         </div>
 

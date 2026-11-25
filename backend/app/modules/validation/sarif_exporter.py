@@ -43,7 +43,6 @@ SARIF_VERSION = "2.1.0"
 SARIF_SCHEMA = "https://json.schemastore.org/sarif-2.1.0.json"
 
 TOOL_NAME = "Vastukar"
-TOOL_INFORMATION_URI = "https://vastukar.com/openconstructionerp"
 TOOL_ORG = "Vastukar"
 
 
@@ -303,7 +302,6 @@ def report_to_sarif(report: Any) -> dict[str, Any]:
             # Authorship pin - SARIF properties survive even when tool.driver
             # values get rebranded by a downstream consumer / fork.
             "engineSignature": "DDC-CWICR-OE-2026",
-            "engineUri": "https://vastukar.com",
         },
     }
 
@@ -313,7 +311,6 @@ def report_to_sarif(report: Any) -> dict[str, Any]:
                 "name": TOOL_NAME,
                 "organization": TOOL_ORG,
                 "version": _get_tool_version(),
-                "informationUri": TOOL_INFORMATION_URI,
                 "rules": list(rules_by_id.values()),
             }
         },

@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { useNavigate, useLocation, useMatch } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { openAiPanel } from '@/shared/lib/actions/askAi';
-import { Search, ChevronDown, ChevronRight, LogOut, User, Settings, Menu, MessageSquarePlus, FolderOpen, CheckCircle2, XCircle, Bug, BookOpen, Loader2, Upload, HelpCircle, GraduationCap, Mail, ExternalLink, Github, Sun, Moon, Monitor, Globe, Sparkles, Clock } from 'lucide-react';
+import { Search, ChevronDown, ChevronRight, LogOut, User, Settings, Menu, MessageSquarePlus, FolderOpen, CheckCircle2, XCircle, Bug, Loader2, Upload, HelpCircle, GraduationCap, Mail, ExternalLink, Github, Sun, Moon, Monitor, Globe, Sparkles, Clock } from 'lucide-react';
 import clsx from 'clsx';
 import { SUPPORTED_LANGUAGES, getLanguageByCode, changeLanguage } from '../i18n';
 import { sortLanguagesByName } from '@/shared/lib/languageOrder';
@@ -892,7 +892,7 @@ export function BugReportMenu() {
       icon: MessageSquarePlus,
       iconColor: 'text-emerald-500',
       title: t('bug.channel_form', { defaultValue: 'Web feedback form' }),
-      desc: t('bug.channel_form_desc', { defaultValue: 'Richer fields and screenshots on vastukar.com.' }),
+      desc: t('bug.channel_form_desc', { defaultValue: 'Richer fields and screenshots.' }),
       onClick: handleFeedbackForm,
       requiresDescription: false,
     },
@@ -1173,20 +1173,6 @@ function HelpMenu() {
           </button>
           <div className="my-1 border-t border-border-light" role="separator" />
 
-          {/* External resources. Documentation points at the official docs
-              site so users land on the maintained guides, not the raw repo. */}
-          <a
-            role="menuitem"
-            href="https://vastukar.com/docs"
-            target="_blank"
-            rel="noopener noreferrer"
-            onClick={() => setOpen(false)}
-            className="flex w-full items-center gap-2.5 px-3 py-2 text-sm text-content-primary hover:bg-surface-secondary transition-colors"
-          >
-            <BookOpen size={14} className="text-content-tertiary shrink-0" />
-            <span className="flex-1">{t('nav.docs', { defaultValue: 'Documentation' })}</span>
-            <ExternalLink size={11} className="text-content-quaternary shrink-0" />
-          </a>
           <a
             role="menuitem"
             href="https://github.com/Taha-Aalam/Vastukar"

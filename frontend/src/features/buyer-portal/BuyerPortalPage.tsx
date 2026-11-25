@@ -1914,14 +1914,6 @@ function ShellWrapper({
               info@vastukar.com
             </a>
           </span>
-          <a
-            href="https://www.gnu.org/licenses/agpl-3.0.html"
-            target="_blank"
-            rel="noreferrer"
-            className="hover:underline"
-          >
-            AGPL-3.0
-          </a>
         </div>
       </footer>
     </div>

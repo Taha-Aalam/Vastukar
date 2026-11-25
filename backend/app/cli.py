@@ -184,12 +184,9 @@ DEFAULT_HOST = "127.0.0.1"
 DEFAULT_PORT = 8080
 MIN_PYTHON = (3, 12)
 
-DOCS_URL = "https://vastukar.com/docs"
 # Install and startup messages with what each means and what to do, kept
 # in step with docs/INSTALL_TROUBLESHOOTING.md.
-TROUBLESHOOTING_URL = "https://vastukar.com/install-help"
 ISSUES_URL = "https://github.com/Taha-Aalam/Vastukar/issues"
-COMMUNITY_URL = "https://t.me/vastukar"
 GITHUB_URL = "https://github.com/Taha-Aalam/Vastukar"
 
 logger = logging.getLogger("openestimate.cli")
@@ -365,7 +362,6 @@ def print_startup_banner(
         f"  {bar}  {_dim('or, anywhere'.ljust(11))} {_amber('python -m openconstructionerp')}  {_dim('(works without PATH)')}"
     )
     print(f"  {bar}  {_dim('Data folder'.ljust(11))} {data_dir}")
-    print(f"  {bar}  {_dim('Need help'.ljust(11))} {DOCS_URL}")
     print()
 
 
@@ -432,7 +428,6 @@ def _setup_env(data_dir: Path, host: str, port: int) -> None:
                     + "). If it keeps happening, send those logs to info@vastukar.com."
                 )
             )
-            print(_dim(f"  Installation help: {TROUBLESHOOTING_URL}"))
             raise SystemExit(1)
 
     os.environ.setdefault("VECTOR_BACKEND", "lancedb")
@@ -1300,7 +1295,6 @@ def _run_fatal_preflight(data_dir: Path, host: str, port: int) -> None:
         c.print()
     print()
     print(_dim("Run 'openconstructionerp doctor' for full diagnostics."))
-    print(_dim(f"Troubleshooting: {TROUBLESHOOTING_URL}"))
     sys.exit(1)
 
 
@@ -1358,7 +1352,6 @@ def cmd_serve(args: argparse.Namespace) -> None:
         version = settings.app_version
     except Exception as exc:
         print(_red(f"Failed to load settings: {exc}"))
-        print(_dim(f"Troubleshooting: {TROUBLESHOOTING_URL}"))
         sys.exit(1)
 
     # Print the banner BEFORE uvicorn starts so the user sees it immediately
@@ -1479,7 +1472,6 @@ def cmd_serve(args: argparse.Namespace) -> None:
                     f"  {arrow} Port {args.port} is already in use. Try: openconstructionerp serve --port {args.port + 1}"
                 )
             )
-        print(_dim(f"  {arrow} Installation help: {TROUBLESHOOTING_URL}"))
         sys.exit(1)
     except Exception as exc:  # noqa: BLE001
         _emit_server_fail(exc)
@@ -1487,7 +1479,6 @@ def cmd_serve(args: argparse.Namespace) -> None:
         print()
         print(_red(_bold("Unexpected startup error:")) + f" {type(exc).__name__}: {exc}")
         print(_dim(f"  {arrow} Run 'openconstructionerp doctor' to diagnose."))
-        print(_dim(f"  {arrow} Installation help: {TROUBLESHOOTING_URL}"))
         print(_dim(f"  {arrow} Report this at: {ISSUES_URL}"))
         sys.exit(1)
 
@@ -1740,7 +1731,6 @@ def cmd_doctor(args: argparse.Namespace) -> None:
         print(_red(_bold(f"  {len(errors)} error(s)")) + _dim(f", {len(warns)} warning(s)"))
         print()
         print(_dim("Fix the errors above, then run 'openconstructionerp serve'."))
-        print(_dim(f"Docs: {TROUBLESHOOTING_URL}"))
         sys.exit(1)
     elif warns:
         print(
@@ -1771,7 +1761,6 @@ def cmd_version(_args: argparse.Namespace) -> None:
     print(f"Installed at: {Path(__file__).resolve().parent.parent}")
     print(f"Interpreter: {sys.executable}")
     print(f"Data directory: {DEFAULT_DATA_DIR}")
-    print(f"Docs: {DOCS_URL}")
 
 
 def cmd_upgrade(args: argparse.Namespace) -> None:
@@ -1958,10 +1947,8 @@ def print_welcome(*, next_command_hint: bool = True) -> None:
     print()
     print(f"  {_dim('Advanced:')}  openconstructionerp serve {_dim('|')} init-db {_dim('|')} doctor {_dim('|')} --help")
     print()
-    print(f"  {_bold('Help and community')}")
-    print(f"    {_dim('Docs'.ljust(10))} {DOCS_URL}")
+    print(f"  {_bold('Help')}")
     print(f"    {_dim('GitHub'.ljust(10))} {GITHUB_URL}")
-    print(f"    {_dim('Community'.ljust(10))} {COMMUNITY_URL} {_dim('(Telegram)')}")
     print()
     if next_command_hint:
         print(
