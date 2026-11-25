@@ -11834,7 +11834,7 @@ const resource = {
     "login.hero_desc": "Profesyonel metraj, 4B iş programı, 5B maliyet modeli ve ihale - hepsi tek bir AI destekli platformda.",
     "login.hero_highlight": "yeniden tasarlandı",
     "login.hero_title": "İnşaat maliyet tahmini,",
-    "dashboard.open_source_badge": "Hindistan için sıfırdan oluşturulan ilk yapay zeka destekli inşaat ERP'si.",
+    "dashboard.open_source_badge": "Hindistan için sıfırdan oluşturulan ilk yapay zeka destekli inşaat ERP’si.",
     "login.learn_more": "Platform hakkında daha fazla bilgi edinin",
     "login.privacy": "Tüm veriler bilgisayarınızda yerel olarak işlenir ve saklanır. Hiçbir şey harici sunuculara gönderilmez. Verileriniz her zaman size aittir.",
     "login.privacy_ai": "Yerleşik yapay zeka araçlarını kullanırsanız, yapılandırdığınız yapay zeka sağlayıcısına (OpenAI, Anthropic vb.) bazı veriler gönderilebilir. Hangi sağlayıcıyı kullanacağınızı ve hangi verileri paylaşacağınızı siz kontrol edersiniz.",
@@ -19396,7 +19396,7 @@ const resource = {
     "propdev.phone": "Telefon",
     // --- /propdev ---
     // --- LoginPage i18n backfill ---
-    "login.hero_tagline": "Hindistan için sıfırdan oluşturulan ilk yapay zeka destekli inşaat ERP'si.",
+    "login.hero_tagline": "Hindistan için sıfırdan oluşturulan ilk yapay zeka destekli inşaat ERP’si.",
     "login.stat_costs": "maliyet kalemi",
     "login.stat_langs": "dil",
     "login.stat_regions": "bölge",
@@ -27369,7 +27369,7 @@ const resource = {
     "about.svc_workshop_desc": "Uygulamalı oturumlar: tahmin, BIM-to-BOQ, AI çıkışı, GAEB boru hatları. Ekip kitaplığınız için kaydedildi.",
     "about.svc_workshop_tagline": "1-3 GÜN · TESİS ÜZERİNDE VEYA UZAK",
     "about.svc_workshop_title": "Çalıştaylar",
-    "about.tagline": "Hindistan için sıfırdan oluşturulan ilk yapay zeka destekli inşaat ERP'si.",
+    "about.tagline": "Hindistan için sıfırdan oluşturulan ilk yapay zeka destekli inşaat ERP’si.",
     "about.ddc_flagship_label": "Amiral gemisi ürünleri",
     "accommodation.assign.checkout_before_checkin": "Çıkış, giriş den sonra olmalıdır.",
     "accommodation.assign.conflict_hint": "Check-in veya check-out'u ayarlayın böylece konaklama artık çakışmaz, ardından rezervasyonu oluşturun.",
