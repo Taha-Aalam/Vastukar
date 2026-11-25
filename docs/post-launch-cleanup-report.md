@@ -372,3 +372,94 @@ occurrences of the un-humanized draft variant using an em dash after
 English bundle keys, the three inline defaults, two meta descriptions, this
 report and DOWNSTREAM.md — the translated bundles carry in-language values).
 All 19 i18n/locale guards pass on this tree.
+
+
+## Follow-up Part B — backend-postgres timeout diagnosis
+
+Verified facts: on head `58a341b3` the `backend-postgres` job in run
+45620318104 (job `139260087028`) failed after 56m19s (14:03:38Z → 14:59:57Z);
+a same-head job re-run also hit the timeout. The same lane on main is green on
+the last three CI (PostgreSQL) runs, including `45592439680`
+(2026-11-25, success); PR #17 is based on that main (`c334a7c0`). The two
+cancelled ci-postgres runs on this branch were superseded-head cancellations
+and carry no verdict.
+
+### Named test and first error lines
+
+The lane command in `.github/workflows/ci-postgres.yml` is:
+
+    pytest tests/pg -q -rs -p no:cacheprovider --timeout=300 --timeout-method=thread
+
+The `-q` dots hide the node id, but the captured log names the test via its
+pytest temp directory:
+
+    log:673  ##[group]Run pytest tests/pg -q -rs -p no:cacheprovider --timeout=300 --timeout-method=thread
+    log:698  ............................................+++++++++++++++++++++++++++++++++++ Timeout ++++++++++++++++++++++++++++++++++++
+    log:711  /tmp/pytest-of-runner/pytest-1/test_every_demo_project_gets_p0/bim/...
+
+The truncated temp-dir name expands to
+`tests/pg/test_demo_projects_get_permits_and_design_data.py::test_every_demo_project_gets_permits_and_design_rows`.
+That test carries `@pytest.mark.timeout(1500)`, which overrides the lane's
+300-second default — the job timed out at the 1500-second marker, not at 300.
+
+The MainThread stack at the timeout is in demo-seed code, not in any file
+this PR touched:
+
+    File ".../backend/app/modules/plant_register/seed.py", line 726, in _order_before_the_gate
+      await svc.update_item(project_id, item_id, ...)
+    File ".../backend/app/modules/plant_register/service.py", line 308, in catalogue
+      return await resolve_catalogue(...)
+    File ".../backend/app/modules/plant_register/repository.py", line 51, in settings
+      return (await self.session.execute(stmt)).scalar_one_or_none()
+    .../asyncpg/connresource.py, line 20, in _check
+    .../asyncpg/prepared_stmt.py, line 275, in _check_open
+
+i.e. an asyncpg prepared-statement / connection wait during plant-register
+demo enrichment.
+
+### Local reproduction on this head and on main
+
+Exact command (worktree backend on `PYTHONPATH`, embedded PostgreSQL via
+`OE_TEST_DB=pg`), named test file first:
+
+    OE_TEST_DB=pg PYTHONPATH=<worktree>/backend python -m pytest \
+      tests/pg/test_demo_projects_get_permits_and_design_data.py \
+      -q -rs -p no:cacheprovider --timeout=300 --timeout-method=thread
+
+| Tree | Run | Result | pytest time | wall time |
+|---|---|---|---:|---:|
+| PR head `58a341b3` | first | 1 passed | 1345.73s (22:25) | 1355.41s |
+| PR head `58a341b3` | same-head re-run | 1 passed | 1199.43s (19:59) | 1208.75s |
+| main `c334a7c0` (detached worktree) | baseline | 1 passed | 1197.34s (19:57) | 1206.68s |
+
+All three completed below the test's 1500s marker; the second same-head run
+is within two seconds of main. The full `tests/pg` lane was not re-run
+locally: it takes well over an hour in CI, and the named test plus its file
+is the timeout site.
+
+### Causal chain and classification
+
+`git diff c334a7c0..58a341b3 --name-only -- backend` lists 13 files: CLI help
+text, `demo_read_only.py` display copy, `main.py` OpenAPI contact URL and
+startup log, and ten exporter/PDF/SARIF metadata strings. **Zero** files in
+`backend/app/modules/plant_register/`, `backend/app/core/demo_enrichment.py`,
+`backend/app/core/demo_projects.py` or `backend/tests/pg/` were changed by
+this PR. The candidate areas are ruled out as follows:
+
+- currency/market defaults: frontend stores/components only;
+- removed locale keys: frontend bundles only (backend has its own 38 JSON
+  catalogues, untouched);
+- removed licensing/community surfaces: frontend components, CLI text and
+  OpenAPI display metadata — no demo seed path;
+- demo-domain display removals: contact/log/metadata strings only — no
+  seeded value or identity changed.
+
+Classification: **(iv) flake/environment**, evidence-gated — not (i) stale
+encoding, not (ii) real regression, not (v) pre-existing on main. The evidence
+is the passing same-head test twice with timings (including a re-run within
+2s of main), the stack in an unchanged asyncpg lock-wait path, and green main
+runs of the same lane. The CI timeout is a runner-specific slowdown/hang near
+the test's 1500s ceiling; "timeout" alone is not a classification. Per the
+instruction for class (iv), no code was changed for Part B: raising the
+timeout or deleting the test would mask rather than fix a cause, and this PR
+has no causal change to fix.
