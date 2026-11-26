@@ -195,10 +195,7 @@ describe('a refused write on the public demonstration', () => {
     expect(screen.getByText(/^Python:/)).toBeInTheDocument();
     expect(screen.getByText(/^From source:/)).toBeInTheDocument();
 
-    expect(screen.getByTestId('demo-read-only-download')).toHaveAttribute(
-      'href',
-      'https://vastukar.com/download',
-    );
+    expect(screen.queryByTestId('demo-read-only-download')).toBeNull();
   });
 
   it('never shows the server\'s English sentence to the reader', async () => {

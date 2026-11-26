@@ -26,25 +26,14 @@ import { useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { Newspaper, X, ExternalLink } from 'lucide-react';
+import { Newspaper, X } from 'lucide-react';
 import clsx from 'clsx';
 
 import { APP_VERSION, isNewerFeatureRelease } from '@/shared/lib/version';
-import { openLink } from '@/shared/lib/desktop';
 import { useFocusTrap } from '@/shared/hooks/useFocusTrap';
 
 /** Which release the user has acknowledged. */
 const LAST_SEEN_KEY = 'oe.last_seen_version';
-
-/**
- * Latest news on the marketing site. The UTM tags let the site's analytics
- * attribute the pageview to the in-app News button, which is exactly the
- * "counts as a site visit" signal we want. news.html is the news index
- * (newest first), so it never needs a per-release URL bump.
- */
-const NEWS_URL =
-  'https://vastukar.com/news.html?utm_source=erp_app&utm_medium=news_button';
-const COOKIE_POLICY_URL = 'https://vastukar.com/cookie-policy.html';
 
 /**
  * True when the current release is a newer feature version (major.minor)
@@ -102,11 +91,6 @@ export function HeaderNewsButton({ className }: { className?: string }) {
   const handleButtonClick = () => {
     acknowledge();
     setOpen(true);
-  };
-
-  const handleOpenNews = () => {
-    openLink(NEWS_URL);
-    setOpen(false);
   };
 
   // Fallback for users who would rather read the in-app changelog than leave
@@ -167,9 +151,6 @@ export function HeaderNewsButton({ className }: { className?: string }) {
                 </span>
                 <div className="min-w-0 flex-1">
                   <h2 className="text-sm font-semibold text-content-primary">{label}</h2>
-                  <p className="mt-0.5 text-xs text-content-tertiary">
-                    {t('header.news.source', { defaultValue: 'From vastukar.com' })}
-                  </p>
                 </div>
                 <button
                   type="button"
@@ -189,20 +170,6 @@ export function HeaderNewsButton({ className }: { className?: string }) {
                       'Read the latest Vastukar release news on our site.',
                   })}
                 </p>
-                <p className="text-xs leading-relaxed text-content-tertiary">
-                  {t('header.news.cookie_note', {
-                    defaultValue:
-                      'This opens vastukar.com in a new tab. The site uses anonymised analytics cookies; you can accept or decline there.',
-                  })}{' '}
-                  <a
-                    href={COOKIE_POLICY_URL}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-oe-blue-text underline underline-offset-2 hover:text-oe-blue-hover"
-                  >
-                    {t('header.news.cookie_policy', { defaultValue: 'Cookie policy' })}
-                  </a>
-                </p>
               </div>
 
               {/* Footer */}
@@ -221,14 +188,6 @@ export function HeaderNewsButton({ className }: { className?: string }) {
                     className="rounded-lg px-3 py-1.5 text-xs font-medium text-content-secondary hover:bg-surface-secondary transition-colors"
                   >
                     {t('common.cancel', { defaultValue: 'Cancel' })}
-                  </button>
-                  <button
-                    type="button"
-                    onClick={handleOpenNews}
-                    className="inline-flex items-center gap-1.5 rounded-lg bg-oe-blue px-3 py-1.5 text-xs font-semibold text-white hover:bg-oe-blue-hover transition-colors focus:outline-none focus:ring-2 focus:ring-oe-blue/40"
-                  >
-                    <ExternalLink size={13} strokeWidth={2} />
-                    {t('header.news.open', { defaultValue: 'Open the latest news' })}
                   </button>
                 </div>
               </div>

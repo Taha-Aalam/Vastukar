@@ -86,10 +86,10 @@ export function SubscribeButton() {
         type="button"
         onClick={handleClick}
         aria-label={t('header.subscribe.button_aria', {
-          defaultValue: 'Get release notes by email - opens the newsletter form on vastukar.com',
+          defaultValue: 'Get release notes by email',
         })}
         title={subscribed ? buttonLabel : t('header.subscribe.button_title', {
-          defaultValue: 'Get release notes by email (opens vastukar.com)',
+          defaultValue: 'Get release notes by email',
         })}
         className={clsx(
           'inline-flex h-8 w-8 items-center justify-center rounded-lg',

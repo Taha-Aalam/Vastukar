@@ -16,7 +16,7 @@ describe('usePreferencesStore', () => {
 
   it('should have correct default values', () => {
     const state = usePreferencesStore.getState();
-    expect(state.currency).toBe('EUR');
+    expect(state.currency).toBe('INR');
     expect(state.measurementSystem).toBe('metric');
     // 'auto' = follow the UI language. See the date-format block below.
     expect(state.dateFormat).toBe('auto');
@@ -25,6 +25,19 @@ describe('usePreferencesStore', () => {
     // separators inside an English UI while every other number followed the
     // language. See `numbersAgreeAcrossSurfaces.test.tsx`.
     expect(state.numberLocale).toBe('auto');
+  });
+
+  it('keeps a saved non-INR currency instead of overriding it with the default', async () => {
+    localStorage.setItem('oe_preferences', JSON.stringify({ currency: 'USD', defaultCurrency: 'USD', _v: 2 }));
+    vi.resetModules();
+    const fresh = await import('./usePreferencesStore');
+    expect(fresh.usePreferencesStore.getState().currency).toBe('USD');
+  });
+
+  it('formats INR through the locale-aware formatter with Indian grouping', async () => {
+    const { formatCurrency } = await import('@/shared/lib/money');
+    expect(formatCurrency(1234567.89, 'INR', 'en-IN')).toContain('₹');
+    expect(formatCurrency(1234567.89, 'INR', 'en-IN')).toContain('12,34,567.89');
   });
 
   it('carries no country default nobody reads', () => {
@@ -46,7 +59,7 @@ describe('usePreferencesStore', () => {
     const state = fresh.usePreferencesStore.getState() as unknown as Record<string, unknown>;
     expect(state.vatRate).toBeUndefined();
     expect(state.defaultRegion).toBeUndefined();
-    expect(state.currency).toBe('EUR');
+    expect(state.currency).toBe('EUR'); // a saved value survives the new default
   });
 
   it('should update currency via setPreference', () => {
@@ -79,7 +92,7 @@ describe('usePreferencesStore', () => {
   it('should reset to defaults', () => {
     usePreferencesStore.getState().setPreference('currency', 'CHF');
     usePreferencesStore.getState().resetPreferences();
-    expect(usePreferencesStore.getState().currency).toBe('EUR');
+    expect(usePreferencesStore.getState().currency).toBe('INR');
   });
 
   it('should format numbers correctly', () => {
@@ -123,7 +136,7 @@ describe('usePreferencesStore', () => {
       await usePreferencesStore.getState().hydrateFromServer();
       const s = usePreferencesStore.getState();
       expect(s.measurementSystem).toBe('metric');
-      expect(s.currency).toBe('EUR');
+      expect(s.currency).toBe('INR'); // unset account keeps the new default
     });
 
     it('swallows a server error and leaves the offline cache untouched', async () => {

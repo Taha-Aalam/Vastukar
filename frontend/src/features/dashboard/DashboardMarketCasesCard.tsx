@@ -154,20 +154,18 @@ export function DashboardMarketCasesCard() {
       }),
     [i18n.language, packCountry, markets],
   );
-  const shelf = useMemo(() => orderMarkets(counts, resolution.market), [counts, resolution.market]);
 
   // The chip the reader pressed, remembered together with the home market it
   // was pressed against. A language or pack change moves the home market and
   // the pick lapses with it, so the card re-leads with the new home rather
   // than staying on a market chosen under the old one.
   const [pick, setPick] = useState<{ home: string | null; market: string } | null>(null);
-  // With no pack, browser region, language or nearest-market answer, the card
-  // leads with the default market (India) rather than whichever market happens
-  // to hold the most cases. A stored chip pick still wins while it is valid.
-  const selected =
-    pick && pick.home === resolution.market
-      ? pick.market
-      : (resolution.market ?? (markets.includes('IN') ? 'IN' : shelf[0]?.market) ?? null);
+  // India leads the dashboard card by default. Detection (pack/browser
+  // region/language/nearest) still informs other surfaces, and a chip the
+  // reader pressed still wins here; it is session state, not a stored
+  // preference. The persisted cases-hub filter is untouched.
+  const selected = pick && pick.home === resolution.market ? pick.market : 'IN';
+  const shelf = useMemo(() => orderMarkets(counts, selected), [counts, selected]);
 
   const offers = useMarketPackOffers(markets);
   const cases = useMemo(() => casesForMarket(PLAYBOOKS, selected, positionOf), [selected]);
@@ -223,33 +221,19 @@ export function DashboardMarketCasesCard() {
   const selectedCount = counts.get(selected) ?? 0;
   const offer = offers.get(selected);
 
-  // The title claims "your market" only when the pack or the language earned
-  // it; the subtitle says which. A nearest-market answer and a no-answer both
-  // get the neutral title, and the nearest one says what it is.
-  const title =
-    resolution.source === 'pack' || resolution.source === 'region' || resolution.source === 'language'
-      ? t('dashboard.market_cases.title', { defaultValue: 'Cases for your market' })
-      : t('dashboard.market_cases.title_generic', { defaultValue: 'Cases by market' });
-  const sourceLine =
-    resolution.source === 'pack'
-      ? t('dashboard.market_cases.source_pack', { defaultValue: 'Matched to your regional pack' })
-      : resolution.source === 'region'
-        ? t('dashboard.market_cases.source_region', { defaultValue: "Matched to your browser's region" })
-        : resolution.source === 'language'
-          ? t('dashboard.market_cases.source_language', {
-              defaultValue: 'Matched to the language you use',
-            })
-          : resolution.source === 'nearest'
-            ? t('dashboard.market_cases.source_nearest', {
-                defaultValue: 'The closest market to your language',
-              })
-            : t('cases.region_selector.subtitle', {
-                defaultValue: "Cases written for one country's standards, forms and payment law.",
-              });
-  // Whether the subtitle still describes the market on screen: once the
-  // reader presses another chip, "matched to your language" would be a
-  // sentence about a market they are no longer looking at.
-  const onHomeMarket = selected === resolution.market;
+  // India leads by default. Detection still informs other surfaces, but this
+  // card no longer claims a detected market is "yours": the default and any
+  // chip pick are described in neutral terms.
+  const hasPick = !!pick && pick.home === resolution.market;
+  const title = t('dashboard.market_cases.title_generic', { defaultValue: 'Cases by market' });
+  const sourceLine = hasPick
+    ? t('cases.region_hero.body', {
+        defaultValue:
+          "These cases follow this market's own standards, forms and payment rules, so the numbers and the paperwork match what a client there expects.",
+      })
+    : t('cases.region_selector.subtitle', {
+        defaultValue: "Cases written for one country's standards, forms and payment law.",
+      });
   // Per tile, the language its title is shown in when that is not the UI
   // language. Read once here so the tiles and the legend above them agree.
   const langTags = shown.map((pb) => languageTag(keyLanguage(i18n, pb.titleKey), i18n.language));
@@ -258,7 +242,7 @@ export function DashboardMarketCasesCard() {
     <div
       data-testid="dashboard-market-cases-card"
       data-market={selected}
-      data-source={onHomeMarket ? (resolution.source ?? 'none') : 'pick'}
+      data-source={hasPick ? 'pick' : 'default'}
       className="relative h-full overflow-hidden rounded-xl border border-border-light bg-surface-primary p-4 shadow-xs animate-card-in"
       style={{ animationDelay: '140ms' }}
     >
@@ -288,10 +272,7 @@ export function DashboardMarketCasesCard() {
               {marketName}
             </h3>
             <p className="mt-0.5 text-xs text-content-secondary">
-              {onHomeMarket ? sourceLine : t('cases.region_hero.body', {
-                defaultValue:
-                  "These cases follow this market's own standards, forms and payment rules, so the numbers and the paperwork match what a client there expects.",
-              })}
+              {sourceLine}
             </p>
           </div>
           {/* The hand-over to the hub, named for the market it hands over. */}

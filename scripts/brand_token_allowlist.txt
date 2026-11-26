@@ -14,7 +14,6 @@ backend/app/modules/schedule/router.py||XER
 
 # Integration-targets description: lists the external systems the platform can
 # connect to via API, so a user knows what actually integrates.
-locales/||community_type_integration_desc
 
 # Functional schedule import-format parsers named in design docs (same case as the
 # XER allowlist above: the code actually parses these exchange formats).

@@ -58,7 +58,7 @@ import type { BIMElementData } from '@/shared/ui/BIMViewer/ElementManager';
 import { fmtList, fmtFixed } from '@/shared/lib/formatters';
 import { reuseNumberFormat } from '@/shared/lib/money';
 import { parseDecimalInput } from '@/shared/lib/parseDecimal';
-import { getNumberLocale } from '@/stores/usePreferencesStore';
+import { getNumberLocale, usePreferencesStore } from '@/stores/usePreferencesStore';
 import { quantityFractionDigits } from './quantityFormat';
 import { localizedUnitCode } from '@/shared/lib/unitLabels';
 import type { DisplayQuantityApi } from '@/shared/hooks/useDisplayQuantity';
@@ -5555,7 +5555,9 @@ export function UnitRateCellRenderer(params: ICellRendererParams) {
   const stats = meta.cost_item_variant_stats as VariantStats | undefined;
   const variant = (meta as { variant?: { label: string; price: number; index: number } }).variant;
   const variantDefault = meta.variant_default as 'mean' | 'median' | undefined;
-  const baseCurrency = ctx?.currencyCode || 'USD';
+  // A blank project currency falls back to the account's chosen currency
+  // (INR by default); no amount is converted or re-denominated here.
+  const baseCurrency = ctx?.currencyCode || usePreferencesStore.getState().currency || 'INR';
   const currency = (meta.currency as string | undefined) || baseCurrency;
   // A position whose own `metadata.currency` differs from the project base
   // currency must SHOW that currency on the line — otherwise a USD position

@@ -307,9 +307,6 @@ export function SharePage() {
           )}
         </div>
 
-        <p className="mt-4 text-center text-2xs text-content-quaternary">
-          Vastukar · vastukar.com
-        </p>
       </div>
     </div>
   );

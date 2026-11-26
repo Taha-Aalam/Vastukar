@@ -74,7 +74,7 @@ const flatten = (text: string | null) => (text ?? '').replace(/\s+/g, ' ');
  * in the component, which is exactly what had happened - see the yen case
  * below.
  */
-const previewFor = (locale: string, currency = 'EUR') =>
+const previewFor = (locale: string, currency = 'INR') =>
   flatten(`Amounts across the app now read ${formatCurrency(SAMPLE, currency, locale)}`);
 
 /**
@@ -99,8 +99,8 @@ const asTheOldPreviewPrinted = (locale: string, currency: string) =>
  *  Zustand is not mocked here on purpose: the panel writes to it and the
  *  writes are half of what these tests check. */
 const STORE_DEFAULTS = {
-  currency: 'EUR',
-  defaultCurrency: 'EUR',
+  currency: 'INR',
+  defaultCurrency: 'INR',
   measurementSystem: 'metric' as const,
   dateFormat: 'auto' as const,
   numberLocale: 'auto' as const,
@@ -125,11 +125,12 @@ function row(label: string): HTMLElement {
   return element;
 }
 
-/** The currency control is a searchable dropdown, so a choice takes two
- *  clicks: open, then pick. Before it is opened the row holds exactly one
- *  button, which is the trigger. */
+/** The currency row now holds the INR/USD quick switch as well as the
+ *  searchable dropdown, so target the dropdown trigger by its popup role. */
 function openCurrencyPicker() {
-  fireEvent.click(within(row('Currency')).getByRole('button'));
+  // Quick-switch buttons come first; the searchable dropdown is last.
+  const buttons = within(row('Currency')).getAllByRole('button');
+  fireEvent.click(buttons[buttons.length - 1] as HTMLElement);
 }
 
 beforeEach(() => {
@@ -143,7 +144,7 @@ beforeEach(() => {
 describe('the currency the panel saves', () => {
   it('goes on the wire under the key the backend actually declares', async () => {
     renderPanel();
-    await screen.findByText('€ EUR - Euro');
+    await screen.findByText('₹ INR - Indian Rupee');
 
     openCurrencyPicker();
     fireEvent.click(screen.getByRole('button', { name: '$ USD - US Dollar' }));
@@ -160,7 +161,7 @@ describe('the currency the panel saves', () => {
 
   it('reaches both store keys, so the next screen agrees with this one', async () => {
     renderPanel();
-    await screen.findByText('€ EUR - Euro');
+    await screen.findByText('₹ INR - Indian Rupee');
 
     openCurrencyPicker();
     fireEvent.click(screen.getByRole('button', { name: '$ USD - US Dollar' }));
@@ -176,7 +177,7 @@ describe('the currency the panel saves', () => {
     apiGetMock.mockResolvedValue({ currency_code: 'BRL' });
     renderPanel();
     // The whole point of reading `currency_code`: an account that saved
-    // Brazilian reais gets them back, instead of the panel falling to EUR and
+    // Brazilian reais gets them back, instead of the panel falling to INR and
     // quietly reporting a currency nobody chose.
     expect(await screen.findByText('R$ BRL - Brazilian Real')).toBeInTheDocument();
   });
@@ -185,7 +186,7 @@ describe('the currency the panel saves', () => {
 describe('the custom currency code', () => {
   it('does not put the sentinel on the wire', async () => {
     renderPanel();
-    await screen.findByText('€ EUR - Euro');
+    await screen.findByText('₹ INR - Indian Rupee');
 
     openCurrencyPicker();
     fireEvent.click(screen.getByRole('button', { name: 'Custom...' }));
@@ -199,7 +200,7 @@ describe('the custom currency code', () => {
 
   it('saves once when the field is left, not once per keystroke', async () => {
     renderPanel();
-    await screen.findByText('€ EUR - Euro');
+    await screen.findByText('₹ INR - Indian Rupee');
 
     openCurrencyPicker();
     fireEvent.click(screen.getByRole('button', { name: 'Custom...' }));

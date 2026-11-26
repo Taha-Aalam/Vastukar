@@ -279,7 +279,7 @@ def _document(buffer: io.BytesIO, title: str, *, letterhead_on_first_page: bool 
             "author": "Vastukar",
             "subject": "Tender decision · DDC-CWICR-OE",
             "creator": "Vastukar",
-            "producer": "Vastukar / reportlab · vastukar.com",
+            "producer": "Vastukar / reportlab",
             "keywords": "DDC-CWICR-OE-2026,Vastukar,Tendering",
         }
     doc = BaseDocTemplate(

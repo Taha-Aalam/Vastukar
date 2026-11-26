@@ -62,6 +62,7 @@ import { SectionIntro } from '@/features/validation';
 import { fetchProjectList } from '@/shared/lib/projectList';
 import { useToastStore } from '@/stores/useToastStore';
 import { useProjectContextStore } from '@/stores/useProjectContextStore';
+import { usePreferencesStore } from '@/stores/usePreferencesStore';
 import {
   fetchPunchItems,
   fetchPunchSummary,
@@ -1329,7 +1330,9 @@ export function PunchListPage() {
           resolved_at: null,
           verified_at: null,
           rework_cost: data.rework_cost ?? null,
-          rework_cost_currency: data.rework_cost_currency ?? 'USD',
+          // Blank currency follows the account preference (INR by default);
+          // existing rework_cost amounts are never re-denominated.
+          rework_cost_currency: data.rework_cost_currency ?? usePreferencesStore.getState().currency ?? 'INR',
         }),
       }),
     onSuccess: (created) => {

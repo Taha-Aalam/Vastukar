@@ -106,12 +106,15 @@ export type { DigitSystem, SecondaryCalendar };
 const RETIRED_KEYS = ['vatRate', 'defaultRegion', 'defaultStandard'] as const;
 
 const DEFAULTS: Preferences = {
-  currency: 'EUR',
+  // New/unset users start in India. Stored values are merged over these
+  // defaults on read, so a saved currency (INR, USD or anything else) is
+  // never overwritten by this default.
+  currency: 'INR',
   measurementSystem: 'metric',
   dateFormat: 'auto',
   numberLocale: 'auto',
   digitSystem: 'auto',
-  defaultCurrency: 'EUR',
+  defaultCurrency: 'INR',
   secondaryCalendar: 'none',
   secondaryCalendarChosen: false,
 };

@@ -73,13 +73,10 @@ describe('RecoveryCard - 401 (signed out)', () => {
 });
 
 describe('RecoveryCard - 403 (no access)', () => {
-  it('renders the "Request access" mailto CTA on a 403', () => {
+  it('does not render a "Request access" mailto CTA on a 403', () => {
     renderCard({ error: { status: 403 } });
     expect(screen.getByText(/don’t have access here/i)).toBeInTheDocument();
-    const mailto = screen.getByRole('link', { name: /Request access/i });
-    expect(mailto.getAttribute('href')).toBe(
-      'mailto:info@vastukar.com?subject=Access%20request',
-    );
+    expect(screen.queryByRole('link', { name: /Request access/i })).toBeNull();
   });
 
   it('does not render a Retry button on a 403 (no recovery via reload)', () => {

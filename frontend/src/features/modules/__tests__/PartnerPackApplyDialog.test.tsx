@@ -195,8 +195,8 @@ describe('a failed install says what failed and why', () => {
     expect(within(alert).getByText(/needs an administrator/)).toBeTruthy();
     expect(within(alert).getByText(/Role 'admin' required/)).toBeTruthy();
     // Where to go instead: a copy of their own, where they are the admin.
-    const link = within(alert).getByRole('link', { name: 'Download and install guide' });
-    expect(link.getAttribute('href')).toBe('https://vastukar.com/download');
+    expect(within(alert).getByText(/run the platform yourself/)).toBeTruthy();
+    expect(within(alert).queryByRole('link')).toBeNull();
     // Not the partial-install view the 403 used to end on.
     expect(screen.queryByText('Finished with warnings')).toBeNull();
     expect(screen.queryByText(/Pack activated/)).toBeNull();
@@ -554,7 +554,7 @@ describe('who may install', () => {
     renderDialog();
     const note = screen.getByRole('note');
     expect(note.textContent).toMatch(/Only an administrator can activate a pack/);
-    expect(within(note).getByRole('link', { name: 'Download and install guide' })).toBeTruthy();
+    expect(within(note).queryByRole('link', { name: 'Download and install guide' })).toBeNull();
     const button = screen.getByRole('button', { name: /Activate pack/ }) as HTMLButtonElement;
     expect(button.disabled).toBe(true);
     fireEvent.click(button);

@@ -4,10 +4,10 @@
  * Adopt the currency of the market a first-run reader set up as the account's
  * currency, unless the account already has one.
  *
- * The preferences store defaults to EUR, so before this a reader who set up
- * the United Kingdom, India or Brazil finished the wizard with every money
- * surface outside a project in euros. An explicit account choice always wins:
- * the server's `currency_code` is only written while it is still empty.
+ * The preferences store defaults to INR, which covers the India market and
+ * leaves other markets to adopt their own currency in the wizard. An explicit
+ * account choice always wins: the server's `currency_code` is only written
+ * while it is still empty.
  */
 import { apiGet, apiPatch } from '@/shared/lib/api';
 import { usePreferencesStore } from '@/stores/usePreferencesStore';

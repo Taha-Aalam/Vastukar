@@ -27,13 +27,12 @@ function renderIt() {
 describe('DemoQuickStart', () => {
   it('renders six cards with a hex mark each and real counts', () => {
     renderIt();
-    for (const id of ['what', 'data', 'try', 'roles', 'limits', 'install']) {
+    for (const id of ['what', 'data', 'try', 'roles', 'limits']) {
       expect(screen.getByTestId(`demo-quick-card-${id}`)).toBeTruthy();
     }
-    expect(screen.getAllByTestId('hex-mark')).toHaveLength(6);
+    expect(screen.getAllByTestId('hex-mark')).toHaveLength(5);
     expect(screen.getByTestId('demo-quick-card-data').textContent).toContain('4');
-    const pricing = screen.getByTestId('demo-quick-card-install').querySelector('a');
-    expect(pricing?.getAttribute('href')).toBe('https://vastukar.com/pricing');
+    expect(screen.queryByTestId('demo-quick-card-install')).toBeNull();
   });
 
   it('shows nothing outside demo mode', () => {

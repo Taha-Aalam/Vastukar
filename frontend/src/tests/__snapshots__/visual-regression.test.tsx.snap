@@ -960,27 +960,6 @@ exports[`Visual Regression - DashboardPage > renders loading/skeleton state 1`] 
       style="animation-delay: 140ms;"
     >
       <a
-        class="group/ddc inline-flex items-center gap-1.5 text-[11px] text-content-tertiary hover:text-content-secondary transition-colors"
-        href="https://vastukar.com/?utm_source=erp"
-        rel="noopener noreferrer"
-        target="_blank"
-      >
-        <img
-          alt="Vastukar"
-          class="h-3.5 w-auto opacity-60 group-hover/ddc:opacity-100 transition-opacity"
-          src="/brand/vastukar-logo.webp"
-        />
-        <span
-          class="hidden sm:inline"
-        >
-          by Vastukar
-        </span>
-      </a>
-      <span
-        aria-hidden="true"
-        class="h-3 w-px bg-border-light"
-      />
-      <a
         class="group/oss inline-flex items-center gap-2 text-xs font-medium text-content-secondary hover:text-content-primary transition-colors"
         href="https://github.com/Taha-Aalam/Vastukar"
         rel="noopener noreferrer"
@@ -997,7 +976,7 @@ exports[`Visual Regression - DashboardPage > renders loading/skeleton state 1`] 
           />
         </span>
         <span>
-          Open-source construction ERP
+          The first construction ERP designed from the ground up for the agentic era: a construction ERP for human teams and their AI agents.
         </span>
         <svg
           class="lucide lucide-external-link text-content-quaternary group-hover/oss:text-oe-blue transition-colors"

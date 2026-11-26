@@ -4,11 +4,6 @@
     "note": "our own product name, never translated - the About page book card now carries the Vastukar name after the round-2 UI rebrand (was the upstream book title \"Data-Driven Construction\", identical in en/ru/kk)",
     "reason_category": "product_name"
   },
-  "about.third_party_size": {
-    "en_value": "{{kb}} kB",
-    "note": "unit abbreviation (kilobytes) beside a bundled licence text's size, the same shape as the settled sibling bim.converter_panel_size ({{size}} MB); the only literal is kB, written the same way in every locale we ship including the Cyrillic and Arabic-script ones, and en-US is a spelling overlay that does not carry the key at all",
-    "reason_category": "abbreviation"
-  },
   "accommodation.bim_link.label": {
     "en_value": "BIM",
     "note": "named open data / interchange standard or format code (CLAUDE.md: not translated)",
@@ -788,11 +783,6 @@
     "en_value": "BCF",
     "note": "open interchange format code, identical in all 29 locales including ru",
     "reason_category": "standard_code"
-  },
-  "login.github": {
-    "en_value": "GitHub",
-    "note": "brand/service name, functional interop reference",
-    "reason_category": "product_name"
   },
   "login.mod.bim": {
     "en_value": "BIM",

@@ -211,9 +211,6 @@ function baseCountry(flag: string | null | undefined, market: string | null | un
   return market ?? '';
 }
 
-/** Where someone who may only view packs can get a copy they administer. */
-export const PACK_INSTALL_DOWNLOAD_URL = 'https://vastukar.com/download';
-
 /**
  * Whether this server is the public demo. Same shared ``['system-status']``
  * query the demo banner reads, so it costs no extra request.
@@ -256,14 +253,6 @@ export function PackOwnCopyHint({ askAdmin = true }: { askAdmin?: boolean }) {
       {t('modules.pp_own_copy_hint', {
         defaultValue: 'To install packs, run the platform yourself: in your own copy you are the administrator.',
       })}{' '}
-      <a
-        href={PACK_INSTALL_DOWNLOAD_URL}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="font-medium underline"
-      >
-        {t('modules.pp_own_copy_link', { defaultValue: 'Download and install guide' })}
-      </a>
     </span>
   );
 }

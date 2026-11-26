@@ -49,7 +49,7 @@ import {
   type CostSearchPage,
 } from './api';
 import { CostCategoryTree } from './CostCategoryTree';
-import { getNumberLocale } from '@/stores/usePreferencesStore';
+import { getNumberLocale, usePreferencesStore } from '@/stores/usePreferencesStore';
 import { formatCurrency } from '@/shared/lib/money';
 import { fmtList } from '@/shared/lib/formatters';
 import { parseDecimalInput } from '@/shared/lib/parseDecimal';
@@ -2445,7 +2445,8 @@ export function CostDatabaseSearchModal({
             || (activeVariantPick.item.region
               ? REGION_MAP[activeVariantPick.item.region]?.currency
               : null)
-            || 'USD'
+            || usePreferencesStore.getState().currency
+            || 'INR'
           }
           onApply={(chosen) => {
             const pending = activeVariantPick;

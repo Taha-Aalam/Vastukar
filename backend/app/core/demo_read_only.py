@@ -108,8 +108,7 @@ DEMO_READ_ONLY_ERROR = "demo_read_only"
 DEMO_READ_ONLY_MESSAGE = (
     "This is the public demo, so it is read-only and nothing you change here is kept. "
     "To run this exact version yourself, download a ready-made build for your operating "
-    "system or install it from PyPI - every available option is listed at "
-    "vastukar.com/download. It takes a few minutes, and what you get is the "
+    "system or install it from PyPI. It takes a few minutes, and what you get is the "
     "full product with nothing held back, running on your own machine, where all of your "
     "data stays yours."
 )

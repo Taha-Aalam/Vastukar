@@ -1205,3 +1205,188 @@ Files changed in this step:
 - docs/india-rollout/review-first/kn.md
 - docs/india-rollout/review-first/ml.md
 - docs/india-rollout/review-first/pa.md
+
+
+## Post-launch UI and market defaults (cleanup/login-and-market-defaults)
+
+Downstream-owned cleanup on branch `cleanup/login-and-market-defaults` from
+`main` c334a7c0. One PR, not merged. The live deployment clone was untouched.
+
+Item 1 — removed both rendered "Open Source" chips from `LoginPage.tsx`
+(desktop eyebrow + mobile banner), deleted `login.open_source_badge` and the
+three `login.hero_h_*` split-key tagline lines (replaced by one
+`login.hero_tagline` key), and removed the now-unused `Github`, `Users` and
+`ArrowUpRight` imports. `/login-next` had neither surface.
+
+Item 2 — removed the GitHub + Community two-card row from `LoginPage.tsx`
+(`https://github.com/Taha-Aalam/Vastukar` and `https://t.me/vastukar`) and
+deleted `login.github`, `login.github_sub`, `login.community`,
+`login.community_sub` from every bundle. The adjacent mobile footer that
+carried another GitHub/vastukar.com link was removed with it; `ClassicAuthFooter`
+and the AGPL source link were kept.
+
+Item 3 — removed the Community feature surfaces: the About "Join the
+community" card, the dead `#community` handler, the network-strip Telegram
+tile and anchor; the Modules "Build Your Own Module" community section; the
+backend CLI `COMMUNITY_URL` and help line; and all 24 Community feature keys
+from every bundle plus the `community_type_integration_desc` brand-allowlist
+entry. There is no backend Community module, router, model, migration or
+permission. Shared module-category `"community"` machinery, DDC Community
+converter branding, community wheel/pack distribution, domain vocabulary,
+acknowledgments and the `Sidebar.footer.test.tsx` absence guard were kept and
+are reported as entanglement. The architecture manifest was REGENERATED with
+`python scripts/generate_architecture_manifest.py`, never hand-edited.
+
+Item 4 — GitHub pointers were inventoried only. "Report a Bug" was not
+touched. Login/register pointers were removed by Items 2 and 5; every other
+pointer is listed in the PR report for the owner's decision.
+
+Item 5 — removed 515 DISPLAY `vastukar.com` occurrences (locale bundles,
+index.html metadata, About/register/auth/dashboard/help/modules/file-manager
+links, served privacy/terms HTML, desktop help-dialog URL fragments and
+exported document metadata). Held 44 FUNCTIONAL occurrences (demo login
+emails, support mailtos, CORS, SMTP From, newsletter postMessage, IATE
+allowlists, OpenRouter referer, basemap UA, manifest signing, email logo,
+bug-report destinations) and 4 LEGAL/ATTRIBUTION occurrences, each listed in
+the PR report with what breaks. Removed licensing UI surfaces (About license
+card, ThirdPartyLicenses panel, Settings License & Plan card, buyer-portal
+AGPL link, license-request CTA) and their locale keys; LICENSE/NOTICE/
+AUTHORS/COPYRIGHT and in-source licence headers were not touched. OpenAPI
+contact URL, startup docs log and demo read-only download text were also
+removed; AGPL source endpoint and contact email remain.
+
+Item 6 — replaced the `#1 AI-powered ...` tagline variants with exactly
+"The first construction ERP designed from the ground up for the agentic era: a construction ERP for human teams and their AI agents."
+in `about.tagline`, `dashboard.open_source_badge`, the new `login.hero_tagline`,
+all inline defaults, `index.html` meta/twitter descriptions, and all 50
+bundles. The ten Indian languages were translated in the bundles' existing
+style; the `about.tagline` leak-baseline entry was removed because no locale
+is identical to English now.
+
+Item 7 — dashboard "Cases for your market" now leads with India (code default
+was already India; the observed US was browser-region detection, not a stored
+preference). The card no longer claims detected markets are "yours"; chip
+picks still work. Currency default changed from EUR to INR for new/unset
+users; saved USD/other values are preserved by the existing merge and by
+ignoring empty server `currency_code`. Blank-currency fallbacks in BOQ and
+punch-list now follow the account preference. A visible INR/USD quick switch
+in Regional Settings writes through the existing `currency_code` path.
+`Intl.NumberFormat`/`formatCurrency` already produce ₹ with Indian grouping
+under `en-IN`; no stored amount was converted or re-denominated.
+
+Files changed in this step (all downstream-owned):
+
+Locale bundles (51; keys removed/added/translated across all 50 base bundles
+plus the en-US overlay):
+- frontend/src/app/locales/ar.ts
+- frontend/src/app/locales/bg.ts
+- frontend/src/app/locales/bn.ts
+- frontend/src/app/locales/cs.ts
+- frontend/src/app/locales/da.ts
+- frontend/src/app/locales/de.ts
+- frontend/src/app/locales/el.ts
+- frontend/src/app/locales/en-US.ts
+- frontend/src/app/locales/en.ts
+- frontend/src/app/locales/es-CL.ts
+- frontend/src/app/locales/es-CO.ts
+- frontend/src/app/locales/es-MX.ts
+- frontend/src/app/locales/es.ts
+- frontend/src/app/locales/et.ts
+- frontend/src/app/locales/fa.ts
+- frontend/src/app/locales/fi.ts
+- frontend/src/app/locales/fil.ts
+- frontend/src/app/locales/fr.ts
+- frontend/src/app/locales/gu.ts
+- frontend/src/app/locales/he.ts
+- frontend/src/app/locales/hi.ts
+- frontend/src/app/locales/hr.ts
+- frontend/src/app/locales/hu.ts
+- frontend/src/app/locales/id.ts
+- frontend/src/app/locales/it.ts
+- frontend/src/app/locales/ja.ts
+- frontend/src/app/locales/kk.ts
+- frontend/src/app/locales/kn.ts
+- frontend/src/app/locales/ko.ts
+- frontend/src/app/locales/ky.ts
+- frontend/src/app/locales/ml.ts
+- frontend/src/app/locales/mn.ts
+- frontend/src/app/locales/mr.ts
+- frontend/src/app/locales/nl.ts
+- frontend/src/app/locales/no.ts
+- frontend/src/app/locales/pa.ts
+- frontend/src/app/locales/pl.ts
+- frontend/src/app/locales/pt-BR.ts
+- frontend/src/app/locales/pt.ts
+- frontend/src/app/locales/ro.ts
+- frontend/src/app/locales/ru.ts
+- frontend/src/app/locales/sv.ts
+- frontend/src/app/locales/ta.ts
+- frontend/src/app/locales/te.ts
+- frontend/src/app/locales/th.ts
+- frontend/src/app/locales/tr.ts
+- frontend/src/app/locales/uk.ts
+- frontend/src/app/locales/ur.ts
+- frontend/src/app/locales/uz.ts
+- frontend/src/app/locales/vi.ts
+- frontend/src/app/locales/zh.ts
+
+Other files:
+- backend/app/cli.py
+- backend/app/core/demo_read_only.py
+- backend/app/core/pdf_branding.py
+- backend/app/main.py
+- backend/app/modules/bim_hub/exporters/boq_xlsx.py
+- backend/app/modules/bim_hub/exporters/cobie.py
+- backend/app/modules/bim_requirements/exporters/excel_exporter.py
+- backend/app/modules/bim_requirements/exporters/ids_exporter.py
+- backend/app/modules/boq/router.py
+- backend/app/modules/design_options/exporters.py
+- backend/app/modules/methodology/service.py
+- backend/app/modules/tendering/pdf_documents.py
+- backend/app/modules/validation/sarif_exporter.py
+- desktop/src-tauri/src/main.rs
+- frontend/index.html
+- frontend/public/favicon.svg
+- frontend/public/privacy-policy.html
+- frontend/public/terms.html
+- frontend/src/app/layout/Header.tsx
+- frontend/src/app/layout/SubscribeButton.tsx
+- frontend/src/features/about/AboutPage.tsx
+- frontend/src/features/about/ThirdPartyLicenses.tsx
+- frontend/src/features/architecture/architecture_manifest.json
+- frontend/src/features/auth/ClassicAuth.tsx
+- frontend/src/features/auth/LoginPage.tsx
+- frontend/src/features/auth/LoginPageNext.tsx
+- frontend/src/features/auth/RegisterPage.tsx
+- frontend/src/features/boq/BOQModals.tsx
+- frontend/src/features/boq/grid/cellRenderers.tsx
+- frontend/src/features/buyer-portal/BuyerPortalPage.tsx
+- frontend/src/features/cases/FeaturedArticle.tsx
+- frontend/src/features/cases/casesCardNavigation.test.tsx
+- frontend/src/features/dashboard/DashboardMarketCasesCard.tsx
+- frontend/src/features/dashboard/DashboardPage.tsx
+- frontend/src/features/dashboard/__tests__/DashboardMarketCasesCard.test.tsx
+- frontend/src/features/file-manager/SharePage.tsx
+- frontend/src/features/help/DemoQuickStart.test.tsx
+- frontend/src/features/help/DemoQuickStart.tsx
+- frontend/src/features/modules/ModulesPage.tsx
+- frontend/src/features/modules/PartnerPackApplyDialog.tsx
+- frontend/src/features/modules/__tests__/PartnerPackApplyDialog.test.tsx
+- frontend/src/features/onboarding/marketCurrency.ts
+- frontend/src/features/punchlist/PunchListPage.tsx
+- frontend/src/features/settings/RegionalSettings.test.tsx
+- frontend/src/features/settings/RegionalSettings.tsx
+- frontend/src/features/settings/SettingsTeamPanel.tsx
+- frontend/src/pwa/__tests__/staticAssetRoute.test.ts
+- frontend/src/shared/ui/DemoBanner.tsx
+- frontend/src/shared/ui/DemoReadOnlyDialog.test.tsx
+- frontend/src/shared/ui/DemoReadOnlyDialog.tsx
+- frontend/src/shared/ui/HeaderNewsButton.tsx
+- frontend/src/shared/ui/RecoveryCard.test.tsx
+- frontend/src/shared/ui/RecoveryCard.tsx
+- frontend/src/stores/usePreferencesStore.test.ts
+- frontend/src/stores/usePreferencesStore.ts
+- frontend/src/tests/__snapshots__/visual-regression.test.tsx.snap
+- scripts/brand_token_allowlist.txt
+- scripts/i18n_leak_allowlist.json
+- scripts/i18n_leak_baseline.json

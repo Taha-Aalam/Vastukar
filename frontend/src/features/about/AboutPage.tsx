@@ -8,23 +8,20 @@ import { useEffect, useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { useLocation, useNavigate } from 'react-router-dom';
 import {
-  Mail, Shield, BookOpen, Users, Award,
-  Briefcase, Globe, ExternalLink,
+  BookOpen, Users, Award,
+  Briefcase, Globe,
   Linkedin, Youtube, Star, Coffee, Rocket, ArrowRight, Handshake,
-  Github, MessageCircle, Heart, HandCoins, ChevronDown, Sparkles,
-  MessageSquareQuote,
+  Github, Heart, HandCoins, ChevronDown, Sparkles,
 } from 'lucide-react';
 import clsx from 'clsx';
 import { Card, Button, Badge, Breadcrumb, DismissibleInfo, IntroRichText } from '@/shared/ui';
 import { SUPPORTED_LANGUAGES } from '@/app/i18n';
 import { PageHeader } from '@/shared/ui/PageHeader';
 import { Changelog, getRecentReleases } from './Changelog';
-import { ThirdPartyLicenses } from './ThirdPartyLicenses';
 import { CONTRIBUTORS, SPONSORS, acknowledgedUrl, type Acknowledged } from './acknowledgments';
 
 const REPO_URL = 'https://github.com/Taha-Aalam/Vastukar';
 // Clean product URL - "?source=search" is G2's search-result tracking.
-const G2_REVIEWS_URL = 'https://www.g2.com/products/vastukar/reviews';
 const PAYPAL_DONATE_URL = 'https://www.paypal.com/donate/?hosted_button_id=DWBCLNLY2VWAA';
 const GITHUB_SPONSORS_URL = 'https://github.com/sponsors/Taha-Aalam';
 
@@ -150,16 +147,6 @@ export function AboutPage() {
     return () => window.cancelAnimationFrame(frame);
   }, [hash, key]);
 
-  // A deep link to the contributor wall (/about#community, used by the "Support
-  // us" dialog) scrolls the "Built with our community" card into view.
-  useEffect(() => {
-    if (hash !== '#community') return;
-    const frame = window.requestAnimationFrame(() => {
-      const community = document.querySelector('[data-community-anchor]');
-      if (community) community.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    });
-    return () => window.cancelAnimationFrame(frame);
-  }, [hash, key]);
 
   return (
     <div className="space-y-5 animate-fade-in">
@@ -199,16 +186,6 @@ export function AboutPage() {
 
         {/* ── Left column — project identity (left-aligned on wide) ── */}
         <div className="text-center lg:text-left">
-          <a
-            href="https://vastukar.com?utm_source=app&utm_medium=about"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-1.5 text-xs font-semibold text-oe-blue hover:text-oe-blue-text transition-colors mb-4"
-          >
-            <Globe size={13} />
-            vastukar.com
-            <ExternalLink size={11} />
-          </a>
           <div className="flex items-center justify-center lg:justify-start gap-2 mb-4">
             <span className="relative flex h-2.5 w-2.5">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
@@ -218,7 +195,7 @@ export function AboutPage() {
           </div>
           <h2 className="text-3xl font-bold text-content-primary tracking-tight">Vastukar</h2>
           <p className="mt-2 text-base text-content-secondary">
-            {t('about.tagline', { defaultValue: 'The #1 open-source platform for construction cost estimation, project management and resource control' })}
+            {t('about.tagline', { defaultValue: 'The first construction ERP designed from the ground up for the agentic era: a construction ERP for human teams and their AI agents.' })}
           </p>
           <div className="mt-3 flex items-center justify-center lg:justify-start gap-3 text-sm text-content-tertiary">
             <span>2026</span>
@@ -311,154 +288,10 @@ export function AboutPage() {
         </div>
       </Card>
 
-      {/* ── Card 2: Community — feedback channels.
-          Uses the same blue-tinted gradient the old embedded block had, so
-          the visual identity carries over but as its own bordered Card. ── */}
-      <Card
-        padding="none"
-        className="animate-card-in h-full flex flex-col overflow-hidden border-oe-blue/20 bg-gradient-to-br from-oe-blue/5 via-transparent to-blue-50/40 dark:from-blue-950/20 dark:via-transparent dark:to-slate-900/30"
-        style={{ animationDelay: '75ms' }}
-      >
-        <div className="p-6 flex flex-col flex-1">
-            <div className="flex items-start gap-3 mb-4">
-              {/* Plain Stroke — community icon, no chip wrapper. r-cleanup 2026-05-11. */}
-              <MessageCircle size={20} strokeWidth={1.75} className="shrink-0 mt-0.5 text-oe-blue" />
-              <div className="min-w-0 flex-1">
-                <h3 className="text-sm font-semibold text-content-primary">
-                  {t('about.community_title', { defaultValue: 'Join the community - your feedback shapes the roadmap' })}
-                </h3>
-                <p className="text-xs text-content-secondary mt-1 leading-relaxed">
-                  {t('about.community_desc', {
-                    defaultValue:
-                      'Share what works, what breaks, and what you want next. Every release in the changelog started as a user request. Pick the channel you already use - we read all three.',
-                  })}
-                </p>
-              </div>
-            </div>
-
-            {/* Social channels — Telegram is featured on its own row (it's the
-                primary live-support channel) so the chat invite reads first.
-                LinkedIn and X follow on their own rows so the Community card
-                stretches vertically to match the Platform Capabilities card
-                on wide screens. Each tile carries a 2-line copy block instead
-                of a 1-line truncated string. */}
-            <div className="flex flex-col gap-2.5">
-
-              {/* Featured row — Telegram, primary live channel. */}
-              <a
-                href="https://t.me/vastukar"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group flex items-center gap-3 rounded-lg border border-[#26A5E4]/25 bg-[#26A5E4]/[0.04] px-3.5 py-3 hover:border-[#26A5E4]/50 hover:bg-[#26A5E4]/[0.08] transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-oe-blue focus-visible:ring-offset-1"
-              >
-                <span className="shrink-0 h-10 w-10 rounded-lg bg-[#26A5E4]/15 text-[#26A5E4] flex items-center justify-center">
-                  <svg viewBox="0 0 24 24" fill="currentColor" className="h-5 w-5" aria-hidden>
-                    <path d="M9.78 18.65l.28-4.23 7.68-6.92c.34-.31-.07-.46-.52-.19L7.74 13.3 3.64 12c-.88-.25-.89-.86.2-1.3l15.97-6.16c.73-.33 1.43.18 1.15 1.3l-2.72 12.81c-.19.91-.74 1.13-1.5.71l-4.14-3.06-1.99 1.93c-.23.23-.42.42-.83.42z"/>
-                  </svg>
-                </span>
-                <div className="min-w-0 flex-1">
-                  <div className="flex items-center gap-2">
-                    <p className="text-sm font-semibold text-content-primary leading-tight">
-                      Telegram
-                    </p>
-                    <span className="inline-flex items-center rounded-md bg-[#26A5E4]/15 text-[#26A5E4] text-2xs font-semibold px-1.5 py-0.5">
-                      {t('about.community_tg_badge', { defaultValue: 'Live' })}
-                    </span>
-                  </div>
-                  <p className="text-xs text-content-secondary mt-0.5 leading-snug">
-                    {t('about.community_telegram_v2', { defaultValue: 'Fastest replies from the maintainers - questions, ideas, bug reports, partnerships.' })}
-                  </p>
-                </div>
-                <ExternalLink size={13} className="text-content-quaternary group-hover:text-[#26A5E4] shrink-0" />
-              </a>
-
-              {/* LinkedIn + X — paired on one row so the Community card stays
-                  compact and matches the Platform Capabilities card's height. */}
-              <div className="grid grid-cols-2 gap-2.5">
-                <a
-                  href="https://www.linkedin.com/company/vastukar/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="group flex items-center gap-2.5 rounded-lg border border-border-light bg-surface-primary px-3 py-2.5 hover:border-[#0A66C2]/50 hover:bg-[#0A66C2]/[0.04] transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-oe-blue focus-visible:ring-offset-1"
-                >
-                  <span className="shrink-0 h-9 w-9 rounded-lg bg-[#0A66C2]/10 text-[#0A66C2] flex items-center justify-center">
-                    <Linkedin size={16} />
-                  </span>
-                  <div className="min-w-0 flex-1">
-                    <p className="text-xs font-semibold text-content-primary leading-tight">
-                      LinkedIn
-                    </p>
-                    <p className="text-2xs text-content-tertiary mt-0.5 leading-snug">
-                      {t('about.community_linkedin_short', { defaultValue: 'Articles + industry posts' })}
-                    </p>
-                  </div>
-                </a>
-
-                <a
-                  href="https://x.com/vastukar"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="group flex items-center gap-2.5 rounded-lg border border-border-light bg-surface-primary px-3 py-2.5 hover:border-slate-700/50 hover:bg-slate-900/[0.04] dark:hover:border-slate-300/40 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-oe-blue focus-visible:ring-offset-1"
-                >
-                  <span className="shrink-0 h-9 w-9 rounded-lg bg-slate-900 text-white dark:bg-slate-100 dark:text-slate-900 flex items-center justify-center">
-                    <svg viewBox="0 0 24 24" fill="currentColor" className="h-3.5 w-3.5" aria-hidden>
-                      <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231 5.45-6.231zm-1.161 17.52h1.833L7.084 4.126H5.117l11.966 15.644z"/>
-                    </svg>
-                  </span>
-                  <div className="min-w-0 flex-1">
-                    <p className="text-xs font-semibold text-content-primary leading-tight">
-                      X / Twitter
-                    </p>
-                    <p className="text-2xs text-content-tertiary mt-0.5 leading-snug">
-                      {t('about.community_x_short', { defaultValue: 'Release announcements' })}
-                    </p>
-                  </div>
-                </a>
-              </div>
-
-              {/* Review on G2 — a review from a real user helps other teams
-                  find and trust the project. Full-width row like Telegram. */}
-              <a
-                href={G2_REVIEWS_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group flex items-center gap-3 rounded-lg border border-[#FF492C]/25 bg-[#FF492C]/[0.04] px-3.5 py-3 hover:border-[#FF492C]/50 hover:bg-[#FF492C]/[0.08] transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-oe-blue focus-visible:ring-offset-1"
-              >
-                <span className="shrink-0 h-10 w-10 rounded-lg bg-[#FF492C]/15 text-[#FF492C] flex items-center justify-center">
-                  <MessageSquareQuote size={18} />
-                </span>
-                <div className="min-w-0 flex-1">
-                  <div className="flex items-center gap-2">
-                    <p className="text-sm font-semibold text-content-primary leading-tight">
-                      {t('about.community_g2_title', { defaultValue: 'Review us on G2' })}
-                    </p>
-                    <span className="inline-flex items-center rounded-md bg-[#FF492C]/15 text-[#FF492C] text-2xs font-semibold px-1.5 py-0.5">
-                      {t('about.community_g2_badge', { defaultValue: 'Means a lot' })}
-                    </span>
-                  </div>
-                  <p className="text-xs text-content-secondary mt-0.5 leading-snug">
-                    {t('about.community_g2_desc', { defaultValue: 'We would be grateful if you rate us or write a short review - it helps other construction teams find and trust the platform.' })}
-                  </p>
-                </div>
-                <ExternalLink size={13} className="text-content-quaternary group-hover:text-[#FF492C] shrink-0" />
-              </a>
-            </div>
-
-            <p className="mt-auto pt-4 text-[11px] text-content-tertiary text-center">
-              {t('about.community_cta', {
-                defaultValue:
-                  'Have a feature idea? A bug? A workflow we haven\'t thought of? Drop a message - we reply.',
-              })}
-            </p>
-        </div>
-      </Card>
-
       </div>
       {/* /Two-card band */}
 
-      {/* About the project — founder's note (left) + Vastukar ecosystem (right).
-          Two-column inside one Card so heights stay synced on wide screens.
-          On narrow screens the right column stacks below. */}
+      {/* About the project — founder's note (left) + Vastukar ecosystem (right). */}
       <Card className="animate-card-in" style={{ animationDelay: '150ms' }}>
         <div className="p-6 grid grid-cols-1 lg:grid-cols-5 gap-x-8 gap-y-6">
           {/* ── Left column — narrative (3 of 5 cols on wide screens) ── */}
@@ -486,24 +319,9 @@ export function AboutPage() {
                 <p>
                   <Trans
                     i18nKey="about.founder_bio_p2"
-                    defaults='We&rsquo;ve written a fair amount on these topics over the years, and some of it found a wide readership. Alongside the writing, we&rsquo;ve consulted for construction and consulting firms, developers, and software vendors on how they handle project data - treating it as the basis for decisions rather than a byproduct of them. That work let us see the industry from both sides: the people who build the tools, and the people who use them every day. A lot of those observations ended up in the book <book>Vastukar</book>, now available in 16 languages (<books>vastukar.com/books</books>). It is free of charge in every one of them.'
+                    defaults='We&rsquo;ve written a fair amount on these topics over the years, and some of it found a wide readership. Alongside the writing, we&rsquo;ve consulted for construction and consulting firms, developers, and software vendors on how they handle project data - treating it as the basis for decisions rather than a byproduct of them. That work let us see the industry from both sides: the people who build the tools, and the people who use them every day. A lot of those observations ended up in the book <book>Vastukar</book>, now available in 16 languages. It is free of charge in every one of them.'
                     components={{
-                      book: (
-                        <a
-                          href="https://vastukar.com/books"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="text-oe-blue hover:underline italic font-medium"
-                        />
-                      ),
-                      books: (
-                        <a
-                          href="https://vastukar.com/books"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="text-oe-blue hover:underline"
-                        />
-                      ),
+                      book: <span className="text-oe-blue italic font-medium" />,
                     }}
                   />
                 </p>
@@ -589,8 +407,8 @@ export function AboutPage() {
 
           {/* ── Right column — Vastukar ecosystem (2 of 5 cols on wide screens) ──
               Three subsections, matching the "Built on Vastukar"
-              band on vastukar.com:
-                1. Flagship products (vastukar.com)
+              band on the marketing site:
+                1. Flagship products
                 2. Open source on GitHub
                 3. Find us across the network (social) */}
           <aside className="lg:col-span-2 lg:border-l lg:border-border-light lg:pl-8 flex flex-col h-full">
@@ -606,14 +424,11 @@ export function AboutPage() {
 
             {/* ── Subsection 1: Flagship products ── */}
             <p className="mb-2 text-2xs font-semibold uppercase tracking-wider text-content-tertiary">
-              {t('about.ddc_flagship_label', { defaultValue: 'Flagship products · vastukar.com' })}
+              {t('about.ddc_flagship_label', { defaultValue: 'Flagship products' })}
             </p>
             <ul className="mb-6 grid grid-cols-1 sm:grid-cols-2 gap-2.5">
               {[
-                { href: 'https://vastukar.com', label: 'Vastukar', desc: t('about.ddc_link_lab', { defaultValue: 'Lab homepage - research & consulting' }) },
-                { href: 'https://vastukar.com/books/', label: 'Vastukar Guidebook', desc: t('about.ddc_link_book', { defaultValue: 'Reference reading, free, 16 languages' }) },
                 { href: 'https://github.com/Taha-Aalam/Vastukar', label: 'CAD-BIM Converter', desc: t('about.ddc_link_cad', { defaultValue: 'Pipeline: Revit® · IFC · DWG · DGN → data' }) },
-                { href: 'https://vastukar.com/excel-plugin/', label: 'Vastukar Excel Plugin', desc: t('about.ddc_link_excel', { defaultValue: 'Spreadsheet bridge - pull live data into Excel' }) },
               ].map(item => (
                 <li key={item.href}>
                   <a
@@ -678,10 +493,8 @@ export function AboutPage() {
               <div className="flex flex-wrap items-center gap-2">
                 {[
                   { href: 'https://github.com/Taha-Aalam', icon: Github, label: 'GitHub' },
-                  { href: 'https://vastukar.com', icon: Globe, label: 'Website' },
                   { href: 'https://www.linkedin.com/company/vastukar/', icon: Linkedin, label: 'LinkedIn' },
                   { href: 'https://www.youtube.com/@vastukar', icon: Youtube, label: 'YouTube' },
-                  { href: 'https://t.me/vastukar', icon: MessageCircle, label: 'Telegram' },
                 ].map(({ href, icon: Icon, label }) => (
                   <a
                     key={href}
@@ -703,7 +516,7 @@ export function AboutPage() {
       </Card>
 
       {/* Consulting Services — matches the "Build 01 / Workshops 02 / Consulting 03"
-          structure on vastukar.com so users coming from the marketing
+          structure of the marketing site so users coming from the marketing
           page see the same offering shape inside the product. */}
       <Card>
         <div className="p-6">
@@ -819,15 +632,6 @@ export function AboutPage() {
             </div>
           </div>
 
-          {/* CTA row — primary contact button (case-studies link removed per
-              user request 2026-05-20). */}
-          <div className="mt-5 flex flex-wrap items-center gap-3">
-            <a href="https://vastukar.com/contact-support/" target="_blank" rel="noopener noreferrer">
-              <Button variant="primary" size="md" icon={<Mail size={15} />}>
-                {t('about.contact_us', { defaultValue: 'Contact Us' })}
-              </Button>
-            </a>
-          </div>
         </div>
       </Card>
 
@@ -926,23 +730,6 @@ export function AboutPage() {
                   <ArrowRight size={14} className="shrink-0 text-content-quaternary group-hover:text-emerald-500 group-hover:translate-x-0.5 transition-all" />
                 </a>
 
-                <a
-                  href="https://vastukar.com/contact-support/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="group flex items-center gap-3 rounded-lg border border-border-light bg-surface-primary/80 backdrop-blur-sm px-3.5 py-3 hover:border-oe-blue/50 hover:bg-oe-blue/[0.06] dark:hover:bg-blue-900/15 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-oe-blue focus-visible:ring-offset-1"
-                >
-                  <Rocket size={22} className="shrink-0 text-oe-blue group-hover:scale-110 group-hover:-translate-y-0.5 transition-transform" />
-                  <div className="min-w-0 flex-1">
-                    <p className="text-sm font-bold text-content-primary leading-tight">
-                      {t('about.support_consulting', { defaultValue: 'Order Consulting' })}
-                    </p>
-                    <p className="text-2xs text-content-tertiary leading-snug mt-0.5">
-                      {t('about.support_consulting_desc', { defaultValue: 'Need custom features, deployment, or training? We deliver professional solutions worldwide' })}
-                    </p>
-                  </div>
-                  <ArrowRight size={14} className="shrink-0 text-content-quaternary group-hover:text-oe-blue group-hover:translate-x-0.5 transition-all" />
-                </a>
 
                 <button
                   type="button"
@@ -1032,30 +819,12 @@ export function AboutPage() {
             <p className="text-xs text-content-tertiary mb-4">
               {t('about.book_subtitle', { defaultValue: 'By the Vastukar team · 16 languages · 600+ pages · 10 parts, 173 chapters' })}
             </p>
-            <a
-              href="https://vastukar.com/books/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group block overflow-hidden rounded-xl bg-gradient-to-br from-slate-50 via-white to-blue-50 dark:from-slate-900 dark:via-slate-900 dark:to-slate-800 border border-border-light hover:border-oe-blue/40 hover:shadow-lg transition-all max-w-[320px] mx-auto lg:mx-0"
-              title={t('about.book_cta', { defaultValue: 'Pick your language on vastukar.com' })}
-            >
               <img
                 src="/brand/vastukar-book.png"
                 alt={t('about.book_title', { defaultValue: 'Vastukar' })}
                 className="block w-full h-auto transition-transform duration-500 group-hover:scale-[1.02]"
                 loading="lazy"
               />
-            </a>
-            <a
-              href="https://vastukar.com/books/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="mt-4 inline-flex items-center gap-2 rounded-lg bg-oe-blue px-4 py-2 text-sm font-medium text-white hover:bg-oe-blue-hover transition-colors shadow-sm"
-            >
-              <BookOpen size={16} />
-              {t('about.book_download', { defaultValue: 'Download Free' })}
-              <ExternalLink size={14} />
-            </a>
           </div>
           {/* /Left column */}
 
@@ -1173,95 +942,6 @@ export function AboutPage() {
           </div>
         </Card>
 
-        {/* License — restructured into "You can / You must" so users see the
-            AGPL trade-off at a glance instead of reading prose. CTA at bottom
-            matches the Documentation card's "Open Docs" button position. */}
-        <Card className="animate-card-in h-full flex flex-col" style={{ animationDelay: '260ms' }}>
-          <div className="p-6 flex flex-col flex-1">
-            <div className="flex items-center gap-3 mb-3">
-              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-emerald-50 dark:bg-emerald-900/20">
-                <Shield size={20} className="text-emerald-500" />
-              </div>
-              <div className="flex-1 min-w-0">
-                <h2 className="text-lg font-semibold text-content-primary">
-                  {t('about.license_title', { defaultValue: 'License & Open Source' })}
-                </h2>
-                <p className="text-xs text-content-tertiary">
-                  {t('about.license_subtitle', { defaultValue: 'AGPL-3.0 - free for any use, including commercial' })}
-                </p>
-              </div>
-            </div>
-            <p className="text-sm text-content-secondary leading-relaxed mb-4">
-              {t('about.license_desc_short', { defaultValue: 'GNU Affero General Public License v3.0 - copyleft. The full text ships with the source and is also available at gnu.org/licenses/agpl-3.0.' })}
-            </p>
-
-            {/* ── You can / You must — concrete bullet pairs so the AGPL
-                obligations are visible before download, not after lawyers. ── */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-3 mb-4">
-              <div>
-                <p className="mb-1.5 text-2xs font-semibold uppercase tracking-wider text-emerald-600 dark:text-emerald-400">
-                  {t('about.license_youcan_label', { defaultValue: 'You can' })}
-                </p>
-                <ul className="space-y-1 text-xs text-content-secondary leading-snug">
-                  {[
-                    t('about.license_youcan_1', { defaultValue: 'Use for any purpose, including commercial' }),
-                    t('about.license_youcan_2', { defaultValue: 'Self-host on your own hardware' }),
-                    t('about.license_youcan_3', { defaultValue: 'Modify, fork, and redistribute' }),
-                    t('about.license_youcan_4', { defaultValue: 'Build proprietary modules on top' }),
-                  ].map((b, i) => (
-                    <li key={i} className="flex items-start gap-1.5">
-                      <span className="mt-1 inline-block h-1 w-1 rounded-full bg-emerald-500 shrink-0" />
-                      <span>{b}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-              <div>
-                <p className="mb-1.5 text-2xs font-semibold uppercase tracking-wider text-amber-600 dark:text-amber-400">
-                  {t('about.license_youmust_label', { defaultValue: 'You must' })}
-                </p>
-                <ul className="space-y-1 text-xs text-content-secondary leading-snug">
-                  {[
-                    t('about.license_youmust_1', { defaultValue: 'Share modifications under AGPL-3.0' }),
-                    t('about.license_youmust_2', { defaultValue: 'Provide source to network users' }),
-                    t('about.license_youmust_3', { defaultValue: 'Keep copyright + license notices' }),
-                    t('about.license_youmust_4', { defaultValue: 'Document what you changed' }),
-                  ].map((b, i) => (
-                    <li key={i} className="flex items-start gap-1.5">
-                      <span className="mt-1 inline-block h-1 w-1 rounded-full bg-amber-500 shrink-0" />
-                      <span>{b}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </div>
-
-            <div className="flex flex-wrap gap-1.5 mb-4">
-              <Badge variant="success" size="sm">{t('about.license_badge_free', { defaultValue: 'Free to use' })}</Badge>
-              <Badge variant="success" size="sm">{t('about.license_badge_oss', { defaultValue: 'Open source' })}</Badge>
-              <Badge variant="success" size="sm">{t('about.license_badge_selfhost', { defaultValue: 'Self-hosted' })}</Badge>
-              <Badge variant="success" size="sm">{t('about.license_badge_nolockin', { defaultValue: 'No vendor lock-in' })}</Badge>
-              <Badge variant="blue" size="sm">AGPL-3.0</Badge>
-            </div>
-
-            {/* Third-party components. AGPL-3.0 above is our own licence and
-                not the whole story: the build also redistributes LGPL-2.1 and
-                LGPL-3.0 components, and their texts ship inside the artefact
-                where nothing could read them until /api/v1/licenses/. */}
-            <ThirdPartyLicenses className="mb-4" />
-
-            <div className="mt-auto pt-3 border-t border-border-light">
-              <p className="text-xs text-content-secondary mb-2">
-                {t('about.license_commercial_short', { defaultValue: 'Need a commercial licence (without AGPL obligations) or an enterprise SLA?' })}
-              </p>
-              <a href="https://vastukar.com/contact-support/" target="_blank" rel="noopener noreferrer">
-                <Button variant="secondary" size="md" icon={<Shield size={15} />}>
-                  {t('about.license_commercial_cta', { defaultValue: 'Commercial licensing' })}
-                </Button>
-              </a>
-            </div>
-          </div>
-        </Card>
 
       </div>
 
@@ -1272,7 +952,7 @@ export function AboutPage() {
           otherwise a single inviting line asks for the first backer. Kept in
           sync with /docs/legal/ACKNOWLEDGMENTS.md via acknowledgments.ts. */}
       <Card className="animate-card-in" style={{ animationDelay: '280ms' }}>
-        <div className="p-6" data-community-anchor style={{ scrollMarginTop: '80px' }}>
+        <div className="p-6" style={{ scrollMarginTop: '80px' }}>
           <div className="flex items-center gap-2.5 mb-2">
             <div className="flex h-9 w-9 items-center justify-center rounded-full bg-rose-500/10 ring-1 ring-rose-500/20">
               <Heart size={18} className="text-rose-500" fill="currentColor" />
@@ -1452,10 +1132,6 @@ export function AboutPage() {
       <div className="text-center py-4 text-xs text-content-quaternary">
         <p className="flex items-center justify-center gap-1">
           {t('about.built_by', { defaultValue: 'Built by the Vastukar team' })}
-          {' · '}
-          <a href="https://vastukar.com" target="_blank" rel="noopener noreferrer" className="hover:text-oe-blue transition-colors">
-            vastukar.com
-          </a>
         </p>
         <p className="mt-1">&copy; 2026 Vastukar. All rights reserved.</p>
       </div>
