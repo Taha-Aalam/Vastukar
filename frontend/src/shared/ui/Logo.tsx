@@ -1,4 +1,4 @@
-// DDC-CWICR-OE: DataDrivenConstruction · OpenConstructionERP​‌‍⁠​‌‍⁠​‌‍⁠​‌‍⁠
+// DDC-CWICR-OE: DataDrivenConstruction · OpenConstructionERP
 // Copyright (c) 2026 Artem Boiko / DataDrivenConstruction
 import clsx from 'clsx';
 
@@ -18,85 +18,41 @@ const sizeMap = {
 };
 
 /**
- * Brand logo — 3 ascending bars + building on gradient background.
- * Per BRAND.md: gradient #0066ff → #5856d6, white elements.
+ * Brand mark — three ascending bars in front of a building, cut as one
+ * flat glyph. Solid brand blue, no gradient, no gloss, no glow. The mark
+ * is the only decorative colour in the chrome; everything else is neutral.
  *
- * `animate` triggers a staggered entrance:
- *   1. Background scales in
- *   2. Bars grow up one by one
- *   3. Building slides in from right
- *   4. Windows fade in
+ * `animate` keeps its existing API and plays one short entrance, never a loop.
  */
 export function Logo({ size = 'md', animate = false, className }: LogoProps) {
   const isSmall = size === 'xs' || size === 'sm';
-  const gradientId = `oe-lg-${size}-${animate ? 'a' : 's'}`;
-
-  const barStyle = (delay: number, _height: number) =>
-    animate
-      ? {
-          transformOrigin: 'bottom',
-          animation: `oeBarGrow 500ms cubic-bezier(0.34,1.56,0.64,1) both`,
-          animationDelay: `${delay}ms`,
-        }
-      : undefined;
-
-  const buildingStyle = animate
-    ? {
-        animation: `oeBuildingSlide 600ms cubic-bezier(0.22,1,0.36,1) both`,
-        animationDelay: '300ms',
-      }
-    : undefined;
-
-  const windowStyle = (delay: number) =>
-    animate
-      ? {
-          animation: `oeWindowFade 400ms ease both`,
-          animationDelay: `${delay}ms`,
-        }
-      : undefined;
-
-  const bgStyle = animate
-    ? {
-        animation: `oeBgScale 450ms cubic-bezier(0.34,1.56,0.64,1) both`,
-      }
-    : undefined;
 
   return (
     <div
-      className={clsx(sizeMap[size], 'relative shrink-0', className)}
-      style={animate ? { animation: 'oeLogoFloat 3s ease-in-out 1.2s infinite, oeLogoGlow 3s ease-in-out 1.2s infinite' } : undefined}
+      className={clsx(sizeMap[size], 'relative shrink-0', animate && 'animate-fade-in', className)}
     >
-      <svg viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full">
-        <defs>
-          <linearGradient id={gradientId} x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor="#0066ff" />
-            <stop offset="100%" stopColor="#5856d6" />
-          </linearGradient>
-        </defs>
+      <svg viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full" aria-hidden="true">
+        {/* Flat tile. Nested radii add up: outer 96, inner 8. */}
+        <rect x="32" y="32" width="448" height="448" rx="96" fill="var(--oe-blue)" />
 
-        {/* Background */}
-        <rect x="32" y="32" width="448" height="448" rx="96" fill={`url(#${gradientId})`} style={bgStyle} />
-
-        {/* Bar 1 (short) */}
-        <rect x="102" y="296" width="42" height="114" rx="6" fill="#fff" opacity=".85" style={barStyle(120, 114)} />
-        {/* Bar 2 (medium) */}
-        <rect x="162" y="233" width="42" height="177" rx="6" fill="#fff" opacity=".95" style={barStyle(200, 177)} />
-        {/* Bar 3 (tall) */}
-        <rect x="222" y="176" width="42" height="234" rx="6" fill="#fff" opacity=".85" style={barStyle(280, 234)} />
+        {/* Three ascending bars */}
+        <rect x="102" y="296" width="42" height="114" rx="8" fill="#fff" opacity=".88" />
+        <rect x="162" y="233" width="42" height="177" rx="8" fill="#fff" />
+        <rect x="222" y="176" width="42" height="234" rx="8" fill="#fff" opacity=".88" />
 
         {/* Building body */}
-        <rect x="282" y="150" width="128" height="260" rx="8" fill="#fff" opacity=".9" style={buildingStyle} />
+        <rect x="282" y="150" width="128" height="260" rx="8" fill="#fff" />
 
         {/* Windows + door — only shown at medium+ sizes */}
         {!isSmall && (
-          <g style={buildingStyle}>
-            <rect x="304" y="182" width="26" height="28" rx="4" fill={`url(#${gradientId})`} opacity=".5" style={windowStyle(550)} />
-            <rect x="362" y="182" width="26" height="28" rx="4" fill={`url(#${gradientId})`} opacity=".5" style={windowStyle(600)} />
-            <rect x="304" y="226" width="26" height="28" rx="4" fill={`url(#${gradientId})`} opacity=".5" style={windowStyle(650)} />
-            <rect x="362" y="226" width="26" height="28" rx="4" fill={`url(#${gradientId})`} opacity=".5" style={windowStyle(700)} />
-            <rect x="304" y="272" width="26" height="28" rx="4" fill={`url(#${gradientId})`} opacity=".45" style={windowStyle(750)} />
-            <rect x="362" y="272" width="26" height="28" rx="4" fill={`url(#${gradientId})`} opacity=".45" style={windowStyle(800)} />
-            <rect x="329" y="328" width="34" height="82" rx="4" fill={`url(#${gradientId})`} opacity=".55" style={windowStyle(850)} />
+          <g fill="var(--oe-blue)">
+            <rect x="304" y="182" width="26" height="28" rx="4" opacity=".45" />
+            <rect x="362" y="182" width="26" height="28" rx="4" opacity=".45" />
+            <rect x="304" y="226" width="26" height="28" rx="4" opacity=".45" />
+            <rect x="362" y="226" width="26" height="28" rx="4" opacity=".45" />
+            <rect x="304" y="272" width="26" height="28" rx="4" opacity=".38" />
+            <rect x="362" y="272" width="26" height="28" rx="4" opacity=".38" />
+            <rect x="329" y="328" width="34" height="82" rx="4" opacity=".55" />
           </g>
         )}
       </svg>
@@ -127,13 +83,7 @@ const gapSizeMap = {
   xl: 'gap-3',
 };
 
-/**
- * Logo + brand name. Per BRAND.md:
- * - Font: Plus Jakarta Sans 800
- * - Name: "OpenConstructionERP" (PascalCase, one word)
- * - Letter-spacing: -0.02em
- * - Icon is compact, name is prominent
- */
+/** Logo + brand name in the same interface family as the rest of the app. */
 export function LogoWithText({ size = 'md', animate, className }: LogoWithTextProps) {
   return (
     <div className={clsx('flex items-center', gapSizeMap[size], className)}>
@@ -143,7 +93,6 @@ export function LogoWithText({ size = 'md', animate, className }: LogoWithTextPr
           textSizeMap[size],
           'font-medium text-content-primary whitespace-nowrap tracking-tight',
         )}
-        style={{ fontFamily: "'Plus Jakarta Sans', system-ui, sans-serif", letterSpacing: '-0.02em' }}
       >
         Vastukar
       </span>

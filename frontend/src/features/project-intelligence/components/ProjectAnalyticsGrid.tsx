@@ -110,7 +110,17 @@ interface ProjectAnalyticsGridProps {
   projectId: string;
 }
 
-const COLORS = ['#58a6ff', '#bc8cff', '#3fb950', '#f0883e', '#ffa657', '#8b949e'];
+// One accent leads; the remaining series are steps of the neutral ramp.
+// Chart chrome is muted so the data carries the colour.
+const ACCENT = '#0071e3';
+const NEUTRAL_STEPS = ['#5b6470', '#8b949e', '#b9c0c8', '#d9dde2'];
+const COLORS = [ACCENT, ...NEUTRAL_STEPS];
+const GRID_STROKE = 'var(--oe-border-light)';
+const AXIS_TICK = {
+  fontSize: 11,
+  fontFamily: 'ui-monospace, SFMono-Regular, Menlo, monospace',
+  fill: 'var(--oe-text-tertiary)',
+};
 
 function WidgetCard({
   testId,
@@ -126,10 +136,10 @@ function WidgetCard({
   return (
     <div
       data-testid={testId}
-      className="rounded-xl bg-white dark:bg-gray-800/60 border border-border-light shadow-sm p-4 h-64 flex flex-col"
+      className="rounded-xl border border-border-light bg-surface-primary p-4 h-64 flex flex-col"
     >
       <div className="mb-2">
-        <h4 className="text-xs font-semibold text-content-primary">{title}</h4>
+        <h4 className="text-sm font-medium text-content-primary">{title}</h4>
         {subtitle && (
           <p className="text-2xs text-content-tertiary">{subtitle}</p>
         )}
@@ -327,18 +337,18 @@ export function ProjectAnalyticsGrid({ projectId }: ProjectAnalyticsGridProps) {
         ) : (
           <ResponsiveContainer width="100%" height="100%">
             <BarChart data={pareto} margin={{ left: 0, right: 8, top: 4, bottom: 4 }}>
-              <CartesianGrid strokeDasharray="3 3" stroke="#8b949e22" />
+              <CartesianGrid strokeDasharray="3 3" stroke={GRID_STROKE} strokeWidth={0.5} />
               <XAxis
                 dataKey="label"
-                tick={{ fontSize: 9 }}
+                tick={AXIS_TICK}
                 interval={0}
                 angle={-20}
                 textAnchor="end"
                 height={36}
               />
-              <YAxis tick={{ fontSize: 10 }} />
+              <YAxis tick={AXIS_TICK} />
               <Tooltip />
-              <Bar dataKey="value" fill="#58a6ff" />
+              <Bar dataKey="value" fill={ACCENT} />
             </BarChart>
           </ResponsiveContainer>
         )}
@@ -359,11 +369,11 @@ export function ProjectAnalyticsGrid({ projectId }: ProjectAnalyticsGridProps) {
         ) : (
           <ResponsiveContainer width="100%" height="100%">
             <BarChart data={volatility} margin={{ left: 0, right: 8, top: 4, bottom: 4 }}>
-              <CartesianGrid strokeDasharray="3 3" stroke="#8b949e22" />
-              <XAxis dataKey="name" tick={{ fontSize: 10 }} />
-              <YAxis tick={{ fontSize: 10 }} />
+              <CartesianGrid strokeDasharray="3 3" stroke={GRID_STROKE} strokeWidth={0.5} />
+              <XAxis dataKey="name" tick={AXIS_TICK} />
+              <YAxis tick={AXIS_TICK} />
               <Tooltip />
-              <Bar dataKey="value" fill="#bc8cff" />
+              <Bar dataKey="value" fill={NEUTRAL_STEPS[0]} />
             </BarChart>
           </ResponsiveContainer>
         )}
@@ -387,23 +397,23 @@ export function ProjectAnalyticsGrid({ projectId }: ProjectAnalyticsGridProps) {
               data={laborPhases}
               margin={{ left: 0, right: 8, top: 4, bottom: 4 }}
             >
-              <CartesianGrid strokeDasharray="3 3" stroke="#8b949e22" />
-              <XAxis dataKey="phase" tick={{ fontSize: 10 }} />
-              <YAxis tick={{ fontSize: 10 }} />
+              <CartesianGrid strokeDasharray="3 3" stroke={GRID_STROKE} strokeWidth={0.5} />
+              <XAxis dataKey="phase" tick={AXIS_TICK} />
+              <YAxis tick={AXIS_TICK} />
               <Tooltip />
               <Area
                 type="monotone"
                 dataKey="labor_cost"
                 stackId="1"
-                stroke="#3fb950"
-                fill="#3fb95033"
+                stroke={NEUTRAL_STEPS[1]}
+                fill="#8b949e33"
               />
               <Area
                 type="monotone"
                 dataKey="total_cost"
                 stackId="1"
-                stroke="#58a6ff"
-                fill="#58a6ff33"
+                stroke={ACCENT}
+                fill="#0071e333"
               />
             </AreaChart>
           </ResponsiveContainer>
@@ -454,12 +464,12 @@ export function ProjectAnalyticsGrid({ projectId }: ProjectAnalyticsGridProps) {
       >
         <div className="h-full flex flex-col items-center justify-center text-center">
           <div
-            className={`text-3xl font-bold tabular-nums ${
+            className={`text-3xl font-medium tabular-nums ${
               coverage.drift > 0
-                ? 'text-amber-500'
+                ? 'text-semantic-warning'
                 : coverage.drift < 0
-                  ? 'text-rose-500'
-                  : 'text-emerald-500'
+                  ? 'text-semantic-error'
+                  : 'text-semantic-success'
             }`}
             data-testid="pi-scope-coverage-pct"
           >
@@ -474,8 +484,8 @@ export function ProjectAnalyticsGrid({ projectId }: ProjectAnalyticsGridProps) {
           </div>
           {coverage.drift !== 0 && (
             <div
-              className={`text-2xs mt-0.5 ${
-                coverage.drift > 0 ? 'text-amber-500' : 'text-rose-500'
+              className={`text-xs mt-1 ${
+                coverage.drift > 0 ? 'text-semantic-warning' : 'text-semantic-error'
               }`}
               data-testid="pi-scope-drift"
             >
@@ -496,7 +506,7 @@ export function ProjectAnalyticsGrid({ projectId }: ProjectAnalyticsGridProps) {
               onClick={() => setBaselineM.mutate()}
               disabled={setBaselineM.isPending}
               data-testid="pi-set-baseline"
-              className="mt-2 inline-flex items-center gap-1.5 px-2.5 py-1 text-2xs font-medium text-oe-blue border border-oe-blue/30 rounded-md hover:bg-oe-blue/5 transition-colors disabled:opacity-50"
+              className="mt-2 inline-flex items-center gap-2 px-3 py-1 text-xs font-medium text-oe-blue-text border border-oe-blue/30 rounded-md hover:bg-oe-blue-subtle transition-colors disabled:opacity-50"
             >
               {setBaselineM.isPending ? (
                 <Loader2 size={11} className="animate-spin" />
@@ -508,7 +518,7 @@ export function ProjectAnalyticsGrid({ projectId }: ProjectAnalyticsGridProps) {
               })}
             </button>
           ) : (
-            <div className="text-[10px] text-content-quaternary mt-1.5">
+            <div className="text-xs text-content-quaternary mt-2">
               {coverage.source === 'metadata'
                 ? t('project_intelligence.analytics.baseline_src_metadata', {
                     defaultValue: 'Baseline: captured',
@@ -521,7 +531,7 @@ export function ProjectAnalyticsGrid({ projectId }: ProjectAnalyticsGridProps) {
             </div>
           )}
           {baselineMsg && (
-            <div className="text-[10px] text-content-tertiary mt-1" data-testid="pi-baseline-msg">
+            <div className="text-xs text-content-tertiary mt-1" data-testid="pi-baseline-msg">
               {baselineMsg}
             </div>
           )}
@@ -546,23 +556,23 @@ export function ProjectAnalyticsGrid({ projectId }: ProjectAnalyticsGridProps) {
       >
         <div className="h-full flex flex-col items-center justify-center gap-1">
           <div
-            className="text-3xl font-bold text-content-primary tabular-nums"
+            className="text-3xl font-medium text-content-primary tabular-nums"
             data-testid="pi-validation-passed"
           >
             {validation.passed}
-            <span className="text-lg text-content-tertiary font-normal">
+            <span className="text-base text-content-tertiary font-normal">
               {' '}
               / {validation.total}
             </span>
           </div>
           <div className="flex items-center gap-3 text-2xs mt-1">
-            <span className="text-rose-500" data-testid="pi-validation-errors">
+            <span className="text-semantic-error" data-testid="pi-validation-errors">
               {validation.errors}{' '}
               {t('project_intelligence.analytics.errors', {
                 defaultValue: 'errors',
               })}
             </span>
-            <span className="text-amber-500">
+            <span className="text-semantic-warning">
               {validation.warnings}{' '}
               {t('project_intelligence.analytics.warnings', {
                 defaultValue: 'warnings',

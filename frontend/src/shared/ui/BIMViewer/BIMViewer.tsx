@@ -442,11 +442,11 @@ function SubTable({ data }: { data: Record<string, string> }) {
 /** Render a boolean as a coloured tag. */
 function BoolTag({ value }: { value: boolean }) {
   return value ? (
-    <span className="inline-flex items-center rounded-full bg-emerald-500/15 text-emerald-700 dark:text-emerald-300 px-2 py-[1px] text-[10px] font-semibold">
+    <span className="inline-flex items-center rounded-full bg-emerald-500/15 text-emerald-700 dark:text-emerald-300 px-2 py-0 text-[10px] font-semibold">
       true
     </span>
   ) : (
-    <span className="inline-flex items-center rounded-full bg-rose-500/15 text-rose-700 dark:text-rose-300 px-2 py-[1px] text-[10px] font-semibold">
+    <span className="inline-flex items-center rounded-full bg-rose-500/15 text-rose-700 dark:text-rose-300 px-2 py-0 text-[10px] font-semibold">
       false
     </span>
   );
@@ -3611,7 +3611,7 @@ export function BIMViewer({
                 <>
                   <div className="h-2 w-full rounded-full bg-surface-tertiary overflow-hidden ring-1 ring-border-light">
                     <div
-                      className="h-full rounded-full bg-gradient-to-r from-oe-blue via-blue-400 to-cyan-400 transition-all duration-150 ease-out"
+                      className="h-full rounded-full bg-gradient-to-r from-oe-blue via-blue-400 to-cyan-400 transition duration-150 ease-out"
                       style={{
                         width: `${Math.max(2, Math.round(geometryProgress * 100))}%`,
                       }}
@@ -4527,7 +4527,7 @@ export function BIMViewer({
           className="absolute bottom-3 end-3 z-20 flex flex-col items-end gap-1 rounded-lg bg-surface-primary border border-border-light shadow-sm px-3 py-2 min-w-[180px]"
           data-testid="bim-5d-legend"
         >
-          <span className="text-[10px] font-semibold uppercase tracking-wide text-content-tertiary">
+          <span className="text-[10px] font-semibold text-content-tertiary">
             {t('bim.5d_legend_title', { defaultValue: 'Unit rate' })}
           </span>
           <div
@@ -4584,7 +4584,7 @@ export function BIMViewer({
           className="absolute bottom-3 end-3 z-20 flex flex-col items-end gap-1 rounded-lg bg-surface-primary border border-border-light shadow-sm px-3 py-2 min-w-[180px]"
           data-testid="bim-progress-legend"
         >
-          <span className="text-[10px] font-semibold uppercase tracking-wide text-content-tertiary">
+          <span className="text-[10px] font-semibold text-content-tertiary">
             {t('bim.progress_legend_title', { defaultValue: 'BOQ progress' })}
           </span>
           <div
@@ -4627,7 +4627,7 @@ export function BIMViewer({
           for installed / in-progress / pending, mirroring the mesh colours. */}
       {colorByMode === 'install_status' && (
         <div className="absolute bottom-3 end-3 z-20 flex flex-col gap-1 rounded-lg bg-surface-primary border border-border-light shadow-sm px-3 py-2 min-w-[150px]">
-          <span className="text-[10px] font-semibold uppercase tracking-wide text-content-tertiary">
+          <span className="text-[10px] font-semibold text-content-tertiary">
             {t('bim.install_status_legend_title', { defaultValue: 'Install status' })}
           </span>
           {(
@@ -4952,7 +4952,7 @@ export function BIMViewer({
                 share visually via a tinted fill that stretches from the
                 left, with category name and count overlaid. */}
             <div>
-              <h4 className="text-[10px] font-bold uppercase tracking-wider text-content-tertiary mb-2">
+              <h4 className="text-[10px] font-bold text-content-tertiary mb-2">
                 {t('bim.by_category', { defaultValue: 'By category' })}
               </h4>
               <div className="space-y-0.5 max-h-48 overflow-y-auto -mx-1 px-1">
@@ -4995,7 +4995,7 @@ export function BIMViewer({
             {/* Storey breakdown — same row-bg style for visual rhythm */}
             {modelSummary.storeys.length > 1 && (
               <div>
-                <h4 className="text-[10px] font-bold uppercase tracking-wider text-content-tertiary mb-2">
+                <h4 className="text-[10px] font-bold text-content-tertiary mb-2">
                   {t('bim.by_storey', { defaultValue: 'By storey' })}
                 </h4>
                 <div className="space-y-0.5 max-h-36 overflow-y-auto -mx-1 px-1">
@@ -5076,7 +5076,7 @@ export function BIMViewer({
                 vs "what the filter narrowed to". */}
             {modelSummary.aggregations.length > 0 && (
               <div className="pt-2 border-t border-border-light">
-                <h4 className="text-[10px] font-bold uppercase tracking-wider text-content-tertiary mb-2">
+                <h4 className="text-[10px] font-bold text-content-tertiary mb-2">
                   {modelSummary.scope === 'selection'
                     ? t('bim.group_quantities_selection', {
                         defaultValue: 'Selection quantities',
@@ -5112,7 +5112,7 @@ export function BIMViewer({
                         >
                           <div className="flex items-center gap-1 min-w-0">
                             <span
-                              className="text-[9px] font-bold uppercase text-emerald-600/90 tracking-wider shrink-0"
+                              className="text-[9px] font-bold text-emerald-600/90 shrink-0"
                               aria-hidden
                             >
                               Σ
@@ -5149,7 +5149,7 @@ export function BIMViewer({
                           <div className="flex items-baseline justify-between gap-2">
                             <div className="flex items-center gap-1 min-w-0">
                               <span
-                                className="text-[9px] font-bold uppercase text-blue-600/90 tracking-wider shrink-0"
+                                className="text-[9px] font-bold text-blue-600/90 shrink-0"
                                 aria-hidden
                               >
                                 ⌀
@@ -5211,7 +5211,7 @@ export function BIMViewer({
                           <span className="text-[11px] text-content-secondary truncate flex-1">
                             {a.label}
                           </span>
-                          <span className="text-[9px] text-sky-600/90 font-bold uppercase tracking-wider shrink-0">
+                          <span className="text-[9px] text-sky-600/90 font-bold shrink-0">
                             {a.uniqueValues.length === 1
                               ? '='
                               : t('bim.agg_distinct_label', {
@@ -5249,7 +5249,7 @@ export function BIMViewer({
             )}
             {/* Keyboard shortcuts hint */}
             <div className="pt-2 border-t border-border-light">
-              <h4 className="text-[10px] font-semibold text-content-quaternary uppercase tracking-wider mb-1">
+              <h4 className="text-[10px] font-semibold text-content-quaternary mb-1">
                 {t('bim.shortcuts', { defaultValue: 'Shortcuts' })}
               </h4>
               <div className="grid grid-cols-2 gap-x-2 gap-y-0.5 text-[10px] text-content-tertiary">
@@ -5941,7 +5941,7 @@ export function BIMViewer({
                             {d.document_name || '—'}
                           </div>
                           {d.document_category && (
-                            <div className="text-[9px] text-content-tertiary uppercase tracking-wider">
+                            <div className="text-[9px] text-content-tertiary">
                               {d.document_category}
                             </div>
                           )}
@@ -5997,7 +5997,7 @@ export function BIMViewer({
                         >
                           <div className="flex items-center gap-1.5">
                             <span
-                              className={`text-[9px] px-1 rounded uppercase tracking-wider ${
+                              className={`text-[9px] px-1 rounded ${
                                 task.status === 'closed' || task.status === 'done'
                                   ? 'bg-emerald-100 text-emerald-700'
                                   : task.status === 'in_progress'
@@ -6280,7 +6280,7 @@ function ClipControls({
       style={{ insetInlineStart: leftOffset }}
     >
       <div className="flex items-center justify-between">
-        <h3 className="text-xs font-semibold uppercase tracking-wide text-content-primary">
+        <h3 className="text-xs font-semibold text-content-primary">
           {t('bim.clip_title', { defaultValue: 'Section & clipping' })}
         </h3>
         <button
@@ -6332,7 +6332,7 @@ function ClipControls({
             ] as const
           ).map(([axisLabel, minKey, maxKey]) => (
             <div key={axisLabel} className="flex flex-col gap-1">
-              <div className="flex items-center justify-between text-[10px] text-content-tertiary uppercase tracking-wider">
+              <div className="flex items-center justify-between text-[10px] text-content-tertiary">
                 <span>
                   {t('bim.clip_axis', {
                     defaultValue: 'Axis {{axis}}',
@@ -6553,7 +6553,7 @@ function ColorModeLegend({
       className="absolute bottom-12 end-3 z-20 flex flex-col gap-1 rounded-lg bg-surface-primary/95 backdrop-blur-sm border border-border-light shadow-sm px-3 py-2 max-w-[220px]"
       data-testid="bim-color-legend"
     >
-      <span className="text-[10px] font-semibold uppercase tracking-wide text-content-tertiary">
+      <span className="text-[10px] font-semibold text-content-tertiary">
         {titleByMode[mode]}
       </span>
       <ul className="flex flex-col gap-0.5">

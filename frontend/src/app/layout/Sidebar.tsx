@@ -27,7 +27,6 @@ import {
   HelpCircle,
   History,
   Plus,
-  Search,
   Pin,
   PinOff,
   Eye,
@@ -52,7 +51,6 @@ import { apiGet } from '@/shared/lib/api';
 import { useViewModeStore } from '@/stores/useViewModeStore';
 import { useNavPendingStore } from '@/shared/lib/navigationProgress';
 import { useRecentStore } from '@/stores/useRecentStore';
-import { useGlobalSearchStore } from '@/stores/useGlobalSearchStore';
 import { getModuleNavItems, navItemModuleId } from '@/modules/_registry';
 import { RUNTIME_MODULE_ICONS, runtimeModuleRoute, useRuntimeUiEntries } from '@/features/modules/runtimeModules';
 import { useSidebarBadges } from '@/shared/hooks/useSidebarBadges';
@@ -608,7 +606,6 @@ export function Sidebar({ onClose }: { onClose?: () => void }) {
     }
   }, [moreOpen]);
   const badgeCounts = useSidebarBadges();
-  const openSearch = useGlobalSearchStore((s) => s.openModal);
   const collapsedToIcons = useSidebarCollapseStore((s) => s.iconified);
   const toggleCollapsed = useSidebarCollapseStore((s) => s.toggle);
   // The Rail menu view is the icon-only sidebar; its edge tab still opens the
@@ -1461,36 +1458,7 @@ export function Sidebar({ onClose }: { onClose?: () => void }) {
         />
       </button>
 
-      {/* Search-as-jumper — modern-SaaS-style. Triggers the existing global
-          semantic-search palette. Keeps the visible affordance for
-          users who don't know the ⌘K shortcut, while still surfacing
-          it for those who do. When iconified, collapses to a single
-          icon button — the ⌘K shortcut still works regardless. */}
-      <div className={clsx('pt-1 pb-1', iconified ? 'px-2 flex justify-center' : 'px-3')}>
-        <button
-          type="button"
-          onClick={() => openSearch()}
-          className={clsx(
-            'group flex items-center gap-2 rounded-md border border-border-light bg-surface-secondary/60 text-[12px] text-content-tertiary hover:border-content-quaternary/30 hover:bg-surface-secondary hover:text-content-secondary transition-colors',
-            iconified ? 'h-8 w-8 justify-center' : 'w-full px-2.5 py-1.5',
-          )}
-          aria-label={t('common.search', { defaultValue: 'Search' })}
-          title={iconified ? t('common.search', { defaultValue: 'Search' }) : undefined}
-        >
-          <Search size={13} strokeWidth={1.75} className="shrink-0" />
-          {!iconified && (
-            <>
-              <span className="truncate">
-                {t('common.search', { defaultValue: 'Search' })}
-              </span>
-              <kbd className="ms-auto hidden sm:inline-flex items-center gap-0.5 rounded border border-border-light bg-surface-primary px-1 py-px text-[9px] font-medium text-content-quaternary group-hover:text-content-tertiary">
-                ⌘K
-              </kbd>
-            </>
-          )}
-        </button>
-      </div>
-
+      {/* Search lives once, in the header, with the ⌘K keycap. */}
       {!iconified && (
         <MenuModeBar
           mode={menuLayout.activeMode}

@@ -177,7 +177,7 @@ function resolveActiveProvider(
 
 function TypingDots() {
   return (
-    <div className="flex items-center gap-[5px] px-4 py-3">
+    <div className="flex items-center gap-1 px-4 py-3">
       {[0, 1, 2].map((i) => (
         <span
           key={i}
@@ -228,7 +228,7 @@ function ChatBubble({
     >
       {/* Bubble */}
       <div
-        className={`relative max-w-[85%] sm:max-w-[75%] px-[14px] py-[9px] text-[15px] leading-[1.38] ${
+        className={`relative max-w-[85%] sm:max-w-[75%] px-3 py-2 text-[15px] leading-[1.38] ${
           isUser
             ? 'bg-oe-blue text-white rounded-[20px] rounded-br-[6px]'
             : 'bg-surface-secondary text-content-primary rounded-[20px] rounded-bl-[6px]'
@@ -310,8 +310,8 @@ function ChatBubble({
               key={i}
               onClick={() => onOptionClick(opt)}
               className="inline-flex items-center gap-1.5 rounded-full border border-oe-blue/30
-                bg-oe-blue/[0.06] px-3.5 py-[7px] text-[13px] font-medium text-oe-blue
-                transition-all duration-150 ease-out
+                bg-oe-blue/[0.06] px-3.5 py-2 text-[13px] font-medium text-oe-blue
+                transition duration-150 ease-out
                 hover:bg-oe-blue hover:text-white hover:border-oe-blue hover:shadow-sm
                 active:scale-[0.97]"
             >
@@ -336,7 +336,7 @@ function ChatBubble({
               navigate(`/ai-estimate?tab=text&q=${encodeURIComponent(msg.query!)}`)
             }
             className="inline-flex items-center gap-1.5 rounded-full border border-border-light
-              bg-surface-elevated px-3 py-[6px] text-[12px] font-medium text-content-secondary
+              bg-surface-elevated px-3 py-2 text-[12px] font-medium text-content-secondary
               transition-colors hover:border-oe-blue/40 hover:bg-oe-blue/[0.06] hover:text-oe-blue"
           >
             <Calculator size={13} />
@@ -364,7 +364,7 @@ function ChatBubble({
 
       {/* Timestamp */}
       <p
-        className={`mt-[3px] text-[11px] ${
+        className={`mt-1 text-[11px] ${
           isUser ? 'text-content-quaternary/50 mr-1' : 'text-content-quaternary/50 ml-1'
         }`}
       >
@@ -396,7 +396,7 @@ function AiToolsStrip() {
   ];
   return (
     <section aria-label={t('ai.cross_strip_label', { defaultValue: 'Other AI tools' })}>
-      <p className="flex items-center gap-1.5 text-2xs font-semibold text-content-tertiary uppercase tracking-wide mb-2">
+      <p className="flex items-center gap-1.5 text-2xs font-semibold text-content-tertiary mb-2">
         <Sparkles size={11} />
         {t('ai.cross_strip_title', { defaultValue: 'Other AI tools' })}
       </p>
@@ -811,7 +811,7 @@ export function AdvisorPage() {
                     key={s}
                     onClick={() => sendMessage(s)}
                     className="rounded-full border border-border-light bg-surface-elevated px-4 py-2 text-[13px] text-content-secondary
-                      transition-all duration-150
+                      transition duration-150
                       hover:border-oe-blue/40 hover:bg-oe-blue/[0.06] hover:text-oe-blue
                       active:scale-[0.97]"
                   >
@@ -822,7 +822,7 @@ export function AdvisorPage() {
 
               {/* Cross-module: where to go next */}
               <div className="w-full max-w-lg rounded-xl border border-border-light bg-surface-secondary/40 px-4 py-3 text-left">
-                <p className="flex items-center gap-1.5 text-2xs font-semibold text-content-tertiary uppercase tracking-wide mb-2">
+                <p className="flex items-center gap-1.5 text-2xs font-semibold text-content-tertiary mb-2">
                   <Info size={11} />
                   {t('ai.advisor_next_steps', { defaultValue: 'Turn answers into an estimate' })}
                 </p>
@@ -902,10 +902,10 @@ export function AdvisorPage() {
                 })}
                 rows={1}
                 className="w-full resize-none rounded-[22px] border border-border bg-surface-primary
-                  px-4 py-[10px] pe-10 text-[15px] leading-[1.35]
+                  px-4 py-2 pe-10 text-[15px] leading-[1.35]
                   placeholder:text-content-tertiary/60
                   focus:outline-none focus:ring-2 focus:ring-oe-blue/20 focus:border-oe-blue/40
-                  transition-all duration-150"
+                  transition duration-150"
                 disabled={loading}
                 style={{ maxHeight: '120px' }}
               />
@@ -916,7 +916,7 @@ export function AdvisorPage() {
               onClick={() => sendMessage()}
               disabled={!canSend}
               className={`flex h-[38px] w-[38px] shrink-0 items-center justify-center rounded-full
-                transition-all duration-200 ease-out mb-[1px]
+                transition duration-200 ease-out mb-0
                 ${
                   canSend
                     ? 'bg-oe-blue text-white shadow-sm hover:bg-oe-blue-hover active:scale-[0.93]'

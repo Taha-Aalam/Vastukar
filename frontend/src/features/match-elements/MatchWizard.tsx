@@ -146,7 +146,7 @@ function Stepper({
               onClick={reachable ? () => onJump(n) : undefined}
               disabled={!reachable}
               className={clsx(
-                'group flex items-center gap-2.5 transition-all duration-300',
+                'group flex items-center gap-2.5 transition duration-300',
                 reachable && 'cursor-pointer',
                 !reachable && 'cursor-not-allowed',
               )}
@@ -161,7 +161,7 @@ function Stepper({
             >
               <span
                 className={clsx(
-                  'w-11 h-11 rounded-full flex items-center justify-center text-base font-bold transition-all duration-300',
+                  'w-11 h-11 rounded-full flex items-center justify-center text-base font-bold transition duration-300',
                   isCurrent &&
                     'bg-gradient-to-br from-indigo-500 to-indigo-700 text-white shadow-lg shadow-indigo-500/40 ring-4 ring-indigo-100 dark:ring-indigo-900/40 scale-110',
                   isDone &&
@@ -221,7 +221,7 @@ function SelectableTile({
       onClick={onClick}
       disabled={disabled}
       className={clsx(
-        'group relative text-left rounded-2xl px-4 py-3.5 transition-all duration-200',
+        'group relative text-left rounded-2xl px-4 py-3.5 transition duration-200',
         'border bg-surface-primary',
         selected
           ? 'border-indigo-500/60 bg-gradient-to-br from-indigo-50 to-white dark:from-indigo-950/40 dark:to-surface-primary shadow-md shadow-indigo-500/10 ring-1 ring-indigo-500/20'
@@ -375,7 +375,7 @@ function StageStep({
   return (
     <div className="animate-[wizard-fade_300ms_ease-out]">
       <header className="mb-6">
-        <p className="text-xs uppercase tracking-[0.14em] text-indigo-600 dark:text-indigo-400 font-semibold mb-1.5">
+        <p className="text-xs text-indigo-600 dark:text-indigo-400 font-semibold mb-1.5">
           {t('match_wizard.step1_eyebrow', 'Step 1')}
         </p>
         <h2 className="text-2xl font-semibold tracking-tight text-content-primary mb-1.5">
@@ -397,7 +397,7 @@ function StageStep({
         type="button"
         onClick={() => onPick('')}
         className={clsx(
-          'group w-full mb-5 rounded-2xl border px-5 py-3.5 text-left transition-all duration-200 flex items-center gap-3',
+          'group w-full mb-5 rounded-2xl border px-5 py-3.5 text-left transition duration-200 flex items-center gap-3',
           selected === ''
             ? 'border-indigo-500/60 bg-gradient-to-r from-indigo-50 to-white dark:from-indigo-950/40 dark:to-surface-primary shadow-md shadow-indigo-500/10 ring-1 ring-indigo-500/20'
             : 'border-border-light bg-surface-primary hover:border-indigo-300 dark:hover:border-indigo-800 hover:shadow-sm hover:-translate-y-px',
@@ -445,7 +445,7 @@ function StageStep({
               onClick={() => onPick(s)}
               aria-pressed={isSel}
               className={clsx(
-                'group relative overflow-hidden text-left rounded-2xl border p-4 transition-all duration-200',
+                'group relative overflow-hidden text-left rounded-2xl border p-4 transition duration-200',
                 'bg-surface-primary',
                 isSel
                   ? 'border-indigo-500/60 shadow-md shadow-indigo-500/15 ring-1 ring-indigo-500/25'
@@ -486,7 +486,7 @@ function StageStep({
       {/* Compact strip — less common phases. Icon-led so the user can
           scan visually; full label sits next to the icon so nothing is
           lost behind a tooltip. Wraps freely on narrow widths. */}
-      <div className="text-[11px] uppercase tracking-[0.14em] text-content-tertiary font-semibold mb-2">
+      <div className="text-[11px] text-content-tertiary font-semibold mb-2">
         {t('match_wizard.stage_other_label', 'Other phases')}
       </div>
       <div className="flex flex-wrap gap-1.5">
@@ -502,7 +502,7 @@ function StageStep({
               aria-pressed={isSel}
               title={blurbFor(s)}
               className={clsx(
-                'inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium transition-all duration-200',
+                'inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium transition duration-200',
                 isSel
                   ? 'bg-indigo-600 text-white shadow-sm shadow-indigo-500/30 ring-1 ring-indigo-400/40'
                   : 'bg-surface-secondary text-content-secondary border border-border-light hover:border-indigo-300 dark:hover:border-indigo-800 hover:text-content-primary hover:shadow-sm',
@@ -527,7 +527,7 @@ function StageStep({
                 key={s.id}
                 type="button"
                 onClick={() => onResume(s.id)}
-                className="text-xs px-2.5 py-1 rounded-full bg-white dark:bg-surface-primary border border-amber-300/60 dark:border-amber-700/40 hover:bg-amber-50 dark:hover:bg-amber-900/20 text-amber-900 dark:text-amber-100 shadow-sm transition-all hover:shadow-md hover:-translate-y-px"
+                className="text-xs px-2.5 py-1 rounded-full bg-white dark:bg-surface-primary border border-amber-300/60 dark:border-amber-700/40 hover:bg-amber-50 dark:hover:bg-amber-900/20 text-amber-900 dark:text-amber-100 shadow-sm transition-colors hover:shadow-md hover:-translate-y-px"
                 title={s.id}
               >
                 {s.name || s.id.slice(0, 8)}
@@ -659,7 +659,7 @@ export function CatalogueStep({
   return (
     <div className="animate-[wizard-fade_300ms_ease-out]">
       <header className="mb-6">
-        <p className="text-xs uppercase tracking-[0.14em] text-indigo-600 dark:text-indigo-400 font-semibold mb-1.5">
+        <p className="text-xs text-indigo-600 dark:text-indigo-400 font-semibold mb-1.5">
           {t('match_wizard.step2_eyebrow', 'Step 2')}
         </p>
         <h2 className="text-2xl font-semibold tracking-tight text-content-primary mb-1.5">
@@ -726,7 +726,7 @@ export function CatalogueStep({
                 onClick={scrollToAvailable}
                 disabled={available.length === 0}
                 className={clsx(
-                  'mt-3 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold transition-all',
+                  'mt-3 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold transition',
                   'bg-gradient-to-br from-amber-500 to-orange-600 text-white',
                   'shadow-sm shadow-amber-500/25 hover:shadow-md hover:shadow-amber-500/35 hover:-translate-y-px',
                   'disabled:opacity-60 disabled:shadow-none disabled:translate-y-0 disabled:cursor-not-allowed',
@@ -753,7 +753,7 @@ export function CatalogueStep({
 
       {installed.length > 0 && (
         <>
-          <div className="text-[11px] uppercase tracking-[0.14em] text-content-tertiary font-semibold mb-3">
+          <div className="text-[11px] text-content-tertiary font-semibold mb-3">
             {t('match_wizard.installed_label', 'Installed')}
           </div>
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-2.5 mb-5">
@@ -780,7 +780,7 @@ export function CatalogueStep({
           <div
             ref={availableAnchorRef}
             data-testid="catalogues-available-anchor"
-            className="text-[11px] uppercase tracking-[0.14em] text-content-tertiary font-semibold mb-3 mt-2 scroll-mt-20"
+            className="text-[11px] text-content-tertiary font-semibold mb-3 mt-2 scroll-mt-20"
           >
             {t('match_wizard.available_label', 'Available to install ({{n}})', {
               n: available.length,
@@ -863,7 +863,7 @@ export function CatalogueStep({
                         }
                         disabled={isInstalling || isFinalizing}
                         className={clsx(
-                          'shrink-0 inline-flex items-center gap-1 px-2.5 py-1.5 rounded-full text-xs font-semibold transition-all',
+                          'shrink-0 inline-flex items-center gap-1 px-2.5 py-1.5 rounded-full text-xs font-semibold transition',
                           'bg-gradient-to-br from-emerald-500 to-emerald-700 text-white',
                           'shadow-sm shadow-emerald-500/25 hover:shadow-md hover:shadow-emerald-500/35 hover:-translate-y-px',
                           'disabled:opacity-60 disabled:shadow-none disabled:translate-y-0',
@@ -893,7 +893,7 @@ export function CatalogueStep({
                     {(isInstalling || isFinalizing) && job && (
                       <div className="mt-2 h-1 rounded-full bg-emerald-100 dark:bg-emerald-900/40 overflow-hidden">
                         <div
-                          className="h-full bg-emerald-500 transition-all duration-500"
+                          className="h-full bg-emerald-500 transition duration-500"
                           style={{ width: `${isFinalizing ? 100 : job.progress}%` }}
                         />
                       </div>
@@ -953,7 +953,7 @@ function SourceStep({
   return (
     <div className="animate-[wizard-fade_300ms_ease-out]">
       <header className="mb-6">
-        <p className="text-xs uppercase tracking-[0.14em] text-indigo-600 dark:text-indigo-400 font-semibold mb-1.5">
+        <p className="text-xs text-indigo-600 dark:text-indigo-400 font-semibold mb-1.5">
           {t('match_wizard.step3_eyebrow', 'Step 3')}
         </p>
         <h2 className="text-2xl font-semibold tracking-tight text-content-primary mb-1.5">
@@ -975,7 +975,7 @@ function SourceStep({
             type="button"
             onClick={() => setTab(tabDef.id)}
             className={clsx(
-              'inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-full transition-all duration-200',
+              'inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-full transition duration-200',
               tab === tabDef.id
                 ? 'bg-white dark:bg-surface-primary text-content-primary shadow-sm'
                 : 'text-content-tertiary hover:text-content-secondary',
@@ -1218,7 +1218,7 @@ function ReviewStep({
   return (
     <div className="animate-[wizard-fade_300ms_ease-out]">
       <header className="mb-6">
-        <p className="text-xs uppercase tracking-[0.14em] text-indigo-600 dark:text-indigo-400 font-semibold mb-1.5">
+        <p className="text-xs text-indigo-600 dark:text-indigo-400 font-semibold mb-1.5">
           {t('match_wizard.step4_eyebrow', 'Step 4')}
         </p>
         <h2 className="text-2xl font-semibold tracking-tight text-content-primary mb-1.5">
@@ -1239,7 +1239,7 @@ function ReviewStep({
               <it.icon className="w-4 h-4 text-indigo-600 dark:text-indigo-300" />
             </span>
             <div className="min-w-0 flex-1">
-              <div className="text-[11px] uppercase tracking-[0.12em] text-content-tertiary font-semibold">
+              <div className="text-[11px] text-content-tertiary font-semibold">
                 {it.label}
               </div>
               <div className="text-sm text-content-primary truncate">{it.value}</div>
@@ -1478,7 +1478,7 @@ export function MatchWizard({
             onClick={() => setStep((s) => Math.min(4, s + 1) as 1 | 2 | 3 | 4)}
             disabled={!canNext}
             className={clsx(
-              'inline-flex items-center gap-2 px-7 py-3 rounded-full text-base font-semibold transition-all duration-200',
+              'inline-flex items-center gap-2 px-7 py-3 rounded-full text-base font-semibold transition duration-200',
               'bg-gradient-to-br from-indigo-500 to-indigo-700 text-white',
               'shadow-lg shadow-indigo-500/30 hover:shadow-xl hover:shadow-indigo-500/40 hover:-translate-y-px',
               'ring-1 ring-indigo-400/30',
@@ -1494,7 +1494,7 @@ export function MatchWizard({
             onClick={() => createMut.mutate()}
             disabled={!source || createMut.isPending}
             className={clsx(
-              'inline-flex items-center gap-2.5 px-8 py-3.5 rounded-full text-base font-semibold transition-all duration-200',
+              'inline-flex items-center gap-2.5 px-8 py-3.5 rounded-full text-base font-semibold transition duration-200',
               'bg-gradient-to-br from-indigo-500 via-indigo-600 to-indigo-700 text-white',
               'shadow-xl shadow-indigo-500/35 hover:shadow-2xl hover:shadow-indigo-500/45 hover:-translate-y-px',
               'ring-2 ring-indigo-400/40',

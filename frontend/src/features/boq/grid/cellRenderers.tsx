@@ -327,8 +327,8 @@ export function SectionFullWidthRenderer(params: ICellRendererParams) {
       </span>
 
       {ordinal && (
-        <span className="shrink-0 inline-flex items-center h-4 px-1.5 rounded
-                         bg-oe-blue-subtle text-oe-blue-text text-[10px] font-mono font-semibold
+        <span className="shrink-0 inline-flex items-center h-4 px-2 rounded
+                         bg-oe-blue-subtle text-oe-blue-text text-xs font-mono font-medium
                          tabular-nums">
           {ordinal}
         </span>
@@ -349,9 +349,9 @@ export function SectionFullWidthRenderer(params: ICellRendererParams) {
             }
           }}
           onBlur={commitRename}
-          className="min-w-0 flex-1 text-xs font-bold text-content-primary uppercase
-                     tracking-wide bg-surface-primary border border-oe-blue rounded
-                     px-1.5 py-0.5 outline-none"
+          className="min-w-0 flex-1 text-xs font-medium text-content-primary
+                     bg-surface-primary border border-oe-blue rounded
+                     px-2 py-0.5 outline-none"
           aria-label={t('boq.rename_section', { defaultValue: 'Rename section' })}
         />
       ) : (
@@ -365,7 +365,7 @@ export function SectionFullWidthRenderer(params: ICellRendererParams) {
           title={readOnly ? undefined : t('boq.rename_section_hint', {
             defaultValue: 'Double-click to rename',
           })}
-          className="text-xs font-bold text-content-primary uppercase tracking-wide
+          className="text-xs font-medium text-content-primary
                      truncate min-w-0 text-left bg-transparent cursor-text"
         >
           {description || t('boq.untitled_section', {
@@ -374,8 +374,8 @@ export function SectionFullWidthRenderer(params: ICellRendererParams) {
         </button>
       )}
 
-      <span className="shrink-0 inline-flex items-center h-4 px-1.5 rounded-full
-                       bg-surface-tertiary text-[10px] font-medium text-content-tertiary
+      <span className="shrink-0 inline-flex items-center h-4 px-2 rounded-full
+                       bg-surface-tertiary text-xs font-medium text-content-tertiary
                        tabular-nums">
         {t('boq.item_count', {
           count: childCount,
@@ -392,12 +392,12 @@ export function SectionFullWidthRenderer(params: ICellRendererParams) {
             e.stopPropagation();
             startRename();
           }}
-          className="shrink-0 h-5 flex items-center gap-0.5 px-1.5 rounded
-                     text-[10px] font-medium
+          className="shrink-0 h-5 flex items-center gap-0.5 px-2 rounded
+                     text-xs font-medium
                      text-content-tertiary hover:text-oe-blue
                      bg-transparent hover:bg-oe-blue-subtle
                      opacity-0 group-hover/section:opacity-100
-                     transition-all"
+                     transition-colors"
           title={t('boq.rename_section', { defaultValue: 'Rename section' })}
           aria-label={t('boq.rename_section', { defaultValue: 'Rename section' })}
         >
@@ -412,7 +412,7 @@ export function SectionFullWidthRenderer(params: ICellRendererParams) {
             ctx.onAddSubSection!(data.id);
           }}
           className="shrink-0 h-5 flex items-center gap-1 px-2 rounded ring-1 ring-oe-blue
-                     text-[10px] font-semibold
+                     text-xs font-medium
                      bg-oe-blue-subtle text-oe-blue-text
                      hover:bg-oe-blue hover:text-white
                      transition-colors"
@@ -437,7 +437,7 @@ export function SectionFullWidthRenderer(params: ICellRendererParams) {
           ctx.onAddPosition?.(data.id);
         }}
         className="shrink-0 h-5 flex items-center gap-1 px-2 rounded ring-1 ring-oe-blue
-                   text-[10px] font-semibold
+                   text-xs font-medium
                    bg-oe-blue text-white
                    hover:bg-oe-blue/90
                    transition-colors"
@@ -466,7 +466,7 @@ export function SectionFullWidthRenderer(params: ICellRendererParams) {
                      bg-transparent hover:bg-red-50 dark:hover:bg-red-950/30
                      opacity-50 group-hover/section:opacity-100 focus-visible:opacity-100
                      focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-500/60
-                     transition-all"
+                     transition-colors"
           title={t('boq.delete_section', { defaultValue: 'Delete section with all positions' })}
           aria-label={t('boq.delete_section', { defaultValue: 'Delete section with all positions' })}
         >
@@ -510,7 +510,7 @@ export function SectionFullWidthRenderer(params: ICellRendererParams) {
                    text-content-tertiary hover:text-content-primary
                    hover:bg-surface-tertiary
                    focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-oe-blue
-                   transition-all"
+                   transition-colors"
         title={t('boq.section_actions', { defaultValue: 'Section actions' })}
         // Named per section: a screen reader lists every row's button, and
         // twenty identical "Section actions" say nothing about which is which.
@@ -540,7 +540,7 @@ export function SectionFullWidthRenderer(params: ICellRendererParams) {
               ctx.onOpenFxRateSettings?.();
             }}
             className="shrink-0 inline-flex items-center gap-1 h-5 px-2 rounded
-                       text-[10px] font-semibold
+                       text-xs font-medium
                        bg-amber-100 text-amber-800 dark:bg-amber-900/50 dark:text-amber-200
                        hover:bg-amber-200 dark:hover:bg-amber-800/70
                        ring-1 ring-amber-300 dark:ring-amber-700/60
@@ -574,8 +574,8 @@ export function SectionFullWidthRenderer(params: ICellRendererParams) {
         ctx.sectionTotalBasis > 0 &&
         Number.isFinite(subtotal) && (
           <span
-            className="shrink-0 inline-flex items-center h-4 px-1.5 rounded-full
-                       bg-oe-blue-subtle text-oe-blue-text text-[10px] font-semibold
+            className="shrink-0 inline-flex items-center h-4 px-2 rounded-full
+                       bg-oe-blue-subtle text-oe-blue-text text-xs font-medium
                        tabular-nums cursor-help"
             title={t('boq.section_pct_of_total_tip', {
               defaultValue: 'This section is {{pct}}% of the project direct cost.',
@@ -586,7 +586,7 @@ export function SectionFullWidthRenderer(params: ICellRendererParams) {
           </span>
         )}
 
-      <span className="shrink-0 text-xs font-bold text-content-primary tabular-nums pl-2">
+      <span className="shrink-0 text-xs font-medium text-content-primary tabular-nums pl-2">
         {formattedSubtotal}
       </span>
     </div>
@@ -834,7 +834,7 @@ export function ActionsCellRenderer(params: ICellRendererParams) {
           title={t('boq.comment_count', { defaultValue: '{{count}} comment(s)', count: commentCount })}
           aria-label={t('boq.comment_count', { defaultValue: '{{count}} comment(s)', count: commentCount })}
         >
-          <span className="text-[9px] font-bold tabular-nums">{commentCount}</span>
+          <span className="text-xs font-medium tabular-nums">{commentCount}</span>
         </button>
       )}
       {/* More actions button — triggers context menu */}
@@ -845,7 +845,7 @@ export function ActionsCellRenderer(params: ICellRendererParams) {
         }}
         className="flex h-6 w-6 items-center justify-center rounded
                    text-content-tertiary/50 hover:text-content-primary
-                   hover:bg-surface-tertiary transition-all"
+                   hover:bg-surface-tertiary transition-colors"
         title={t('common.actions', { defaultValue: 'Actions' })}
         aria-label={t('common.actions', { defaultValue: 'Actions' })}
       >
@@ -1011,7 +1011,7 @@ function ScopeOfWorkHint({
           style={{ top: pos.top, left: pos.left }}
           onMouseDown={(e) => e.stopPropagation()}
         >
-          <div className="mb-1.5 text-[11px] font-semibold uppercase tracking-wider text-content-tertiary">
+          <div className="mb-1.5 text-xs font-medium text-content-tertiary">
             {label}
           </div>
           <ul className="list-disc pl-4 space-y-1 leading-relaxed max-h-[280px] overflow-auto">
@@ -1188,7 +1188,7 @@ export function DescriptionCellRenderer(params: ICellRendererParams) {
                  rounded-md cursor-pointer
                  bg-violet-50 dark:bg-violet-900/30
                  text-violet-700 dark:text-violet-300
-                 text-[11px] font-bold leading-none
+                 text-xs font-medium leading-none
                  ring-1 ring-violet-200 dark:ring-violet-700/50
                  hover:bg-violet-100 dark:hover:bg-violet-800/40
                  hover:ring-violet-300 dark:hover:ring-violet-600
@@ -1256,7 +1256,7 @@ export function DescriptionCellRenderer(params: ICellRendererParams) {
   const breakdownPill =
     breakdownEntries.length > 0 && ctx?.showResourceSplitPill ? (
       <span
-        className="shrink-0 inline-flex items-center gap-0.5 rounded text-[10px] font-medium px-1 py-0.5 bg-indigo-50 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-300 cursor-help"
+        className="shrink-0 inline-flex items-center gap-0.5 rounded text-xs font-medium px-1 py-0.5 bg-indigo-50 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-300 cursor-help"
         title={t('boq.resource_breakdown_tip', {
           defaultValue: 'Cost driver split - sourced from the linked assembly',
         })}
@@ -1311,7 +1311,7 @@ export function DescriptionCellRenderer(params: ICellRendererParams) {
   }
   const provenanceChip = provenance ? (
     <span
-      className="shrink-0 inline-flex items-center gap-0.5 rounded text-[10px] font-medium px-1 py-0.5
+      className="shrink-0 inline-flex items-center gap-0.5 rounded text-xs font-medium px-1 py-0.5
                  bg-surface-tertiary text-content-tertiary cursor-help max-w-[140px] truncate"
       title={provenance.tip}
       aria-label={provenance.tip}
@@ -1327,7 +1327,7 @@ export function DescriptionCellRenderer(params: ICellRendererParams) {
   const provisChip =
     provis === 'withouttotal' || provis === 'withtotal' ? (
       <span
-        className="shrink-0 inline-flex items-center rounded text-[10px] font-medium px-1 py-0.5
+        className="shrink-0 inline-flex items-center rounded text-xs font-medium px-1 py-0.5
                    bg-amber-50 dark:bg-amber-900/30 text-amber-700 dark:text-amber-300 cursor-help"
         title={
           provis === 'withouttotal'
@@ -1355,7 +1355,7 @@ export function DescriptionCellRenderer(params: ICellRendererParams) {
       );
     }
     return (
-      <span className={`inline-flex ${descAlignCls} gap-1.5 min-w-0 max-w-full`}>
+      <span className={`inline-flex ${descAlignCls} gap-2 min-w-0 max-w-full`}>
         {variantIconButton}
         <span className={descTextCls}>{displayValue}</span>
         {scopeHint}
@@ -1384,7 +1384,7 @@ export function DescriptionCellRenderer(params: ICellRendererParams) {
     // VARIANT row inside the expanded resource panel \u2014 the blue
     // "Variant: <label>" pill that used to render here was redundant.
     return (
-      <span className={`inline-flex ${descAlignCls} gap-1.5 min-w-0 max-w-full`}>
+      <span className={`inline-flex ${descAlignCls} gap-2 min-w-0 max-w-full`}>
         {variantIconButton}
         <span className={descTextCls}>{displayValue}</span>
         {scopeHint}
@@ -1416,7 +1416,7 @@ export function DescriptionCellRenderer(params: ICellRendererParams) {
   });
 
   return (
-    <span className="inline-flex items-center gap-1.5 min-w-0 max-w-full">
+    <span className="inline-flex items-center gap-2 min-w-0 max-w-full">
       {variantIconButton}
       <span className="truncate min-w-0">{displayValue}</span>
       {scopeHint}
@@ -1427,7 +1427,7 @@ export function DescriptionCellRenderer(params: ICellRendererParams) {
         className="shrink-0 inline-flex items-center gap-1 rounded
                    bg-amber-100 dark:bg-amber-900/40
                    text-amber-700 dark:text-amber-300
-                   px-1.5 py-0.5 text-2xs font-medium cursor-help"
+                   px-2 py-0.5 text-2xs font-medium cursor-help"
         title={tooltip}
         data-testid="boq-variant-default-pill"
       >
@@ -1514,7 +1514,7 @@ export function OrdinalCellRenderer(params: ICellRendererParams) {
     <div className="flex items-center justify-end gap-1 overflow-hidden w-full">
       {(linkRole === 'master' || linkRole === 'instance') && (
         <span
-          className={`inline-flex h-4 shrink-0 items-center gap-0.5 rounded px-1 text-[9px] font-semibold ${
+          className={`inline-flex h-4 shrink-0 items-center gap-0.5 rounded px-1 text-xs font-medium ${
             linkRole === 'master'
               ? 'bg-amber-500/15 text-amber-600 dark:text-amber-400'
               : 'bg-oe-blue/10 text-oe-blue'
@@ -1529,7 +1529,7 @@ export function OrdinalCellRenderer(params: ICellRendererParams) {
       <span className="text-xs font-mono truncate min-w-0">{value}</span>
       {showConfidence && (
         <span
-          className={`inline-flex h-4 shrink-0 items-center rounded px-1 text-[9px] font-semibold tabular-nums ${confidenceTone} cursor-help`}
+          className={`inline-flex h-4 shrink-0 items-center rounded px-1 text-xs font-medium tabular-nums ${confidenceTone} cursor-help`}
           title={confidenceTooltip}
           aria-label={confidenceTooltip}
           data-testid="boq-ai-confidence-badge"
@@ -1552,7 +1552,7 @@ export function OrdinalCellRenderer(params: ICellRendererParams) {
               : 'bg-emerald-500/15 text-emerald-600 dark:text-emerald-400';
         return (
           <span
-            className={`inline-flex h-4 shrink-0 items-center rounded px-1 text-[9px] font-semibold ${tone} cursor-help`}
+            className={`inline-flex h-4 shrink-0 items-center rounded px-1 text-xs font-medium ${tone} cursor-help`}
             title={badge.title}
             aria-label={badge.title}
             data-testid="boq-variation-trace-badge"
@@ -1689,8 +1689,8 @@ export function BimLinkCellRenderer(params: ICellRendererParams) {
             handleOpen();
           }}
           onMouseDown={(e) => e.stopPropagation()}
-          className="h-6 px-1.5 inline-flex items-center gap-0.5 rounded
-                     bg-oe-blue/10 text-oe-blue text-[10px] font-semibold
+          className="h-6 px-2 inline-flex items-center gap-0.5 rounded
+                     bg-oe-blue/10 text-oe-blue text-xs font-medium
                      hover:bg-oe-blue/25 transition-colors cursor-pointer"
           title={t('boq.bim_link_tooltip', { defaultValue: '{{count}} BIM element(s) linked - click to preview', count: bimLinkCount })}
           aria-label={t('boq.bim_link_tooltip', { defaultValue: '{{count}} BIM element(s) linked - click to preview', count: bimLinkCount })}
@@ -2128,10 +2128,10 @@ const BimLinkPopover = forwardRef<
       <div className="flex items-center justify-between px-4 py-2 border-b border-border-light dark:border-border-dark bg-surface-secondary/30">
         <div className="flex items-center gap-2">
           <Cuboid size={14} className="text-oe-blue" />
-          <span className="text-xs font-semibold text-content-primary">
+          <span className="text-xs font-medium text-content-primary">
             {t('boq.linked_geometry', { defaultValue: 'Linked Geometry' })}
           </span>
-          <span className="text-[10px] text-content-tertiary tabular-nums">
+          <span className="text-xs text-content-tertiary tabular-nums">
             ({t('boq.element_count', { defaultValue: '{{count}} element(s)', count: elementIds.length })})
           </span>
         </div>
@@ -2146,7 +2146,7 @@ const BimLinkPopover = forwardRef<
               popoverNavigate(`/bim/${modelId}?${params.toString()}`);
               onClose();
             }}
-            className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-semibold
+            className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-xs font-medium
                        text-oe-blue hover:bg-oe-blue/10 transition-colors"
             title={t('boq.open_in_bim_title', { defaultValue: 'Open in 3D viewer with the linked element pre-selected' })}
           >
@@ -2172,15 +2172,15 @@ const BimLinkPopover = forwardRef<
             the right so the affordance is obvious. */}
         {canApply && (
           <div className="w-[260px] shrink-0 flex flex-col border-r border-border-light dark:border-border-dark">
-            <div className="flex items-center gap-1.5 px-3 py-1.5 w-full bg-blue-50/50 dark:bg-blue-950/20 border-b border-border-light/50 dark:border-border-dark/50 shrink-0">
+            <div className="flex items-center gap-2 px-3 py-2 w-full bg-blue-50/50 dark:bg-blue-950/20 border-b border-border-light/50 dark:border-border-dark/50 shrink-0">
               <Info size={11} className="text-blue-600 shrink-0" />
-              <span className="text-[10px] font-bold uppercase tracking-wider text-blue-700 dark:text-blue-400 flex-1 text-left">
+              <span className="text-xs font-medium text-blue-700 dark:text-blue-400 flex-1 text-left">
                 {t('boq.bim_properties', { defaultValue: 'Properties' })}
               </span>
               <button
                 type="button"
                 onClick={() => setShowAllProps((v) => !v)}
-                className={`inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[10px] font-semibold transition-colors ${
+                className={`inline-flex items-center gap-1 px-2 py-0.5 rounded text-xs font-medium transition-colors ${
                   showAllProps
                     ? 'bg-oe-blue text-white hover:bg-oe-blue-hover'
                     : 'bg-white dark:bg-blue-900/40 text-blue-700 dark:text-blue-300 border border-blue-300 dark:border-blue-700 hover:bg-blue-100 dark:hover:bg-blue-900/60'
@@ -2207,9 +2207,9 @@ const BimLinkPopover = forwardRef<
                 const numericEntries = extractNumerics(el, showAllProps);
                 if (numericEntries.length === 0) return null;
                 return (
-                  <div key={el.id} className="px-3 py-1.5 border-b border-border-light/30 dark:border-border-dark/30 last:border-b-0">
+                  <div key={el.id} className="px-3 py-2 border-b border-border-light/30 dark:border-border-dark/30 last:border-b-0">
                     {elements.length > 1 && (
-                      <div className="text-[9px] font-medium text-content-tertiary mb-0.5 truncate">{el.name || el.element_type}</div>
+                      <div className="text-xs font-medium text-content-tertiary mb-1 truncate">{el.name || el.element_type}</div>
                     )}
                     {numericEntries.map(({ key, value, source }) => {
                       const isCurrent = canApply && Math.abs(value - currentQuantity) < 0.001;
@@ -2217,10 +2217,10 @@ const BimLinkPopover = forwardRef<
                       return (
                         <div
                           key={key}
-                          className="group/prow flex items-center justify-between gap-1.5 py-0.5 rounded-sm hover:bg-blue-50/40 dark:hover:bg-blue-950/20 transition-colors"
+                          className="group/prow flex items-center justify-between gap-2 py-0.5 rounded-sm hover:bg-blue-50/40 dark:hover:bg-blue-950/20 transition-colors"
                         >
                           <span
-                            className={`text-[10px] truncate ${
+                            className={`text-xs truncate ${
                               source === 'qty'
                                 ? 'text-content-secondary'
                                 : source === 'parquet'
@@ -2232,13 +2232,13 @@ const BimLinkPopover = forwardRef<
                             {paramLabel}
                           </span>
                           <div className="flex items-center gap-1 shrink-0">
-                            <span className="text-[10px] font-mono text-content-primary tabular-nums font-medium">
+                            <span className="text-xs font-mono text-content-primary tabular-nums font-medium">
                               {value.toLocaleString(getNumberLocale(), { minimumFractionDigits: 2, maximumFractionDigits: 4 })}
                             </span>
                             {canApply && (
                               isCurrent ? (
                                 <span
-                                  className="text-[8px] font-semibold uppercase text-emerald-600 bg-emerald-100 dark:bg-emerald-900/40 px-1 py-0.5 rounded"
+                                  className="text-xs font-medium text-emerald-600 bg-emerald-100 dark:bg-emerald-900/40 px-1 py-0.5 rounded"
                                   title={t('boq.bim_qty_current_title', { defaultValue: 'Already the position quantity' })}
                                 >
                                   {t('boq.bim_qty_current', { defaultValue: 'current' })}
@@ -2250,11 +2250,11 @@ const BimLinkPopover = forwardRef<
                                     e.stopPropagation();
                                     handleUseQuantity(value, `BIM: ${paramLabel}`);
                                   }}
-                                  className="inline-flex items-center gap-0.5 px-1.5 h-4 rounded-sm text-[9px] font-semibold
+                                  className="inline-flex items-center gap-0.5 px-2 h-4 rounded-sm text-xs font-medium
                                              text-emerald-700 dark:text-emerald-300
                                              bg-emerald-100/70 dark:bg-emerald-900/30
                                              hover:bg-emerald-500 hover:text-white dark:hover:bg-emerald-500
-                                             opacity-0 group-hover/prow:opacity-100 transition-all"
+                                             opacity-0 group-hover/prow:opacity-100 transition-colors"
                                   title={t('boq.set_as_quantity_title', { defaultValue: 'Push this value into the BOQ quantity field' })}
                                 >
                                   {t('boq.set_as_quantity', { defaultValue: 'Set as qty' })}
@@ -2270,14 +2270,14 @@ const BimLinkPopover = forwardRef<
                 );
               })}
               {!isLoading && !isEnriching && elements.every((el) => extractNumerics(el, showAllProps).length === 0) && (
-                <div className="py-3 text-center text-[10px] text-content-tertiary">
+                <div className="py-3 text-center text-xs text-content-tertiary">
                   {!showAllProps
                     ? t('boq.no_quantities_hint_button', { defaultValue: 'No quantities - press "Show all" above to surface every BIM property' })
                     : t('boq.no_numeric_found', { defaultValue: 'No numeric values in this element' })}
                 </div>
               )}
               {isEnriching && !isLoading && (
-                <div className="flex items-center justify-center gap-2 py-2 text-[10px] text-content-tertiary">
+                <div className="flex items-center justify-center gap-2 py-2 text-xs text-content-tertiary">
                   <Loader2 size={10} className="animate-spin" />
                   {t('boq.loading_full_properties', { defaultValue: 'Loading full properties…' })}
                 </div>
@@ -2318,7 +2318,7 @@ const BimLinkPopover = forwardRef<
                   defaultValue: 'No 3D geometry to preview',
                 })}
               </p>
-              <p className="text-[10px] leading-snug text-content-tertiary max-w-[300px]">
+              <p className="text-xs leading-snug text-content-tertiary max-w-[300px]">
                 {t('boq.linked_geometry_unavailable_hint', {
                   defaultValue:
                     'The linked element belongs to a model that has no displayable mesh yet (for example a data-only drawing still waiting on the CAD converter). The link and its quantities are intact.',
@@ -2334,7 +2334,7 @@ const BimLinkPopover = forwardRef<
                   popoverNavigate(`/bim/${modelId}?${params.toString()}`);
                   onClose();
                 }}
-                className="mt-1 inline-flex items-center gap-1 px-2.5 py-1 rounded text-[10px] font-semibold
+                className="mt-1 inline-flex items-center gap-1 px-3 py-1 rounded text-xs font-medium
                            text-oe-blue bg-oe-blue/10 hover:bg-oe-blue/20 transition-colors"
               >
                 <ExternalLink size={11} />
@@ -2355,10 +2355,10 @@ const BimLinkPopover = forwardRef<
                 <div className="flex items-center gap-2">
                   <Cuboid size={11} className="text-oe-blue/60 shrink-0" />
                   <div className="min-w-0 flex-1">
-                    <div className="text-[11px] font-medium text-content-primary truncate">
+                    <div className="text-xs font-medium text-content-primary truncate">
                       {el.name || el.element_type}
                     </div>
-                    <div className="text-[9px] text-content-tertiary font-mono">{el.element_type}</div>
+                    <div className="text-xs text-content-tertiary font-mono">{el.element_type}</div>
                   </div>
                 </div>
               </div>
@@ -2374,9 +2374,9 @@ const BimLinkPopover = forwardRef<
             numeric is summed (vs only the headline area/volume/length). */}
         {canApply && (
           <div className="w-[260px] shrink-0 flex flex-col">
-            <div className="flex items-center gap-1.5 px-3 py-1.5 w-full bg-emerald-50/50 dark:bg-emerald-950/20 border-b border-border-light/50 dark:border-border-dark/50 shrink-0">
+            <div className="flex items-center gap-2 px-3 py-2 w-full bg-emerald-50/50 dark:bg-emerald-950/20 border-b border-border-light/50 dark:border-border-dark/50 shrink-0">
               <Ruler size={11} className="text-emerald-600 shrink-0" />
-              <span className="text-[10px] font-bold uppercase tracking-wider text-emerald-700 dark:text-emerald-400 flex-1 text-left">
+              <span className="text-xs font-medium text-emerald-700 dark:text-emerald-400 flex-1 text-left">
                 {t('boq.apply_to_boq', { defaultValue: 'Apply to BOQ' })}
               </span>
               {isEnriching && (
@@ -2385,7 +2385,7 @@ const BimLinkPopover = forwardRef<
               <button
                 type="button"
                 onClick={() => setShowAllSums((v) => !v)}
-                className={`inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[10px] font-semibold transition-colors ${
+                className={`inline-flex items-center gap-1 px-2 py-0.5 rounded text-xs font-medium transition-colors ${
                   showAllSums
                     ? 'bg-emerald-600 text-white hover:bg-emerald-700'
                     : 'bg-white dark:bg-emerald-900/40 text-emerald-700 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-700 hover:bg-emerald-100 dark:hover:bg-emerald-900/60'
@@ -2402,7 +2402,7 @@ const BimLinkPopover = forwardRef<
                 <ChevronDown size={10} className={`transition-transform ${showAllSums ? 'rotate-180' : ''}`} />
               </button>
             </div>
-            <div className="flex shrink-0 border-b border-border-light/50 text-[10px] font-semibold">
+            <div className="flex shrink-0 border-b border-border-light/50 text-xs font-medium">
               {(['sums', 'formula'] as const).map((tab) => (
                 <button
                   key={tab}
@@ -2440,7 +2440,7 @@ const BimLinkPopover = forwardRef<
                 </div>
               )}
               {!isLoading && quantitySums.length === 0 && (
-                <div className="py-3 text-center text-[10px] text-content-tertiary">
+                <div className="py-3 text-center text-xs text-content-tertiary">
                   {t('boq.no_numeric_quantities', { defaultValue: 'No numeric quantities' })}
                 </div>
               )}
@@ -2454,7 +2454,7 @@ const BimLinkPopover = forwardRef<
                   return (
                     <div
                       key={s.key}
-                      className={`flex items-center gap-1 px-3 py-1.5 group/qrow transition-colors ${
+                      className={`flex items-center gap-1 px-3 py-2 group/qrow transition-colors ${
                         isCurrent
                           ? 'bg-emerald-50/60 dark:bg-emerald-950/20'
                           : 'hover:bg-emerald-50/80 dark:hover:bg-emerald-950/30'
@@ -2462,24 +2462,24 @@ const BimLinkPopover = forwardRef<
                     >
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center gap-1">
-                          <span className="text-[11px] text-content-secondary truncate">{s.label}</span>
+                          <span className="text-xs text-content-secondary truncate">{s.label}</span>
                           <span
-                            className="text-[8px] font-bold uppercase text-emerald-600/80 tracking-wider shrink-0"
+                            className="text-xs font-medium text-emerald-600/80 shrink-0"
                             title={t('boq.bim_agg_sum_title', { defaultValue: 'Summed across all linked elements' })}
                           >
                             Σ
                           </span>
                         </div>
                         <div className="flex items-baseline gap-1">
-                          <span className="text-[12px] tabular-nums text-content-primary font-semibold">{fmt}</span>
-                          {s.unit && <span className="text-[9px] text-content-quaternary font-mono">{s.unit}</span>}
+                          <span className="text-xs tabular-nums text-content-primary font-medium">{fmt}</span>
+                          {s.unit && <span className="text-xs text-content-quaternary font-mono">{s.unit}</span>}
                           {elements.length > 1 && s.count > 1 && (
-                            <span className="text-[8px] text-content-quaternary">({s.count} el.)</span>
+                            <span className="text-xs text-content-quaternary">({s.count} el.)</span>
                           )}
                         </div>
                       </div>
                       {isCurrent ? (
-                        <span className="text-[9px] text-emerald-600 font-semibold shrink-0 bg-emerald-100 dark:bg-emerald-900/40 px-1.5 py-0.5 rounded inline-flex items-center gap-0.5">
+                        <span className="text-xs text-emerald-600 font-medium shrink-0 bg-emerald-100 dark:bg-emerald-900/40 px-2 py-0.5 rounded inline-flex items-center gap-0.5">
                           <CheckCircle2 size={9} />
                           {t('boq.bim_qty_current', { defaultValue: 'current' })}
                         </span>
@@ -2489,11 +2489,9 @@ const BimLinkPopover = forwardRef<
                             e.stopPropagation();
                             handleUseQuantity(s.sum, `BIM: ${s.label} (Σ)`);
                           }}
-                          className="shrink-0 h-6 flex items-center gap-1 px-2.5 rounded-md text-[10px] font-semibold
-                                     text-white bg-gradient-to-r from-emerald-500 to-emerald-600
-                                     hover:from-emerald-600 hover:to-emerald-700
-                                     shadow-sm hover:shadow-md ring-1 ring-emerald-500/20 hover:ring-emerald-500/40
-                                     active:scale-[0.97] transition-all"
+                          className="shrink-0 h-6 flex items-center gap-1 px-3 rounded-md text-xs font-medium
+                                     text-white bg-oe-blue
+                                     hover:bg-oe-blue-hover transition-colors"
                           title={t('boq.bim_qty_use_as_quantity', { defaultValue: 'Set as quantity' })}
                         >
                           {t('boq.bim_qty_use_as_quantity', { defaultValue: 'Set as quantity' })}
@@ -2514,11 +2512,11 @@ const BimLinkPopover = forwardRef<
                     ? n.toLocaleString(getNumberLocale())
                     : n.toLocaleString(getNumberLocale(), { minimumFractionDigits: 2, maximumFractionDigits: 4 });
                 return (
-                  <div key={s.key} className="px-3 py-1.5 border-b border-border-light/30 dark:border-border-dark/30 last:border-b-0 hover:bg-sky-50/40 dark:hover:bg-sky-950/20 transition-colors">
-                    <div className="flex items-center gap-1 mb-0.5">
-                      <span className="text-[11px] text-content-secondary truncate">{s.label}</span>
+                  <div key={s.key} className="px-3 py-2 border-b border-border-light/30 dark:border-border-dark/30 last:border-b-0 hover:bg-sky-50/40 dark:hover:bg-sky-950/20 transition-colors">
+                    <div className="flex items-center gap-1 mb-1">
+                      <span className="text-xs text-content-secondary truncate">{s.label}</span>
                       <span
-                        className="text-[8px] font-bold uppercase text-sky-600/80 tracking-wider shrink-0"
+                        className="text-xs font-medium text-sky-600/80 shrink-0"
                         title={t('boq.bim_agg_distinct_title', {
                           defaultValue:
                             'Per-element value - summing is meaningless, so each unique value is listed. Click one to apply it.',
@@ -2543,10 +2541,10 @@ const BimLinkPopover = forwardRef<
                               if (!isCurrent) handleUseQuantity(v, `BIM: ${s.label} = ${fmtVal(v)}`);
                             }}
                             disabled={isCurrent}
-                            className={`group/chip inline-flex items-center gap-0.5 px-2 py-1 rounded-md border text-[10px] tabular-nums font-mono transition-all ${
+                            className={`group/chip inline-flex items-center gap-0.5 px-2 py-1 rounded-md border text-xs tabular-nums font-mono transition-colors ${
                               isCurrent
                                 ? 'bg-emerald-100 dark:bg-emerald-900/40 text-emerald-700 dark:text-emerald-400 border-emerald-300 cursor-default'
-                                : 'bg-surface-primary text-content-primary border-border-light hover:bg-emerald-500 hover:text-white hover:border-emerald-500 hover:shadow-sm active:scale-[0.97]'
+                                : 'bg-surface-primary text-content-primary border-border-light hover:bg-oe-blue-subtle hover:text-oe-blue-text hover:border-oe-blue/40'
                             }`}
                             title={
                               isCurrent
@@ -2554,8 +2552,8 @@ const BimLinkPopover = forwardRef<
                                 : t('boq.bim_qty_use_as_quantity', { defaultValue: 'Set as quantity' })
                             }
                           >
-                            <span className="font-semibold">{fmtVal(v)}</span>
-                            {s.unit && <span className="text-[8px] opacity-70 group-hover/chip:opacity-100">{s.unit}</span>}
+                            <span className="font-medium">{fmtVal(v)}</span>
+                            {s.unit && <span className="text-xs opacity-70 group-hover/chip:opacity-100">{s.unit}</span>}
                             {!isCurrent && (
                               <ArrowRight size={8} className="opacity-0 group-hover/chip:opacity-100 transition-opacity -mr-0.5" />
                             )}
@@ -2722,9 +2720,6 @@ function PdfDwgSourcePopover(props: PdfDwgSourcePopoverProps) {
     onClose();
   };
 
-  const accent = kind === 'pdf'
-    ? 'from-rose-500 to-rose-600 ring-rose-500/20'
-    : 'from-amber-500 to-amber-600 ring-amber-500/20';
   const accentBg = kind === 'pdf'
     ? 'bg-rose-500/10 text-rose-600 dark:text-rose-400'
     : 'bg-amber-500/10 text-amber-600 dark:text-amber-400';
@@ -2741,12 +2736,12 @@ function PdfDwgSourcePopover(props: PdfDwgSourcePopoverProps) {
       aria-label={kind === 'pdf' ? 'PDF takeoff source' : 'DWG drawing source'}
     >
       {/* Header */}
-      <div className="flex items-center justify-between px-3.5 py-2 border-b border-border-light dark:border-border-dark bg-surface-secondary/30">
-        <div className="flex items-center gap-1.5 min-w-0">
+      <div className="flex items-center justify-between px-4 py-2 border-b border-border-light dark:border-border-dark bg-surface-secondary/30">
+        <div className="flex items-center gap-2 min-w-0">
           <span className={`h-5 w-5 inline-flex items-center justify-center rounded ${accentBg}`}>
             {kind === 'pdf' ? <FileText size={12} /> : <FileBox size={12} />}
           </span>
-          <span className="text-[11px] font-semibold text-content-primary uppercase tracking-wide">
+          <span className="text-xs font-medium text-content-primary">
             {kind === 'pdf'
               ? t('boq.source_pdf', { defaultValue: 'PDF takeoff' })
               : t('boq.source_dwg', { defaultValue: 'DWG drawing' })}
@@ -2764,22 +2759,22 @@ function PdfDwgSourcePopover(props: PdfDwgSourcePopoverProps) {
       </div>
 
       {/* Body */}
-      <div className="px-3.5 py-3 space-y-2.5">
+      <div className="px-4 py-3 space-y-2.5">
         {/* Source document name */}
         <div>
-          <div className="text-[9px] font-semibold uppercase tracking-wider text-content-tertiary mb-0.5">
+          <div className="text-xs font-medium text-content-tertiary mb-1">
             {t('boq.source_doc_label', { defaultValue: 'Source document' })}
           </div>
-          <div className="text-[12px] font-medium text-content-primary truncate" title={sourceName || ''}>
+          <div className="text-xs font-medium text-content-primary truncate" title={sourceName || ''}>
             {sourceName || t('boq.source_doc_unknown', { defaultValue: 'Unknown document' })}
           </div>
           {kind === 'pdf' && page && (
-            <div className="text-[10px] text-content-tertiary mt-0.5">
+            <div className="text-xs text-content-tertiary mt-1">
               {t('boq.source_pdf_page', { defaultValue: 'Page {{page}}', page })}
             </div>
           )}
           {kind === 'dwg' && drawingId && (
-            <div className="text-[10px] text-content-tertiary font-mono mt-0.5 truncate">
+            <div className="text-xs text-content-tertiary font-mono mt-1 truncate">
               {drawingId.slice(0, 8)}…
             </div>
           )}
@@ -2787,25 +2782,25 @@ function PdfDwgSourcePopover(props: PdfDwgSourcePopoverProps) {
 
         {/* Measurement value(s) */}
         <div>
-          <div className="text-[9px] font-semibold uppercase tracking-wider text-content-tertiary mb-1">
+          <div className="text-xs font-medium text-content-tertiary mb-1">
             {t('boq.source_measurement_label', { defaultValue: 'Measurement' })}
           </div>
           {measurementValue !== null ? (
-            <div className="flex items-baseline gap-1.5">
-              <span className="text-[20px] font-semibold tabular-nums text-content-primary leading-none">
+            <div className="flex items-baseline gap-2">
+              <span className="text-base font-medium tabular-nums text-content-primary leading-none">
                 {(displayMeasurementValue ?? measurementValue).toLocaleString(getNumberLocale(), { minimumFractionDigits: 2, maximumFractionDigits: 4 })}
               </span>
               {displayMeasurementUnit && (
-                <span className="text-[11px] text-content-secondary font-medium">{displayMeasurementUnit}</span>
+                <span className="text-xs text-content-secondary font-medium">{displayMeasurementUnit}</span>
               )}
               {measurementType && (
-                <span className="ml-auto text-[9px] uppercase tracking-wide text-content-tertiary bg-surface-secondary/60 px-1.5 py-0.5 rounded">
+                <span className="ml-auto text-xs text-content-tertiary bg-surface-secondary/60 px-2 py-0.5 rounded">
                   {measurementType}
                 </span>
               )}
             </div>
           ) : (
-            <div className="text-[11px] text-content-tertiary italic">
+            <div className="text-xs text-content-tertiary italic">
               {t('boq.source_no_measurement', { defaultValue: 'Measurement data not stored locally - open the source to view details.' })}
             </div>
           )}
@@ -2814,10 +2809,10 @@ function PdfDwgSourcePopover(props: PdfDwgSourcePopoverProps) {
         {/* Identifier (debug-friendly but readable) */}
         {(measurementId || annotationId) && (
           <div>
-            <div className="text-[9px] font-semibold uppercase tracking-wider text-content-tertiary mb-0.5">
+            <div className="text-xs font-medium text-content-tertiary mb-1">
               {t('boq.source_id_label', { defaultValue: 'Item id' })}
             </div>
-            <div className="text-[10px] font-mono text-content-tertiary truncate">
+            <div className="text-xs font-mono text-content-tertiary truncate">
               {(measurementId || annotationId || '').slice(0, 12)}…
             </div>
           </div>
@@ -2825,12 +2820,12 @@ function PdfDwgSourcePopover(props: PdfDwgSourcePopoverProps) {
       </div>
 
       {/* Footer actions */}
-      <div className="px-3.5 py-2.5 border-t border-border-light dark:border-border-dark bg-surface-secondary/20 flex items-center gap-2">
+      <div className="px-4 py-3 border-t border-border-light dark:border-border-dark bg-surface-secondary/20 flex items-center gap-2">
         {canApply && (
           <button
             type="button"
             onClick={applyQuantity}
-            className={`flex-1 h-8 flex items-center justify-center gap-1.5 rounded-md text-[11px] font-semibold text-white bg-gradient-to-r ${accent} ring-1 shadow-sm hover:shadow-md active:scale-[0.98] transition-all`}
+            className={`flex-1 h-8 flex items-center justify-center gap-2 rounded-md text-xs font-medium text-white bg-oe-blue transition-colors duration-fast ease-oe`}
             title={t('boq.source_apply_qty_title', { defaultValue: 'Set this value as the BOQ position quantity' })}
           >
             <ArrowRight size={12} />
@@ -2840,7 +2835,7 @@ function PdfDwgSourcePopover(props: PdfDwgSourcePopoverProps) {
         <button
           type="button"
           onClick={onNavigate}
-          className={`${canApply ? 'h-8 px-3' : 'flex-1 h-8'} flex items-center justify-center gap-1.5 rounded-md text-[11px] font-semibold text-oe-blue bg-oe-blue/10 hover:bg-oe-blue/20 transition-colors`}
+          className={`${canApply ? 'h-8 px-3' : 'flex-1 h-8'} flex items-center justify-center gap-2 rounded-md text-xs font-medium text-oe-blue bg-oe-blue/10 hover:bg-oe-blue/20 transition-colors`}
           title={t('boq.source_open_title', { defaultValue: 'Open the source document in its viewer, focused on this item' })}
         >
           <ExternalLink size={12} />
@@ -2932,10 +2927,10 @@ function InlineNumberInput({
         />
         {livePreview !== null && (
           <span
-            className={`absolute right-0 top-full mt-0.5 text-[10px] tabular-nums pointer-events-none whitespace-nowrap z-10 px-1 rounded shadow-sm bg-surface-elevated border ${
+            className={`absolute right-0 top-full mt-1 text-xs tabular-nums pointer-events-none whitespace-nowrap z-10 px-1 rounded shadow-sm bg-surface-elevated border ${
               isNaN(livePreview)
                 ? 'border-rose-300 text-rose-600 dark:text-rose-400'
-                : 'border-emerald-300 text-emerald-600 dark:text-emerald-400 font-semibold'
+                : 'border-emerald-300 text-emerald-600 dark:text-emerald-400 font-medium'
             }`}
           >
             {isNaN(livePreview) ? <AlertTriangle size={10} strokeWidth={2} /> : '= ' + fmt.format(livePreview)}
@@ -3409,7 +3404,7 @@ function ResourceTypePicker({
   const badge = isVariant
     ? {
         ...baseBadge,
-        bg: 'bg-gradient-to-br from-violet-500 to-purple-600 text-white ring-1 ring-violet-300/40 shadow-[0_1px_3px_rgba(139,92,246,0.45)]',
+        bg: 'bg-oe-blue text-white',
       }
     : baseBadge;
 
@@ -3450,8 +3445,8 @@ function ResourceTypePicker({
         ref={btnRef}
         type="button"
         onClick={togglePicker}
-        className={`shrink-0 inline-flex items-center justify-center h-4 px-1.5 rounded
-                    text-[9px] font-bold uppercase tracking-wider whitespace-nowrap
+        className={`shrink-0 inline-flex items-center justify-center h-4 px-2 rounded
+                    text-xs font-medium whitespace-nowrap
                     cursor-pointer outline-none border-0 focus:ring-1 focus:ring-oe-blue ${badge.bg}`}
         title={
           isVariant
@@ -3498,15 +3493,15 @@ function ResourceTypePicker({
                   onChange(rt.value);
                   setOpen(false);
                 }}
-                className={`flex items-center gap-2 w-full px-2 py-1.5 text-[11px] text-left
+                className={`flex items-center gap-2 w-full px-2 py-2 text-xs text-left
                             hover:bg-surface-secondary transition-colors
                             ${selected ? 'bg-oe-blue-subtle/30' : ''}`}
               >
                 <span className={`inline-flex items-center justify-center h-4 w-4 rounded
-                                  text-[9px] font-bold ${b.bg}`}>
+                                  text-xs font-medium ${b.bg}`}>
                   {b.label}
                 </span>
-                <span className="text-content-primary uppercase tracking-wider font-medium">
+                <span className="text-content-primary font-medium">
                   {getResourceTypeLabel(rt.value, t)}
                 </span>
                 {selected && <Check size={11} strokeWidth={2.5} className="ml-auto text-oe-blue" />}
@@ -3632,11 +3627,11 @@ function ResourceCurrencyCombobox({
         ref={btnRef}
         type="button"
         onClick={togglePopover}
-        className={`shrink-0 h-4 px-1 rounded text-[9px] font-mono uppercase tracking-wide
+        className={`shrink-0 h-4 px-1 rounded text-xs font-mono
                     text-center cursor-pointer outline-none focus:ring-1 focus:ring-oe-blue
                     inline-flex items-center justify-center gap-0.5
                     ${isUserDefined
-                      ? 'bg-amber-50 dark:bg-amber-900/20 border border-amber-400 text-amber-800 dark:text-amber-200 font-bold'
+                      ? 'bg-amber-50 dark:bg-amber-900/20 border border-amber-400 text-amber-800 dark:text-amber-200 font-medium'
                       : 'bg-surface-primary border border-border-light text-content-secondary'}`}
         style={{ minWidth: '36px' }}
         title={isUserDefined
@@ -3679,7 +3674,7 @@ function ResourceCurrencyCombobox({
                 }
               }}
               placeholder={t('boq.resource_currency_search', { defaultValue: 'Type or search (e.g. EUR, MYC)' })}
-              className="w-full h-7 px-2 text-[11px] font-mono uppercase tracking-wide
+              className="w-full h-7 px-2 text-xs font-mono
                          text-center bg-surface-secondary border border-border-light rounded
                          outline-none focus:ring-1 focus:ring-oe-blue"
               autoComplete="off"
@@ -3689,7 +3684,7 @@ function ResourceCurrencyCombobox({
               <button
                 type="button"
                 onClick={() => commit(q)}
-                className="mt-1.5 w-full h-6 rounded text-[10px] font-bold uppercase tracking-wide
+                className="mt-1.5 w-full h-6 rounded text-xs font-medium
                            bg-amber-100 hover:bg-amber-200 dark:bg-amber-900/30 dark:hover:bg-amber-900/50
                            text-amber-800 dark:text-amber-200 border border-amber-400
                            flex items-center justify-center gap-1"
@@ -3705,10 +3700,10 @@ function ResourceCurrencyCombobox({
                 here; the global localStorage rate is editable. */}
             {isForeign && baseCode && onCommitFxRate && (
               <div className="mt-2 pt-2 border-t border-border-light/60">
-                <div className="text-[9px] uppercase tracking-wider text-content-tertiary mb-1">
+                <div className="text-xs text-content-tertiary mb-1">
                   {t('boq.fx_rate_label', { defaultValue: 'FX rate' })}
                   {fxSource === 'project' ? (
-                    <span className="ml-1 px-1 rounded bg-oe-blue-subtle text-oe-blue-text text-[8px] font-bold">
+                    <span className="ml-1 px-1 rounded bg-oe-blue-subtle text-oe-blue-text text-xs font-medium">
                       {t('boq.fx_rate_project_badge', { defaultValue: 'PROJECT' })}
                     </span>
                   ) : (
@@ -3717,7 +3712,7 @@ function ResourceCurrencyCombobox({
                     // reads project rates. So anything that isn't a project
                     // rate must prompt the estimator to set one, otherwise the
                     // section sum silently stays unconverted.
-                    <span className="ml-1 px-1 rounded bg-amber-100 dark:bg-amber-900/40 text-amber-800 dark:text-amber-200 text-[8px] font-bold">
+                    <span className="ml-1 px-1 rounded bg-amber-100 dark:bg-amber-900/40 text-amber-800 dark:text-amber-200 text-xs font-medium">
                       {t('boq.fx_rate_missing_badge', { defaultValue: 'SET RATE' })}
                     </span>
                   )}
@@ -3733,7 +3728,7 @@ function ResourceCurrencyCombobox({
                   autoFocus={fxSource !== 'project'}
                 />
                 {fxSource !== 'project' && (
-                  <p className="mt-1 text-[9px] text-amber-700 dark:text-amber-300 leading-tight">
+                  <p className="mt-1 text-xs text-amber-700 dark:text-amber-300 leading-tight">
                     {fxSource === 'global'
                       ? t('boq.fx_rate_confirm_hint', {
                           defaultValue:
@@ -3750,7 +3745,7 @@ function ResourceCurrencyCombobox({
           </div>
           <div className="overflow-auto flex-1 py-1">
             {matchProject.length > 0 && (
-              <div className="px-2 py-1 text-[9px] font-bold uppercase tracking-wider text-content-tertiary">
+              <div className="px-2 py-1 text-xs font-medium text-content-tertiary">
                 {t('boq.currency_group_project', { defaultValue: 'Project' })}
               </div>
             )}
@@ -3764,7 +3759,7 @@ function ResourceCurrencyCombobox({
               />
             ))}
             {matchOther.length > 0 && (
-              <div className="px-2 py-1 text-[9px] font-bold uppercase tracking-wider text-content-tertiary border-t border-border-light/60">
+              <div className="px-2 py-1 text-xs font-medium text-content-tertiary border-t border-border-light/60">
                 {t('boq.currency_group_world', { defaultValue: 'World currencies' })}
               </div>
             )}
@@ -3781,7 +3776,7 @@ function ResourceCurrencyCombobox({
                 the user can confirm it's persisted. */}
             {isUserDefined && (!q || value.includes(q)) && (
               <>
-                <div className="px-2 py-1 text-[9px] font-bold uppercase tracking-wider text-amber-700 dark:text-amber-300 border-t border-border-light/60">
+                <div className="px-2 py-1 text-xs font-medium text-amber-700 dark:text-amber-300 border-t border-border-light/60">
                   {t('boq.currency_group_custom', { defaultValue: 'Custom (saved)' })}
                 </div>
                 <CurrencyOption
@@ -3793,7 +3788,7 @@ function ResourceCurrencyCombobox({
               </>
             )}
             {matchProject.length === 0 && matchOther.length === 0 && !canAddCustom && (
-              <div className="px-2 py-3 text-[10px] text-center text-content-quaternary">
+              <div className="px-2 py-3 text-xs text-center text-content-quaternary">
                 {t('boq.resource_currency_no_match', { defaultValue: 'No matches - type at least 2 letters to add a custom code.' })}
               </div>
             )}
@@ -3881,7 +3876,7 @@ function PopoverFxRateRow({
   };
 
   return (
-    <div className="flex items-center gap-1 text-[10px] font-mono">
+    <div className="flex items-center gap-1 text-xs font-mono">
       <span className="text-content-secondary">1 {foreignCode} =</span>
       <input
         ref={inputRef}
@@ -3932,14 +3927,14 @@ function CurrencyOption({
       role="option"
       aria-selected={selected}
       onClick={(e) => { e.stopPropagation(); onPick(); }}
-      className={`flex items-center gap-2 w-full px-2 py-1.5 text-[11px] text-left
+      className={`flex items-center gap-2 w-full px-2 py-2 text-xs text-left
                   hover:bg-surface-secondary transition-colors
                   ${selected ? (custom ? 'bg-amber-100/40 dark:bg-amber-900/20' : 'bg-oe-blue-subtle/30') : ''}`}
     >
-      <span className={`inline-flex items-center justify-center w-7 text-[10px] font-mono ${custom ? 'text-amber-700 dark:text-amber-300 font-bold' : 'text-content-secondary'}`}>
+      <span className={`inline-flex items-center justify-center w-7 text-xs font-mono ${custom ? 'text-amber-700 dark:text-amber-300 font-medium' : 'text-content-secondary'}`}>
         {CURRENCY_SYMBOL[code] ?? '·'}
       </span>
-      <span className={`font-mono uppercase tracking-wide ${custom ? 'text-amber-800 dark:text-amber-200 font-bold' : 'text-content-primary'}`}>
+      <span className={`font-mono ${custom ? 'text-amber-800 dark:text-amber-200 font-medium' : 'text-content-primary'}`}>
         {code}
       </span>
       {selected && <Check size={11} strokeWidth={2.5} className="ml-auto text-oe-blue" />}
@@ -4413,14 +4408,14 @@ export function EditableResourceRow({ data, ctx, slots, leftPad }: { data: Recor
   const renderOrdinalSlot = (width: number) => (
     <span
       key="ordinal"
-      className="shrink-0 inline-flex items-center justify-end self-center pr-2 text-[9px] font-mono whitespace-nowrap overflow-hidden"
+      className="shrink-0 inline-flex items-center justify-end self-center pr-2 text-xs font-mono whitespace-nowrap overflow-hidden"
       style={{ width: `${width}px` }}
       title={resourceCode
         ? ctx.t('boq.resource_catalog_code', { defaultValue: 'Catalogue code: {{code}}', code: resourceCode })
         : ctx.t('boq.resource_customised', { defaultValue: 'Customised resource - no catalogue code' })}
     >
       {resourceCode ? (
-        <span className="font-normal tracking-tight text-content-tertiary/70 overflow-hidden text-ellipsis">
+        <span className="font-normal text-content-tertiary/70 overflow-hidden text-ellipsis">
           {resourceCode}
         </span>
       ) : (
@@ -4432,7 +4427,7 @@ export function EditableResourceRow({ data, ctx, slots, leftPad }: { data: Recor
   const renderBimLinkSlot = (width: number) => (
     <span
       key="_bim_link"
-      className="shrink-0 inline-flex items-center justify-end self-center ps-2 pe-3"
+      className="shrink-0 inline-flex items-center justify-end self-center ps-2 pe-4"
       style={{ width: `${width}px` }}
     >
       <ResourceTypePicker
@@ -4457,19 +4452,11 @@ export function EditableResourceRow({ data, ctx, slots, leftPad }: { data: Recor
             defaultValue: 'Variant resource - multiple price options available',
           })}
           className="shrink-0 relative inline-flex h-[18px] w-[18px] items-center justify-center
-                     rounded-full overflow-hidden
-                     bg-gradient-to-br from-violet-500 via-purple-500 to-fuchsia-600
-                     text-white text-[9px] font-extrabold leading-none tracking-wider
-                     ring-1 ring-white/30
-                     shadow-[0_1px_3px_rgba(139,92,246,0.5),0_0_0_1px_rgba(139,92,246,0.2)]"
+                     rounded overflow-hidden
+                     bg-oe-blue text-white text-xs font-medium leading-none"
           data-testid={`resource-variant-badge-${data._resourceIndex}`}
         >
-          <span
-            aria-hidden="true"
-            className="pointer-events-none absolute inset-x-0 top-0 h-1/2 rounded-t-full
-                       bg-gradient-to-b from-white/35 to-transparent"
-          />
-          <span className="relative z-10 drop-shadow-[0_1px_1px_rgba(0,0,0,0.25)]">V</span>
+          <span className="relative z-10">V</span>
         </span>
       )}
       <InlineTextInput value={originalName} onCommit={handleNameChange} className="flex-1 min-w-0 text-xs text-left" />
@@ -4545,7 +4532,7 @@ export function EditableResourceRow({ data, ctx, slots, leftPad }: { data: Recor
               setVariantPickerOpen((open) => !open);
             }}
             onMouseDown={(e) => e.stopPropagation()}
-            className={`shrink-0 inline-flex items-center gap-0.5 h-4 px-1 rounded text-[9px] font-semibold
+            className={`shrink-0 inline-flex items-center gap-0.5 h-4 px-1 rounded text-xs font-medium
                         transition-colors cursor-pointer ${
                           resourceVariant
                             ? 'bg-oe-blue/15 text-oe-blue hover:bg-oe-blue/25'
@@ -4608,7 +4595,7 @@ export function EditableResourceRow({ data, ctx, slots, leftPad }: { data: Recor
               ctx.onOpenFxRateSettings?.();
             }}
             className="inline-flex items-center justify-center h-3 px-1 rounded
-                       text-[8px] font-bold uppercase cursor-pointer
+                       text-xs font-medium cursor-pointer
                        bg-amber-100 text-amber-700 dark:bg-amber-900/40 dark:text-amber-300
                        hover:bg-amber-200 hover:text-amber-900
                        dark:hover:bg-amber-800/60 dark:hover:text-amber-100
@@ -4628,7 +4615,7 @@ export function EditableResourceRow({ data, ctx, slots, leftPad }: { data: Recor
         ) : (
           <span
             className="inline-flex items-center justify-center h-3 px-1 rounded
-                       text-[8px] font-bold uppercase
+                       text-xs font-medium
                        bg-amber-100 text-amber-700 dark:bg-amber-900/40 dark:text-amber-300"
             title={ctx.t('boq.resource_no_fx_rate', {
               defaultValue: 'No FX rate configured for {{code}} - total shown in {{code}}',
@@ -4656,7 +4643,7 @@ export function EditableResourceRow({ data, ctx, slots, leftPad }: { data: Recor
         }}
         className="shrink-0 h-4 w-4 flex items-center justify-center rounded
                    text-content-tertiary hover:text-oe-blue-text hover:bg-oe-blue-subtle
-                   opacity-0 group-hover/res:opacity-100 transition-all"
+                   opacity-0 group-hover/res:opacity-100 transition-colors"
         title={ctx.t('boq.save_to_catalog', { defaultValue: 'Save to My Catalog' })}
       >
         <BookmarkPlus size={10} />
@@ -4668,7 +4655,7 @@ export function EditableResourceRow({ data, ctx, slots, leftPad }: { data: Recor
         }}
         className="shrink-0 h-4 w-4 flex items-center justify-center rounded
                    text-content-tertiary hover:text-semantic-error hover:bg-semantic-error-bg
-                   opacity-0 group-hover/res:opacity-100 transition-all"
+                   opacity-0 group-hover/res:opacity-100 transition-colors"
       >
         <X size={10} />
       </button>
@@ -4723,7 +4710,6 @@ export function EditableResourceRow({ data, ctx, slots, leftPad }: { data: Recor
       // we don't need a separate background to call them out.
       className="relative flex items-stretch w-full h-full select-none group/res text-xs border-b border-border-light/50 transition-colors
                  bg-surface-secondary/35 dark:bg-surface-secondary/25
-                 shadow-[inset_0_2px_3px_-1px_rgba(0,0,0,0.05)] dark:shadow-[inset_0_2px_3px_-1px_rgba(0,0,0,0.30)]
                  hover:bg-surface-secondary/55 dark:hover:bg-surface-secondary/40"
       style={{ paddingLeft: `${leftPad}px`, paddingRight: '4px' }}
       onContextMenu={(e) => {
@@ -4747,7 +4733,7 @@ export function EditableResourceRow({ data, ctx, slots, leftPad }: { data: Recor
               ? 'bg-oe-blue/70'
               : variantBarTone === 'amber'
               ? 'bg-amber-400 dark:bg-amber-500'
-              : 'bg-gradient-to-b from-violet-500 to-purple-600'
+              : 'bg-oe-blue'
           }`}
         />
       )}
@@ -4924,13 +4910,13 @@ function VariantHeaderResourceRow({
   const renderOrdinalSlot = (width: number) => (
     <span
       key="ordinal"
-      className="shrink-0 inline-flex items-center justify-end self-center pr-2 text-[8px] font-mono whitespace-nowrap overflow-hidden"
+      className="shrink-0 inline-flex items-center justify-end self-center pr-2 text-xs font-mono whitespace-nowrap overflow-hidden"
       style={{ width: `${width}px` }}
       title={ctx.t('boq.variant_header_code_tooltip', {
         defaultValue: 'Abstract variant resource - inherits the position quantity',
       })}
     >
-      <span className="px-1 py-0.5 rounded bg-violet-200/60 dark:bg-violet-800/40 text-violet-800 dark:text-violet-200 font-bold tracking-wider">
+      <span className="px-1 py-0.5 rounded bg-violet-200/60 dark:bg-violet-800/40 text-violet-800 dark:text-violet-200 font-medium">
         VAR
       </span>
     </span>
@@ -4939,7 +4925,7 @@ function VariantHeaderResourceRow({
   const renderBimLinkSlot = (width: number) => (
     <span
       key="_bim_link"
-      className="shrink-0 inline-flex items-center justify-end self-center ps-2 pe-3"
+      className="shrink-0 inline-flex items-center justify-end self-center ps-2 pe-4"
       style={{ width: `${width}px` }}
     >
       <button
@@ -4949,14 +4935,9 @@ function VariantHeaderResourceRow({
           openPicker();
         }}
         onMouseDown={(e) => e.stopPropagation()}
-        className="inline-flex items-center px-1.5 py-0.5 rounded
-                   bg-gradient-to-br from-violet-500 to-fuchsia-600 text-white
-                   text-[9px] font-bold uppercase tracking-wider
-                   ring-1 ring-white/30 shadow-[0_1px_3px_rgba(139,92,246,0.4)]
-                   hover:from-violet-400 hover:to-fuchsia-500
-                   hover:shadow-[0_2px_6px_rgba(217,70,239,0.5)]
-                   hover:scale-105 active:scale-95
-                   transition-all duration-150 cursor-pointer"
+        className="inline-flex items-center px-2 py-0.5 rounded
+                   bg-oe-blue text-white
+                   transition-colors duration-fast ease-oe cursor-pointer"
         title={ctx.t('boq.variant_header_type_tooltip', {
           defaultValue: 'Click to pick a price variant from the catalog',
         })}
@@ -4985,7 +4966,7 @@ function VariantHeaderResourceRow({
   const renderUnitSlot = (width: number) => (
     <span
       key="unit"
-      className="shrink-0 text-center text-content-secondary font-mono uppercase self-center px-2 text-[11px]"
+      className="shrink-0 text-center text-content-secondary font-mono self-center px-2 text-xs"
       style={{ width: `${width}px` }}
     >
       {displayUnitLabel || '—'}
@@ -5030,12 +5011,9 @@ function VariantHeaderResourceRow({
           openPicker();
         }}
         onMouseDown={(e) => e.stopPropagation()}
-        className="shrink-0 inline-flex items-center gap-0.5 h-4 px-1 rounded text-[9px] font-semibold
-                   bg-gradient-to-br from-violet-500 to-fuchsia-600 text-white
-                   ring-1 ring-white/30 shadow-[0_1px_3px_rgba(139,92,246,0.4)]
-                   hover:from-violet-400 hover:to-fuchsia-500 hover:shadow-[0_2px_6px_rgba(217,70,239,0.5)]
-                   hover:scale-105 active:scale-95
-                   transition-all duration-150 cursor-pointer"
+        className="shrink-0 inline-flex items-center gap-0.5 h-4 px-1 rounded text-xs font-medium
+                   bg-oe-blue text-white
+                   transition-colors duration-fast ease-oe cursor-pointer"
         title={ctx.t('boq.variant_header_pill_tooltip', {
           defaultValue: 'Choose / switch a price variant for this abstract resource',
         })}
@@ -5045,10 +5023,10 @@ function VariantHeaderResourceRow({
       </button>
       {showNumbers && (
         <>
-          <span className="shrink-0 inline-flex items-center justify-center w-7 text-[10px] font-mono text-content-secondary">
+          <span className="shrink-0 inline-flex items-center justify-center w-7 text-xs font-mono text-content-secondary">
             {currency}
           </span>
-          <span className="flex-1 min-w-0 text-right tabular-nums text-content-primary text-xs font-semibold">
+          <span className="flex-1 min-w-0 text-right tabular-nums text-content-primary text-xs font-medium">
             <InlineNumberInput
               value={displayRate}
               onCommit={handleRateCommit}
@@ -5064,7 +5042,7 @@ function VariantHeaderResourceRow({
   const renderTotalSlot = (width: number) => (
     <span
       key="total"
-      className="shrink-0 text-right tabular-nums font-semibold text-content-primary self-center pr-2 pl-2"
+      className="shrink-0 text-right tabular-nums font-medium text-content-primary self-center pr-2 pl-2"
       style={{ width: `${width}px` }}
     >
       {showNumbers ? fmtNum(total) : ''}
@@ -5088,7 +5066,7 @@ function VariantHeaderResourceRow({
           onMouseDown={(e) => e.stopPropagation()}
           className="shrink-0 h-4 w-4 flex items-center justify-center rounded
                      text-content-tertiary hover:text-oe-blue-text hover:bg-oe-blue-subtle
-                     transition-all"
+                     transition-colors"
           title={ctx.t('boq.rs_save_variant_to_catalog', {
             defaultValue: 'Save as a regular article in your catalog',
           })}
@@ -5108,7 +5086,6 @@ function VariantHeaderResourceRow({
       className="relative flex items-stretch w-full h-full select-none group/vh text-xs
                  bg-surface-secondary/35 dark:bg-surface-secondary/25
                  border-b border-border-light/50
-                 shadow-[inset_0_2px_3px_-1px_rgba(0,0,0,0.05)] dark:shadow-[inset_0_2px_3px_-1px_rgba(0,0,0,0.30)]
                  transition-colors"
       style={{ paddingLeft: `${leftPad}px`, paddingRight: '4px' }}
       data-testid={`variant-header-row-${positionId}`}
@@ -5118,7 +5095,7 @@ function VariantHeaderResourceRow({
           violet→fuchsia gradient announcing "this is the variant pick". */}
       <span
         aria-hidden="true"
-        className="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-violet-500 to-fuchsia-600"
+        className="absolute left-0 top-0 bottom-0 w-1 bg-oe-blue"
       />
 
       {/* Column-driven slot rendering — mirrors EditableResourceRow so
@@ -5236,7 +5213,7 @@ export function ResourceFullWidthRenderer(params: ICellRendererParams) {
       return (
         <span
           key={key}
-          className="shrink-0 self-center text-right tabular-nums text-[10px] font-medium text-content-tertiary pr-2 pl-2"
+          className="shrink-0 self-center text-right tabular-nums text-xs font-medium text-content-tertiary pr-2 pl-2"
           style={{ width: `${width}px` }}
           title={title}
         >
@@ -5313,8 +5290,8 @@ export function ResourceFullWidthRenderer(params: ICellRendererParams) {
             aria-label={hint}
             data-testid={`resource-basis-toggle-${footerPosId}`}
             data-basis={basis}
-            className="inline-flex items-center gap-1 h-5 px-1.5 rounded text-[10px] font-medium min-w-0
-                       text-content-tertiary hover:text-oe-blue-text hover:bg-oe-blue-subtle transition-all
+            className="inline-flex items-center gap-1 h-5 px-2 rounded text-xs font-medium min-w-0
+                       text-content-tertiary hover:text-oe-blue-text hover:bg-oe-blue-subtle transition-colors
                        disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-transparent"
           >
             <ArrowLeftRight size={10} className="shrink-0" />
@@ -5335,8 +5312,8 @@ export function ResourceFullWidthRenderer(params: ICellRendererParams) {
             e.stopPropagation();
             ctx.onAddManualResource?.(data._parentPositionId);
           }}
-          className="flex items-center gap-1.5 h-5 px-2 rounded text-[10px] font-medium
-                     text-content-tertiary hover:text-oe-blue-text hover:bg-oe-blue-subtle transition-all"
+          className="flex items-center gap-2 h-5 px-2 rounded text-xs font-medium
+                     text-content-tertiary hover:text-oe-blue-text hover:bg-oe-blue-subtle transition-colors"
         >
           <Plus size={10} />
           {ctx.t('boq.add_resource_manual', { defaultValue: 'Add Resource' })}
@@ -5346,8 +5323,8 @@ export function ResourceFullWidthRenderer(params: ICellRendererParams) {
             e.stopPropagation();
             ctx.onOpenCostDbForPosition?.(data._parentPositionId);
           }}
-          className="flex items-center gap-1.5 h-5 px-2 rounded text-[10px] font-medium
-                     text-content-tertiary hover:text-emerald-600 hover:bg-emerald-50 dark:hover:bg-emerald-900/20 transition-all"
+          className="flex items-center gap-2 h-5 px-2 rounded text-xs font-medium
+                     text-content-tertiary hover:text-emerald-600 hover:bg-emerald-50 dark:hover:bg-emerald-900/20 transition-colors"
         >
           <Plus size={10} />
           {ctx.t('boq.add_from_database', { defaultValue: 'From Database' })}
@@ -5357,8 +5334,8 @@ export function ResourceFullWidthRenderer(params: ICellRendererParams) {
             e.stopPropagation();
             ctx.onOpenCatalogForPosition?.(data._parentPositionId);
           }}
-          className="flex items-center gap-1.5 h-5 px-2 rounded text-[10px] font-medium
-                     text-content-tertiary hover:text-teal-600 hover:bg-teal-50 dark:hover:bg-teal-900/20 transition-all"
+          className="flex items-center gap-2 h-5 px-2 rounded text-xs font-medium
+                     text-content-tertiary hover:text-teal-600 hover:bg-teal-50 dark:hover:bg-teal-900/20 transition-colors"
         >
           <Boxes size={10} />
           {ctx.t('boq.add_from_catalog_short', { defaultValue: 'From Catalog' })}
@@ -5449,18 +5426,18 @@ export function QuantityCellRenderer(params: ICellRendererParams) {
   let colorClass = '';
   let titleText: string | undefined;
   if (hasPdfSource) {
-    colorClass = 'font-semibold text-rose-700 dark:text-rose-400';
+    colorClass = 'font-medium text-rose-700 dark:text-rose-400';
     titleText = String(meta.pdf_measurement_source);
   } else if (hasDwgSource) {
-    colorClass = 'font-semibold text-amber-700 dark:text-amber-400';
+    colorClass = 'font-medium text-amber-700 dark:text-amber-400';
     titleText = String(meta.dwg_annotation_source);
   } else if (hasBimSource) {
-    colorClass = 'font-semibold text-emerald-700 dark:text-emerald-400';
+    colorClass = 'font-medium text-emerald-700 dark:text-emerald-400';
     titleText = String(meta.bim_qty_source);
   } else if (formulaSource) {
     // Issue #90: cells with a stored formula get a violet accent + the
     // formula string in the title so a user knows the qty is computed.
-    colorClass = 'font-semibold text-violet-700 dark:text-violet-300';
+    colorClass = 'font-medium text-violet-700 dark:text-violet-300';
     titleText = `Formula: ${formulaSource}`;
   }
 
@@ -5477,11 +5454,11 @@ export function QuantityCellRenderer(params: ICellRendererParams) {
       >
         <span
           aria-hidden="true"
-          className="inline-flex items-center px-1 h-[16px] rounded text-[9px] font-bold leading-none tracking-tight bg-violet-100 text-violet-700 dark:bg-violet-900/40 dark:text-violet-300 border border-violet-300/60 dark:border-violet-700/50"
+          className="inline-flex items-center px-1 h-4 rounded text-xs font-medium leading-none bg-oe-blue-subtle text-oe-blue-text"
         >
           ƒx
         </span>
-        <span className="font-semibold text-violet-700 dark:text-violet-300">{formatted}</span>
+        <span className="font-medium text-content-primary">{formatted}</span>
       </span>
     );
   }
@@ -5691,7 +5668,7 @@ export function UnitRateCellRenderer(params: ICellRendererParams) {
         data-testid={`boq-deduction-rate-${data.id}`}
       >
         <span
-          className="shrink-0 inline-flex items-center h-4 px-1 rounded text-[9px] font-semibold
+          className="shrink-0 inline-flex items-center h-4 px-1 rounded text-xs font-medium
                      bg-rose-100 dark:bg-rose-900/40 text-rose-700 dark:text-rose-300"
         >
           {t('boq.deduction_badge', { defaultValue: 'Deduction' })}
@@ -5720,9 +5697,9 @@ export function UnitRateCellRenderer(params: ICellRendererParams) {
           })}
         >
           <span
-            className="shrink-0 inline-flex items-center gap-0.5 h-4 px-1 rounded text-[9px] font-bold
+            className="shrink-0 inline-flex items-center gap-0.5 h-4 px-1 rounded text-xs font-medium
                        bg-amber-100 dark:bg-amber-900/40 text-amber-700 dark:text-amber-300
-                       font-mono uppercase tracking-wide"
+                       font-mono"
             data-testid={`boq-position-currency-${data.id}`}
           >
             {CURRENCY_SYMBOL[currency] ?? ''}{currency}
@@ -5767,7 +5744,7 @@ export function UnitRateCellRenderer(params: ICellRendererParams) {
         });
 
   return (
-    <span className="flex items-center justify-end gap-1.5 w-full h-full text-xs tabular-nums leading-[32px]">
+    <span className="flex items-center justify-end gap-2 w-full h-full text-xs tabular-nums leading-[32px]">
       {/* Pill renders LEFT of the number so the formatted value sits flush
           with the cell's right edge (= cell.right - 8px from !pr-2). This
           matches the resource sub-row layout (combobox/pill on the left,
@@ -5785,7 +5762,7 @@ export function UnitRateCellRenderer(params: ICellRendererParams) {
             setPickerOpen((open) => !open);
           }}
           onMouseDown={(e) => e.stopPropagation()}
-          className={`shrink-0 inline-flex items-center gap-0.5 h-5 px-1.5 rounded text-[10px] font-semibold
+          className={`shrink-0 inline-flex items-center gap-0.5 h-5 px-2 rounded text-xs font-medium
                       transition-colors cursor-pointer disabled:cursor-default ${
                         variant
                           ? 'bg-oe-blue/15 text-oe-blue hover:bg-oe-blue/25'
@@ -5805,9 +5782,9 @@ export function UnitRateCellRenderer(params: ICellRendererParams) {
       )}
       {isForeignCurrency && (
         <span
-          className="shrink-0 inline-flex items-center gap-0.5 h-4 px-1 rounded text-[9px] font-bold
+          className="shrink-0 inline-flex items-center gap-0.5 h-4 px-1 rounded text-xs font-medium
                      bg-amber-100 dark:bg-amber-900/40 text-amber-700 dark:text-amber-300
-                     font-mono uppercase tracking-wide"
+                     font-mono"
           title={t('boq.position_currency_tooltip', {
             defaultValue:
               'This position is priced in {{code}} ({{symbol}}), not the project currency {{base}}. Totals are converted to {{base}} using the project FX rate.',
@@ -5880,7 +5857,7 @@ export function UnitCellRenderer(params: ICellRendererParams) {
       <div className="flex flex-col items-center justify-center h-full w-full gap-0">
         <span className="text-xs font-mono leading-tight">{displayUnit}</span>
         <span
-          className="text-[7px] leading-none font-medium text-rose-600 dark:text-rose-400 truncate max-w-full"
+          className="text-xs leading-none font-medium text-rose-600 dark:text-rose-400 truncate max-w-full"
           title={pdfSource}
         >
           {shortLabel}
@@ -5897,7 +5874,7 @@ export function UnitCellRenderer(params: ICellRendererParams) {
       <div className="flex flex-col items-center justify-center h-full w-full gap-0">
         <span className="text-xs font-mono leading-tight">{displayUnit}</span>
         <span
-          className="text-[7px] leading-none font-medium text-amber-600 dark:text-amber-400 truncate max-w-full"
+          className="text-xs leading-none font-medium text-amber-600 dark:text-amber-400 truncate max-w-full"
           title={dwgSource}
         >
           {shortLabel}
@@ -5915,7 +5892,7 @@ export function UnitCellRenderer(params: ICellRendererParams) {
     <div className="flex flex-col items-center justify-center h-full w-full gap-0">
       <span className="text-xs font-mono leading-tight">{displayUnit}</span>
       <span
-        className="text-[7px] leading-none font-medium text-emerald-600 dark:text-emerald-400 truncate max-w-full"
+        className="text-xs leading-none font-medium text-emerald-600 dark:text-emerald-400 truncate max-w-full"
         title={bimSource}
       >
         {paramName}

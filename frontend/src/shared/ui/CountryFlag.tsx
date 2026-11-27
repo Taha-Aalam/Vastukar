@@ -341,7 +341,7 @@ const EMOJI_FALLBACK: Record<string, string> = {
   // Hebrew locale (has an SVG above; fallback only)
   il: '🇮🇱',
   // CIS provenance badge (has an SVG above; fallback only)
-  cis: '🤝',
+  cis: 'CIS',
 };
 
 /** Region-key prefixes that don't match an ISO code directly.
@@ -393,7 +393,7 @@ export function CountryFlag({ code, size = 16, className = '' }: CountryFlagProp
   if (!svg) {
     const emoji = EMOJI_FALLBACK[iso];
     if (emoji) {
-      return <span className={className} role="img" aria-label={iso} style={{ fontSize: size * 0.7 }}>{emoji}</span>;
+      return <span role="img" aria-label={iso} className={`font-medium tracking-tight ${className}`} style={{ fontSize: size * 0.55 }}>{emoji}</span>;
     }
     return null;
   }

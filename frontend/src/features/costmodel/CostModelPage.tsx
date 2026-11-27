@@ -129,26 +129,23 @@ const KPICard = memo(function KPICard({
   return (
     <div className="relative flex-1 min-w-[200px] overflow-hidden rounded-xl border border-border-light bg-surface-elevated/90 shadow-xs transition-shadow duration-normal ease-oe hover:shadow-sm">
       {/* Top accent bar */}
-      <div className={`absolute top-0 start-0 end-0 h-1 ${accentColor === 'green' ? 'bg-green-500' : accentColor === 'amber' ? 'bg-amber-500' : accentColor === 'rose' ? 'bg-rose-500' : 'bg-oe-blue'}`} />
+      <div className={`absolute top-0 start-0 end-0 h-1 ${accentColor ? 'bg-content-tertiary' : 'bg-oe-blue'}`} />
       <div className="p-5 pt-4">
         <div className="flex items-center justify-between mb-3">
-          <span className="text-xs font-medium uppercase tracking-wider text-content-tertiary">
+          <span className="text-xs font-medium text-content-tertiary">
             {label}
           </span>
-          <div className={`flex h-9 w-9 items-center justify-center rounded-xl ${
-            accentColor === 'green' ? 'bg-green-50 text-green-600 dark:bg-green-950/40 dark:text-green-400'
-            : accentColor === 'amber' ? 'bg-amber-50 text-amber-600 dark:bg-amber-950/40 dark:text-amber-400'
-            : accentColor === 'rose' ? 'bg-rose-50 text-rose-600 dark:bg-rose-950/40 dark:text-rose-400'
-            : 'bg-oe-blue/10 text-oe-blue'
+          <div className={`flex h-9 w-9 items-center justify-center rounded-lg ${
+            accentColor ? 'bg-surface-secondary text-content-secondary' : 'bg-oe-blue-subtle text-oe-blue-text'
           }`}>
             {icon}
           </div>
         </div>
-        <div className="text-2xl font-bold tabular-nums text-content-primary leading-tight">
+        <div className="text-2xl font-medium tabular-nums text-content-primary leading-tight">
           {formatCurrency(amount, currency)}
         </div>
         {variance !== undefined && variance !== 0 && (
-          <div className="mt-2.5 flex items-center gap-1.5">
+          <div className="mt-2.5 flex items-center gap-2">
             {/* The badge says "vs budget", so the number has to be the deviation
                 from it - spending above budget is a plus. What the callers pass
                 is the opposite quantity, budget minus spend, which is the
@@ -159,7 +156,7 @@ const KPICard = memo(function KPICard({
                 rather than the arrow got the opposite truth. All three now come
                 off one quantity. */}
             <span
-              className={`inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-2xs font-semibold ${varianceBg(variance)} ${varianceColor(variance)}`}
+              className={`inline-flex items-center gap-1 rounded px-3 py-1 text-xs font-medium tabular-nums ${varianceBg(variance)} ${varianceColor(variance)}`}
             >
               {variance < 0 ? <TrendingUp size={10} /> : <TrendingDown size={10} />}
               {-variance > 0 ? '+' : ''}
@@ -191,7 +188,7 @@ const PerformanceIndicator = memo(function PerformanceIndicator({
   return (
     <div className="flex items-center gap-4">
       <div
-        className={`flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl text-lg font-bold tabular-nums ${
+        className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-lg text-base font-medium tabular-nums ${
           isHealthy
             ? 'bg-semantic-success-bg text-semantic-success'
             : 'bg-semantic-error-bg text-semantic-error'
@@ -201,12 +198,12 @@ const PerformanceIndicator = memo(function PerformanceIndicator({
       </div>
       <div className="min-w-0">
         <div className="flex items-center gap-2">
-          <span className="text-sm font-semibold text-content-primary">{label}</span>
+          <span className="text-sm font-medium text-content-primary">{label}</span>
           <Badge variant={isHealthy ? 'success' : 'error'} size="sm">
             {isHealthy ? t('costmodel.on_track', { defaultValue: 'On Track' }) : t('costmodel.at_risk', { defaultValue: 'At Risk' })}
           </Badge>
         </div>
-        <p className="mt-0.5 text-xs text-content-secondary">{description}</p>
+        <p className="mt-1 text-xs text-content-secondary">{description}</p>
       </div>
     </div>
   );
@@ -216,9 +213,9 @@ const PerformanceIndicator = memo(function PerformanceIndicator({
 
 /** EVM S-curve chart colors — semantic names for planned/earned/actual series */
 const CHART_COLORS = {
-  planned: 'var(--chart-planned, #2563eb)',
-  earned: 'var(--chart-earned, #16a34a)',
-  actual: 'var(--chart-actual, #dc2626)',
+  planned: '#8b949e',
+  earned: '#0071e3',
+  actual: '#3f4854',
 } as const;
 
 const SCurveChart = memo(function SCurveChart({ data }: { data: SCurvePoint[] }) {
@@ -303,8 +300,8 @@ const SCurveChart = memo(function SCurveChart({ data }: { data: SCurvePoint[] })
               y={line.y + 4}
               textAnchor="end"
               className="fill-content-tertiary"
-              fontSize={10}
-              fontFamily="system-ui"
+              fontSize={11}
+              fontFamily="ui-monospace, SFMono-Regular, Menlo, monospace"
             >
               {formatCompact(line.value, '')}
             </text>
@@ -323,8 +320,8 @@ const SCurveChart = memo(function SCurveChart({ data }: { data: SCurvePoint[] })
               y={padding.top + plotHeight + 24}
               textAnchor="middle"
               className="fill-content-tertiary"
-              fontSize={10}
-              fontFamily="system-ui"
+              fontSize={11}
+              fontFamily="ui-monospace, SFMono-Regular, Menlo, monospace"
             >
               {d.period}
             </text>
@@ -406,9 +403,9 @@ const SCurveChart = memo(function SCurveChart({ data }: { data: SCurvePoint[] })
             x={22}
             y={10}
             fontSize={11}
-            fontWeight={500}
+            fontWeight={400}
             className="fill-content-secondary"
-            fontFamily="system-ui"
+            fontFamily="ui-monospace, SFMono-Regular, Menlo, monospace"
           >
             {t('costmodel.planned', 'Planned (PV)')}
           </text>
@@ -418,9 +415,9 @@ const SCurveChart = memo(function SCurveChart({ data }: { data: SCurvePoint[] })
             x={122}
             y={10}
             fontSize={11}
-            fontWeight={500}
+            fontWeight={400}
             className="fill-content-secondary"
-            fontFamily="system-ui"
+            fontFamily="ui-monospace, SFMono-Regular, Menlo, monospace"
           >
             {t('costmodel.earned', 'Earned (EV)')}
           </text>
@@ -430,9 +427,9 @@ const SCurveChart = memo(function SCurveChart({ data }: { data: SCurvePoint[] })
             x={218}
             y={10}
             fontSize={11}
-            fontWeight={500}
+            fontWeight={400}
             className="fill-content-secondary"
-            fontFamily="system-ui"
+            fontFamily="ui-monospace, SFMono-Regular, Menlo, monospace"
           >
             {t('costmodel.actual', 'Actual (AC)')}
           </text>
@@ -497,25 +494,25 @@ const BudgetTable = memo(function BudgetTable({
       <table className="w-full text-sm">
         <thead>
           <tr className="border-b-2 border-border">
-            <th className="py-3 pr-4 text-left text-xs font-semibold uppercase tracking-wider text-content-secondary">
+            <th className="py-3 pr-4 text-left text-xs font-medium text-content-secondary">
               {t('costmodel.name_category', { defaultValue: 'Category' })}
             </th>
-            <th className="py-3 px-4 text-right text-xs font-semibold uppercase tracking-wider text-content-secondary">
+            <th className="py-3 px-4 text-right text-xs font-medium text-content-secondary">
               {t('costmodel.planned', 'Planned')}
             </th>
-            <th className="py-3 px-4 text-right text-xs font-semibold uppercase tracking-wider text-content-secondary">
+            <th className="py-3 px-4 text-right text-xs font-medium text-content-secondary">
               {t('costmodel.committed', 'Committed')}
             </th>
-            <th className="py-3 px-4 text-right text-xs font-semibold uppercase tracking-wider text-content-secondary">
+            <th className="py-3 px-4 text-right text-xs font-medium text-content-secondary">
               {t('costmodel.actual', 'Actual')}
             </th>
-            <th className="py-3 px-4 text-right text-xs font-semibold uppercase tracking-wider text-content-secondary">
+            <th className="py-3 px-4 text-right text-xs font-medium text-content-secondary">
               {t('costmodel.forecast', 'Forecast')}
             </th>
-            <th className="py-3 px-2 text-center text-xs font-semibold uppercase tracking-wider text-content-secondary" style={{ minWidth: 80 }}>
+            <th className="py-3 px-2 text-center text-xs font-medium text-content-secondary" style={{ minWidth: 80 }}>
               {t('costmodel.spent_pct', { defaultValue: 'Spent %' })}
             </th>
-            <th className="py-3 pl-4 text-right text-xs font-semibold uppercase tracking-wider text-content-secondary">
+            <th className="py-3 pl-4 text-right text-xs font-medium text-content-secondary">
               {t('costmodel.variance', 'Variance')}
             </th>
           </tr>
@@ -546,12 +543,12 @@ const BudgetTable = memo(function BudgetTable({
                 </td>
                 <td className="py-3.5 px-2">
                   <div className="flex flex-col items-center gap-0.5">
-                    <span className={`text-2xs font-semibold tabular-nums ${spentOver ? 'text-semantic-error' : 'text-content-secondary'}`}>
+                    <span className={`text-2xs font-medium tabular-nums ${spentOver ? 'text-semantic-error' : 'text-content-secondary'}`}>
                       {fmtPercent(spentPct, 0)}
                     </span>
                     <div className="h-1.5 w-full max-w-[60px] rounded-full bg-surface-secondary overflow-hidden">
                       <div
-                        className={`h-full rounded-full transition-all ${spentOver ? 'bg-semantic-error' : spentPct > 80 ? 'bg-amber-500' : 'bg-oe-blue'}`}
+                        className={`h-full rounded transition-[width] duration-fast ease-oe ${spentOver ? 'bg-semantic-error' : 'bg-oe-blue'}`}
                         style={{ width: `${Math.min(100, spentPct)}%` }}
                       />
                     </div>
@@ -568,7 +565,7 @@ const BudgetTable = memo(function BudgetTable({
           })}
         </tbody>
         <tfoot>
-          <tr className="border-t-2 border-border font-semibold">
+          <tr className="border-t-2 border-border font-medium">
             <td className="py-3.5 pr-4 text-content-primary">
               {t('costmodel.total', 'Total')}
             </td>
@@ -587,12 +584,12 @@ const BudgetTable = memo(function BudgetTable({
             <td className="py-3.5 px-2">
               {totals.planned > 0 && (
                 <div className="flex flex-col items-center gap-0.5">
-                  <span className="text-2xs font-bold tabular-nums text-content-primary">
+                  <span className="text-2xs font-medium tabular-nums text-content-primary">
                     {fmtPercent(Math.min(100, (totals.actual / totals.planned) * 100), 0)}
                   </span>
                   <div className="h-1.5 w-full max-w-[60px] rounded-full bg-surface-secondary overflow-hidden">
                     <div
-                      className={`h-full rounded-full ${totals.actual > totals.planned ? 'bg-semantic-error' : 'bg-oe-blue'}`}
+                      className={`h-full rounded ${totals.actual > totals.planned ? 'bg-semantic-error' : 'bg-oe-blue'}`}
                       style={{ width: `${Math.min(100, (totals.actual / totals.planned) * 100)}%` }}
                     />
                   </div>
@@ -600,7 +597,7 @@ const BudgetTable = memo(function BudgetTable({
               )}
             </td>
             <td
-              className={`py-3.5 pl-4 text-right tabular-nums font-bold ${varianceColor(totals.variance)}`}
+              className={`py-3.5 pl-4 text-right tabular-nums font-medium ${varianceColor(totals.variance)}`}
             >
               {totals.variance > 0 ? '+' : ''}
               {formatCurrency(totals.variance, currency)}
@@ -665,10 +662,10 @@ const EVMKPIBox = memo(function EVMKPIBox({
 
   return (
     <div className={`flex-1 min-w-[140px] rounded-xl p-4 ${bgClass}`}>
-      <div className="text-2xs font-medium uppercase tracking-wider text-content-tertiary mb-1">
+      <div className="text-2xs font-medium text-content-tertiary mb-1">
         {label}
       </div>
-      <div className={`text-xl font-bold tabular-nums ${colorClass}`}>{displayValue}</div>
+      <div className={`text-xl font-medium tabular-nums ${colorClass}`}>{displayValue}</div>
     </div>
   );
 });
@@ -700,17 +697,17 @@ const EVMProgressBars = memo(function EVMProgressBars({
       {
         label: t('costmodel.evm_pv', { defaultValue: 'Planned Value (PV)' }),
         value: evm.pv,
-        color: 'bg-blue-500',
+        color: 'bg-content-tertiary',
       },
       {
         label: t('costmodel.evm_ev', { defaultValue: 'Earned Value (EV)' }),
         value: evm.ev,
-        color: 'bg-green-500',
+        color: 'bg-oe-blue',
       },
       {
         label: t('costmodel.evm_ac', { defaultValue: 'Actual Cost (AC)' }),
         value: evm.ac,
-        color: 'bg-red-500',
+        color: 'bg-content-quaternary',
       },
     ],
     [t, evm.pv, evm.ev, evm.ac],
@@ -722,13 +719,13 @@ const EVMProgressBars = memo(function EVMProgressBars({
         <div key={bar.label}>
           <div className="flex items-center justify-between mb-1">
             <span className="text-xs font-medium text-content-secondary">{bar.label}</span>
-            <span className="text-xs font-semibold tabular-nums text-content-primary">
+            <span className="text-xs font-medium tabular-nums text-content-primary">
               {formatCompact(bar.value, currency)}
             </span>
           </div>
           <div className="h-3 w-full rounded-full bg-surface-secondary overflow-hidden">
             <div
-              className={`h-full rounded-full transition-all duration-500 ${bar.color}`}
+              className={`h-full rounded transition-[width] duration-fast ease-oe ${bar.color}`}
               style={{ width: barWidth(bar.value) }}
             />
           </div>
@@ -738,7 +735,7 @@ const EVMProgressBars = memo(function EVMProgressBars({
         <span className="text-xs text-content-tertiary">
           {t('costmodel.evm_bac', { defaultValue: 'BAC (Budget At Completion)' })}
         </span>
-        <span className="text-xs font-semibold tabular-nums text-content-primary">
+        <span className="text-xs font-medium tabular-nums text-content-primary">
           {formatCompact(maxValue, currency)}
         </span>
       </div>
@@ -765,7 +762,7 @@ const EVMDashboard = memo(function EVMDashboard({
   const liveTooltip = t('costmodel.evm_live_tooltip', { defaultValue: 'Live - these figures refresh automatically when cost, schedule progress or finance data changes' });
   const livePill = live ? (
     <span
-      className="inline-flex shrink-0 items-center gap-1.5 rounded-full bg-semantic-success/10 px-2 py-0.5 text-[11px] font-medium text-semantic-success"
+      className="inline-flex shrink-0 items-center gap-2 rounded bg-semantic-success-bg px-2 py-1 text-xs font-medium text-semantic-success"
       title={liveTooltip}
     >
       <span className="relative flex h-1.5 w-1.5">
@@ -780,7 +777,7 @@ const EVMDashboard = memo(function EVMDashboard({
     return (
       <Card>
         <div className="flex items-start justify-between gap-4">
-          <h3 className="text-lg font-semibold text-content-primary truncate">
+          <h3 className="text-lg font-medium text-content-primary truncate">
             {t('costmodel.evm_title', { defaultValue: 'Earned Value Analysis' })}
             <span className="ml-1.5 inline-flex align-middle cursor-help" title={evmTooltip}>
               <Activity size={14} className="text-content-tertiary" />
@@ -808,7 +805,7 @@ const EVMDashboard = memo(function EVMDashboard({
   return (
     <Card>
       <div className="flex items-start justify-between gap-4">
-        <h3 className="text-lg font-semibold text-content-primary truncate">
+        <h3 className="text-lg font-medium text-content-primary truncate">
           {t('costmodel.evm_title', { defaultValue: 'Earned Value Analysis' })}
           <span className="ml-1.5 inline-flex align-middle cursor-help" title={evmTooltip}>
             <Activity size={14} className="text-content-tertiary" />
@@ -850,7 +847,7 @@ const EVMDashboard = memo(function EVMDashboard({
           {/* SPI-capped warning — PV is a time-elapsed proxy and was clamped */}
           {evm.spi_capped && (
             <div className="flex items-start gap-2 rounded-xl border border-amber-200 bg-amber-50/60 p-3 dark:border-amber-800/50 dark:bg-amber-950/20">
-              <AlertTriangle size={14} className="mt-0.5 shrink-0 text-amber-600 dark:text-amber-400" />
+              <AlertTriangle size={14} className="mt-1 shrink-0 text-amber-600 dark:text-amber-400" />
               <p className="text-xs leading-relaxed text-amber-700 dark:text-amber-400/80">
                 {t('costmodel.spi_capped_hint', {
                   defaultValue:
@@ -1156,16 +1153,16 @@ function BudgetLinesEditor({
       <table className="w-full text-sm">
         <thead>
           <tr className="border-b-2 border-border">
-            <th className="py-3 pr-4 text-left text-xs font-semibold uppercase tracking-wider text-content-secondary">
+            <th className="py-3 pr-4 text-left text-xs font-medium text-content-secondary">
               {t('costmodel.bl_category', { defaultValue: 'Category' })}
             </th>
-            <th className="py-3 px-4 text-left text-xs font-semibold uppercase tracking-wider text-content-secondary">
+            <th className="py-3 px-4 text-left text-xs font-medium text-content-secondary">
               {t('costmodel.bl_description', { defaultValue: 'Description' })}
             </th>
-            <th className="py-3 px-4 text-right text-xs font-semibold uppercase tracking-wider text-content-secondary">
+            <th className="py-3 px-4 text-right text-xs font-medium text-content-secondary">
               {t('costmodel.planned', 'Planned')}
             </th>
-            <th className="py-3 px-4 text-right text-xs font-semibold uppercase tracking-wider text-content-secondary">
+            <th className="py-3 px-4 text-right text-xs font-medium text-content-secondary">
               <span
                 className="inline-flex items-center gap-1 cursor-help"
                 title={t('costmodel.bl_earned_hint', {
@@ -1176,19 +1173,19 @@ function BudgetLinesEditor({
                 <Activity size={11} className="shrink-0 text-content-tertiary" />
               </span>
             </th>
-            <th className="py-3 px-4 text-right text-xs font-semibold uppercase tracking-wider text-content-secondary">
+            <th className="py-3 px-4 text-right text-xs font-medium text-content-secondary">
               {t('costmodel.committed', 'Committed')}
             </th>
-            <th className="py-3 px-4 text-right text-xs font-semibold uppercase tracking-wider text-content-secondary">
+            <th className="py-3 px-4 text-right text-xs font-medium text-content-secondary">
               {t('costmodel.actual', 'Actual')}
             </th>
-            <th className="py-3 px-4 text-right text-xs font-semibold uppercase tracking-wider text-content-secondary">
+            <th className="py-3 px-4 text-right text-xs font-medium text-content-secondary">
               {t('costmodel.forecast', 'Forecast')}
             </th>
-            <th className="py-3 px-4 text-right text-xs font-semibold uppercase tracking-wider text-content-secondary">
+            <th className="py-3 px-4 text-right text-xs font-medium text-content-secondary">
               {t('costmodel.variance', 'Variance')}
             </th>
-            <th className="py-3 pl-4 text-center text-xs font-semibold uppercase tracking-wider text-content-secondary w-20">
+            <th className="py-3 pl-4 text-center text-xs font-medium text-content-secondary w-20">
               {t('common.actions', { defaultValue: 'Actions' })}
             </th>
           </tr>
@@ -1337,7 +1334,7 @@ function BudgetLinesEditor({
                 onDoubleClick={() => startEditing(line)}
               >
                 <td className="py-3.5 pr-4 font-medium text-content-primary">
-                  <span className="flex items-center gap-1.5">
+                  <span className="flex items-center gap-2">
                     {line.category}
                     {parseThreshold(line.overrun_alert_threshold_pct) > 0 && (
                       <Badge variant="warning" size="sm">
@@ -1447,7 +1444,7 @@ function BudgetLinesEditor({
           })}
         </tbody>
         <tfoot>
-          <tr className="border-t-2 border-border font-semibold">
+          <tr className="border-t-2 border-border font-medium">
             <td className="py-3.5 pr-4 text-content-primary" colSpan={2}>
               {t('costmodel.total', 'Total')}
             </td>
@@ -1467,7 +1464,7 @@ function BudgetLinesEditor({
               {formatCurrency(lineTotal.forecast, currency)}
             </td>
             <td
-              className={`py-3.5 px-4 text-right tabular-nums font-bold ${varianceColor(lineTotal.planned - lineTotal.forecast)}`}
+              className={`py-3.5 px-4 text-right tabular-nums font-medium ${varianceColor(lineTotal.planned - lineTotal.forecast)}`}
             >
               {lineTotal.planned - lineTotal.forecast > 0 ? '+' : ''}
               {formatCurrency(lineTotal.planned - lineTotal.forecast, currency)}
@@ -1554,28 +1551,28 @@ function SnapshotsList({ projectId, currency }: { projectId: string; currency: s
           <table className="w-full text-sm">
             <thead>
               <tr className="border-b border-border-light">
-                <th className="py-2 pr-3 text-left text-xs font-semibold uppercase tracking-wider text-content-secondary">
+                <th className="py-2 pr-3 text-left text-xs font-medium text-content-secondary">
                   {t('costmodel.period', { defaultValue: 'Period' })}
                 </th>
-                <th className="py-2 px-3 text-right text-xs font-semibold uppercase tracking-wider text-content-secondary">
+                <th className="py-2 px-3 text-right text-xs font-medium text-content-secondary">
                   {t('costmodel.planned', 'Planned')}
                 </th>
-                <th className="py-2 px-3 text-right text-xs font-semibold uppercase tracking-wider text-content-secondary">
+                <th className="py-2 px-3 text-right text-xs font-medium text-content-secondary">
                   {t('costmodel.snapshot_ev', { defaultValue: 'EV' })}
                 </th>
-                <th className="py-2 px-3 text-right text-xs font-semibold uppercase tracking-wider text-content-secondary">
+                <th className="py-2 px-3 text-right text-xs font-medium text-content-secondary">
                   {t('costmodel.snapshot_ac', { defaultValue: 'AC' })}
                 </th>
-                <th className="py-2 px-3 text-center text-xs font-semibold uppercase tracking-wider text-content-secondary">
+                <th className="py-2 px-3 text-center text-xs font-medium text-content-secondary">
                   {t('costmodel.snapshot_spi', { defaultValue: 'SPI' })}
                 </th>
-                <th className="py-2 px-3 text-center text-xs font-semibold uppercase tracking-wider text-content-secondary">
+                <th className="py-2 px-3 text-center text-xs font-medium text-content-secondary">
                   {t('costmodel.snapshot_cpi', { defaultValue: 'CPI' })}
                 </th>
-                <th className="py-2 pl-3 text-left text-xs font-semibold uppercase tracking-wider text-content-secondary">
+                <th className="py-2 pl-3 text-left text-xs font-medium text-content-secondary">
                   {t('costmodel.notes', { defaultValue: 'Notes' })}
                 </th>
-                <th className="py-2 pl-3 text-center text-xs font-semibold uppercase tracking-wider text-content-secondary w-12">
+                <th className="py-2 pl-3 text-center text-xs font-medium text-content-secondary w-12">
                   {t('common.actions', { defaultValue: 'Actions' })}
                 </th>
               </tr>
@@ -1583,25 +1580,25 @@ function SnapshotsList({ projectId, currency }: { projectId: string; currency: s
             <tbody className="divide-y divide-border-light">
               {snapshots.map((snap) => (
                 <tr key={snap.id} className="hover:bg-surface-secondary/50 transition-colors group">
-                  <td className="py-2.5 pr-3 font-mono text-xs text-content-primary">
+                  <td className="py-3 pr-3 font-mono text-xs text-content-primary">
                     {snap.period}
                   </td>
-                  <td className="py-2.5 px-3 text-right tabular-nums text-content-secondary">
+                  <td className="py-3 px-3 text-right tabular-nums text-content-secondary">
                     {formatCompact(snap.planned_cost, currency)}
                   </td>
-                  <td className="py-2.5 px-3 text-right tabular-nums text-content-secondary">
+                  <td className="py-3 px-3 text-right tabular-nums text-content-secondary">
                     {formatCompact(snap.earned_value, currency)}
                   </td>
-                  <td className="py-2.5 px-3 text-right tabular-nums text-content-secondary">
+                  <td className="py-3 px-3 text-right tabular-nums text-content-secondary">
                     {formatCompact(snap.actual_cost, currency)}
                   </td>
-                  <td className={`py-2.5 px-3 text-center tabular-nums font-medium ${snap.spi >= 1 ? 'text-semantic-success' : 'text-semantic-error'}`}>
+                  <td className={`py-3 px-3 text-center tabular-nums font-medium ${snap.spi >= 1 ? 'text-semantic-success' : 'text-semantic-error'}`}>
                     {fmtFixed(snap.spi, 2)}
                   </td>
-                  <td className={`py-2.5 px-3 text-center tabular-nums font-medium ${snap.cpi >= 1 ? 'text-semantic-success' : 'text-semantic-error'}`}>
+                  <td className={`py-3 px-3 text-center tabular-nums font-medium ${snap.cpi >= 1 ? 'text-semantic-success' : 'text-semantic-error'}`}>
                     {fmtFixed(snap.cpi, 2)}
                   </td>
-                  <td className="py-2.5 pl-3 min-w-[160px]">
+                  <td className="py-3 pl-3 min-w-[160px]">
                     {editingNotes === snap.id ? (
                       <div className="flex items-center gap-1">
                         <input
@@ -1652,7 +1649,7 @@ function SnapshotsList({ projectId, currency }: { projectId: string; currency: s
                       </div>
                     )}
                   </td>
-                  <td className="py-2.5 pl-3 text-center">
+                  <td className="py-3 pl-3 text-center">
                     <button
                       type="button"
                       onClick={() => handleDeleteSnapshot(snap.id)}
@@ -1701,7 +1698,7 @@ const SliderControl = memo(function SliderControl({
       <div className="flex items-center justify-between mb-2">
         <span className="text-sm font-medium text-content-secondary">{label}</span>
         <span
-          className={`text-sm font-bold tabular-nums ${
+          className={`text-sm font-medium tabular-nums ${
             value > 0
               ? 'text-semantic-error'
               : value < 0
@@ -1815,7 +1812,7 @@ function WhatIfPanel({
       >
         <div className="flex items-center gap-2">
           <TrendingUp size={16} className="text-content-tertiary" />
-          <span className="text-sm font-semibold text-content-primary">
+          <span className="text-sm font-medium text-content-primary">
             {t('costmodel.whatif_title', { defaultValue: 'What-If Scenarios' })}
           </span>
         </div>
@@ -1908,35 +1905,35 @@ function WhatIfPanel({
                 </div>
                 <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
                   <div>
-                    <div className="text-2xs font-medium uppercase tracking-wider text-content-tertiary mb-0.5">
+                    <div className="text-2xs font-medium text-content-tertiary mb-1">
                       {t('costmodel.whatif_original_bac', { defaultValue: 'Original BAC' })}
                     </div>
-                    <div className="text-sm font-semibold tabular-nums text-content-primary">
+                    <div className="text-sm font-medium tabular-nums text-content-primary">
                       {formatCompact(result.original_bac, currency)}
                     </div>
                   </div>
                   <div>
-                    <div className="text-2xs font-medium uppercase tracking-wider text-content-tertiary mb-0.5">
+                    <div className="text-2xs font-medium text-content-tertiary mb-1">
                       {t('costmodel.whatif_adjusted_bac', { defaultValue: 'Adjusted BAC' })}
                     </div>
-                    <div className="text-sm font-semibold tabular-nums text-content-primary">
+                    <div className="text-sm font-medium tabular-nums text-content-primary">
                       {formatCompact(result.adjusted_bac, currency)}
                     </div>
                   </div>
                   <div>
-                    <div className="text-2xs font-medium uppercase tracking-wider text-content-tertiary mb-0.5">
+                    <div className="text-2xs font-medium text-content-tertiary mb-1">
                       {t('costmodel.whatif_adjusted_eac', { defaultValue: 'Adjusted EAC' })}
                     </div>
-                    <div className="text-sm font-semibold tabular-nums text-content-primary">
+                    <div className="text-sm font-medium tabular-nums text-content-primary">
                       {formatCompact(result.adjusted_eac, currency)}
                     </div>
                   </div>
                   <div>
-                    <div className="text-2xs font-medium uppercase tracking-wider text-content-tertiary mb-0.5">
+                    <div className="text-2xs font-medium text-content-tertiary mb-1">
                       {t('costmodel.whatif_impact', { defaultValue: 'Impact' })}
                     </div>
                     <div
-                      className={`text-sm font-bold tabular-nums ${
+                      className={`text-sm font-medium tabular-nums ${
                         result.delta > 0
                           ? 'text-semantic-error'
                           : result.delta < 0
@@ -2038,7 +2035,7 @@ function MonteCarloPanel({ projectId, currency }: { projectId: string; currency:
       >
         <div className="flex items-center gap-2">
           <BarChart3 size={16} className="text-content-tertiary" />
-          <span className="text-sm font-semibold text-content-primary">
+          <span className="text-sm font-medium text-content-primary">
             {t('costmodel.mc_title', { defaultValue: 'Cost Risk Simulation (Monte Carlo)' })}
           </span>
         </div>
@@ -2061,13 +2058,13 @@ function MonteCarloPanel({ projectId, currency }: { projectId: string; currency:
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
                 {[
                   { label: t('costmodel.mc_bac', { defaultValue: 'Budget (BAC)' }), value: result.bac, color: 'text-content-primary' },
-                  { label: 'P50', value: result.p50, color: 'text-oe-blue' },
-                  { label: 'P80', value: result.p80, color: 'text-semantic-warning' },
-                  { label: 'P95', value: result.p95, color: 'text-semantic-error' },
+                  { label: 'P50', value: result.p50, color: 'text-oe-blue-text' },
+                  { label: 'P80', value: result.p80, color: 'text-content-secondary' },
+                  { label: 'P95', value: result.p95, color: 'text-content-tertiary' },
                 ].map((item) => (
-                  <div key={item.label} className="rounded-xl border border-border-light bg-surface-secondary/50 px-3 py-2.5">
-                    <p className="text-2xs font-semibold uppercase tracking-wider text-content-tertiary">{item.label}</p>
-                    <p className={`text-lg font-bold tabular-nums ${item.color}`}>{fmt(item.value)}</p>
+                  <div key={item.label} className="rounded-xl border border-border-light bg-surface-secondary/50 px-3 py-3">
+                    <p className="text-xs font-medium text-content-tertiary">{item.label}</p>
+                    <p className={`text-lg font-medium tabular-nums ${item.color}`}>{fmt(item.value)}</p>
                   </div>
                 ))}
               </div>
@@ -2087,8 +2084,8 @@ function MonteCarloPanel({ projectId, currency }: { projectId: string; currency:
                       <div key={`${bin.from}-${bin.to}`} className="flex-1 flex flex-col items-center gap-0.5">
                         <span className="text-2xs text-content-quaternary tabular-nums">{bin.count}</span>
                         <div
-                          className={`w-full rounded-t transition-all ${
-                            isP95 ? 'bg-semantic-error' : isP80 ? 'bg-semantic-warning' : isP50 ? 'bg-oe-blue' : 'bg-oe-blue/30'
+                          className={`w-full rounded-t ${
+                            isP95 ? 'bg-semantic-error' : isP80 ? 'bg-semantic-warning' : isP50 ? 'bg-oe-blue' : 'bg-content-tertiary/40'
                           }`}
                           style={{ height: `${Math.max(2, pct)}%` }}
                           title={`${fmt(bin.from)} - ${fmt(bin.to)}: ${bin.count} iterations`}
@@ -2236,22 +2233,16 @@ function FiveDDashboard({ project }: { project: Project }) {
     <div className="space-y-6">
       {/* ── Empty state: no budget yet ────────────────────────────────────── */}
       {!hasBudget && (
-        <div className="rounded-2xl border-2 border-dashed border-oe-blue/30 bg-gradient-to-br from-oe-blue-subtle/10 via-surface-primary to-violet-50/10 dark:from-oe-blue-subtle/5 dark:to-violet-950/5 p-8">
+        <div className="rounded-xl border border-dashed border-oe-blue/30 bg-surface-primary p-8">
           <div className="mx-auto max-w-2xl text-center">
             {/* Icon cluster */}
             <div className="mb-5 flex items-center justify-center gap-3">
-              <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-oe-blue/10 text-oe-blue">
-                <DollarSign size={24} />
-              </div>
-              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-green-100 text-green-600 dark:bg-green-950/40 dark:text-green-400">
-                <LineChart size={18} />
-              </div>
-              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-amber-100 text-amber-600 dark:bg-amber-950/40 dark:text-amber-400">
-                <Gauge size={18} />
+              <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-oe-blue-subtle text-oe-blue-text">
+                <DollarSign size={18} strokeWidth={1.5} />
               </div>
             </div>
 
-            <h2 className="text-xl font-bold text-content-primary">
+            <h2 className="text-xl font-medium text-content-primary">
               {t('costmodel.empty_title', { defaultValue: '5D Cost Model' })}
             </h2>
             <p className="mt-2 text-sm leading-relaxed text-content-secondary">
@@ -2270,7 +2261,7 @@ function FiveDDashboard({ project }: { project: Project }) {
               ].map((pill) => (
                 <span
                   key={pill.label}
-                  className="inline-flex items-center gap-1.5 rounded-full border border-border-light bg-surface-primary px-3 py-1 text-2xs font-medium text-content-secondary shadow-sm"
+                  className="inline-flex items-center gap-2 rounded-md border border-border-light bg-surface-primary px-3 py-1 text-xs font-medium text-content-secondary"
                 >
                   {pill.icon}
                   {pill.label}
@@ -2284,7 +2275,7 @@ function FiveDDashboard({ project }: { project: Project }) {
                 <div>
                   <div className="mb-3 flex items-center justify-center gap-2">
                     <ShieldCheck size={16} className="text-oe-blue" />
-                    <span className="text-sm font-semibold text-content-primary">
+                    <span className="text-sm font-medium text-content-primary">
                       {t('costmodel.ready_to_generate', { defaultValue: 'Ready to generate budget from your BOQ' })}
                     </span>
                   </div>
@@ -2308,7 +2299,7 @@ function FiveDDashboard({ project }: { project: Project }) {
                 <div>
                   <div className="mb-2 flex items-center justify-center gap-2">
                     <Lock size={16} className="text-amber-500" />
-                    <span className="text-sm font-semibold text-content-primary">
+                    <span className="text-sm font-medium text-content-primary">
                       {t('costmodel.prereq_boq', { defaultValue: 'BOQ estimate required' })}
                     </span>
                   </div>
@@ -2327,15 +2318,15 @@ function FiveDDashboard({ project }: { project: Project }) {
         <Card padding="md">
           <div className="flex items-center gap-2 mb-4">
             <ShieldCheck size={16} className="text-semantic-success" />
-            <h3 className="text-sm font-semibold text-content-primary">
+            <h3 className="text-sm font-medium text-content-primary">
               {t('costmodel.workflow', { defaultValue: 'Cost Model Active' })}
             </h3>
           </div>
           <div className="flex items-start gap-4">
             {/* Step 1: Budget (complete) */}
-            <div className="flex-1 rounded-lg border border-semantic-success/30 bg-semantic-success-bg/30 p-3">
+            <div className="flex-1 rounded-lg border border-semantic-success/30 bg-semantic-success-bg p-3">
               <div className="flex items-center gap-2 mb-1">
-                <div className="flex h-6 w-6 items-center justify-center rounded-full bg-semantic-success text-white text-xs font-bold">{'\u2713'}</div>
+                <div className="flex h-6 w-6 items-center justify-center rounded bg-semantic-success text-white text-xs font-medium">{'\u2713'}</div>
                 <span className="text-xs font-medium text-content-primary">
                   {t('costmodel.step_budget', { defaultValue: 'Budget Generated' })}
                 </span>
@@ -2350,7 +2341,7 @@ function FiveDDashboard({ project }: { project: Project }) {
             {/* Step 2: Track Costs */}
             <div className="flex-1 rounded-lg border border-oe-blue/30 bg-oe-blue-subtle/20 p-3">
               <div className="flex items-center gap-2 mb-1">
-                <div className="flex h-6 w-6 items-center justify-center rounded-full bg-oe-blue text-white text-xs font-bold">2</div>
+                <div className="flex h-6 w-6 items-center justify-center rounded bg-oe-blue text-white text-xs font-medium tabular-nums">2</div>
                 <span className="text-xs font-medium text-content-primary">
                   {t('costmodel.step_track', { defaultValue: 'Track Costs' })}
                 </span>
@@ -2365,7 +2356,7 @@ function FiveDDashboard({ project }: { project: Project }) {
             {/* Step 3: Analyze */}
             <div className="flex-1 rounded-lg border border-border-light p-3">
               <div className="flex items-center gap-2 mb-1">
-                <div className="flex h-6 w-6 items-center justify-center rounded-full bg-surface-tertiary text-xs font-bold text-content-secondary">3</div>
+                <div className="flex h-6 w-6 items-center justify-center rounded bg-surface-tertiary text-xs font-medium tabular-nums text-content-secondary">3</div>
                 <span className="text-xs font-medium text-content-primary">
                   {t('costmodel.step_analyze', { defaultValue: 'Analyze & Forecast' })}
                 </span>
@@ -2456,7 +2447,7 @@ function FiveDDashboard({ project }: { project: Project }) {
       ) : hasBudget ? (
         <Card>
           <div className="flex items-start justify-between gap-4">
-            <h3 className="text-lg font-semibold text-content-primary truncate">
+            <h3 className="text-lg font-medium text-content-primary truncate">
               {t('costmodel.evm_title', { defaultValue: 'Earned Value Analysis' })}
               <span className="ml-1.5 inline-flex align-middle cursor-help" title={t('costmodel.evm_tooltip', { defaultValue: 'Earned Value Management compares planned vs actual cost and schedule performance' })}>
                 <Activity size={14} className="text-content-tertiary" />
@@ -2534,7 +2525,7 @@ function FiveDDashboard({ project }: { project: Project }) {
                           {t('costmodel.overall_variance', { defaultValue: 'Overall Variance' })}
                         </span>
                         <span
-                          className={`text-sm font-semibold tabular-nums ${varianceColor(dashboard.variance)}`}
+                          className={`text-sm font-medium tabular-nums ${varianceColor(dashboard.variance)}`}
                         >
                           {dashboard.variance > 0 ? '+' : ''}
                           {fmtPercent(dashboard.variance_pct)}
@@ -2662,10 +2653,10 @@ function FiveDDashboard({ project }: { project: Project }) {
       <div>
         <div className="mb-3 flex items-center gap-2">
           <Network size={16} className="text-oe-blue" />
-          <h2 className="text-base font-semibold text-content-primary">
+          <h2 className="text-base font-medium text-content-primary">
             {t('costmodel.spine.section_title', { defaultValue: 'Cost Spine' })}
           </h2>
-          <span className="rounded-full bg-oe-blue-subtle/60 px-2 py-0.5 text-2xs font-medium text-oe-blue-text">
+          <span className="rounded bg-oe-blue-subtle px-2 py-1 text-xs font-medium text-oe-blue-text">
             {t('costmodel.spine.section_badge', { defaultValue: 'Estimate to actual' })}
           </span>
         </div>
@@ -2696,15 +2687,15 @@ const ProjectCard = memo(function ProjectCard({
       onClick={handleClick}
     >
       <div className="flex items-center gap-3 px-5 py-4">
-        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-oe-blue-subtle text-oe-blue-text font-bold">
+        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-oe-blue-subtle text-oe-blue-text font-medium">
           {project.name.charAt(0).toUpperCase()}
         </div>
         <div className="min-w-0 flex-1">
-          <h2 className="text-sm font-semibold text-content-primary truncate">
+          <h2 className="text-sm font-medium text-content-primary truncate">
             {project.name}
           </h2>
           {project.description && (
-            <p className="mt-0.5 text-xs text-content-secondary truncate">
+            <p className="mt-1 text-xs text-content-secondary truncate">
               {project.description}
             </p>
           )}
@@ -2789,7 +2780,7 @@ function HowCostModelConnects() {
                 <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg bg-oe-blue-subtle">
                   {s.icon}
                 </span>
-                <span className="text-xs font-semibold text-content-primary">{s.title}</span>
+                <span className="text-xs font-medium text-content-primary">{s.title}</span>
               </div>
               <p className="mt-1.5 text-2xs leading-relaxed text-content-tertiary">{s.desc}</p>
             </li>
@@ -2865,37 +2856,37 @@ export function CostModelPage() {
         icon: <Target size={20} />,
         title: t('costmodel.feat_budget', { defaultValue: 'Budget Tracking' }),
         desc: t('costmodel.feat_budget_desc', { defaultValue: 'Generate budget lines from BOQ positions. Track planned, committed, actual, and forecast costs in real time.' }),
-        color: 'text-blue-600 bg-blue-50 dark:text-blue-400 dark:bg-blue-950/40',
+        color: 'bg-oe-blue-subtle text-oe-blue-text',
       },
       {
         icon: <LineChart size={20} />,
         title: t('costmodel.feat_scurve', { defaultValue: 'S-Curve Analysis' }),
         desc: t('costmodel.feat_scurve_desc', { defaultValue: 'Visualize planned vs earned vs actual cost over time with cumulative S-curve charts.' }),
-        color: 'text-green-600 bg-green-50 dark:text-green-400 dark:bg-green-950/40',
+        color: 'bg-surface-secondary text-content-secondary',
       },
       {
         icon: <Wallet size={20} />,
         title: t('costmodel.feat_cashflow', { defaultValue: 'Cash Flow' }),
         desc: t('costmodel.feat_cashflow_desc', { defaultValue: 'Forecast project cash inflows and outflows period by period to manage liquidity.' }),
-        color: 'text-violet-600 bg-violet-50 dark:text-violet-400 dark:bg-violet-950/40',
+        color: 'bg-surface-secondary text-content-secondary',
       },
       {
         icon: <Gauge size={20} />,
         title: t('costmodel.feat_evm', { defaultValue: 'EVM (SPI / CPI / EAC)' }),
         desc: t('costmodel.feat_evm_desc', { defaultValue: 'Earned Value Management with Schedule and Cost Performance Indexes, Estimate at Completion, and variance analysis.' }),
-        color: 'text-amber-600 bg-amber-50 dark:text-amber-400 dark:bg-amber-950/40',
+        color: 'bg-surface-secondary text-content-secondary',
       },
       {
         icon: <Dice5 size={20} />,
         title: t('costmodel.feat_montecarlo', { defaultValue: 'Monte Carlo Simulation' }),
         desc: t('costmodel.feat_montecarlo_desc', { defaultValue: 'Run 1,000 probabilistic iterations to estimate P50, P80, and P95 cost confidence levels.' }),
-        color: 'text-rose-600 bg-rose-50 dark:text-rose-400 dark:bg-rose-950/40',
+        color: 'bg-surface-secondary text-content-secondary',
       },
       {
         icon: <GitBranch size={20} />,
         title: t('costmodel.feat_whatif', { defaultValue: 'What-If Scenarios' }),
         desc: t('costmodel.feat_whatif_desc', { defaultValue: 'Adjust material, labor, and duration costs to instantly see impact on budget and forecasts.' }),
-        color: 'text-teal-600 bg-teal-50 dark:text-teal-400 dark:bg-teal-950/40',
+        color: 'bg-surface-secondary text-content-secondary',
       },
     ],
     [t],
@@ -3011,7 +3002,7 @@ export function CostModelPage() {
                 <div className={`mb-3 flex h-10 w-10 items-center justify-center rounded-xl ${feat.color}`}>
                   {feat.icon}
                 </div>
-                <h3 className="text-sm font-semibold text-content-primary">{feat.title}</h3>
+                <h3 className="text-sm font-medium text-content-primary">{feat.title}</h3>
                 <p className="mt-1 text-xs leading-relaxed text-content-tertiary">{feat.desc}</p>
               </div>
             ))}
@@ -3019,12 +3010,12 @@ export function CostModelPage() {
 
           {/* Prerequisites callout */}
           <div className="mt-6 flex items-start gap-3 rounded-xl border border-amber-200 bg-amber-50/60 p-4 dark:border-amber-800/50 dark:bg-amber-950/20">
-            <Lock size={18} className="mt-0.5 shrink-0 text-amber-600 dark:text-amber-400" />
+            <Lock size={18} className="mt-1 shrink-0 text-amber-600 dark:text-amber-400" />
             <div>
               <p className="text-sm font-medium text-amber-800 dark:text-amber-300">
                 {t('costmodel.prereq_title', { defaultValue: 'Getting Started' })}
               </p>
-              <p className="mt-0.5 text-xs text-amber-700/80 dark:text-amber-400/70">
+              <p className="mt-1 text-xs text-amber-700/80 dark:text-amber-400/70">
                 {t('costmodel.prereq_desc', { defaultValue: 'Create a project and build your BOQ estimate first. Once your BOQ is ready, generate the project budget to unlock the full 5D cost model with all analytics capabilities.' })}
               </p>
             </div>
@@ -3070,7 +3061,7 @@ export function CostModelPage() {
           {/* Compact feature strip when projects exist */}
           <div className="flex flex-wrap gap-2">
             {featureCards.map((feat) => (
-              <span key={feat.title} className="inline-flex items-center gap-1.5 rounded-lg bg-surface-secondary px-3 py-1.5 text-2xs font-medium text-content-secondary">
+              <span key={feat.title} className="inline-flex items-center gap-2 rounded-lg bg-surface-secondary px-3 py-1.5 text-2xs font-medium text-content-secondary">
                 <span className={`flex h-5 w-5 items-center justify-center rounded ${feat.color}`}>
                   {feat.icon}
                 </span>
@@ -3079,7 +3070,7 @@ export function CostModelPage() {
             ))}
           </div>
 
-          <h2 className="mb-3 text-sm font-semibold text-content-secondary uppercase tracking-wider">
+          <h2 className="mb-3 text-sm font-medium text-content-secondary">
             {t('costmodel.select_project', { defaultValue: 'Select a project' })}
           </h2>
           <div className="space-y-3">

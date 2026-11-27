@@ -345,7 +345,7 @@ export const navGroups: NavGroup[] = [
         icon: Globe2,
         moduleKey: 'regional-exchange',
       },
-      { labelKey: 'nav.match_elements', to: '/match-elements', icon: Link2, badge: 'BETA' },
+      { labelKey: 'nav.match_elements', to: '/match-elements', icon: Link2 },
       { labelKey: 'nav.estimation_dashboard', to: '/project-intelligence', icon: BrainCircuit },
       { labelKey: 'nav.rom_estimate', to: '/rom-estimate', icon: Gauge },
       { labelKey: 'nav.methodologies', to: '/methodologies', icon: SlidersHorizontal, moduleKey: 'methodology' },
@@ -380,8 +380,8 @@ export const navGroups: NavGroup[] = [
       // it, or a reorganisation becomes indistinguishable from a launch, and
       // Plan room is still BETA: landing it in front of the users who chose the
       // simplest view is a decision somebody should make on purpose.
-      { labelKey: 'nav.plan_room', to: '/plan-room', icon: Layers, badge: 'BETA', advancedOnly: true },
-      { labelKey: 'nav.drawing_compare', to: '/drawing-compare', icon: GitCompare, badge: 'BETA', advancedOnly: true },
+      { labelKey: 'nav.plan_room', to: '/plan-room', icon: Layers, advancedOnly: true },
+      { labelKey: 'nav.drawing_compare', to: '/drawing-compare', icon: GitCompare, advancedOnly: true },
       { labelKey: 'nav.markups', to: '/markups', icon: PenTool, advancedOnly: true },
     ],
   },
@@ -410,8 +410,8 @@ export const navGroups: NavGroup[] = [
     dynamicGroupKey: 'reality',
     defaultOpen: true,
     items: [
-      { labelKey: 'sidebar.geo_hub', to: '/geo', icon: Globe, badge: 'BETA' },
-      { labelKey: 'nav.point_cloud', to: '/pointcloud', icon: ScanLine, badge: 'BETA' },
+      { labelKey: 'sidebar.geo_hub', to: '/geo', icon: Globe },
+      { labelKey: 'nav.point_cloud', to: '/pointcloud', icon: ScanLine },
       { labelKey: 'nav.cad_bim_explorer', to: '/data-explorer', icon: TableProperties, advancedOnly: true },
     ],
   },
@@ -425,13 +425,13 @@ export const navGroups: NavGroup[] = [
     defaultOpen: true,
     hideInSimple: true,
     items: [
-      { labelKey: 'nav.coordination_hub', to: '/coordination', icon: LayoutDashboard, badge: 'BETA' },
-      { labelKey: 'nav.model_review', to: '/model-review', icon: ScanEye, badge: 'BETA' },
+      { labelKey: 'nav.coordination_hub', to: '/coordination', icon: LayoutDashboard },
+      { labelKey: 'nav.model_review', to: '/model-review', icon: ScanEye },
       { labelKey: 'nav.bim_federations', to: '/bim/federations', icon: Layers },
-      { labelKey: 'nav.clash_detection', to: '/clash', icon: Radar, badge: 'BETA' },
-      { labelKey: 'nav.model_issues', to: '/bcf', icon: MessageSquare, badge: 'BETA' },
+      { labelKey: 'nav.clash_detection', to: '/clash', icon: Radar },
+      { labelKey: 'nav.model_issues', to: '/bcf', icon: MessageSquare },
       { labelKey: 'nav.bim_rules', to: '/bim/rules?mode=requirements', icon: SlidersHorizontal },
-      { labelKey: 'nav.eir_matrix', to: '/requirements/matrix', icon: FileCheck, advancedOnly: true, badge: 'BETA' },
+      { labelKey: 'nav.eir_matrix', to: '/requirements/matrix', icon: FileCheck, advancedOnly: true },
     ],
   },
   // ── 7. SCHEDULING ──────────────────────────────────────────────────
@@ -883,7 +883,7 @@ export const navGroups: NavGroup[] = [
     hideInSimple: true,
     items: [
       { labelKey: 'nav.property_dev', to: '/property-dev', icon: Building2 },
-      { labelKey: 'nav.accommodation', to: '/accommodation', icon: Building2, badge: 'BETA' },
+      { labelKey: 'nav.accommodation', to: '/accommodation', icon: Building2 },
       { labelKey: 'nav.leasing', to: '/leasing', icon: KeyRound },
       { labelKey: 'nav.service_charges', to: '/service-charges', icon: Scale },
       { labelKey: 'nav.property_dev_dashboards', to: '/property-dev/dashboards', icon: BarChart3, advancedOnly: true },
@@ -972,9 +972,9 @@ export const navGroups: NavGroup[] = [
     defaultOpen: false,
     hideInSimple: true,
     items: [
-      { labelKey: 'nav.ai_estimate', to: '/ai-estimate', icon: Sparkles, badge: 'BETA' },
-      { labelKey: 'nav.ai_estimator', to: '/ai-estimator', icon: Wand2, badge: 'BETA' },
-      { labelKey: 'nav.estimate_copilot', to: '/estimate-copilot', icon: Bot, badge: 'BETA' },
+      { labelKey: 'nav.ai_estimate', to: '/ai-estimate', icon: Sparkles },
+      { labelKey: 'nav.ai_estimator', to: '/ai-estimator', icon: Wand2 },
+      { labelKey: 'nav.estimate_copilot', to: '/estimate-copilot', icon: Bot },
     ],
   },
   // ── 21. AUTOMATION & AI ────────────────────────────────────────────
@@ -997,12 +997,12 @@ export const navGroups: NavGroup[] = [
     defaultOpen: true,
     hideInSimple: true,
     items: [
-      { labelKey: 'nav.ai_agents', to: '/ai-agents', icon: Bot, badge: 'BETA' },
-      { labelKey: 'nav.project_agents', defaultLabel: 'Project Agents', to: '/ai-agents/catalogue', icon: Bot, moduleKey: 'ai_agents', badge: 'BETA' },
+      { labelKey: 'nav.ai_agents', to: '/ai-agents', icon: Bot },
+      { labelKey: 'nav.project_agents', defaultLabel: 'Project Agents', to: '/ai-agents/catalogue', icon: Bot, moduleKey: 'ai_agents' },
       { labelKey: 'nav.doc_assistant', defaultLabel: 'Document Assistant', to: '/document-assistant', icon: MessageSquare, moduleKey: 'doc_assistant' },
       { labelKey: 'nav.ai_advisor', to: '/advisor', icon: MessageSquare },
       { labelKey: 'nav.erp_chat', to: '/chat', icon: MessageSquare },
-      { labelKey: 'nav.pipelines', to: '/pipelines', icon: GitBranch, moduleKey: 'pipelines', advancedOnly: true, badge: 'BETA' },
+      { labelKey: 'nav.pipelines', to: '/pipelines', icon: GitBranch, moduleKey: 'pipelines', advancedOnly: true },
       // The register of modules built on this instance. Readable by anyone, so
       // no role gate here: the build and remove controls on the page are what
       // an administrator sees and what the server enforces.

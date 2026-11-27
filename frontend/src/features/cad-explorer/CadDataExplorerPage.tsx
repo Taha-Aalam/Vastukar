@@ -248,7 +248,7 @@ function TopNToggle({ value, direction, onChange, testIdPrefix }: TopNToggleProp
 
   return (
     <div className="flex items-center gap-2 flex-wrap">
-      <label className="text-2xs font-semibold text-content-secondary uppercase tracking-wide">
+      <label className="text-2xs font-semibold text-content-secondary">
         {t('explorer.limit', { defaultValue: 'Limit' })}
       </label>
       <button
@@ -299,7 +299,7 @@ function SlicerBanner() {
       className="flex items-center gap-2 flex-wrap px-3 py-2 border-b border-border-light bg-surface-secondary/40"
     >
       <Filter size={12} className="text-content-tertiary shrink-0" />
-      <span className="text-2xs font-semibold text-content-tertiary uppercase tracking-wide shrink-0">
+      <span className="text-2xs font-semibold text-content-tertiary shrink-0">
         {t('explorer.active_filters', { defaultValue: 'Active filters' })}
       </span>
       {slicers.length === 0 ? (
@@ -783,7 +783,7 @@ function PivotVizSwitcher({ mode, onChange, matrixEnabled }: PivotVizSwitcherPro
   const { t } = useTranslation();
   return (
     <div className="flex items-center gap-2 flex-wrap" data-testid="pivot-viz-switcher">
-      <span className="text-2xs font-semibold text-content-secondary uppercase tracking-wide">
+      <span className="text-2xs font-semibold text-content-secondary">
         {t('explorer.viz_mode', { defaultValue: 'View as' })}
       </span>
       {PIVOT_VIZ_OPTIONS.map(({ id, icon: Icon, labelKey, fallback, title }) => {
@@ -873,12 +873,12 @@ function PivotHeatmap({ groups, groupBy, aggCols, aggFn, maxByAgg, thresholdRule
         <thead>
           <tr className="border-b border-border bg-surface-secondary/50">
             {groupBy.map((col) => (
-              <th key={col} className="px-3 py-2 text-left text-2xs font-semibold text-content-tertiary uppercase tracking-wide sticky left-0 bg-surface-secondary/50">
+              <th key={col} className="px-3 py-2 text-left text-2xs font-semibold text-content-tertiary sticky left-0 bg-surface-secondary/50">
                 {col}
               </th>
             ))}
             {aggCols.map((col) => (
-              <th key={col} className="px-3 py-2 text-right text-2xs font-semibold text-content-tertiary uppercase tracking-wide">
+              <th key={col} className="px-3 py-2 text-right text-2xs font-semibold text-content-tertiary">
                 {aggFn}({col})
               </th>
             ))}
@@ -1114,11 +1114,11 @@ function PivotMatrix({ groups, groupBy, aggCols, aggFn, thresholdRules }: PivotV
       <table className="text-xs border-collapse">
         <thead>
           <tr className="border-b border-border bg-surface-secondary/50">
-            <th className="px-3 py-2 text-left text-2xs font-semibold text-content-tertiary uppercase tracking-wide sticky left-0 bg-surface-secondary/50">
+            <th className="px-3 py-2 text-left text-2xs font-semibold text-content-tertiary sticky left-0 bg-surface-secondary/50">
               {rowKey} ╲ {colKey}
             </th>
             {colLabels.map((c) => (
-              <th key={c} className="px-3 py-2 text-right text-2xs font-semibold text-content-tertiary uppercase tracking-wide whitespace-nowrap" title={c}>
+              <th key={c} className="px-3 py-2 text-right text-2xs font-semibold text-content-tertiary whitespace-nowrap" title={c}>
                 {c.length > 18 ? c.slice(0, 16) + '…' : c}
               </th>
             ))}
@@ -1423,7 +1423,7 @@ function PivotTab({ sessionId, describe, thresholdRules, setThresholdRules }: Pi
       <Card className="p-4 space-y-3">
         {/* Row 1: Group By */}
         <div>
-          <label className="text-2xs font-semibold text-content-secondary uppercase tracking-wide mb-1.5 block">
+          <label className="text-2xs font-semibold text-content-secondary mb-1.5 block">
             {t('explorer.group_by', { defaultValue: 'Group By' })} ({groupBy.length} {t('explorer.selected', { defaultValue: 'selected' })})
           </label>
           <div className="flex gap-1.5 flex-wrap">
@@ -1431,7 +1431,7 @@ function PivotTab({ sessionId, describe, thresholdRules, setThresholdRules }: Pi
               <button
                 key={col.name}
                 onClick={() => toggleGroupBy(col.name)}
-                className={`px-2.5 py-1 rounded-lg text-2xs font-medium transition-all border whitespace-nowrap ${
+                className={`px-2.5 py-1 rounded-lg text-2xs font-medium transition border whitespace-nowrap ${
                   groupBy.includes(col.name)
                     ? 'bg-oe-blue text-white border-oe-blue shadow-sm'
                     : 'border-border-light bg-surface-secondary text-content-tertiary hover:text-content-primary hover:border-border'
@@ -1472,7 +1472,7 @@ function PivotTab({ sessionId, describe, thresholdRules, setThresholdRules }: Pi
           return (
             <div className="flex items-end gap-3 flex-wrap">
               <div className="flex-1">
-                <label className="text-2xs font-semibold text-content-secondary uppercase tracking-wide mb-1.5 block">
+                <label className="text-2xs font-semibold text-content-secondary mb-1.5 block">
                   {t(sumLabelKey, { defaultValue: sumLabelDefault })} ({aggCols.length})
                 </label>
                 <div className="flex gap-1.5 flex-wrap" data-testid="pivot-aggcol-picker">
@@ -1491,7 +1491,7 @@ function PivotTab({ sessionId, describe, thresholdRules, setThresholdRules }: Pi
                         disabled={!allowed}
                         data-testid={`pivot-aggcol-${col.name}`}
                         data-col-dtype={col.dtype}
-                        className={`px-2.5 py-1 rounded-lg text-2xs font-medium transition-all border whitespace-nowrap ${
+                        className={`px-2.5 py-1 rounded-lg text-2xs font-medium transition border whitespace-nowrap ${
                           aggCols.includes(col.name)
                             ? 'bg-emerald-500 text-white border-emerald-500 shadow-sm'
                             : allowed
@@ -1641,10 +1641,10 @@ function PivotTab({ sessionId, describe, thresholdRules, setThresholdRules }: Pi
               <thead>
                 <tr className="border-b border-border bg-surface-secondary/50">
                   {groupBy.map((col) => (
-                    <th key={col} className="px-3 py-2.5 text-left text-2xs font-semibold text-content-tertiary uppercase tracking-wide">{col}</th>
+                    <th key={col} className="px-3 py-2.5 text-left text-2xs font-semibold text-content-tertiary">{col}</th>
                   ))}
                   <th
-                    className="px-3 py-2.5 text-right text-2xs font-semibold text-content-tertiary uppercase tracking-wide cursor-pointer hover:text-content-primary select-none"
+                    className="px-3 py-2.5 text-right text-2xs font-semibold text-content-tertiary cursor-pointer hover:text-content-primary select-none"
                     onClick={() => { setSortCol(null); setSortDesc((d) => !d); }}
                   >
                     {t('explorer.count', { defaultValue: 'Count' })}
@@ -1652,7 +1652,7 @@ function PivotTab({ sessionId, describe, thresholdRules, setThresholdRules }: Pi
                   {aggCols.map((col) => (
                     <th
                       key={col}
-                      className="px-3 py-2.5 text-right text-2xs font-semibold text-content-tertiary uppercase tracking-wide cursor-pointer hover:text-content-primary select-none"
+                      className="px-3 py-2.5 text-right text-2xs font-semibold text-content-tertiary cursor-pointer hover:text-content-primary select-none"
                       onClick={() => { setSortCol(col); setSortDesc((d) => sortCol === col ? !d : true); }}
                     >
                       <span className="inline-flex items-center gap-1">
@@ -2829,7 +2829,7 @@ function DescribeSummary({
                 <span className="w-36 text-xs text-content-secondary truncate shrink-0">{v.value || '(empty)'}</span>
                 <div className="flex-1 h-5 bg-surface-secondary rounded overflow-hidden relative">
                   <div
-                    className="h-full rounded bg-oe-blue/60 transition-all"
+                    className="h-full rounded bg-oe-blue/60 transition"
                     style={{ width: `${v.percentage}%` }}
                   />
                 </div>
@@ -3033,7 +3033,7 @@ function CreateBOQFromPivotModal({ open, onClose, groups, groupByColumns, aggCol
 
           {/* Preview */}
           <div className="rounded-lg border border-border-light bg-surface-secondary/30 p-3 max-h-40 overflow-y-auto">
-            <p className="text-2xs font-medium text-content-tertiary uppercase tracking-wider mb-2">
+            <p className="text-2xs font-medium text-content-tertiary mb-2">
               {t('explorer.positions_preview', { defaultValue: 'Positions Preview' })}
             </p>
             <div className="space-y-1">
@@ -3257,7 +3257,7 @@ function UploadConvertZone({
             inputRef.current?.click();
           }
         }}
-        className={`relative rounded-2xl border-2 border-dashed transition-all cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-oe-blue focus-visible:ring-offset-2 ${
+        className={`relative rounded-2xl border-2 border-dashed transition-colors cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-oe-blue focus-visible:ring-offset-2 ${
           uploading ? 'pointer-events-none border-oe-blue/40 bg-oe-blue-subtle/5' :
           dragOver ? 'border-oe-blue bg-oe-blue-subtle/10 scale-[1.005] shadow-lg shadow-oe-blue/10' :
           'border-border-light hover:border-oe-blue/50 hover:bg-surface-secondary/20'
@@ -3284,7 +3284,7 @@ function UploadConvertZone({
               <span className="text-lg font-bold text-oe-blue tabular-nums shrink-0">{Math.round(progressPct)}%</span>
             </div>
             <div className="h-1.5 w-full overflow-hidden rounded-full bg-surface-secondary">
-              <div className="h-full rounded-full bg-oe-blue transition-all duration-1000" style={{ width: `${progressPct}%` }} />
+              <div className="h-full rounded-full bg-oe-blue transition duration-1000" style={{ width: `${progressPct}%` }} />
             </div>
           </div>
         ) : done ? (
@@ -3664,7 +3664,7 @@ function KpiStrip({ describe }: { describe: DescribeResponse }) {
               <Icon size={14} />
             </div>
             <div className="min-w-0 flex-1">
-              <p className="text-[9px] font-semibold uppercase tracking-wide text-content-quaternary truncate">
+              <p className="text-[9px] font-semibold text-content-quaternary truncate">
                 {tile.label}
               </p>
               <p className={`text-sm font-bold tabular-nums ${tile.accent}`}>{tile.value}</p>
@@ -4071,12 +4071,12 @@ export function CadDataExplorerPage() {
 
             {/* Feature cards */}
             <div className="mb-8">
-              <h2 className="text-xs font-bold text-content-tertiary uppercase tracking-widest mb-3">
+              <h2 className="text-xs font-bold text-content-tertiary mb-3">
                 {t('explorer.what_you_get', { defaultValue: 'What you get' })}
               </h2>
               <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
                 {FEATURE_CARDS.map((f, i) => (
-                  <div key={i} className="flex items-start gap-3 rounded-xl p-4 bg-white dark:bg-gray-800/40 border border-border-light/60 hover:border-border-light hover:shadow-sm transition-all">
+                  <div key={i} className="flex items-start gap-3 rounded-xl p-4 bg-white dark:bg-gray-800/40 border border-border-light/60 hover:border-border-light hover:shadow-sm transition-colors">
                     <div className={`w-8 h-8 rounded-lg ${f.color} border flex items-center justify-center shrink-0`}><f.icon size={15} className={f.ic} /></div>
                     <div className="min-w-0">
                       <h3 className="text-xs font-semibold text-content-primary leading-tight">{f.title}</h3>
@@ -4117,7 +4117,7 @@ export function CadDataExplorerPage() {
               return (
                 <div
                   key={s.session_id}
-                  className="group relative shrink-0 w-64 rounded-xl border border-border-light bg-surface-secondary hover:bg-surface-tertiary hover:border-oe-blue/30 hover:shadow-lg transition-all duration-200 overflow-hidden"
+                  className="group relative shrink-0 w-64 rounded-xl border border-border-light bg-surface-secondary hover:bg-surface-tertiary hover:border-oe-blue/30 hover:shadow-lg transition-colors duration-200 overflow-hidden"
                 >
                   {/* Card body - single native button, opens the session */}
                   <button
@@ -4135,7 +4135,7 @@ export function CadDataExplorerPage() {
                     }`} />
                     <div className="px-3.5 py-3">
                       <div className="flex items-center gap-2 mb-1.5 pr-6">
-                        <div className={`w-7 h-7 rounded-lg flex items-center justify-center shrink-0 text-[9px] font-black tracking-tighter leading-none ${
+                        <div className={`w-7 h-7 rounded-lg flex items-center justify-center shrink-0 text-[9px] font-semibold tracking-tighter leading-none ${
                           fmt === 'RVT' ? 'bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-300' :
                           fmt === 'IFC' ? 'bg-green-100 text-green-700 dark:bg-green-900/40 dark:text-green-300' :
                           fmt === 'DWG' ? 'bg-orange-100 text-orange-700 dark:bg-orange-900/40 dark:text-orange-300' :
@@ -4159,7 +4159,7 @@ export function CadDataExplorerPage() {
                         deleteSessionMutation.mutate(s.session_id);
                       }
                     }}
-                    className="absolute top-2 right-2 p-1 rounded text-content-quaternary hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-950/30 opacity-0 group-hover:opacity-100 focus:opacity-100 transition-all z-10"
+                    className="absolute top-2 right-2 p-1 rounded text-content-quaternary hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-950/30 opacity-0 group-hover:opacity-100 focus:opacity-100 transition z-10"
                   >
                     <X size={12} />
                   </button>

@@ -443,7 +443,7 @@ export function TemplatesPage() {
                 }
                 onClick={handleCreate}
                 disabled={!projectId || createMutation.isPending}
-                className="w-full btn-shimmer"
+                className="w-full"
               >
                 {createMutation.isPending
                   ? t('boq.creating', { defaultValue: 'Creating...' })

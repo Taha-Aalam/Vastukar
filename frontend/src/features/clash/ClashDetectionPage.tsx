@@ -2366,7 +2366,7 @@ export function ClashDetectionPage() {
                 )}
               >
                 <div className="flex flex-wrap items-center gap-1.5">
-                  <span className="text-2xs font-medium uppercase tracking-wide text-content-tertiary">
+                  <span className="text-2xs font-medium text-content-tertiary">
                     {t('clash.tol_presets', {
                       defaultValue: 'Tolerance preset',
                     })}
@@ -2654,7 +2654,7 @@ export function ClashDetectionPage() {
                 0 && (
                 <label className="mt-2 flex items-center gap-1.5 text-2xs text-content-secondary">
                   <GitCompareArrows className="h-3.5 w-3.5 shrink-0 text-content-tertiary" />
-                  <span className="shrink-0 font-medium uppercase tracking-wide text-content-tertiary">
+                  <span className="shrink-0 font-medium text-content-tertiary">
                     {t('clash.compare_to', {
                       defaultValue: 'Compare to',
                     })}
@@ -3169,7 +3169,7 @@ export function ClashDetectionPage() {
                         a coordinator triages (BIM coordination tool "Group by"). */}
                     <label className="flex items-center gap-1.5 text-2xs text-content-tertiary">
                       <Layers className="h-3.5 w-3.5" />
-                      <span className="font-medium uppercase tracking-wide">
+                      <span className="font-medium">
                         {t('clash.group_results', {
                           defaultValue: 'Group',
                         })}
@@ -3335,7 +3335,7 @@ export function ClashDetectionPage() {
                   {!showFacets && (
                   <div className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-3">
                     <div className="flex flex-wrap items-center gap-1.5">
-                      <span className="flex items-center gap-1 text-2xs font-medium uppercase tracking-wide text-content-tertiary">
+                      <span className="flex items-center gap-1 text-2xs font-medium text-content-tertiary">
                         <SlidersHorizontal className="h-3 w-3" />
                         {t('clash.filter_status', {
                           defaultValue: 'Status',
@@ -3362,7 +3362,7 @@ export function ClashDetectionPage() {
                     {/* Severity filter pills — coloured to match the table
                         badge so the filter and the column read as one. */}
                     <div className="flex flex-wrap items-center gap-1.5">
-                      <span className="flex items-center gap-1 text-2xs font-medium uppercase tracking-wide text-content-tertiary">
+                      <span className="flex items-center gap-1 text-2xs font-medium text-content-tertiary">
                         <AlertTriangle className="h-3 w-3" />
                         {t('clash.filter_severity', {
                           defaultValue: 'Severity',
@@ -3387,7 +3387,7 @@ export function ClashDetectionPage() {
                     </div>
 
                     <label className="flex items-center gap-2 text-2xs text-content-secondary">
-                      <span className="font-medium uppercase tracking-wide text-content-tertiary">
+                      <span className="font-medium text-content-tertiary">
                         {t('clash.filter_min_pen', {
                           defaultValue: 'Min penetration',
                         })}
@@ -4556,7 +4556,7 @@ function ClashGroupingPanel({
               ).sort();
               return (
                 <div key={grp.level}>
-                  <h3 className="mb-2 text-xs font-semibold uppercase tracking-wide text-content-tertiary">
+                  <h3 className="mb-2 text-xs font-semibold text-content-tertiary">
                     {t('clash.level_n', {
                       defaultValue: 'Level {{n}}',
                       n: grp.level,
@@ -4753,7 +4753,7 @@ function Kpi({
       disabled={!interactive}
       onClick={onClick}
       className={clsx(
-        'rounded-xl border bg-surface-elevated/90 p-3 text-left shadow-xs transition-all',
+        'rounded-xl border bg-surface-elevated/90 p-3 text-left shadow-xs transition',
         interactive && 'hover:-translate-y-0.5 hover:shadow-md',
         active
           ? 'border-oe-blue ring-2 ring-oe-blue/20'
@@ -5273,7 +5273,7 @@ function FacetGroup({
   if (rows.length === 0) return null;
   return (
     <div>
-      <div className="mb-1.5 text-2xs font-semibold uppercase tracking-wide text-content-tertiary">
+      <div className="mb-1.5 text-2xs font-semibold text-content-tertiary">
         {title}
       </div>
       <div className="max-h-40 space-y-0.5 overflow-y-auto pr-1">
@@ -5511,7 +5511,7 @@ function SelectionSetPicker({
         )}
         {groups.length > 0 && (
           <div>
-            <p className="px-1 pb-0.5 text-2xs font-semibold uppercase tracking-wide text-content-tertiary">
+            <p className="px-1 pb-0.5 text-2xs font-semibold text-content-tertiary">
               {groupByLabel(groupBy, t)}
             </p>
             {groups.map((g) => (
@@ -5703,7 +5703,7 @@ function ModelCardPicker({
                 aria-pressed={isSel}
                 onClick={() => !disabled && onToggle(m.id)}
                 className={clsx(
-                  'group relative flex flex-col gap-2 rounded-xl border p-3 text-left transition-all',
+                  'group relative flex flex-col gap-2 rounded-xl border p-3 text-left transition',
                   disabled
                     ? 'cursor-not-allowed border-border-light bg-surface-secondary/40 opacity-60'
                     : isSel

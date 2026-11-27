@@ -269,7 +269,7 @@ export function AboutPage() {
               shorter tile readable at narrower widths. */}
           <div className="grid grid-cols-3 sm:grid-cols-6 gap-2.5">
             {[
-              { value: '120K+', label: t('about.stat_costs', { defaultValue: 'Cost Items' }) },
+              { value: '120,441', label: t('about.stat_costs', { defaultValue: 'Cost Items' }) },
               { value: String(SUPPORTED_LANGUAGES.length), label: t('about.stat_langs', { defaultValue: 'Languages' }) },
               { value: '47', label: t('about.stat_regions', { defaultValue: 'Countries covered' }) },
               { value: '6', label: t('about.stat_cad_formats', { defaultValue: 'CAD/BIM formats supported' }) },
@@ -277,7 +277,7 @@ export function AboutPage() {
               { value: '28', label: t('about.stat_sections', { defaultValue: 'Menu sections' }) },
             ].map((s, i) => (
               <div key={i} className="text-center rounded-xl bg-surface-secondary/50 px-2 py-3">
-                <div className="text-xl font-bold text-content-primary leading-none">{s.value}</div>
+                <div className="text-xl font-medium text-content-primary leading-none">{s.value}</div>
                 <div className="text-2xs text-content-tertiary mt-1.5 leading-snug">{s.label}</div>
               </div>
             ))}

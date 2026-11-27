@@ -916,7 +916,7 @@ export function InlinePdfAnnotator({
               <button
                 key={c}
                 onClick={() => setActiveColor(c)}
-                className={`w-5 h-5 rounded-full border-2 transition-all ${
+                className={`w-5 h-5 rounded-full border-2 transition ${
                   activeColor === c ? 'border-content-primary scale-110' : 'border-transparent'
                 }`}
                 style={{ backgroundColor: c }}
@@ -933,7 +933,7 @@ export function InlinePdfAnnotator({
                 <button
                   key={s.name}
                   onClick={() => setSelectedStamp(s.name)}
-                  className={`px-2 py-0.5 rounded text-2xs font-bold border transition-all ${
+                  className={`px-2 py-0.5 rounded text-2xs font-bold border transition ${
                     selectedStamp === s.name
                       ? 'ring-1 ring-offset-1 ring-oe-blue/40 scale-105'
                       : 'opacity-70 hover:opacity-100'
@@ -1063,7 +1063,7 @@ export function InlinePdfAnnotator({
               return (
                 <div
                   aria-hidden="true"
-                  className="pointer-events-none absolute rounded-lg animate-pulse-glow"
+                  className="pointer-events-none absolute rounded-lg"
                   style={{
                     left: highlightRect.left * scaleX,
                     top: highlightRect.top * scaleY,

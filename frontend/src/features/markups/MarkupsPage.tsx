@@ -474,7 +474,7 @@ function AddMarkupModal({
                     key={tp}
                     onClick={() => setSelectedType(tp)}
                     className={clsx(
-                      'flex items-center gap-1.5 px-2 py-1.5 rounded-lg text-xs font-medium transition-all border',
+                      'flex items-center gap-1.5 px-2 py-1.5 rounded-lg text-xs font-medium transition border',
                       isSelected
                         ? 'border-oe-blue bg-oe-blue-subtle text-oe-blue-text ring-1 ring-oe-blue/30'
                         : 'border-border-light bg-surface-primary text-content-secondary hover:bg-surface-secondary',
@@ -567,7 +567,7 @@ function AddMarkupModal({
                   onClick={() => setColor(c.value)}
                   title={c.name}
                   className={clsx(
-                    'w-7 h-7 rounded-full border-2 transition-all',
+                    'w-7 h-7 rounded-full border-2 transition',
                     color === c.value
                       ? 'border-content-primary scale-110 ring-2 ring-offset-1 ring-oe-blue/40'
                       : 'border-transparent hover:scale-105',
@@ -971,7 +971,7 @@ function MarkupDetail({
       )}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
         <div>
-          <p className="text-2xs font-medium text-content-tertiary uppercase tracking-wide mb-0.5">
+          <p className="text-2xs font-medium text-content-tertiary mb-0.5">
             {t('markups.full_text', { defaultValue: 'Text Content' })}
           </p>
           <p className="text-sm text-content-secondary">
@@ -979,7 +979,7 @@ function MarkupDetail({
           </p>
         </div>
         <div>
-          <p className="text-2xs font-medium text-content-tertiary uppercase tracking-wide mb-0.5">
+          <p className="text-2xs font-medium text-content-tertiary mb-0.5">
             {t('markups.document', { defaultValue: 'Document' })}
           </p>
           <p className="text-sm text-content-secondary">
@@ -999,7 +999,7 @@ function MarkupDetail({
           </p>
         </div>
         <div>
-          <p className="text-2xs font-medium text-content-tertiary uppercase tracking-wide mb-0.5">
+          <p className="text-2xs font-medium text-content-tertiary mb-0.5">
             {t('markups.linked_boq', { defaultValue: 'Linked BOQ Position' })}
           </p>
           {markup.linked_boq_position_id ? (
@@ -1024,7 +1024,7 @@ function MarkupDetail({
           )}
         </div>
         <div>
-          <p className="text-2xs font-medium text-content-tertiary uppercase tracking-wide mb-0.5">
+          <p className="text-2xs font-medium text-content-tertiary mb-0.5">
             {t('markups.issue_tracking', { defaultValue: 'Priority / Due' })}
           </p>
           {priority || due ? (
@@ -1041,7 +1041,7 @@ function MarkupDetail({
       </div>
       {markup.metadata && Object.keys(markup.metadata).length > 0 && (
         <div className="mt-2">
-          <p className="text-2xs font-medium text-content-tertiary uppercase tracking-wide mb-0.5">
+          <p className="text-2xs font-medium text-content-tertiary mb-0.5">
             {t('markups.metadata', { defaultValue: 'Metadata' })}
           </p>
           <pre className="text-xs text-content-tertiary bg-surface-primary rounded-lg p-2 overflow-x-auto">
@@ -1112,7 +1112,7 @@ function MarkupGridCard({
   return (
     <div
       className={clsx(
-        'rounded-lg border p-3 transition-all hover:shadow-md cursor-default',
+        'rounded-lg border p-3 transition hover:shadow-md cursor-default',
         bgColor,
       )}
     >
@@ -2436,34 +2436,34 @@ export function MarkupsPage() {
                   <table className="w-full text-sm">
                     <thead>
                       <tr className="border-b border-border-light bg-surface-secondary/50">
-                        <th className="px-3 py-2 text-left text-2xs font-semibold uppercase tracking-wider text-content-tertiary w-[120px]">
+                        <th className="px-3 py-2 text-left text-2xs font-semibold text-content-tertiary w-[120px]">
                           {t('markups.col_type', { defaultValue: 'Type' })}
                         </th>
-                        <th className="px-3 py-2 text-left text-2xs font-semibold uppercase tracking-wider text-content-tertiary">
+                        <th className="px-3 py-2 text-left text-2xs font-semibold text-content-tertiary">
                           {t('markups.col_label', { defaultValue: 'Label / Text' })}
                         </th>
-                        <th className="px-3 py-2 text-left text-2xs font-semibold uppercase tracking-wider text-content-tertiary w-[130px]">
+                        <th className="px-3 py-2 text-left text-2xs font-semibold text-content-tertiary w-[130px]">
                           {t('markups.col_document', { defaultValue: 'Document' })}
                         </th>
-                        <th className="px-3 py-2 text-center text-2xs font-semibold uppercase tracking-wider text-content-tertiary w-[50px]">
+                        <th className="px-3 py-2 text-center text-2xs font-semibold text-content-tertiary w-[50px]">
                           {t('markups.col_page', { defaultValue: 'Pg' })}
                         </th>
-                        <th className="px-3 py-2 text-left text-2xs font-semibold uppercase tracking-wider text-content-tertiary w-[90px]">
+                        <th className="px-3 py-2 text-left text-2xs font-semibold text-content-tertiary w-[90px]">
                           {t('markups.col_status', { defaultValue: 'Status' })}
                         </th>
-                        <th className="px-3 py-2 text-left text-2xs font-semibold uppercase tracking-wider text-content-tertiary w-[120px]">
+                        <th className="px-3 py-2 text-left text-2xs font-semibold text-content-tertiary w-[120px]">
                           {t('markups.col_priority', { defaultValue: 'Priority' })}
                         </th>
-                        <th className="px-3 py-2 text-left text-2xs font-semibold uppercase tracking-wider text-content-tertiary w-[140px]">
+                        <th className="px-3 py-2 text-left text-2xs font-semibold text-content-tertiary w-[140px]">
                           {t('markups.col_assignee', { defaultValue: 'Assignee' })}
                         </th>
-                        <th className="px-3 py-2 text-left text-2xs font-semibold uppercase tracking-wider text-content-tertiary w-[100px]">
+                        <th className="px-3 py-2 text-left text-2xs font-semibold text-content-tertiary w-[100px]">
                           {t('markups.col_measurement', { defaultValue: 'Measure' })}
                         </th>
-                        <th className="px-3 py-2 text-left text-2xs font-semibold uppercase tracking-wider text-content-tertiary w-[100px]">
+                        <th className="px-3 py-2 text-left text-2xs font-semibold text-content-tertiary w-[100px]">
                           {t('markups.col_date', { defaultValue: 'Date' })}
                         </th>
-                        <th className="px-3 py-2 text-right text-2xs font-semibold uppercase tracking-wider text-content-tertiary w-[80px]">
+                        <th className="px-3 py-2 text-right text-2xs font-semibold text-content-tertiary w-[80px]">
                           {t('common.actions', { defaultValue: 'Actions' })}
                         </th>
                       </tr>
@@ -2555,7 +2555,7 @@ export function MarkupsPage() {
           {/* ── Stamps (inline badges row) ─────────────────────────────────── */}
           {displayStamps.length > 0 && (
             <div className="flex items-center gap-2 flex-wrap">
-              <span className="text-xs font-semibold text-content-tertiary uppercase tracking-wide">
+              <span className="text-xs font-semibold text-content-tertiary">
                 {t('markups.stamps', { defaultValue: 'Stamps' })}:
               </span>
               {displayStamps.map((stamp) => {
@@ -2577,7 +2577,7 @@ export function MarkupsPage() {
                       }
                     }}
                     className={clsx(
-                      'inline-flex items-center gap-1 px-2 py-0.5 rounded-full border text-xs font-medium cursor-pointer hover:opacity-80 hover:scale-105 transition-all',
+                      'inline-flex items-center gap-1 px-2 py-0.5 rounded-full border text-xs font-medium cursor-pointer hover:opacity-80 hover:scale-105 transition',
                       colorCls,
                     )}
                     title={t('markups.click_to_place_stamp', { defaultValue: 'Click to place this stamp on a document' })}
@@ -2648,7 +2648,7 @@ export function MarkupsPage() {
                       key={c.value}
                       onClick={() => setCustomStampColor(c.value)}
                       className={clsx(
-                        'w-7 h-7 rounded-full border-2 transition-all',
+                        'w-7 h-7 rounded-full border-2 transition',
                         customStampColor === c.value ? 'border-content-primary scale-110 ring-2 ring-offset-1 ring-oe-blue/40' : 'border-transparent hover:scale-105',
                       )}
                       style={{ backgroundColor: c.value }}

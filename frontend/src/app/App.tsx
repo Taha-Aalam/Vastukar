@@ -926,7 +926,7 @@ function LoadingScreen() {
       <div className="flex flex-col items-center gap-3 animate-fade-in">
         <Logo size="lg" animate />
         <div className="h-1 w-16 overflow-hidden rounded-full bg-surface-secondary">
-          <div className="h-full w-8 animate-shimmer rounded-full bg-oe-blue opacity-60" />
+          <div className="h-full w-8 rounded-full bg-oe-blue opacity-60" />
         </div>
       </div>
     </div>

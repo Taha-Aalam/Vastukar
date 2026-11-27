@@ -154,7 +154,7 @@ export default function BIMCoverageCard() {
           <div className={`text-2xl font-bold tabular-nums ${headlineColor}`}>
             {headlinePercent}%
           </div>
-          <div className="text-[10px] uppercase tracking-wider text-content-quaternary">
+          <div className="text-[10px]  text-content-quaternary">
             {t('dashboard.bim_coverage_headline', { defaultValue: 'avg coverage' })}
           </div>
         </div>

@@ -706,7 +706,7 @@ export function HSEAdvancedPage() {
                 tabIndex={isActive ? 0 : -1}
                 onClick={() => setTab(tb.key)}
                 title={tb.hint}
-                className={`flex items-center gap-2 px-4 py-2.5 text-sm font-medium border-b-2 transition-all whitespace-nowrap ${
+                className={`flex items-center gap-2 px-4 py-2.5 text-sm font-medium border-b-2 transition whitespace-nowrap ${
                   isActive
                     ? 'border-oe-blue text-oe-blue'
                     : 'border-transparent text-content-tertiary hover:text-content-primary hover:bg-surface-secondary'
@@ -1498,7 +1498,7 @@ function IncidentDetailDrawer({
       </div>
 
       <div>
-        <div className="text-xs font-semibold uppercase tracking-wider text-content-tertiary mb-1">
+        <div className="text-xs font-semibold text-content-tertiary mb-1">
           {t('hse_advanced.investigation_lead', { defaultValue: 'Investigation lead' })}
         </div>
         <p className="text-sm text-content-secondary font-mono">
@@ -1507,7 +1507,7 @@ function IncidentDetailDrawer({
       </div>
 
       <div>
-        <div className="text-xs font-semibold uppercase tracking-wider text-content-tertiary mb-1">
+        <div className="text-xs font-semibold text-content-tertiary mb-1">
           {t('hse_advanced.findings', { defaultValue: 'Findings' })}
         </div>
         <p className="text-sm text-content-secondary whitespace-pre-wrap">
@@ -1516,7 +1516,7 @@ function IncidentDetailDrawer({
       </div>
 
       <div>
-        <div className="text-xs font-semibold uppercase tracking-wider text-content-tertiary mb-1">
+        <div className="text-xs font-semibold text-content-tertiary mb-1">
           {t('hse_advanced.recommendations', { defaultValue: 'Recommendations' })}
         </div>
         <p className="text-sm text-content-secondary whitespace-pre-wrap">
@@ -1527,7 +1527,7 @@ function IncidentDetailDrawer({
 
       {item.report_url && (
         <div>
-          <div className="text-xs font-semibold uppercase tracking-wider text-content-tertiary mb-1">
+          <div className="text-xs font-semibold text-content-tertiary mb-1">
             {t('hse_advanced.report', { defaultValue: 'Report' })}
           </div>
           <a
@@ -1929,7 +1929,7 @@ function JSADetailDrawer({
       </div>
 
       <div>
-        <div className="text-xs font-semibold uppercase tracking-wider text-content-tertiary mb-1">
+        <div className="text-xs font-semibold text-content-tertiary mb-1">
           {t('hse_advanced.task_description', { defaultValue: 'Task' })}
         </div>
         <p className="text-sm text-content-secondary whitespace-pre-wrap">
@@ -1938,7 +1938,7 @@ function JSADetailDrawer({
       </div>
 
       <div>
-        <div className="text-xs font-semibold uppercase tracking-wider text-content-tertiary mb-1">
+        <div className="text-xs font-semibold text-content-tertiary mb-1">
           {t('hse_advanced.hazards', { defaultValue: 'Hazards & controls' })}
         </div>
         {item.hazards && item.hazards.length > 0 ? (
@@ -1968,7 +1968,7 @@ function JSADetailDrawer({
       </div>
 
       <div>
-        <div className="text-xs font-semibold uppercase tracking-wider text-content-tertiary mb-1">
+        <div className="text-xs font-semibold text-content-tertiary mb-1">
           {t('hse_advanced.required_ppe', { defaultValue: 'Required PPE' })}
         </div>
         {item.required_ppe && item.required_ppe.length > 0 ? (
@@ -2515,7 +2515,7 @@ function PermitDetailDrawer({
       </div>
 
       <div>
-        <div className="text-xs font-semibold uppercase tracking-wider text-content-tertiary mb-1">
+        <div className="text-xs font-semibold text-content-tertiary mb-1">
           {t('common.description', { defaultValue: 'Description' })}
         </div>
         <p className="text-sm text-content-secondary whitespace-pre-wrap">
@@ -2525,7 +2525,7 @@ function PermitDetailDrawer({
 
       <div className="grid grid-cols-2 gap-4">
         <div>
-          <div className="text-xs font-semibold uppercase tracking-wider text-content-tertiary mb-1">
+          <div className="text-xs font-semibold text-content-tertiary mb-1">
             {t('hse_advanced.work_start', { defaultValue: 'Work start' })}
           </div>
           <p className="text-sm text-content-secondary">
@@ -2533,7 +2533,7 @@ function PermitDetailDrawer({
           </p>
         </div>
         <div>
-          <div className="text-xs font-semibold uppercase tracking-wider text-content-tertiary mb-1">
+          <div className="text-xs font-semibold text-content-tertiary mb-1">
             {t('hse_advanced.work_end', { defaultValue: 'Work end' })}
           </div>
           <p className="text-sm text-content-secondary">
@@ -2549,7 +2549,7 @@ function PermitDetailDrawer({
       />
 
       <div>
-        <div className="text-xs font-semibold uppercase tracking-wider text-content-tertiary mb-1">
+        <div className="text-xs font-semibold text-content-tertiary mb-1">
           {t('hse_advanced.conditions', { defaultValue: 'Conditions' })}
         </div>
         <p className="text-sm text-content-secondary whitespace-pre-wrap">
@@ -2724,7 +2724,7 @@ function PermitPrereqChecklist({
 
   return (
     <div data-testid="permit-prereq-checklist">
-      <div className="flex items-center justify-between text-xs font-semibold uppercase tracking-wider text-content-tertiary mb-1">
+      <div className="flex items-center justify-between text-xs font-semibold text-content-tertiary mb-1">
         <span>
           {t('hse_advanced.prereq_title', {
             defaultValue: 'Pre-activation checks',
@@ -3896,7 +3896,7 @@ function AuditDetailDrawer({
 
       {item.summary && (
         <div>
-          <div className="text-xs font-semibold uppercase tracking-wider text-content-tertiary mb-1">
+          <div className="text-xs font-semibold text-content-tertiary mb-1">
             {t('hse_advanced.summary', { defaultValue: 'Summary' })}
           </div>
           <p className="text-sm text-content-secondary whitespace-pre-wrap">{item.summary}</p>
@@ -3905,7 +3905,7 @@ function AuditDetailDrawer({
 
       <div>
         <div className="flex items-center justify-between mb-2">
-          <div className="text-xs font-semibold uppercase tracking-wider text-content-tertiary">
+          <div className="text-xs font-semibold text-content-tertiary">
             {t('hse_advanced.findings', { defaultValue: 'Findings' })}
           </div>
           {!isCompleted && (
@@ -4780,7 +4780,7 @@ function CAPADetailDrawer({
 
       {item.description && (
         <div>
-          <div className="text-xs font-semibold uppercase tracking-wider text-content-tertiary mb-1">
+          <div className="text-xs font-semibold text-content-tertiary mb-1">
             {t('common.description', { defaultValue: 'Description' })}
           </div>
           <p className="text-sm text-content-secondary whitespace-pre-wrap">
@@ -4792,7 +4792,7 @@ function CAPADetailDrawer({
       {/* 5-Whys root-cause chain */}
       <div>
         <div className="flex items-center justify-between mb-1">
-          <div className="text-xs font-semibold uppercase tracking-wider text-content-tertiary">
+          <div className="text-xs font-semibold text-content-tertiary">
             {t('hse_advanced.five_whys', { defaultValue: '5-Whys root cause' })}
           </div>
           {!isClosed && (
@@ -4823,7 +4823,7 @@ function CAPADetailDrawer({
 
       {item.verification_notes && (
         <div>
-          <div className="text-xs font-semibold uppercase tracking-wider text-content-tertiary mb-1">
+          <div className="text-xs font-semibold text-content-tertiary mb-1">
             {t('hse_advanced.verification_notes', { defaultValue: 'Verification notes' })}
           </div>
           <p className="text-sm text-content-secondary whitespace-pre-wrap">

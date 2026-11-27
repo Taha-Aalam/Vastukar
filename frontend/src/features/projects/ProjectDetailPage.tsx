@@ -586,7 +586,7 @@ function ProjectPhaseRibbon({ phase }: { phase: string | null }) {
   if (activeIdx < 0) {
     return (
       <div className="flex items-center gap-2 rounded-lg border border-border-light bg-surface-secondary px-3 py-2 text-xs">
-        <span className="font-medium uppercase tracking-wider text-content-tertiary">
+        <span className="font-medium text-content-tertiary">
           {t('projects.phase_label', { defaultValue: 'Phase' })}
         </span>
         <span className="font-semibold text-content-primary">{phase}</span>
@@ -904,7 +904,7 @@ function ProjectHealthBar({
               strokeWidth="6"
               strokeLinecap="round"
               strokeDasharray={`${completeness * 175.93} 175.93`}
-              className={`transition-all duration-500 ${ringColor}`}
+              className={`transition duration-500 ${ringColor}`}
             />
           </svg>
           <div className="absolute inset-0 flex items-center justify-center">
@@ -915,7 +915,7 @@ function ProjectHealthBar({
         {/* Text + checkpoints */}
         <div className="min-w-0 flex-1">
           <div className="flex items-center gap-2 mb-1">
-            <span className="text-2xs font-semibold uppercase tracking-wider text-content-tertiary">
+            <span className="text-2xs font-semibold text-content-tertiary">
               {t('projects.health_label', { defaultValue: 'Project Health' })}
             </span>
             <span className="text-2xs text-content-quaternary">·</span>
@@ -984,7 +984,7 @@ function SummaryCard({
     <div className="flex-1 min-w-[180px] rounded-xl border border-border-light bg-surface-elevated/90 p-4 shadow-xs transition-shadow duration-normal ease-oe hover:shadow-sm">
       <div className="flex items-center justify-between gap-3">
         <div className="min-w-0">
-          <p className="text-2xs font-medium text-content-tertiary uppercase tracking-wide truncate">
+          <p className="text-2xs font-medium text-content-tertiary truncate">
             {label}
           </p>
           <p className="mt-0.5 text-xl font-bold text-content-primary tabular-nums leading-tight">
@@ -1038,7 +1038,7 @@ function WidgetSection({
     <section className="mb-5">
       <div className="mb-2 flex items-center gap-2">
         <span className="text-content-tertiary">{icon}</span>
-        <h2 className="text-2xs font-semibold uppercase tracking-wider text-content-tertiary">
+        <h2 className="text-2xs font-semibold text-content-tertiary">
           {title}
         </h2>
         <div className="h-px flex-1 bg-border-light" aria-hidden="true" />
@@ -1093,7 +1093,7 @@ function DropZone({
       onClick={() => !disabled && inputRef.current?.click()}
       className={`
         flex flex-col items-center justify-center gap-3 rounded-xl border-2 border-dashed
-        px-6 py-10 text-center cursor-pointer transition-all duration-200
+        px-6 py-10 text-center cursor-pointer transition duration-200
         ${dragOver ? 'border-oe-blue bg-oe-blue-subtle/30 scale-[1.01]' : 'border-border-light hover:border-content-tertiary hover:bg-surface-secondary'}
         ${disabled ? 'opacity-50 pointer-events-none' : ''}
       `}
@@ -1352,7 +1352,7 @@ function ImportDialog({
               <div className="grid grid-cols-3 gap-3">
                 <div className="rounded-lg bg-surface-secondary px-3 py-2 text-center">
                   <p className="text-lg font-bold text-content-primary">{result.imported}</p>
-                  <p className="text-2xs text-content-tertiary uppercase tracking-wide">
+                  <p className="text-2xs text-content-tertiary">
                     {t('import.stat_imported', { defaultValue: 'Imported' })}
                   </p>
                 </div>
@@ -1360,13 +1360,13 @@ function ImportDialog({
                   <p className="text-lg font-bold text-content-primary">
                     {result.total_items ?? result.total_rows ?? result.imported + (result.updated ?? 0) + (result.skipped ?? 0)}
                   </p>
-                  <p className="text-2xs text-content-tertiary uppercase tracking-wide">
+                  <p className="text-2xs text-content-tertiary">
                     {t('import.stat_total_items', { defaultValue: 'Total items' })}
                   </p>
                 </div>
                 <div className="rounded-lg bg-surface-secondary px-3 py-2 text-center">
                   <p className="text-lg font-bold text-content-primary">{result.errors.length}</p>
-                  <p className="text-2xs text-content-tertiary uppercase tracking-wide">{t('import.stat_errors', { defaultValue: 'Errors' })}</p>
+                  <p className="text-2xs text-content-tertiary">{t('import.stat_errors', { defaultValue: 'Errors' })}</p>
                 </div>
               </div>
 
@@ -2550,7 +2550,7 @@ export function ProjectDetailPage() {
             key={tab.key}
             onClick={() => setActiveTab(tab.key)}
             className={`
-              flex shrink-0 items-center gap-2 whitespace-nowrap px-4 py-2.5 text-sm font-medium border-b-2 transition-all
+              flex shrink-0 items-center gap-2 whitespace-nowrap px-4 py-2.5 text-sm font-medium border-b-2 transition
               ${
                 activeTab === tab.key
                   ? 'border-oe-blue text-oe-blue'
@@ -2597,7 +2597,7 @@ export function ProjectDetailPage() {
                 >
                   <div className="flex items-start justify-between">
                     <div>
-                      <p className="text-xs font-medium text-content-tertiary uppercase tracking-wide">
+                      <p className="text-xs font-medium text-content-tertiary">
                         {t('projects.dash_budget_consumed', { defaultValue: 'Budget Consumed' })}
                       </p>
                       <p className="mt-0.5 text-xl font-bold text-content-primary tabular-nums leading-tight">
@@ -2622,7 +2622,7 @@ export function ProjectDetailPage() {
                   {/* Budget bar */}
                   <div className="mt-3 h-1.5 w-full rounded-full bg-surface-secondary overflow-hidden">
                     <div
-                      className="h-full rounded-full transition-all duration-500"
+                      className="h-full rounded-full transition duration-500"
                       style={{
                         width: `${barPercent(parseFloat(dashboardData.budget.consumed_pct))}%`,
                         background: dashboardData.budget.warning_level === 'critical'
@@ -2646,7 +2646,7 @@ export function ProjectDetailPage() {
                 >
                   <div className="flex items-start justify-between">
                     <div>
-                      <p className="text-xs font-medium text-content-tertiary uppercase tracking-wide">
+                      <p className="text-xs font-medium text-content-tertiary">
                         {t('projects.dash_schedule_progress', { defaultValue: 'Schedule Progress' })}
                       </p>
                       <p className="mt-0.5 text-xl font-bold text-content-primary tabular-nums leading-tight">
@@ -2679,7 +2679,7 @@ export function ProjectDetailPage() {
                 >
                   <div className="flex items-start justify-between">
                     <div>
-                      <p className="text-xs font-medium text-content-tertiary uppercase tracking-wide">
+                      <p className="text-xs font-medium text-content-tertiary">
                         {t('projects.dash_quality', { defaultValue: 'Quality Score' })}
                       </p>
                       <p className="mt-0.5 text-xl font-bold text-content-primary tabular-nums leading-tight">
@@ -2714,7 +2714,7 @@ export function ProjectDetailPage() {
                 >
                   <div className="flex items-start justify-between">
                     <div>
-                      <p className="text-xs font-medium text-content-tertiary uppercase tracking-wide">
+                      <p className="text-xs font-medium text-content-tertiary">
                         {t('projects.dash_open_items', { defaultValue: 'Open Items' })}
                       </p>
                       <p className="mt-0.5 text-xl font-bold text-content-primary tabular-nums leading-tight">
@@ -2841,7 +2841,7 @@ export function ProjectDetailPage() {
                           cx="40" cy="40" r="34" fill="none" stroke="currentColor" strokeWidth="7"
                           strokeLinecap="round"
                           strokeDasharray={`${(barPercent(parseFloat(dashboardData.schedule.progress_pct)) / 100) * 213.63} 213.63`}
-                          className="text-oe-blue transition-all duration-500"
+                          className="text-oe-blue transition duration-500"
                         />
                       </svg>
                       <div className="absolute inset-0 flex items-center justify-center">
@@ -2871,7 +2871,7 @@ export function ProjectDetailPage() {
                       </div>
                       {dashboardData.schedule.next_milestone && (
                         <div className="mt-2 pt-2 border-t border-border-light">
-                          <p className="text-2xs text-content-tertiary uppercase tracking-wider">
+                          <p className="text-2xs text-content-tertiary">
                             {t('projects.dash_next_milestone', { defaultValue: 'Next Milestone' })}
                           </p>
                           <p className="text-xs font-medium text-content-primary mt-0.5">
@@ -2935,7 +2935,7 @@ export function ProjectDetailPage() {
                         key={item.label}
                         type="button"
                         onClick={() => navigate(item.to)}
-                        className="rounded-lg border border-border-light p-3 text-left transition-all hover:border-oe-blue/40 hover:bg-surface-secondary hover:-translate-y-0.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-oe-blue/40"
+                        className="rounded-lg border border-border-light p-3 text-left transition-colors hover:border-oe-blue/40 hover:bg-surface-secondary hover:-translate-y-0.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-oe-blue/40"
                         aria-label={`${item.label}: ${item.count}`}
                       >
                         <div className="flex items-center gap-2 mb-2">
@@ -3183,23 +3183,23 @@ export function ProjectDetailPage() {
                       className="block w-full text-left rounded-lg border border-border-light bg-surface-secondary/40 transition-colors hover:bg-surface-secondary hover:border-border px-3 py-3 focus:outline-none focus-visible:ring-2 focus-visible:ring-oe-blue/40"
                       aria-label={t('projects.dash_documents', { defaultValue: 'Documents' })}
                     >
-                      <p className="text-2xs font-medium text-content-tertiary uppercase tracking-wider mb-2 flex items-center gap-1.5">
+                      <p className="text-2xs font-medium text-content-tertiary mb-2 flex items-center gap-1.5">
                         <FolderOpen size={12} className="text-content-quaternary" />
                         {t('projects.dash_documents', { defaultValue: 'Documents' })}
                       </p>
                       <div className="flex items-center gap-4 text-xs text-content-secondary">
                         <span className="flex flex-col">
                           <strong className="text-lg leading-none text-content-primary">{dashboardData.documents.total}</strong>
-                          <span className="mt-0.5 text-2xs text-content-tertiary uppercase tracking-wide">{t('projects.dash_total', { defaultValue: 'total' })}</span>
+                          <span className="mt-0.5 text-2xs text-content-tertiary">{t('projects.dash_total', { defaultValue: 'total' })}</span>
                         </span>
                         <span className="flex flex-col">
                           <strong className="text-lg leading-none text-content-primary">{dashboardData.documents.published}</strong>
-                          <span className="mt-0.5 text-2xs text-content-tertiary uppercase tracking-wide">{t('projects.dash_published', { defaultValue: 'published' })}</span>
+                          <span className="mt-0.5 text-2xs text-content-tertiary">{t('projects.dash_published', { defaultValue: 'published' })}</span>
                         </span>
                         {dashboardData.documents.pending_transmittals > 0 && (
                           <span className="flex flex-col">
                             <strong className="text-lg leading-none text-amber-600">{dashboardData.documents.pending_transmittals}</strong>
-                            <span className="mt-0.5 text-2xs text-amber-700/80 uppercase tracking-wide">{t('projects.dash_pending', { defaultValue: 'pending' })}</span>
+                            <span className="mt-0.5 text-2xs text-amber-700/80">{t('projects.dash_pending', { defaultValue: 'pending' })}</span>
                           </span>
                         )}
                       </div>

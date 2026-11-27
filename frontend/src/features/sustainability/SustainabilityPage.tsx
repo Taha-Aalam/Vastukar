@@ -440,7 +440,7 @@ export function SustainabilityPage() {
         <CardContent>
           <div className="flex flex-wrap items-end gap-4">
             <div className="flex-1 min-w-[200px]">
-              <label htmlFor="sust-project-select" className="block text-xs font-medium uppercase tracking-wider text-content-tertiary mb-1.5">
+              <label htmlFor="sust-project-select" className="block text-xs font-medium text-content-tertiary mb-1.5">
                 {t('sustainability.project', 'Project')}
               </label>
               <select
@@ -455,7 +455,7 @@ export function SustainabilityPage() {
               </select>
             </div>
             <div className="flex-1 min-w-[200px]">
-              <label htmlFor="sust-boq-select" className="block text-xs font-medium uppercase tracking-wider text-content-tertiary mb-1.5">
+              <label htmlFor="sust-boq-select" className="block text-xs font-medium text-content-tertiary mb-1.5">
                 {t('sustainability.boq', 'BOQ')}
               </label>
               <select
@@ -470,7 +470,7 @@ export function SustainabilityPage() {
               </select>
             </div>
             <div className="min-w-[140px]">
-              <label htmlFor="sust-gfa-input" className="block text-xs font-medium uppercase tracking-wider text-content-tertiary mb-1.5">
+              <label htmlFor="sust-gfa-input" className="block text-xs font-medium text-content-tertiary mb-1.5">
                 {t('sustainability.area', 'GFA (m2)')}
               </label>
               <input
@@ -509,7 +509,7 @@ export function SustainabilityPage() {
             {/* Total CO2 + Rating */}
             <Card padding="none">
               <div className="p-5">
-                <div className="text-xs font-medium uppercase tracking-wider text-content-tertiary mb-2">
+                <div className="text-xs font-medium text-content-tertiary mb-2">
                   {t('sustainability.total_co2', 'Total Embodied Carbon')}
                 </div>
                 <div className="flex items-baseline gap-2 mb-2">
@@ -544,7 +544,7 @@ export function SustainabilityPage() {
             {/* EU CPR Compliance */}
             <Card padding="none">
               <div className="p-5">
-                <div className="text-xs font-medium uppercase tracking-wider text-content-tertiary mb-2">
+                <div className="text-xs font-medium text-content-tertiary mb-2">
                   {t('sustainability.eu_cpr_title', { defaultValue: 'EU CPR 2024/3110' })}
                 </div>
                 {cpr ? (
@@ -573,7 +573,7 @@ export function SustainabilityPage() {
             {/* Data Quality */}
             <Card padding="none">
               <div className="p-5">
-                <div className="text-xs font-medium uppercase tracking-wider text-content-tertiary mb-2">
+                <div className="text-xs font-medium text-content-tertiary mb-2">
                   {t('sustainability.data_quality', 'Data Quality')}
                 </div>
                 <div className="text-lg font-semibold text-content-primary mb-1">{dataQualityLabel}</div>
@@ -582,7 +582,7 @@ export function SustainabilityPage() {
                 </div>
                 {data.positions_analyzed > 0 && (
                   <div className="w-full h-2 rounded-full bg-border-light overflow-hidden">
-                    <div className="h-full rounded-full bg-semantic-success transition-all"
+                    <div className="h-full rounded-full bg-semantic-success transition"
                       style={{ width: `${(data.positions_matched / data.positions_analyzed) * 100}%` }} />
                   </div>
                 )}
@@ -606,10 +606,10 @@ export function SustainabilityPage() {
                     <table className="w-full text-sm">
                       <thead>
                         <tr className="border-b border-border-light">
-                          <th className="py-2 pr-4 text-left text-xs font-medium uppercase tracking-wider text-content-tertiary">{t('sustainability.col_category', { defaultValue: 'Category' })}</th>
-                          <th className="py-2 px-4 text-right text-xs font-medium uppercase tracking-wider text-content-tertiary">{t('sustainability.col_positions', { defaultValue: 'Positions' })}</th>
-                          <th className="py-2 px-4 text-right text-xs font-medium uppercase tracking-wider text-content-tertiary">%</th>
-                          <th className="py-2 pl-4 text-right text-xs font-medium uppercase tracking-wider text-content-tertiary">{t('sustainability.col_co2', { defaultValue: 'CO2 (t)' })}</th>
+                          <th className="py-2 pr-4 text-left text-xs font-medium text-content-tertiary">{t('sustainability.col_category', { defaultValue: 'Category' })}</th>
+                          <th className="py-2 px-4 text-right text-xs font-medium text-content-tertiary">{t('sustainability.col_positions', { defaultValue: 'Positions' })}</th>
+                          <th className="py-2 px-4 text-right text-xs font-medium text-content-tertiary">%</th>
+                          <th className="py-2 pl-4 text-right text-xs font-medium text-content-tertiary">{t('sustainability.col_co2', { defaultValue: 'CO2 (t)' })}</th>
                         </tr>
                       </thead>
                       <tbody className="divide-y divide-border-light">
@@ -646,13 +646,13 @@ export function SustainabilityPage() {
                   <table className="w-full text-sm">
                     <thead>
                       <tr className="border-b border-border-light">
-                        <th className="py-2 pr-3 text-left text-xs font-medium uppercase tracking-wider text-content-tertiary w-[60px]">#</th>
-                        <th className="py-2 px-3 text-left text-xs font-medium uppercase tracking-wider text-content-tertiary">{t('sustainability.col_description', { defaultValue: 'Description' })}</th>
-                        <th className="py-2 px-3 text-right text-xs font-medium uppercase tracking-wider text-content-tertiary w-[80px]">{t('sustainability.col_qty', { defaultValue: 'Qty' })}</th>
-                        <th className="py-2 px-3 text-center text-xs font-medium uppercase tracking-wider text-content-tertiary w-[50px]">{t('sustainability.col_unit', { defaultValue: 'Unit' })}</th>
-                        <th className="py-2 px-3 text-left text-xs font-medium uppercase tracking-wider text-content-tertiary w-[220px]">{t('sustainability.col_epd_material', { defaultValue: 'EPD Material' })}</th>
-                        <th className="py-2 px-3 text-right text-xs font-medium uppercase tracking-wider text-content-tertiary w-[90px]">{t('sustainability.col_gwp_unit', { defaultValue: 'GWP/unit' })}</th>
-                        <th className="py-2 pl-3 text-right text-xs font-medium uppercase tracking-wider text-content-tertiary w-[100px]">{t('sustainability.col_gwp_total', { defaultValue: 'GWP Total' })}</th>
+                        <th className="py-2 pr-3 text-left text-xs font-medium text-content-tertiary w-[60px]">#</th>
+                        <th className="py-2 px-3 text-left text-xs font-medium text-content-tertiary">{t('sustainability.col_description', { defaultValue: 'Description' })}</th>
+                        <th className="py-2 px-3 text-right text-xs font-medium text-content-tertiary w-[80px]">{t('sustainability.col_qty', { defaultValue: 'Qty' })}</th>
+                        <th className="py-2 px-3 text-center text-xs font-medium text-content-tertiary w-[50px]">{t('sustainability.col_unit', { defaultValue: 'Unit' })}</th>
+                        <th className="py-2 px-3 text-left text-xs font-medium text-content-tertiary w-[220px]">{t('sustainability.col_epd_material', { defaultValue: 'EPD Material' })}</th>
+                        <th className="py-2 px-3 text-right text-xs font-medium text-content-tertiary w-[90px]">{t('sustainability.col_gwp_unit', { defaultValue: 'GWP/unit' })}</th>
+                        <th className="py-2 pl-3 text-right text-xs font-medium text-content-tertiary w-[100px]">{t('sustainability.col_gwp_total', { defaultValue: 'GWP Total' })}</th>
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-border-light">

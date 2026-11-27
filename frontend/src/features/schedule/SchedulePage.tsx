@@ -786,7 +786,7 @@ function GanttChart({
         <div className="w-[280px] shrink-0 border-r border-border-light">
           {/* Header labels */}
           <div className="flex h-10 items-center border-b border-border-light bg-surface-secondary/50 px-3">
-            <span className="text-2xs font-semibold uppercase tracking-wider text-content-tertiary">
+            <span className="text-2xs font-semibold text-content-tertiary">
               {t('schedule.activity', 'Activity')}
             </span>
           </div>
@@ -967,12 +967,12 @@ function GanttChart({
                     ) : (
                       /* Standard bar */
                       <div
-                        className={`absolute top-1/2 -translate-y-1/2 h-7 rounded-md ${sc.bg} transition-all duration-200${isCritical ? ' ring-2 ring-semantic-error/60' : ''}`}
+                        className={`absolute top-1/2 -translate-y-1/2 h-7 rounded-md ${sc.bg} transition duration-200${isCritical ? ' ring-2 ring-semantic-error/60' : ''}`}
                         style={barStyle}
                       >
                         {/* Progress fill */}
                         <div
-                          className={`h-full rounded-md ${sc.fill} transition-all duration-300`}
+                          className={`h-full rounded-md ${sc.fill} transition duration-300`}
                           style={{ width: `${displayProgress}%` }}
                         />
                         {/* CP badge for critical path activities */}
@@ -1095,7 +1095,7 @@ function RiskAnalysisCard({ data }: { data: RiskAnalysisResponse }) {
             key={item.label}
             className="rounded-xl border border-border-light bg-surface-secondary/50 px-3 py-2.5"
           >
-            <p className="text-2xs font-semibold uppercase tracking-wider text-content-tertiary">
+            <p className="text-2xs font-semibold text-content-tertiary">
               {item.label}
             </p>
             <p className={`text-xl font-bold tabular-nums ${item.color}`}>{item.value}</p>
@@ -2097,7 +2097,7 @@ export function ScheduleDetail({
                 </div>
                 <div className="h-3 w-full overflow-hidden rounded-full bg-surface-secondary">
                   <div
-                    className="h-full rounded-full bg-gradient-to-r from-oe-blue to-blue-400 transition-all duration-500"
+                    className="h-full rounded-full bg-gradient-to-r from-oe-blue to-blue-400 transition duration-500"
                     style={{ width: `${Math.min(100, Math.max(0, pct))}%` }}
                   />
                 </div>
@@ -2307,7 +2307,7 @@ export function ScheduleDetail({
                   <button
                     disabled={!canEditSchedule}
                     onClick={() => setShowGenerateBOQ(true)}
-                    className="group flex flex-col items-center gap-3 rounded-xl border-2 border-dashed border-border-light bg-surface-secondary/30 p-6 transition-all hover:border-oe-blue/50 hover:bg-oe-blue-subtle/30"
+                    className="group flex flex-col items-center gap-3 rounded-xl border-2 border-dashed border-border-light bg-surface-secondary/30 p-6 transition-colors hover:border-oe-blue/50 hover:bg-oe-blue-subtle/30"
                   >
                     <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-oe-blue-subtle text-oe-blue-text transition-transform group-hover:scale-110">
                       <FileBarChart size={24} />
@@ -2324,7 +2324,7 @@ export function ScheduleDetail({
                   <button
                     disabled={!canEditSchedule}
                     onClick={() => setShowAddActivity(true)}
-                    className="group flex flex-col items-center gap-3 rounded-xl border-2 border-dashed border-border-light bg-surface-secondary/30 p-6 transition-all hover:border-oe-blue/50 hover:bg-oe-blue-subtle/30 disabled:cursor-not-allowed disabled:opacity-50"
+                    className="group flex flex-col items-center gap-3 rounded-xl border-2 border-dashed border-border-light bg-surface-secondary/30 p-6 transition hover:border-oe-blue/50 hover:bg-oe-blue-subtle/30 disabled:cursor-not-allowed disabled:opacity-50"
                   >
                     <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-surface-secondary text-content-secondary transition-transform group-hover:scale-110">
                       <Plus size={24} />
@@ -2457,7 +2457,7 @@ export function ScheduleDetail({
                   key={type}
                   type="button"
                   onClick={() => setActivityForm((f) => ({ ...f, activity_type: type }))}
-                  className={`flex-1 rounded-lg border px-3 py-2 text-sm font-medium capitalize transition-all ${
+                  className={`flex-1 rounded-lg border px-3 py-2 text-sm font-medium capitalize transition ${
                     activityForm.activity_type === type
                       ? 'border-oe-blue bg-oe-blue-subtle text-oe-blue-text'
                       : 'border-border bg-surface-primary text-content-secondary hover:bg-surface-secondary'
@@ -2635,7 +2635,7 @@ export function ScheduleDetail({
                   key={boq.id}
                   type="button"
                   onClick={() => setSelectedBOQId(boq.id)}
-                  className={`w-full rounded-lg border px-4 py-3 text-left transition-all ${
+                  className={`w-full rounded-lg border px-4 py-3 text-left transition ${
                     selectedBOQId === boq.id
                       ? 'border-oe-blue bg-oe-blue-subtle'
                       : 'border-border bg-surface-primary hover:bg-surface-secondary'
@@ -3211,7 +3211,7 @@ export function ProjectSchedules({
                   setShowGenerateTarget(false);
                   setSelectedSchedule(s);
                 }}
-                className="flex w-full items-center gap-3 rounded-lg border border-border bg-surface-primary px-4 py-3 text-left transition-all hover:bg-surface-secondary"
+                className="flex w-full items-center gap-3 rounded-lg border border-border bg-surface-primary px-4 py-3 text-left transition-colors hover:bg-surface-secondary"
               >
                 <CalendarDays size={16} className="shrink-0 text-oe-blue" />
                 <span className="min-w-0 flex-1 truncate text-sm font-medium text-content-primary">{s.name}</span>

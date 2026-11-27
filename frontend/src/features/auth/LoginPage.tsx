@@ -47,7 +47,7 @@ function ThemeSwitch() {
     <div
       role="radiogroup"
       aria-label={t('theme.label', { defaultValue: 'Theme' })}
-      className="flex items-center gap-0.5 rounded-xl border border-border-light bg-surface-elevated/85 backdrop-blur-sm p-0.5 shadow-sm"
+      className="flex items-center gap-1 rounded-lg border border-border-light bg-surface-elevated p-1"
     >
       {opts.map(({ mode, icon: Icon, label }) => {
         const active = theme === mode;
@@ -60,13 +60,13 @@ function ThemeSwitch() {
             title={label}
             aria-label={label}
             onClick={() => setTheme(mode)}
-            className={`flex h-8 w-8 items-center justify-center rounded-lg transition-colors ${
+            className={`flex h-8 w-8 items-center justify-center rounded-md transition-colors ${
               active
                 ? 'bg-oe-blue text-white shadow-sm'
                 : 'text-content-tertiary hover:text-content-secondary hover:bg-surface-secondary'
             }`}
           >
-            <Icon size={15} strokeWidth={2} />
+            <Icon size={16} strokeWidth={1.5} />
           </button>
         );
       })}
@@ -411,96 +411,26 @@ export function LoginPage() {
       <AuthBackground />
       <ClassicAuthAside />
 
-      {/* Local style block - premium glass variant + drifting orb keyframes
-          scoped to the login page. Pattern mirrors LoginPageNext.tsx. */}
-      <style>{`
-        .login-glass-pro {
-          background:
-            linear-gradient(135deg, rgba(255,255,255,0.78) 0%, rgba(255,255,255,0.62) 100%);
-          backdrop-filter: blur(28px) saturate(180%);
-          -webkit-backdrop-filter: blur(28px) saturate(180%);
-          border: 1px solid rgba(255, 255, 255, 0.85);
-          box-shadow:
-            0 36px 80px -28px rgba(14, 165, 233, 0.30),
-            0 14px 36px -12px rgba(15, 23, 42, 0.12),
-            0 2px 6px -1px rgba(15, 23, 42, 0.06),
-            inset 0 1px 0 rgba(255, 255, 255, 0.95),
-            inset 0 0 0 1px rgba(255, 255, 255, 0.35);
-        }
-        .dark .login-glass-pro {
-          background:
-            linear-gradient(135deg, rgba(22, 26, 36, 0.78) 0%, rgba(15, 17, 23, 0.66) 100%);
-          border-color: transparent;
-          box-shadow:
-            0 30px 80px -24px rgba(14, 165, 233, 0.35),
-            0 12px 40px -12px rgba(0, 0, 0, 0.55),
-            0 2px 6px -2px rgba(0, 0, 0, 0.4);
-        }
-        .login-glass-pro::after {
-          content: '';
-          position: absolute;
-          inset: 0;
-          border-radius: inherit;
-          pointer-events: none;
-          background:
-            radial-gradient(120% 80% at 0% 0%, rgba(14, 165, 233, 0.05), transparent 65%);
-          mix-blend-mode: soft-light;
-        }
-        .dark .login-glass-pro::after {
-          background:
-            radial-gradient(120% 80% at 0% 0%, rgba(14, 165, 233, 0.18), transparent 60%),
-            radial-gradient(120% 80% at 100% 100%, rgba(139, 92, 246, 0.16), transparent 60%);
-          mix-blend-mode: screen;
-        }
-        @keyframes login-orb-drift-a {
-          0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
-          50%      { transform: translate3d(30px, -22px, 0) scale(1.08); }
-        }
-        @keyframes login-orb-drift-b {
-          0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
-          50%      { transform: translate3d(-26px, 28px, 0) scale(0.94); }
-        }
-        @keyframes login-orb-drift-c {
-          0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
-          50%      { transform: translate3d(20px, 32px, 0) scale(1.05); }
-        }
-        .login-orb-a { animation: login-orb-drift-a 12s ease-in-out infinite; }
-        .login-orb-b { animation: login-orb-drift-b 14s ease-in-out infinite; }
-        .login-orb-c { animation: login-orb-drift-c 10s ease-in-out infinite; }
-        @media (prefers-reduced-motion: reduce) {
-          .login-orb-a, .login-orb-b, .login-orb-c { animation: none; }
-        }
-      `}</style>
-
-      {/* ── Ambient mesh blobs (LEFT half only) ─────────────────────────
-          Restrained palette - single faint sky blob behind the marketing
-          column so the headline / stats sit on a near-white field.
-          Dark mode keeps the original richer blob set for depth. */}
-      <div className="absolute inset-y-0 start-0 end-1/2 z-0 pointer-events-none overflow-hidden hidden lg:block">
-        <div className="absolute top-[-12%] left-[-6%] w-[520px] h-[520px] rounded-full bg-sky-300/10 dark:bg-oe-blue/35 blur-[120px] animate-blob-slow-1 mix-blend-screen" />
-        <div className="absolute bottom-[-18%] right-[2%] w-[400px] h-[400px] rounded-full bg-cyan-200/10 dark:bg-violet-500/35 blur-[110px] animate-blob-slow-4 mix-blend-screen hidden dark:block" />
-      </div>
-
-      {/* Mobile-only ambient blobs (single column layout) */}
-      <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden lg:hidden">
-        <div className="absolute top-[-12%] left-[-6%] w-[520px] h-[520px] rounded-full bg-sky-300/10 dark:bg-oe-blue/35 blur-[110px] animate-blob-slow-1 mix-blend-screen" />
-      </div>
-
+      {/* Cards use the shared surface tokens; no page-local glass, glow or drifting decoration. */}
       {/* Theme + Language - top right (enlarged for /login so discoverable). */}
       <div className="absolute top-4 right-4 z-30 flex items-center gap-2">
         <ThemeSwitch />
         <div className="relative" ref={langRef}>
         <button
+          type="button"
           onClick={() => setLangOpen(!langOpen)}
-          className="flex items-center gap-2 rounded-xl border border-border-light bg-surface-elevated/85 backdrop-blur-sm px-4 py-2 text-sm font-medium text-content-secondary hover:bg-surface-elevated hover:border-oe-blue/30 transition-colors shadow-sm"
+          aria-haspopup="listbox"
+          aria-expanded={langOpen}
+          aria-label={t('theme.language', { defaultValue: 'Language' })}
+          className="flex items-center gap-2 rounded-lg border border-border-light bg-surface-elevated px-3 py-2 text-sm text-content-secondary transition-colors hover:bg-surface-secondary"
         >
-          <Globe size={16} className="text-content-tertiary" />
+          <Globe size={16} strokeWidth={1.5} className="text-content-tertiary" />
           <CountryFlag code={currentLang.country} size={20} />
           <span className="hidden sm:inline">{currentLang.name}</span>
-          <ChevronDown size={14} className={`text-content-tertiary transition-transform ${langOpen ? 'rotate-180' : ''}`} />
+          <ChevronDown size={16} strokeWidth={1.5} className={`text-content-tertiary transition-transform ${langOpen ? 'rotate-180' : ''}`} />
         </button>
         {langOpen && (
-          <div className="absolute right-0 mt-2 w-64 max-h-80 overflow-y-auto rounded-xl border border-border-light bg-surface-elevated shadow-xl py-1 animate-stagger-in">
+          <div role="listbox" aria-label={t('theme.language', { defaultValue: 'Language' })} className="absolute right-0 mt-2 w-64 max-h-80 overflow-y-auto rounded-lg border border-border-light bg-surface-elevated py-1">
             {sortLanguagesByName(SUPPORTED_LANGUAGES).map((lang) => {
               const isActive = i18n.language === lang.code;
               const english = 'english' in lang ? (lang as { english?: string }).english : undefined;
@@ -529,71 +459,37 @@ export function LoginPage() {
           Order swap (lg:order-2) puts the form on the left so it's the
           first thing the eye lands on - primary action priority. */}
       <div className="oe-auth-standard-only hidden lg:flex relative z-10 lg:order-2 flex-col justify-center pl-14 xl:pl-20 pr-12 xl:pr-16 py-6 overflow-hidden">
-        {/* Marketing column showcase - color lives here. Sky/cyan mesh +
-            slow-drifting orbs + faint noise grain. The form column on the
-            left stays a clean white field; this column carries the visual
-            weight. */}
-        <div className="absolute inset-0 pointer-events-none -z-10" aria-hidden>
-          <div
-            className="absolute inset-0"
-            style={{
-              background:
-                'radial-gradient(ellipse 90% 70% at 70% 25%, rgba(14,165,233,0.16), transparent 65%),' +
-                'radial-gradient(ellipse 80% 60% at 25% 85%, rgba(56,189,248,0.12), transparent 65%),' +
-                'radial-gradient(ellipse 60% 50% at 90% 75%, rgba(125,211,252,0.10), transparent 65%)',
-            }}
-          />
-          <div
-            className="absolute inset-0 hidden dark:block"
-            style={{
-              background:
-                'radial-gradient(ellipse 80% 60% at 70% 20%, rgba(14,165,233,0.22), transparent 60%),' +
-                'radial-gradient(ellipse 70% 60% at 30% 90%, rgba(139,92,246,0.18), transparent 60%)',
-            }}
-          />
-          <div className="absolute top-[8%] right-[8%] w-[420px] h-[420px] rounded-full bg-sky-300/45 dark:bg-sky-500/35 blur-[100px] login-orb-a" />
-          <div className="absolute bottom-[6%] left-[10%] w-[360px] h-[360px] rounded-full bg-cyan-200/40 dark:bg-violet-500/30 blur-[100px] login-orb-b" />
-          <div className="absolute top-[42%] right-[34%] w-[280px] h-[280px] rounded-full bg-white/55 dark:bg-white/0 blur-[80px] login-orb-c" />
-          <div
-            className="absolute inset-0 opacity-[0.04] dark:opacity-[0.07] mix-blend-overlay"
-            style={{
-              backgroundImage:
-                "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.5 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>\")",
-            }}
-          />
-        </div>
+        {/* Calm tinted surface; the product data below carries the colour. */}
+        <div className="absolute inset-0 -z-10 bg-oe-blue/[0.03] dark:bg-oe-blue/[0.06]" aria-hidden />
 
+        <p className="mb-4 text-xs text-content-secondary">Open source · AGPL-3.0</p>
 
         {/* Marketing headline - kept as h2 because the form panel below has the
             authoritative h1 (visually hidden, always present in DOM). */}
-        <h2 className="text-[32px] xl:text-[36px] font-semibold text-content-primary leading-[1.08] tracking-[-0.025em] animate-stagger-in" style={{ animationDelay: '60ms' }}>
+        <h2 className="text-3xl font-medium text-content-primary leading-tight animate-stagger-in" style={{ animationDelay: '60ms' }}>
           {t('login.hero_tagline', { defaultValue: 'The first construction ERP designed from the ground up for the agentic era: a construction ERP for human teams and their AI agents.' })}
         </h2>
 
         {/* Subhead */}
-        <p className="mt-5 text-[17px] text-content-secondary/70 leading-[1.65] tracking-[-0.008em] max-w-[420px] animate-stagger-in" style={{ animationDelay: '120ms' }}>
-          {t('login.hero_desc', { defaultValue: 'Plan, estimate, schedule, tender - every step of a project on one professional platform.' })}
+        <p className="mt-4 text-base text-content-secondary leading-relaxed max-w-md animate-stagger-in" style={{ animationDelay: '120ms' }}>
+          {t('login.hero_desc', { defaultValue: 'BOQ editing, 4D scheduling, 5D cost model, and tendering in one workspace.' })}
         </p>
 
-        {/* Stats row */}
-        <div className="mt-5 flex items-center gap-5 animate-stagger-in" style={{ animationDelay: '180ms' }}>
-          {[
-            { value: '120K+', label: t('login.stat_costs', { defaultValue: 'cost items' }) },
-            { value: String(SUPPORTED_LANGUAGES.length), label: t('login.stat_langs', { defaultValue: 'languages' }) },
-            { value: '47', label: t('login.stat_regions', { defaultValue: 'countries' }) },
-            { value: '6', label: t('login.stat_cad', { defaultValue: 'CAD formats' }) },
-            { value: '180+', label: t('login.stat_modules', { defaultValue: 'modules' }) },
-            { value: '28', label: t('login.stat_sections', { defaultValue: 'sections' }) },
-          ].map((s) => (
-            <div key={s.label} className="text-center">
-              <div className="text-[22px] font-semibold text-content-primary tracking-tight">{s.value}</div>
-              <div className="text-[11px] text-content-tertiary mt-0.5">{s.label}</div>
-            </div>
-          ))}
+        {/* Checkable capabilities - no unverified counts. */}
+        <div className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-2 text-xs text-content-secondary animate-stagger-in" style={{ animationDelay: '180ms' }}>
+          <span>{t('nav.boq', { defaultValue: 'Bill of Quantities' })}</span>
+          <span aria-hidden className="text-content-quaternary">·</span>
+          <span>{String(SUPPORTED_LANGUAGES.length)} {t('login.stat_langs', { defaultValue: 'languages' })}</span>
+          <span aria-hidden className="text-content-quaternary">·</span>
+          <span>{t('nav.schedule', { defaultValue: '4D Schedule' })}</span>
+          <span aria-hidden className="text-content-quaternary">·</span>
+          <span>{t('about.cap.costmodel', { defaultValue: '5D Cost Model' })}</span>
+          <span aria-hidden className="text-content-quaternary">·</span>
+          <span>{t('about.cap.tendering', { defaultValue: 'Tendering & Bids' })}</span>
         </div>
 
         {/* Divider */}
-        <div className="mt-5 mb-4 h-px bg-gradient-to-r from-black/[0.06] via-black/[0.1] dark:from-white/10 dark:via-white/[0.14] to-transparent animate-stagger-in" style={{ animationDelay: '220ms' }} />
+        <div className="my-4 h-px bg-border-light animate-stagger-in" style={{ animationDelay: '220ms' }} />
 
         {/* Module honeycomb - proper pointy-top hex grid where every cell
             shares an edge with its neighbours. Layout is intentionally
@@ -645,34 +541,18 @@ export function LoginPage() {
                 }}
               >
                 <div
-                  className={`relative flex flex-col items-center justify-center w-[88px] animate-fade-in transition-transform duration-300 hover:scale-[1.05] ${
-                    isAccent ? 'text-white' : 'text-slate-900'
+                  className={`relative flex flex-col items-center justify-center w-24 aspect-square ${
+                    isAccent
+                      ? 'bg-oe-blue text-white'
+                      : 'border border-border-light bg-surface-primary text-content-primary'
                   }`}
                   style={{
-                    animationDelay: `${280 + idx * 35}ms`,
-                    animationFillMode: 'both',
-                    // The height comes from the width, so the cell cannot
-                    // drift off the ratio the clip path is regular in.
                     aspectRatio: HEX_PORTRAIT_ASPECT,
                     clipPath: HEX_PORTRAIT_CLIP,
-                    background: isAccent
-                      ? 'linear-gradient(135deg, #0ea5e9 0%, #0284c7 65%, #0369a1 100%)'
-                      : 'linear-gradient(180deg, rgba(255,255,255,0.97), rgba(244,250,255,0.82))',
-                    boxShadow: isAccent
-                      ? '0 18px 32px -12px rgba(14,165,233,0.55), inset 0 1px 0 rgba(255,255,255,0.35)'
-                      : '0 8px 18px -8px rgba(15,23,42,0.10), inset 0 1px 0 rgba(255,255,255,0.9), inset 0 0 0 1px rgba(14,165,233,0.06)',
                   }}
                 >
-                  <Icon
-                    size={isAccent ? 22 : 18}
-                    strokeWidth={isAccent ? 2 : 1.65}
-                    className={isAccent ? '' : 'text-oe-blue'}
-                  />
-                  <span
-                    className={`mt-[5px] text-[10px] font-semibold tracking-[-0.01em] ${
-                      isAccent ? 'text-white/95' : 'text-slate-800'
-                    }`}
-                  >
+                  <Icon size={18} strokeWidth={1.5} />
+                  <span className={`mt-1 text-xs font-medium ${isAccent ? 'text-white' : 'text-content-secondary'}`}>
                     {cell.label}
                   </span>
                 </div>
@@ -693,14 +573,14 @@ export function LoginPage() {
             const Icon = feat.icon;
             return (
               <div key={feat.title} className="relative pl-4 max-w-[210px]">
-                <span aria-hidden className="absolute left-0 top-1 h-[14px] w-[2px] rounded-full bg-gradient-to-b from-oe-blue to-sky-500/60" />
+                <span aria-hidden className="absolute left-0 top-1 h-4 w-px bg-oe-blue" />
                 <div className="flex items-center gap-1.5">
-                  <Icon size={13} strokeWidth={1.8} className="text-oe-blue/85" />
-                  <span className="text-[12.5px] font-semibold tracking-[-0.01em] text-content-primary leading-tight">
+                  <Icon size={16} strokeWidth={1.5} className="text-oe-blue" />
+                  <span className="text-xs font-medium text-content-primary leading-tight">
                     {feat.title}
                   </span>
                 </div>
-                <p className="mt-1 text-[11.5px] leading-[1.55] text-content-tertiary tracking-[-0.005em] whitespace-pre-line">
+                <p className="mt-1 text-xs leading-relaxed text-content-tertiary whitespace-pre-line">
                   {feat.desc}
                 </p>
               </div>
@@ -710,9 +590,11 @@ export function LoginPage() {
 
         {/* Footer */}
         <div className="mt-4 space-y-1 animate-stagger-in" style={{ animationDelay: '380ms' }}>
-          <div className="flex items-center gap-2 text-[11px] text-content-quaternary/60">
-            <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor" className="opacity-40"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
-            <a href="/api/source" target="_blank" rel="noopener noreferrer" className="hover:text-content-tertiary transition-colors">AGPL-3.0</a>
+          <div className="flex items-center gap-2 text-xs text-content-tertiary">
+            <Github size={16} strokeWidth={1.5} aria-hidden />
+            <a href="/api/source" target="_blank" rel="noopener noreferrer" className="transition-colors hover:text-content-secondary">AGPL-3.0</a>
+            <span className="opacity-30">&middot;</span>
+            <a href="https://vastukar.com" target="_blank" rel="noopener noreferrer" className="hover:text-content-tertiary transition-colors">vastukar.com</a>
           </div>
         </div>
       </div>
@@ -721,19 +603,8 @@ export function LoginPage() {
 
       {/* ── Left column on lg+: logo + form (primary action). ── */}
       <div className="oe-auth-form-col relative flex items-center justify-center p-4 sm:p-6 z-10 lg:order-1 overflow-hidden">
-        {/* Form column backdrop - clean near-white field on lg+ so the
-            glass card reads against a calm canvas. The decorative show
-            (orbs / mesh) lives on the marketing column on the right. */}
-        <div className="absolute inset-0 pointer-events-none overflow-hidden hidden lg:block" aria-hidden>
-          {/* Dark mode: use #070912 (DARKER than #0f1117 surface-primary so
-              form inputs lift visibly off the column backdrop). Previously
-              #0b0d12 — too close to input bg, made inputs invisible. */}
-          <div className="absolute inset-0 bg-white dark:bg-[#070912]" />
-          <div className="absolute inset-0 bg-gradient-to-l from-white/0 via-white/60 to-white dark:from-[#070912]/0 dark:via-[#070912]/60 dark:to-[#070912]" />
-          {/* Tiny far-corner sky tint just to soften the edge - the glass
-              still has something to lift off, but the field reads white. */}
-          <div className="absolute -top-24 -left-24 w-[420px] h-[420px] rounded-full bg-sky-100/55 dark:bg-sky-500/10 blur-[110px]" />
-        </div>
+        {/* Flat field so the form card reads without a glow or gradient. */}
+        <div className="absolute inset-0 hidden lg:block bg-white dark:bg-[#070912]" aria-hidden />
         <div className="w-full max-w-[380px] relative z-10">
           {/* Logo - tenant white-label (logo / company name) when set via
               the in-app sidebar editor; otherwise the default brand. The
@@ -756,8 +627,8 @@ export function LoginPage() {
                     />
                   ) : (
                     <span
-                      className="block max-w-full truncate text-center text-3xl font-extrabold text-content-primary leading-none"
-                      style={{ fontFamily: "'Plus Jakarta Sans', system-ui, sans-serif", letterSpacing: '-0.02em' }}
+                      className="block max-w-full truncate text-center text-2xl font-medium text-content-primary leading-tight"
+                      style={{ fontFamily: "'Plus Jakarta Sans', system-ui, sans-serif" }}
                       title={brandName}
                     >
                       {brandName}
@@ -766,19 +637,19 @@ export function LoginPage() {
                   {/* "by Vastukar" - subordinate attribution that
                       stays visible (AGPL-3.0). Mirrors CustomBranding.tsx. */}
                   <span
-                    className="mt-2 block text-[11px] leading-none text-content-tertiary"
-                    style={{ fontFamily: "'Plus Jakarta Sans', system-ui, sans-serif", letterSpacing: '0.02em' }}
+                    className="mt-2 block text-xs text-content-tertiary"
+                    style={{ fontFamily: "'Plus Jakarta Sans', system-ui, sans-serif" }}
                   >
                     by{' '}
-                    <span className="font-semibold tracking-tight">Vastukar</span>
+                    <span className="font-medium">Vastukar</span>
                   </span>
                 </div>
               ) : (
                 <div className="flex items-center gap-2.5">
-                  <Logo size="md" animate />
+                  <Logo size="md" />
                   <span
                     className="text-2xl font-medium text-content-primary whitespace-nowrap"
-                    style={{ fontFamily: "'Plus Jakarta Sans', system-ui, sans-serif", letterSpacing: '-0.02em' }}
+                    style={{ fontFamily: "'Plus Jakarta Sans', system-ui, sans-serif" }}
                   >
                     Vastukar
                   </span>
@@ -791,11 +662,11 @@ export function LoginPage() {
               <button
                 type="button"
                 onClick={() => setBrandOpen(true)}
-                className="inline-flex h-7 w-7 items-center justify-center rounded-lg border border-border-light bg-surface-elevated/60 text-content-tertiary backdrop-blur-sm transition-colors hover:border-oe-blue/40 hover:bg-oe-blue/5 hover:text-oe-blue focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-oe-blue/40"
+                className="inline-flex h-8 w-8 items-center justify-center rounded-lg border border-border-light bg-surface-elevated text-content-tertiary transition-colors hover:bg-surface-secondary hover:text-content-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-oe-blue/40"
                 aria-label={t('login.brand_edit', { defaultValue: 'Customize logo' })}
                 title={t('login.brand_edit', { defaultValue: 'Customize logo' })}
               >
-                <Pencil size={13} strokeWidth={2.25} />
+                <Pencil size={16} strokeWidth={1.5} />
               </button>
               )}
             </div>
@@ -804,33 +675,8 @@ export function LoginPage() {
             </p>
           </div>
 
-
-          {/* Form - premium multi-layer glass.
-              login-glass-pro adds layered borders, a coloured ambient drop
-              shadow, an inset highlight, and a soft-light overlay tint via
-              ::after. The DOM-level top sheen below adds the rim-light line. */}
-          <div
-            className="login-glass-pro relative rounded-2xl px-6 py-5 animate-form-scale-in"
-            style={{ animationDelay: '150ms' }}
-          >
-            {/* Top-edge sheen - bright highlight along the rim */}
-            <div
-              aria-hidden
-              className="pointer-events-none absolute inset-x-6 top-0 h-px rounded-t-2xl"
-              style={{
-                background:
-                  'linear-gradient(90deg, transparent, rgba(255,255,255,0.95), transparent)',
-              }}
-            />
-            {/* Inner soft glow gradient on the top-left corner */}
-            <div
-              aria-hidden
-              className="pointer-events-none absolute top-0 left-0 w-32 h-32 rounded-tl-2xl opacity-60"
-              style={{
-                background:
-                  'radial-gradient(circle at 0% 0%, rgba(255,255,255,0.5), transparent 70%)',
-              }}
-            />
+          {/* Form card - flat surface, hairline border, no glass or glow. */}
+          <div className="relative rounded-2xl border border-border-light bg-surface-elevated px-6 py-5">
             {/* Visually hidden h1 for screen readers + a11y tools - visible text uses h2 below */}
             <h1 className="sr-only">{t('auth.login', 'Sign in')}</h1>
             <div className="animate-stagger-in" style={{ animationDelay: '200ms' }}>
@@ -840,7 +686,7 @@ export function LoginPage() {
 
             <form onSubmit={handleSubmit} className="space-y-3" aria-label={t('auth.login', 'Sign in')}>
               <div className="animate-stagger-in" style={{ animationDelay: '280ms' }}>
-                <Input id="login-email" name="email" label={t('auth.email', 'Email')} type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="you@company.com" autoComplete="email" required aria-required="true" autoFocus icon={<Mail size={15} />} />
+                <Input id="login-email" name="email" label={t('auth.email', 'Email')} type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="you@company.com" autoComplete="email" required aria-required="true" autoFocus icon={<Mail size={16} strokeWidth={1.5} />} />
               </div>
 
               <div className="flex flex-col gap-1 animate-stagger-in" style={{ animationDelay: '340ms' }}>
@@ -849,10 +695,10 @@ export function LoginPage() {
                   <Link to="/forgot-password" className="text-2xs font-medium text-oe-blue hover:text-oe-blue-hover transition-colors">{t('auth.forgot_password', 'Forgot password?')}</Link>
                 </div>
                 <div className="relative">
-                  <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3 text-content-tertiary"><Lock size={15} /></div>
-                  <input id="login-password" name="password" type={showPassword ? 'text' : 'password'} value={password} onChange={(e) => setPassword(e.target.value)} placeholder={t('auth.password_placeholder', 'Enter your password')} autoComplete="current-password" required aria-required="true" minLength={8} className="h-9 w-full rounded-lg border border-border bg-surface-primary pl-9 pr-9 text-sm text-content-primary placeholder:text-content-tertiary transition-all duration-fast ease-oe focus:outline-none focus:ring-2 focus:ring-oe-blue focus:border-transparent hover:border-content-tertiary" />
+                  <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3 text-content-tertiary"><Lock size={16} strokeWidth={1.5} /></div>
+                  <input id="login-password" name="password" type={showPassword ? 'text' : 'password'} value={password} onChange={(e) => setPassword(e.target.value)} placeholder={t('auth.password_placeholder', 'Enter your password')} autoComplete="current-password" required aria-required="true" minLength={8} className="h-9 w-full rounded-lg border border-border bg-surface-primary pl-9 pr-9 text-sm text-content-primary placeholder:text-content-tertiary transition-colors duration-fast ease-oe focus:outline-none focus:ring-2 focus:ring-oe-blue focus:border-transparent hover:border-content-tertiary" />
                   <button type="button" onClick={() => setShowPassword(!showPassword)} aria-label={showPassword ? t('auth.hide_password', 'Hide password') : t('auth.show_password', 'Show password')} className="absolute inset-y-0 right-0 flex items-center pr-3 text-content-tertiary hover:text-content-secondary transition-colors" tabIndex={-1}>
-                    {showPassword ? <EyeOff size={15} /> : <Eye size={15} />}
+                    {showPassword ? <EyeOff size={16} strokeWidth={1.5} /> : <Eye size={16} strokeWidth={1.5} />}
                   </button>
                 </div>
               </div>
@@ -874,7 +720,7 @@ export function LoginPage() {
               )}
 
               <div className="animate-stagger-in" style={{ animationDelay: '400ms' }}>
-                <Button type="submit" variant="primary" size="lg" loading={loading} className="w-full btn-shimmer">{t('auth.login', 'Sign in')}</Button>
+                <Button type="submit" variant="primary" size="lg" loading={loading} className="w-full">{t('auth.login', 'Sign in')}</Button>
               </div>
             </form>
 
@@ -942,7 +788,7 @@ export function LoginPage() {
                   type="button"
                   onClick={() => setDemoOpen(!demoOpen)}
                   aria-expanded={demoOpen}
-                  className="flex flex-1 items-center justify-center gap-2 px-5 py-2.5 text-sm font-semibold text-oe-blue hover:bg-oe-blue/[0.04] transition-all"
+                  className="flex flex-1 items-center justify-center gap-2 px-5 py-2.5 text-sm font-semibold text-oe-blue hover:bg-oe-blue/[0.04] transition-colors"
                 >
                   <Zap size={14} className="text-oe-blue" />
                   <span>{t('auth.try_demo', { defaultValue: 'Try demo (no signup)' })}</span>
@@ -958,9 +804,9 @@ export function LoginPage() {
                       type="button"
                       onClick={() => handleDemoLogin(acct.email)}
                       disabled={demoLoading !== null}
-                      className="flex w-full items-center gap-3 rounded-xl border border-border-light/50 dark:border-white/10 bg-surface-secondary/50 dark:bg-white/[0.06] px-3.5 py-2.5 text-left transition-all hover:border-oe-blue/40 hover:bg-oe-blue/[0.05] dark:hover:bg-oe-blue/[0.14] hover:shadow-sm disabled:opacity-50 group"
+                      className="flex w-full items-center gap-3 rounded-xl border border-border-light/50 dark:border-white/10 bg-surface-secondary/50 dark:bg-white/[0.06] px-3.5 py-2.5 text-left transition-colors hover:border-oe-blue/40 hover:bg-oe-blue/[0.05] dark:hover:bg-oe-blue/[0.14] hover:shadow-sm disabled:opacity-50 group"
                     >
-                      <div className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-full ${acct.color} text-white text-sm font-bold shadow-sm`}>
+                      <div className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-full ${acct.color} text-white text-sm font-medium shadow-sm`}>
                         {demoLoading === acct.email ? (
                           <svg className="animate-spin h-4 w-4" viewBox="0 0 24 24"><circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" /><path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" /></svg>
                         ) : (
@@ -1006,7 +852,6 @@ export function LoginPage() {
           )}
 
           <ClassicAuthFooter />
-
         </div>
       </div>
 
@@ -1029,7 +874,7 @@ export function LoginPage() {
             {/* Header */}
             <div className="px-6 pt-5 pb-4 border-b border-border-light clear-both">
               <LogoWithText size="sm" className="mb-3" />
-              <h3 className="text-base font-bold text-content-primary mb-2">
+              <h3 className="text-base font-medium text-content-primary mb-2">
                 {t('about.title', 'Professional construction cost estimation - free and open source')}
               </h3>
               <p className="text-[13px] text-content-secondary leading-relaxed">
@@ -1125,7 +970,7 @@ export function LoginPage() {
                   { value: '100%', label: t('about.stat.free', 'Free & open source') },
                 ].map((stat) => (
                   <div key={stat.label} className="rounded-lg bg-surface-secondary/50 py-2.5">
-                    <div className="text-lg font-bold text-oe-blue">{stat.value}</div>
+                    <div className="text-lg font-medium text-oe-blue">{stat.value}</div>
                     <div className="text-2xs text-content-tertiary">{stat.label}</div>
                   </div>
                 ))}

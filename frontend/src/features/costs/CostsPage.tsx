@@ -438,7 +438,7 @@ function RegionTabBar({
           onClick={() => onChangeRegion('')}
           className={`
             group relative flex items-center gap-2 shrink-0 rounded-t-lg px-4 py-2.5
-            border-b-2 transition-all duration-fast ease-oe
+            border-b-2 transition duration-fast ease-oe
             ${
               activeRegion === ''
                 ? 'border-oe-blue bg-oe-blue-subtle/20 text-content-primary'
@@ -471,7 +471,7 @@ function RegionTabBar({
               onClick={() => onChangeRegion(regionId)}
               className={`
                 group relative flex items-center gap-2 shrink-0 rounded-t-lg px-3.5 py-2.5
-                border-b-2 transition-all duration-fast ease-oe
+                border-b-2 transition duration-fast ease-oe
                 ${
                   isActive
                     ? 'border-oe-blue bg-oe-blue-subtle/20 text-content-primary'
@@ -500,7 +500,7 @@ function RegionTabBar({
         {/* Add database button */}
         <button
           onClick={() => navigate('/costs/import')}
-          className="flex items-center gap-1.5 shrink-0 rounded-t-lg px-3 py-2.5 border-b-2 border-transparent text-content-tertiary hover:text-oe-blue-text hover:bg-oe-blue-subtle/10 transition-all duration-fast ease-oe"
+          className="flex items-center gap-1.5 shrink-0 rounded-t-lg px-3 py-2.5 border-b-2 border-transparent text-content-tertiary hover:text-oe-blue-text hover:bg-oe-blue-subtle/10 transition-colors duration-fast ease-oe"
           title={t('costs.import_database', { defaultValue: 'Import database' })}
         >
           <Plus size={14} />
@@ -1455,7 +1455,7 @@ export function CostsPage() {
                       : t('costs.search_placeholder', 'Search by description or code...')
                 }
                 aria-label={t('costs.search_placeholder', { defaultValue: 'Search cost items' })}
-                className={`h-10 w-full rounded-lg border bg-surface-primary ps-10 ${query ? 'pe-8' : 'pe-3'} text-sm text-content-primary placeholder:text-content-tertiary transition-all duration-fast ease-oe focus:outline-none focus:ring-2 focus:border-transparent hover:border-content-tertiary ${
+                className={`h-10 w-full rounded-lg border bg-surface-primary ps-10 ${query ? 'pe-8' : 'pe-3'} text-sm text-content-primary placeholder:text-content-tertiary transition-colors duration-fast ease-oe focus:outline-none focus:ring-2 focus:border-transparent hover:border-content-tertiary ${
                   semanticSearch ? 'border-purple-400 focus:ring-purple-400/30' : 'border-border focus:ring-oe-blue'
                 }`}
               />
@@ -1472,7 +1472,7 @@ export function CostsPage() {
             <button
               onClick={() => setSemanticSearch(!semanticSearch)}
               title={semanticSearch ? t('costs.switch_to_text_search', { defaultValue: 'Switch to text search' }) : t('costs.switch_to_ai_search', { defaultValue: 'Switch to AI semantic search' })}
-              className={`flex h-10 shrink-0 items-center gap-1.5 rounded-lg border px-2.5 transition-all text-xs font-medium ${
+              className={`flex h-10 shrink-0 items-center gap-1.5 rounded-lg border px-2.5 transition text-xs font-medium ${
                 semanticSearch
                   ? 'border-purple-400 bg-purple-500/10 text-purple-500'
                   : 'border-border bg-surface-primary text-content-tertiary hover:text-purple-500 hover:border-purple-300'
@@ -1511,7 +1511,7 @@ export function CostsPage() {
             <select
               value={unit}
               onChange={(e) => handleUnitChange(e.target.value)}
-              className="h-10 w-full appearance-none rounded-lg border border-border bg-surface-primary ps-3 pe-9 text-sm text-content-primary transition-all duration-fast ease-oe focus:outline-none focus:ring-2 focus:ring-oe-blue focus:border-transparent hover:border-content-tertiary sm:w-32"
+              className="h-10 w-full appearance-none rounded-lg border border-border bg-surface-primary ps-3 pe-9 text-sm text-content-primary transition-colors duration-fast ease-oe focus:outline-none focus:ring-2 focus:ring-oe-blue focus:border-transparent hover:border-content-tertiary sm:w-32"
             >
               <option value="">{t('costs.all_units', 'All units')}</option>
               {unitOptions.map((u) => (
@@ -1530,7 +1530,7 @@ export function CostsPage() {
             <select
               value={source}
               onChange={(e) => handleSourceChange(e.target.value)}
-              className="h-10 w-full appearance-none rounded-lg border border-border bg-surface-primary ps-3 pe-9 text-sm text-content-primary transition-all duration-fast ease-oe focus:outline-none focus:ring-2 focus:ring-oe-blue focus:border-transparent hover:border-content-tertiary sm:w-36"
+              className="h-10 w-full appearance-none rounded-lg border border-border bg-surface-primary ps-3 pe-9 text-sm text-content-primary transition-colors duration-fast ease-oe focus:outline-none focus:ring-2 focus:ring-oe-blue focus:border-transparent hover:border-content-tertiary sm:w-36"
             >
               <option value="">{t('costs.all_sources', 'All sources')}</option>
               {SOURCES.filter(Boolean).map((s) => (
@@ -1550,7 +1550,7 @@ export function CostsPage() {
               <select
                 value={category}
                 onChange={(e) => handleCategoryChange(e.target.value)}
-                className="h-10 w-full appearance-none rounded-lg border border-border bg-surface-primary ps-3 pe-9 text-sm text-content-primary transition-all duration-fast ease-oe focus:outline-none focus:ring-2 focus:ring-oe-blue focus:border-transparent hover:border-content-tertiary sm:w-48"
+                className="h-10 w-full appearance-none rounded-lg border border-border bg-surface-primary ps-3 pe-9 text-sm text-content-primary transition-colors duration-fast ease-oe focus:outline-none focus:ring-2 focus:ring-oe-blue focus:border-transparent hover:border-content-tertiary sm:w-48"
               >
                 <option value="">
                   {t('costs.all_categories', 'All categories')}
@@ -3671,7 +3671,7 @@ function CostItemRow({
             <button
               onClick={(e) => { e.stopPropagation(); onSelect(); }}
               title={t('costs.add_to_boq', 'Select for BOQ')}
-              className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-md transition-all ${
+              className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-md transition ${
                 isSelected
                   ? 'bg-oe-blue text-white'
                   : 'text-content-tertiary hover:bg-oe-blue-subtle hover:text-oe-blue-text'
@@ -3682,7 +3682,7 @@ function CostItemRow({
             <button
               onClick={(e) => { e.stopPropagation(); onCopy(); }}
               title={t('costs.copy_rate', 'Copy rate')}
-              className="flex h-7 w-7 shrink-0 items-center justify-center rounded-md text-content-tertiary transition-all hover:bg-surface-tertiary hover:text-content-primary"
+              className="flex h-7 w-7 shrink-0 items-center justify-center rounded-md text-content-tertiary transition-colors hover:bg-surface-tertiary hover:text-content-primary"
             >
               {copiedId === item.id ? (
                 <Check size={13} className="text-semantic-success" />
@@ -3694,7 +3694,7 @@ function CostItemRow({
             <button
               onClick={(e) => { e.stopPropagation(); onBenchmark(); }}
               title={t('costs.benchmark_rate', { defaultValue: 'Benchmark this rate with the AI Cost Advisor' })}
-              className="flex h-7 w-7 shrink-0 items-center justify-center rounded-md text-content-tertiary transition-all hover:bg-violet-500/10 hover:text-violet-500"
+              className="flex h-7 w-7 shrink-0 items-center justify-center rounded-md text-content-tertiary transition-colors hover:bg-violet-500/10 hover:text-violet-500"
             >
               <Sparkles size={13} />
             </button>
@@ -3763,7 +3763,7 @@ function CostItemRow({
                 <div className="rounded-lg bg-surface-primary border border-border-light p-3">
                   <div className="flex items-center gap-1.5 mb-1">
                     <HardHat size={12} className="text-amber-500" />
-                    <span className="text-2xs font-medium text-content-secondary uppercase tracking-wider">
+                    <span className="text-2xs font-medium text-content-secondary">
                       {t('costs.component_labor', { defaultValue: 'Labor' })}
                     </span>
                   </div>
@@ -3784,7 +3784,7 @@ function CostItemRow({
                 <div className="rounded-lg bg-surface-primary border border-border-light p-3">
                   <div className="flex items-center gap-1.5 mb-1">
                     <Hammer size={12} className="text-blue-500" />
-                    <span className="text-2xs font-medium text-content-secondary uppercase tracking-wider">
+                    <span className="text-2xs font-medium text-content-secondary">
                       {t('costs.component_equipment', { defaultValue: 'Equipment' })}
                     </span>
                   </div>
@@ -3800,7 +3800,7 @@ function CostItemRow({
                 <div className="rounded-lg bg-surface-primary border border-border-light p-3">
                   <div className="flex items-center gap-1.5 mb-1">
                     <Package size={12} className="text-green-600" />
-                    <span className="text-2xs font-medium text-content-secondary uppercase tracking-wider">
+                    <span className="text-2xs font-medium text-content-secondary">
                       {t('costs.component_material', { defaultValue: 'Materials' })}
                     </span>
                   </div>
@@ -3815,7 +3815,7 @@ function CostItemRow({
                 </div>
                 <div className="rounded-lg bg-surface-primary border border-border-light p-3">
                   <div className="flex items-center gap-1.5 mb-1">
-                    <span className="text-2xs font-medium text-content-secondary uppercase tracking-wider">
+                    <span className="text-2xs font-medium text-content-secondary">
                       {t('costs.total', { defaultValue: 'Total' })}
                     </span>
                   </div>
@@ -4135,7 +4135,7 @@ function ComparePanel({
                     <td key={item.id} className="py-3 px-3">
                       <div className="h-2 w-full rounded-full bg-surface-tertiary overflow-hidden">
                         <div
-                          className="h-full rounded-full bg-oe-blue transition-all"
+                          className="h-full rounded-full bg-oe-blue transition"
                           style={{ width: `${Math.max(4, pct)}%` }}
                         />
                       </div>

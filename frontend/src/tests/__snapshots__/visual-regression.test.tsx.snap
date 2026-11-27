@@ -690,9 +690,9 @@ exports[`Visual Regression - DashboardPage > renders loading/skeleton state 1`] 
       class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between animate-card-in"
     >
       <h1
-        class="text-2xl font-semibold tracking-tight gradient-text pl-2"
+        class="pl-2 text-2xl font-medium tracking-normal text-content-primary"
       >
-        Good morning, Test
+        Dashboard
       </h1>
       <div
         class="flex items-center gap-2 flex-wrap animate-stagger-in"
@@ -3655,38 +3655,19 @@ exports[`Visual Regression - Input > input with icon 1`] = `
 exports[`Visual Regression - Logo > Logo - large with animation 1`] = `
 <div>
   <div
-    class="h-10 w-10 relative shrink-0"
-    style="animation: oeLogoFloat 3s ease-in-out 1.2s infinite, oeLogoGlow 3s ease-in-out 1.2s infinite;"
+    class="h-10 w-10 relative shrink-0 animate-fade-in"
   >
     <svg
+      aria-hidden="true"
       class="w-full h-full"
       fill="none"
       viewBox="0 0 512 512"
       xmlns="http://www.w3.org/2000/svg"
     >
-      <defs>
-        <lineargradient
-          id="oe-lg-lg-a"
-          x1="0%"
-          x2="100%"
-          y1="0%"
-          y2="100%"
-        >
-          <stop
-            offset="0%"
-            stop-color="#0066ff"
-          />
-          <stop
-            offset="100%"
-            stop-color="#5856d6"
-          />
-        </lineargradient>
-      </defs>
       <rect
-        fill="url(#oe-lg-lg-a)"
+        fill="var(--oe-blue)"
         height="448"
         rx="96"
-        style="animation: oeBgScale 450ms cubic-bezier(0.34,1.56,0.64,1) both;"
         width="448"
         x="32"
         y="32"
@@ -3694,9 +3675,8 @@ exports[`Visual Regression - Logo > Logo - large with animation 1`] = `
       <rect
         fill="#fff"
         height="114"
-        opacity=".85"
-        rx="6"
-        style="transform-origin: bottom; animation: oeBarGrow 500ms cubic-bezier(0.34,1.56,0.64,1) both; animation-delay: 120ms;"
+        opacity=".88"
+        rx="8"
         width="42"
         x="102"
         y="296"
@@ -3704,9 +3684,7 @@ exports[`Visual Regression - Logo > Logo - large with animation 1`] = `
       <rect
         fill="#fff"
         height="177"
-        opacity=".95"
-        rx="6"
-        style="transform-origin: bottom; animation: oeBarGrow 500ms cubic-bezier(0.34,1.56,0.64,1) both; animation-delay: 200ms;"
+        rx="8"
         width="42"
         x="162"
         y="233"
@@ -3714,9 +3692,8 @@ exports[`Visual Regression - Logo > Logo - large with animation 1`] = `
       <rect
         fill="#fff"
         height="234"
-        opacity=".85"
-        rx="6"
-        style="transform-origin: bottom; animation: oeBarGrow 500ms cubic-bezier(0.34,1.56,0.64,1) both; animation-delay: 280ms;"
+        opacity=".88"
+        rx="8"
         width="42"
         x="222"
         y="176"
@@ -3724,82 +3701,66 @@ exports[`Visual Regression - Logo > Logo - large with animation 1`] = `
       <rect
         fill="#fff"
         height="260"
-        opacity=".9"
         rx="8"
-        style="animation: oeBuildingSlide 600ms cubic-bezier(0.22,1,0.36,1) both; animation-delay: 300ms;"
         width="128"
         x="282"
         y="150"
       />
       <g
-        style="animation: oeBuildingSlide 600ms cubic-bezier(0.22,1,0.36,1) both; animation-delay: 300ms;"
+        fill="var(--oe-blue)"
       >
         <rect
-          fill="url(#oe-lg-lg-a)"
           height="28"
-          opacity=".5"
+          opacity=".45"
           rx="4"
-          style="animation: oeWindowFade 400ms ease both; animation-delay: 550ms;"
           width="26"
           x="304"
           y="182"
         />
         <rect
-          fill="url(#oe-lg-lg-a)"
           height="28"
-          opacity=".5"
+          opacity=".45"
           rx="4"
-          style="animation: oeWindowFade 400ms ease both; animation-delay: 600ms;"
           width="26"
           x="362"
           y="182"
         />
         <rect
-          fill="url(#oe-lg-lg-a)"
           height="28"
-          opacity=".5"
+          opacity=".45"
           rx="4"
-          style="animation: oeWindowFade 400ms ease both; animation-delay: 650ms;"
           width="26"
           x="304"
           y="226"
         />
         <rect
-          fill="url(#oe-lg-lg-a)"
           height="28"
-          opacity=".5"
+          opacity=".45"
           rx="4"
-          style="animation: oeWindowFade 400ms ease both; animation-delay: 700ms;"
           width="26"
           x="362"
           y="226"
         />
         <rect
-          fill="url(#oe-lg-lg-a)"
           height="28"
-          opacity=".45"
+          opacity=".38"
           rx="4"
-          style="animation: oeWindowFade 400ms ease both; animation-delay: 750ms;"
           width="26"
           x="304"
           y="272"
         />
         <rect
-          fill="url(#oe-lg-lg-a)"
           height="28"
-          opacity=".45"
+          opacity=".38"
           rx="4"
-          style="animation: oeWindowFade 400ms ease both; animation-delay: 800ms;"
           width="26"
           x="362"
           y="272"
         />
         <rect
-          fill="url(#oe-lg-lg-a)"
           height="82"
           opacity=".55"
           rx="4"
-          style="animation: oeWindowFade 400ms ease both; animation-delay: 850ms;"
           width="34"
           x="329"
           y="328"
@@ -3816,31 +3777,14 @@ exports[`Visual Regression - Logo > Logo - small 1`] = `
     class="h-6 w-6 relative shrink-0"
   >
     <svg
+      aria-hidden="true"
       class="w-full h-full"
       fill="none"
       viewBox="0 0 512 512"
       xmlns="http://www.w3.org/2000/svg"
     >
-      <defs>
-        <lineargradient
-          id="oe-lg-sm-s"
-          x1="0%"
-          x2="100%"
-          y1="0%"
-          y2="100%"
-        >
-          <stop
-            offset="0%"
-            stop-color="#0066ff"
-          />
-          <stop
-            offset="100%"
-            stop-color="#5856d6"
-          />
-        </lineargradient>
-      </defs>
       <rect
-        fill="url(#oe-lg-sm-s)"
+        fill="var(--oe-blue)"
         height="448"
         rx="96"
         width="448"
@@ -3850,8 +3794,8 @@ exports[`Visual Regression - Logo > Logo - small 1`] = `
       <rect
         fill="#fff"
         height="114"
-        opacity=".85"
-        rx="6"
+        opacity=".88"
+        rx="8"
         width="42"
         x="102"
         y="296"
@@ -3859,8 +3803,7 @@ exports[`Visual Regression - Logo > Logo - small 1`] = `
       <rect
         fill="#fff"
         height="177"
-        opacity=".95"
-        rx="6"
+        rx="8"
         width="42"
         x="162"
         y="233"
@@ -3868,8 +3811,8 @@ exports[`Visual Regression - Logo > Logo - small 1`] = `
       <rect
         fill="#fff"
         height="234"
-        opacity=".85"
-        rx="6"
+        opacity=".88"
+        rx="8"
         width="42"
         x="222"
         y="176"
@@ -3877,7 +3820,6 @@ exports[`Visual Regression - Logo > Logo - small 1`] = `
       <rect
         fill="#fff"
         height="260"
-        opacity=".9"
         rx="8"
         width="128"
         x="282"
@@ -3897,31 +3839,14 @@ exports[`Visual Regression - Logo > LogoWithText - default 1`] = `
       class="h-7 w-7 relative shrink-0"
     >
       <svg
+        aria-hidden="true"
         class="w-full h-full"
         fill="none"
         viewBox="0 0 512 512"
         xmlns="http://www.w3.org/2000/svg"
       >
-        <defs>
-          <lineargradient
-            id="oe-lg-md-s"
-            x1="0%"
-            x2="100%"
-            y1="0%"
-            y2="100%"
-          >
-            <stop
-              offset="0%"
-              stop-color="#0066ff"
-            />
-            <stop
-              offset="100%"
-              stop-color="#5856d6"
-            />
-          </lineargradient>
-        </defs>
         <rect
-          fill="url(#oe-lg-md-s)"
+          fill="var(--oe-blue)"
           height="448"
           rx="96"
           width="448"
@@ -3931,8 +3856,8 @@ exports[`Visual Regression - Logo > LogoWithText - default 1`] = `
         <rect
           fill="#fff"
           height="114"
-          opacity=".85"
-          rx="6"
+          opacity=".88"
+          rx="8"
           width="42"
           x="102"
           y="296"
@@ -3940,8 +3865,7 @@ exports[`Visual Regression - Logo > LogoWithText - default 1`] = `
         <rect
           fill="#fff"
           height="177"
-          opacity=".95"
-          rx="6"
+          rx="8"
           width="42"
           x="162"
           y="233"
@@ -3949,8 +3873,8 @@ exports[`Visual Regression - Logo > LogoWithText - default 1`] = `
         <rect
           fill="#fff"
           height="234"
-          opacity=".85"
-          rx="6"
+          opacity=".88"
+          rx="8"
           width="42"
           x="222"
           y="176"
@@ -3958,69 +3882,63 @@ exports[`Visual Regression - Logo > LogoWithText - default 1`] = `
         <rect
           fill="#fff"
           height="260"
-          opacity=".9"
           rx="8"
           width="128"
           x="282"
           y="150"
         />
-        <g>
+        <g
+          fill="var(--oe-blue)"
+        >
           <rect
-            fill="url(#oe-lg-md-s)"
             height="28"
-            opacity=".5"
+            opacity=".45"
             rx="4"
             width="26"
             x="304"
             y="182"
           />
           <rect
-            fill="url(#oe-lg-md-s)"
             height="28"
-            opacity=".5"
+            opacity=".45"
             rx="4"
             width="26"
             x="362"
             y="182"
           />
           <rect
-            fill="url(#oe-lg-md-s)"
             height="28"
-            opacity=".5"
+            opacity=".45"
             rx="4"
             width="26"
             x="304"
             y="226"
           />
           <rect
-            fill="url(#oe-lg-md-s)"
             height="28"
-            opacity=".5"
+            opacity=".45"
             rx="4"
             width="26"
             x="362"
             y="226"
           />
           <rect
-            fill="url(#oe-lg-md-s)"
             height="28"
-            opacity=".45"
+            opacity=".38"
             rx="4"
             width="26"
             x="304"
             y="272"
           />
           <rect
-            fill="url(#oe-lg-md-s)"
             height="28"
-            opacity=".45"
+            opacity=".38"
             rx="4"
             width="26"
             x="362"
             y="272"
           />
           <rect
-            fill="url(#oe-lg-md-s)"
             height="82"
             opacity=".55"
             rx="4"
@@ -4033,7 +3951,6 @@ exports[`Visual Regression - Logo > LogoWithText - default 1`] = `
     </div>
     <span
       class="text-[17px] leading-none font-medium text-content-primary whitespace-nowrap tracking-tight"
-      style="font-family: "Plus Jakarta Sans", system-ui, sans-serif; letter-spacing: -0.02em;"
     >
       Vastukar
     </span>
@@ -4050,31 +3967,14 @@ exports[`Visual Regression - Logo > LogoWithText - without version 1`] = `
       class="h-7 w-7 relative shrink-0"
     >
       <svg
+        aria-hidden="true"
         class="w-full h-full"
         fill="none"
         viewBox="0 0 512 512"
         xmlns="http://www.w3.org/2000/svg"
       >
-        <defs>
-          <lineargradient
-            id="oe-lg-md-s"
-            x1="0%"
-            x2="100%"
-            y1="0%"
-            y2="100%"
-          >
-            <stop
-              offset="0%"
-              stop-color="#0066ff"
-            />
-            <stop
-              offset="100%"
-              stop-color="#5856d6"
-            />
-          </lineargradient>
-        </defs>
         <rect
-          fill="url(#oe-lg-md-s)"
+          fill="var(--oe-blue)"
           height="448"
           rx="96"
           width="448"
@@ -4084,8 +3984,8 @@ exports[`Visual Regression - Logo > LogoWithText - without version 1`] = `
         <rect
           fill="#fff"
           height="114"
-          opacity=".85"
-          rx="6"
+          opacity=".88"
+          rx="8"
           width="42"
           x="102"
           y="296"
@@ -4093,8 +3993,7 @@ exports[`Visual Regression - Logo > LogoWithText - without version 1`] = `
         <rect
           fill="#fff"
           height="177"
-          opacity=".95"
-          rx="6"
+          rx="8"
           width="42"
           x="162"
           y="233"
@@ -4102,8 +4001,8 @@ exports[`Visual Regression - Logo > LogoWithText - without version 1`] = `
         <rect
           fill="#fff"
           height="234"
-          opacity=".85"
-          rx="6"
+          opacity=".88"
+          rx="8"
           width="42"
           x="222"
           y="176"
@@ -4111,69 +4010,63 @@ exports[`Visual Regression - Logo > LogoWithText - without version 1`] = `
         <rect
           fill="#fff"
           height="260"
-          opacity=".9"
           rx="8"
           width="128"
           x="282"
           y="150"
         />
-        <g>
+        <g
+          fill="var(--oe-blue)"
+        >
           <rect
-            fill="url(#oe-lg-md-s)"
             height="28"
-            opacity=".5"
+            opacity=".45"
             rx="4"
             width="26"
             x="304"
             y="182"
           />
           <rect
-            fill="url(#oe-lg-md-s)"
             height="28"
-            opacity=".5"
+            opacity=".45"
             rx="4"
             width="26"
             x="362"
             y="182"
           />
           <rect
-            fill="url(#oe-lg-md-s)"
             height="28"
-            opacity=".5"
+            opacity=".45"
             rx="4"
             width="26"
             x="304"
             y="226"
           />
           <rect
-            fill="url(#oe-lg-md-s)"
             height="28"
-            opacity=".5"
+            opacity=".45"
             rx="4"
             width="26"
             x="362"
             y="226"
           />
           <rect
-            fill="url(#oe-lg-md-s)"
             height="28"
-            opacity=".45"
+            opacity=".38"
             rx="4"
             width="26"
             x="304"
             y="272"
           />
           <rect
-            fill="url(#oe-lg-md-s)"
             height="28"
-            opacity=".45"
+            opacity=".38"
             rx="4"
             width="26"
             x="362"
             y="272"
           />
           <rect
-            fill="url(#oe-lg-md-s)"
             height="82"
             opacity=".55"
             rx="4"
@@ -4186,7 +4079,6 @@ exports[`Visual Regression - Logo > LogoWithText - without version 1`] = `
     </div>
     <span
       class="text-[17px] leading-none font-medium text-content-primary whitespace-nowrap tracking-tight"
-      style="font-family: "Plus Jakarta Sans", system-ui, sans-serif; letter-spacing: -0.02em;"
     >
       Vastukar
     </span>

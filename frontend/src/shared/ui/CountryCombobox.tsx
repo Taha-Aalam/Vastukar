@@ -24,7 +24,7 @@
 
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Check, ChevronDown, Search, X } from 'lucide-react';
+import { Check, ChevronDown, Globe2, Search, X } from 'lucide-react';
 import clsx from 'clsx';
 
 import { CountryFlag } from '@/shared/ui/CountryFlag';
@@ -194,8 +194,8 @@ export function CountryCombobox({
   if (isCustom) {
     triggerInner = (
       <span className="flex items-center gap-2 min-w-0">
-        <span className="inline-flex h-4 w-6 items-center justify-center rounded-[2px] bg-oe-blue/15 text-[10px] font-semibold text-oe-blue">
-          ✱
+        <span className="inline-flex h-5 w-5 items-center justify-center rounded-md bg-oe-blue/10 text-oe-blue">
+          <Globe2 size={14} strokeWidth={1.5} aria-hidden="true" />
         </span>
         <span className="truncate text-content-primary">
           {customValue ||

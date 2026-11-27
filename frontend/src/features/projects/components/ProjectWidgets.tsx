@@ -402,7 +402,7 @@ export function ChangeOrdersPulseWidget({
       ) : (
         <div className="grid grid-cols-2 gap-2">
           <div>
-            <div className="text-2xs uppercase tracking-wider text-content-tertiary mb-1">
+            <div className="text-2xs text-content-tertiary mb-1">
               {t('project.widget.change-orders.pending', { defaultValue: 'Pending' })}
             </div>
             <div className="text-xl font-semibold tabular-nums text-amber-600">
@@ -410,7 +410,7 @@ export function ChangeOrdersPulseWidget({
             </div>
           </div>
           <div>
-            <div className="text-2xs uppercase tracking-wider text-content-tertiary mb-1">
+            <div className="text-2xs text-content-tertiary mb-1">
               {t('project.widget.change-orders.approved_value', {
                 defaultValue: 'Approved value',
               })}
@@ -732,7 +732,7 @@ export function VariationsWidget({
       ) : (
         <div className="grid grid-cols-2 gap-2">
           <div>
-            <div className="text-2xs uppercase tracking-wider text-content-tertiary mb-1">
+            <div className="text-2xs text-content-tertiary mb-1">
               {t('project.widget.variations.open', { defaultValue: 'Open' })}
             </div>
             <div className="text-xl font-semibold tabular-nums text-content-primary">
@@ -740,7 +740,7 @@ export function VariationsWidget({
             </div>
           </div>
           <div>
-            <div className="text-2xs uppercase tracking-wider text-content-tertiary mb-1">
+            <div className="text-2xs text-content-tertiary mb-1">
               {t('project.widget.variations.disputed', {
                 defaultValue: 'Disputed',
               })}
@@ -1227,7 +1227,7 @@ export function QualityNCRWidget({ projectId }: { projectId: string }) {
       ) : (
         <div className="grid grid-cols-3 gap-2">
           <div>
-            <div className="text-2xs uppercase tracking-wider text-content-tertiary mb-1">
+            <div className="text-2xs text-content-tertiary mb-1">
               {t('project.widget.quality-ncr.open', { defaultValue: 'Open' })}
             </div>
             <div className="text-xl font-semibold tabular-nums text-content-primary">
@@ -1235,7 +1235,7 @@ export function QualityNCRWidget({ projectId }: { projectId: string }) {
             </div>
           </div>
           <div>
-            <div className="text-2xs uppercase tracking-wider text-content-tertiary mb-1">
+            <div className="text-2xs text-content-tertiary mb-1">
               {t('project.widget.quality-ncr.major', { defaultValue: 'Major' })}
             </div>
             <div className="text-xl font-semibold tabular-nums text-semantic-error">
@@ -1243,7 +1243,7 @@ export function QualityNCRWidget({ projectId }: { projectId: string }) {
             </div>
           </div>
           <div>
-            <div className="text-2xs uppercase tracking-wider text-content-tertiary mb-1">
+            <div className="text-2xs text-content-tertiary mb-1">
               {t('project.widget.quality-ncr.minor', { defaultValue: 'Minor' })}
             </div>
             <div className="text-xl font-semibold tabular-nums text-amber-600">
@@ -1578,7 +1578,7 @@ export function ComplianceSummaryWidget({ projectId }: { projectId: string }) {
       ) : (
         <div className="grid grid-cols-3 gap-2">
           <div>
-            <div className="text-2xs uppercase tracking-wider text-content-tertiary mb-1">
+            <div className="text-2xs text-content-tertiary mb-1">
               {t('project.widget.compliance-summary.active', { defaultValue: 'Active' })}
             </div>
             <div className="text-xl font-semibold tabular-nums text-emerald-600">
@@ -1586,7 +1586,7 @@ export function ComplianceSummaryWidget({ projectId }: { projectId: string }) {
             </div>
           </div>
           <div>
-            <div className="text-2xs uppercase tracking-wider text-content-tertiary mb-1">
+            <div className="text-2xs text-content-tertiary mb-1">
               {t('project.widget.compliance-summary.expiring', {
                 defaultValue: 'Expiring',
               })}
@@ -1596,7 +1596,7 @@ export function ComplianceSummaryWidget({ projectId }: { projectId: string }) {
             </div>
           </div>
           <div>
-            <div className="text-2xs uppercase tracking-wider text-content-tertiary mb-1">
+            <div className="text-2xs text-content-tertiary mb-1">
               {t('project.widget.compliance-summary.expired', {
                 defaultValue: 'Expired',
               })}
@@ -1666,7 +1666,7 @@ export function ScheduleStripWidget({ projectId }: { projectId: string }) {
             </span>
             <div className="flex-1 h-2 bg-surface-secondary rounded-full overflow-hidden">
               <div
-                className="h-full bg-oe-blue transition-all duration-500"
+                className="h-full bg-oe-blue transition duration-500"
                 style={{
                   width: `${Math.min(Number.isFinite(pct) ? pct : 0, 100)}%`,
                 }}
@@ -1688,7 +1688,7 @@ export function ScheduleStripWidget({ projectId }: { projectId: string }) {
           </div>
           {data.next_milestone?.name && (
             <div className="pt-2 border-t border-border-light">
-              <p className="text-2xs uppercase tracking-wider text-content-tertiary">
+              <p className="text-2xs text-content-tertiary">
                 {t('project.widget.schedule-strip.next', { defaultValue: 'Next milestone' })}
               </p>
               <p className="text-sm font-medium text-content-primary truncate">

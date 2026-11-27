@@ -1149,7 +1149,7 @@ function StepTransition({ children, stepKey }: { children: ReactNode; stepKey: n
     <div
       key={stepKey}
       className={clsx(
-        'transition-all duration-300 ease-out',
+        'transition duration-300 ease-out',
         visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-3',
       )}
     >
@@ -1182,7 +1182,7 @@ function ToggleSwitch({
       onClick={onToggle}
       disabled={disabled}
       className={clsx(
-        'group relative inline-flex h-[26px] w-[48px] shrink-0 cursor-pointer rounded-full p-[3px] transition-all duration-300 ease-in-out focus:outline-none focus-visible:ring-2 focus-visible:ring-oe-blue/50',
+        'group relative inline-flex h-[26px] w-[48px] shrink-0 cursor-pointer rounded-full p-1 transition-colors duration-300 ease-in-out focus:outline-none focus-visible:ring-2 focus-visible:ring-oe-blue/50',
         enabled
           ? 'bg-gradient-to-r from-oe-blue to-blue-500 shadow-[inset_0_0_0_1px_rgba(255,255,255,0.1)]'
           : 'bg-gray-200 dark:bg-gray-700 shadow-[inset_0_1px_3px_rgba(0,0,0,0.1)]',
@@ -1191,7 +1191,7 @@ function ToggleSwitch({
     >
       <span
         className={clsx(
-          'pointer-events-none flex h-5 w-5 items-center justify-center rounded-full bg-white shadow-lg ring-0 transition-all duration-300 ease-in-out',
+          'pointer-events-none flex h-5 w-5 items-center justify-center rounded-full bg-white shadow-lg ring-0 transition duration-300 ease-in-out',
           enabled ? 'translate-x-[22px] rtl:-translate-x-[22px] scale-[1.05]' : 'translate-x-0 scale-100',
         )}
       >
@@ -1284,7 +1284,7 @@ function StepWelcome({
 
       {/* Language grid — 24 languages, flag + native name. */}
       <div className="mt-5 w-full">
-        <div className="mb-2 flex items-center justify-center gap-2 text-xs font-medium text-content-tertiary uppercase tracking-wider">
+        <div className="mb-2 flex items-center justify-center gap-2 text-xs font-medium text-content-tertiary">
           <span className="h-px w-8 bg-border-light" aria-hidden />
           {t('onboarding.welcome_pick_language', { defaultValue: 'Pick your language' })}
           <span className="h-px w-8 bg-border-light" aria-hidden />
@@ -1300,7 +1300,7 @@ function StepWelcome({
                 aria-busy={loadingLang === lang.code}
                 className={clsx(
                   'relative flex items-center gap-3 rounded-xl px-3.5 py-3 text-start',
-                  'backdrop-blur-md transition-all duration-normal ease-oe',
+                  'backdrop-blur-md transition duration-normal ease-oe',
                   isSelected
                     ? 'bg-oe-blue-subtle/70 ring-2 ring-oe-blue/50 shadow-sm shadow-oe-blue/15'
                     : 'bg-surface-elevated/50 ring-1 ring-white/50 dark:ring-white/10 shadow-sm shadow-black/[0.04] hover:bg-oe-blue-subtle/30 hover:-translate-y-0.5 hover:shadow-md hover:shadow-black/[0.06] active:scale-[0.98]',
@@ -1311,7 +1311,7 @@ function StepWelcome({
                   <div className="text-sm font-semibold text-content-primary truncate">
                     {lang.name}
                   </div>
-                  <div className="text-2xs text-content-tertiary uppercase tracking-wide">
+                  <div className="text-2xs text-content-tertiary">
                     {lang.code}
                   </div>
                 </div>
@@ -1402,13 +1402,13 @@ function StepStartChoice({
             'group relative flex flex-col items-start rounded-3xl p-8 text-left min-h-[340px]',
             'bg-surface-elevated/70 backdrop-blur-md shadow-sm shadow-black/[0.04]',
             'hover:bg-oe-blue-subtle/30 hover:shadow-2xl hover:shadow-oe-blue/10 hover:-translate-y-1',
-            'transition-all duration-300 ease-oe active:scale-[0.98]',
+            'transition-transform duration-300 ease-oe active:scale-[0.98]',
           )}
         >
           <Badge variant="blue" size="sm" className="mb-4">
             {t('onboarding.recommended', { defaultValue: 'Recommended' })}
           </Badge>
-          <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-oe-blue-subtle text-oe-blue-text mb-5 transition-all duration-300 group-hover:bg-oe-blue group-hover:text-white group-hover:shadow-lg group-hover:shadow-oe-blue/20">
+          <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-oe-blue-subtle text-oe-blue-text mb-5 transition-colors duration-300 group-hover:bg-oe-blue group-hover:text-white group-hover:shadow-lg group-hover:shadow-oe-blue/20">
             <Sparkles size={26} />
           </div>
           <h3 className="text-xl font-bold text-content-primary">
@@ -1432,13 +1432,13 @@ function StepStartChoice({
             'group relative flex flex-col items-start rounded-3xl p-8 text-left min-h-[340px]',
             'bg-surface-elevated/70 backdrop-blur-md shadow-sm shadow-black/[0.04]',
             'hover:bg-oe-blue-subtle/30 hover:shadow-2xl hover:shadow-oe-blue/10 hover:-translate-y-1',
-            'transition-all duration-300 ease-oe active:scale-[0.98]',
+            'transition-transform duration-300 ease-oe active:scale-[0.98]',
           )}
         >
           <Badge variant="blue" size="sm" className="mb-4">
             {t('onboarding.turnkey', { defaultValue: 'Turnkey' })}
           </Badge>
-          <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-oe-blue-subtle text-oe-blue-text mb-5 transition-all duration-300 group-hover:bg-oe-blue group-hover:text-white group-hover:shadow-lg group-hover:shadow-oe-blue/20">
+          <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-oe-blue-subtle text-oe-blue-text mb-5 transition-colors duration-300 group-hover:bg-oe-blue group-hover:text-white group-hover:shadow-lg group-hover:shadow-oe-blue/20">
             <Boxes size={26} />
           </div>
           <h3 className="text-xl font-bold text-content-primary">
@@ -1460,11 +1460,11 @@ function StepStartChoice({
             'group relative flex flex-col items-start rounded-3xl p-8 text-left min-h-[340px]',
             'bg-surface-elevated/70 backdrop-blur-md shadow-sm shadow-black/[0.04]',
             'hover:bg-oe-blue-subtle/30 hover:shadow-2xl hover:shadow-oe-blue/10 hover:-translate-y-1',
-            'transition-all duration-300 ease-oe active:scale-[0.98]',
+            'transition-transform duration-300 ease-oe active:scale-[0.98]',
           )}
         >
           <div className="h-[22px] mb-4" aria-hidden />
-          <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-surface-secondary text-content-secondary mb-5 transition-all duration-300 group-hover:bg-oe-blue group-hover:text-white group-hover:shadow-lg group-hover:shadow-oe-blue/20">
+          <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-surface-secondary text-content-secondary mb-5 transition-colors duration-300 group-hover:bg-oe-blue group-hover:text-white group-hover:shadow-lg group-hover:shadow-oe-blue/20">
             <Settings2 size={26} />
           </div>
           <h3 className="text-xl font-bold text-content-primary">
@@ -1799,7 +1799,7 @@ export function ReadyPackPicker({
         onClick={() => handleInstallCountry(pack, withCompany)}
         title={label}
         data-testid={`ready-pack-preset-${pack.id}`}
-        className="group relative flex min-w-0 flex-col items-center gap-2 rounded-xl bg-surface-secondary/70 p-3 text-center ring-1 ring-transparent transition-all duration-200 hover:-translate-y-0.5 hover:bg-surface-secondary hover:shadow-sm"
+        className="group relative flex min-w-0 flex-col items-center gap-2 rounded-xl bg-surface-secondary/70 p-3 text-center ring-1 ring-transparent transition-colors duration-200 hover:-translate-y-0.5 hover:bg-surface-secondary hover:shadow-sm"
       >
         <CountryFlag code={pack.flagId} size={30} className="rounded-sm shadow-sm" />
         <span className="line-clamp-2 min-w-0 break-words text-sm font-semibold text-content-primary">{label}</span>
@@ -2205,7 +2205,7 @@ function ReadyPackProgressPanel({
       {/* Tall determinate progress bar. */}
       <div className="h-3 w-full overflow-hidden rounded-full bg-surface-secondary">
         <div
-          className="h-full rounded-full bg-oe-blue transition-all duration-500 ease-out"
+          className="h-full rounded-full bg-oe-blue transition duration-500 ease-out"
           style={{ width: `${Math.max(pct, 5)}%` }}
         />
       </div>
@@ -2333,7 +2333,7 @@ function ProfileMark({
   return (
     <div
       className={clsx(
-        'flex h-10 w-10 shrink-0 items-center justify-center rounded-xl transition-all duration-300',
+        'flex h-10 w-10 shrink-0 items-center justify-center rounded-xl transition duration-300',
         thumb && 'overflow-hidden',
         selected
           ? 'bg-oe-blue text-white shadow-lg shadow-oe-blue/20'
@@ -2384,7 +2384,7 @@ function ProfileCard({
       data-testid={`profile-card-${preset.key}`}
       className={clsx(
         'group relative flex min-w-0 flex-col items-start rounded-2xl p-5 text-start',
-        'transition-all duration-300 ease-oe',
+        'transition duration-300 ease-oe',
         selected
           ? 'bg-oe-blue-subtle/40 ring-2 ring-oe-blue/45 shadow-lg shadow-oe-blue/10'
           : 'bg-surface-elevated shadow-sm shadow-black/[0.04] hover:bg-oe-blue-subtle/15 hover:shadow-md hover:-translate-y-0.5 active:scale-[0.99]',
@@ -2523,7 +2523,7 @@ function StepCompanyProfile({
             data-testid={`profile-card-${everything.key}`}
             className={clsx(
               'group relative mt-3 flex w-full max-w-2xl items-center gap-4 rounded-2xl p-5 text-start',
-              'transition-all duration-300 ease-oe',
+              'transition duration-300 ease-oe',
               isSelected
                 ? 'bg-oe-blue-subtle/40 ring-2 ring-oe-blue/45 shadow-lg shadow-oe-blue/10'
                 : 'bg-surface-elevated shadow-sm shadow-black/[0.04] hover:bg-oe-blue-subtle/15 hover:shadow-md hover:-translate-y-0.5 active:scale-[0.99]',
@@ -2548,7 +2548,7 @@ function StepCompanyProfile({
             </div>
             <span
               className={clsx(
-                'shrink-0 rounded-full px-2.5 py-1 text-xs font-semibold transition-all',
+                'shrink-0 rounded-full px-2.5 py-1 text-xs font-semibold transition',
                 isSelected ? 'bg-oe-blue text-white' : 'bg-surface-secondary text-content-tertiary',
               )}
             >
@@ -3341,7 +3341,7 @@ function PartnerPackInstaller({
                 aria-checked={isSelected}
                 tabIndex={rovingTabIndex(isSelected, index, packs.some((p) => p.slug === selectedSlug))}
                 className={clsx(
-                  'flex items-start gap-3 rounded-xl p-3 text-left transition-all duration-200',
+                  'flex items-start gap-3 rounded-xl p-3 text-left transition duration-200',
                   isSelected
                     ? 'bg-oe-blue-subtle/50 ring-2 ring-oe-blue/40 shadow-sm'
                     : 'bg-surface-secondary/70 hover:bg-surface-secondary hover:shadow-sm',
@@ -3656,7 +3656,7 @@ function CountryPackCard({
               aria-checked={isSelected}
               tabIndex={rovingTabIndex(isSelected, index, filteredPacks.some((p) => p.id === selectedPack.id))}
               className={clsx(
-                'flex items-center gap-2 rounded-xl px-3 py-2 text-left transition-all duration-200',
+                'flex items-center gap-2 rounded-xl px-3 py-2 text-left transition duration-200',
                 isSelected
                   ? 'bg-oe-blue-subtle/50 ring-2 ring-oe-blue/40 shadow-sm'
                   : 'bg-surface-secondary/70 hover:bg-surface-secondary hover:shadow-sm',
@@ -4409,7 +4409,7 @@ export function StepDataSetup({
                 </div>
                 <div className="h-1.5 w-full overflow-hidden rounded-full bg-surface-secondary">
                   <div
-                    className="h-full rounded-full bg-gradient-to-r from-oe-blue to-blue-500 transition-all duration-500 ease-out"
+                    className="h-full rounded-full bg-gradient-to-r from-oe-blue to-blue-500 transition duration-500 ease-out"
                     style={{ width: `${dbProgress}%` }}
                   />
                 </div>
@@ -4554,7 +4554,7 @@ export function StepDataSetup({
                   setApiKey('');
                   setShowKey(false);
                 }}
-                className="h-9 w-full rounded-lg border border-border bg-surface-primary px-3 text-sm text-content-primary focus:outline-none focus:ring-2 focus:ring-oe-blue/30 focus:border-oe-blue transition-all"
+                className="h-9 w-full rounded-lg border border-border bg-surface-primary px-3 text-sm text-content-primary focus:outline-none focus:ring-2 focus:ring-oe-blue/30 focus:border-oe-blue transition-colors"
               >
                 {AI_PROVIDERS.map((p) => (
                   <option key={p.id} value={p.id}>
@@ -4583,7 +4583,7 @@ export function StepDataSetup({
                   placeholder={t('onboarding.api_key_placeholder', {
                     defaultValue: 'Paste API key...',
                   })}
-                  className="h-9 w-full rounded-lg border border-border bg-surface-primary px-3 pe-8 font-mono text-xs text-content-primary placeholder:text-content-tertiary focus:outline-none focus:ring-2 focus:ring-oe-blue/30 focus:border-oe-blue transition-all"
+                  className="h-9 w-full rounded-lg border border-border bg-surface-primary px-3 pe-8 font-mono text-xs text-content-primary placeholder:text-content-tertiary focus:outline-none focus:ring-2 focus:ring-oe-blue/30 focus:border-oe-blue transition-colors"
                 />
                 <button
                   type="button"
@@ -5305,7 +5305,7 @@ export function OnboardingWizard() {
           <div className="flex items-center justify-between gap-4 mb-6">
             <div className="flex items-center gap-2 shrink-0">
               <Logo size="sm" />
-              <span className="text-[11px] font-semibold text-content-tertiary uppercase tracking-wider hidden sm:inline">
+              <span className="text-[11px] font-semibold text-content-tertiary hidden sm:inline">
                 {t('onboarding.setup_label', { defaultValue: 'Setup wizard' })}
               </span>
             </div>
