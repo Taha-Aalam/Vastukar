@@ -1043,7 +1043,7 @@ jobs:
           fi
 
       - name: Upload sidecar artifact
-        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: ${{ inputs.build_only_windows && format('sidecar-{0}-{1}-{2}', matrix.target, github.sha, github.run_attempt) || format('sidecar-{0}', matrix.target) }}
           path: desktop/src-tauri/binaries/
@@ -1059,7 +1059,7 @@ jobs:
 
       - name: Upload the tested diagnostic frontend
         if: inputs.build_only_windows
-        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: frontend-windows-${{ github.sha }}-${{ github.run_attempt }}
           path: desktop/frontend-artifact/
@@ -1555,7 +1555,7 @@ jobs:
 
       - name: Upload Windows diagnostic installer
         if: inputs.build_only_windows
-        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: windows-diagnostic-${{ github.sha }}-${{ github.run_attempt }}
           path: desktop/src-tauri/target/release/bundle/nsis/
