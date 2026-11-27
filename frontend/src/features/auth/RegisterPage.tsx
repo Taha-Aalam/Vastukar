@@ -181,7 +181,7 @@ export function RegisterPage() {
       {/* ── Left: benefits (desktop) ── */}
       <div className="hidden lg:flex lg:w-[460px] xl:w-[500px] shrink-0 relative z-10 flex-col justify-center ps-14 xl:ps-20 pe-8 xl:pe-10 py-6">
         <div className="mb-4 animate-stagger-in" style={{ animationDelay: '0ms' }}>
-          <h2 className="text-xl font-bold text-content-primary leading-snug">
+          <h2 className="text-xl font-medium text-content-primary leading-snug">
             {t('login.hero_title', 'Construction cost estimation,')}{' '}
             <span className="gradient-text">{t('login.hero_highlight', 'reimagined')}</span>
           </h2>
@@ -324,7 +324,7 @@ export function RegisterPage() {
                       name="how_found_us"
                       value={howFoundUs}
                       onChange={(e) => setHowFoundUs(e.target.value)}
-                      className="h-9 w-full rounded-lg border border-border bg-surface-primary ps-9 pe-3 text-sm text-content-primary transition-all duration-fast ease-oe focus:outline-none focus:ring-2 focus:ring-oe-blue focus:border-transparent hover:border-content-tertiary appearance-none cursor-pointer"
+                      className="h-9 w-full rounded-lg border border-border bg-surface-primary ps-9 pe-3 text-sm text-content-primary transition-colors duration-fast ease-oe focus:outline-none focus:ring-2 focus:ring-oe-blue focus:border-transparent hover:border-content-tertiary appearance-none cursor-pointer"
                     >
                       <option value="">{t('auth.how_found_select', '- Select -')}</option>
                       <option value="google">{t('auth.how_found_google', 'Google Search')}</option>
@@ -358,7 +358,7 @@ export function RegisterPage() {
                     autoComplete="new-password"
                     required aria-required="true"
                     minLength={8}
-                    className="h-9 w-full rounded-lg border border-border bg-surface-primary pl-9 pr-9 text-sm text-content-primary placeholder:text-content-tertiary transition-all duration-fast ease-oe focus:outline-none focus:ring-2 focus:ring-oe-blue focus:border-transparent hover:border-content-tertiary"
+                    className="h-9 w-full rounded-lg border border-border bg-surface-primary pl-9 pr-9 text-sm text-content-primary placeholder:text-content-tertiary transition-colors duration-fast ease-oe focus:outline-none focus:ring-2 focus:ring-oe-blue focus:border-transparent hover:border-content-tertiary"
                   />
                   <button
                     type="button"
@@ -455,7 +455,7 @@ export function RegisterPage() {
                       privacyAccepted
                     )
                   }
-                  className="w-full btn-shimmer"
+                  className="w-full"
                 >
                   {t('auth.create_account', 'Create account')}
                 </Button>

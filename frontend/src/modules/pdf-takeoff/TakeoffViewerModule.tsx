@@ -7276,7 +7276,7 @@ export default function TakeoffViewerModule({
                         });
                       }
                     }}
-                    className="group/drop flex flex-col items-center justify-center gap-3 rounded-xl p-6 text-center cursor-pointer transition-all flex-1 border-2 border-dashed border-border-medium bg-gradient-to-br from-blue-50/60 via-white to-violet-50/40 dark:from-blue-950/20 dark:via-gray-800/40 dark:to-violet-950/20 hover:border-oe-blue/50 hover:shadow-md"
+                    className="group/drop flex flex-col items-center justify-center gap-3 rounded-xl p-6 text-center cursor-pointer transition-colors flex-1 border-2 border-dashed border-border-medium bg-gradient-to-br from-blue-50/60 via-white to-violet-50/40 dark:from-blue-950/20 dark:via-gray-800/40 dark:to-violet-950/20 hover:border-oe-blue/50 hover:shadow-md"
                   >
                     <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-oe-blue/10 to-violet-500/10 flex items-center justify-center group-hover/drop:scale-110 transition-transform">
                       <FileUp size={26} className="text-oe-blue" />
@@ -7304,7 +7304,7 @@ export default function TakeoffViewerModule({
                     instead of re-uploading the same file. */}
                 {recentDocuments && recentDocuments.length > 0 && (
                   <div className="mt-4">
-                    <h2 className="text-[10px] font-bold text-content-tertiary uppercase tracking-widest mb-2">
+                    <h2 className="text-[10px] font-bold text-content-tertiary mb-2">
                       {t('takeoff.landing_recent_drawings', { defaultValue: 'Recent drawings' })}
                     </h2>
                     <ul className="space-y-1.5">
@@ -7313,7 +7313,7 @@ export default function TakeoffViewerModule({
                           <button
                             type="button"
                             onClick={() => onOpenRecentDocument?.(doc.id)}
-                            className="group/recent flex w-full items-center gap-2.5 rounded-lg border border-border-light/60 bg-white dark:bg-gray-800/40 px-2.5 py-2 text-left transition-all hover:border-oe-blue/40 hover:shadow-sm focus:outline-none focus-visible:ring-2 focus-visible:ring-oe-blue/40"
+                            className="group/recent flex w-full items-center gap-2.5 rounded-lg border border-border-light/60 bg-white dark:bg-gray-800/40 px-2.5 py-2 text-left transition-colors hover:border-oe-blue/40 hover:shadow-sm focus:outline-none focus-visible:ring-2 focus-visible:ring-oe-blue/40"
                           >
                             <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-md border border-border-light bg-surface-secondary text-content-tertiary group-hover/recent:text-oe-blue">
                               <FileText size={13} />
@@ -7359,14 +7359,14 @@ export default function TakeoffViewerModule({
                     below; pulling it up here keeps the formats-at-a-glance
                     without the redundant textual line. */}
                 <div>
-                  <h2 className="text-[10px] font-bold text-content-tertiary uppercase tracking-widest mb-2">
+                  <h2 className="text-[10px] font-bold text-content-tertiary mb-2">
                     {t('takeoff.landing_supported_formats', { defaultValue: 'Supported formats' })}
                   </h2>
                   <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
                     {landingFormats.map((f, i) => (
                       <div
                         key={i}
-                        className={`flex items-start gap-2 rounded-lg p-2 bg-white dark:bg-gray-800/40 border transition-all ${
+                        className={`flex items-start gap-2 rounded-lg p-2 bg-white dark:bg-gray-800/40 border transition ${
                           f.primary
                             ? 'border-oe-blue/30 shadow-sm ring-1 ring-oe-blue/10'
                             : f.muted
@@ -7389,7 +7389,7 @@ export default function TakeoffViewerModule({
                               .{f.ext.toLowerCase()}
                             </span>
                             {f.primary && (
-                              <span className="text-[8px] font-semibold uppercase tracking-wider text-oe-blue">
+                              <span className="text-[8px] font-semibold text-oe-blue">
                                 {t('takeoff.landing_fmt_primary', { defaultValue: 'Primary' })}
                               </span>
                             )}
@@ -7405,14 +7405,14 @@ export default function TakeoffViewerModule({
 
             {/* Row 2: Feature cards */}
             <div>
-              <h2 className="text-xs font-bold text-content-tertiary uppercase tracking-widest mb-2">
+              <h2 className="text-xs font-bold text-content-tertiary mb-2">
                 {t('takeoff.landing_what_you_get', { defaultValue: 'What you get' })}
               </h2>
               <div className="grid grid-cols-2 lg:grid-cols-3 gap-3">
                 {landingFeatures.map((f, i) => (
                   <div
                     key={i}
-                    className="flex items-start gap-3 rounded-xl p-3 bg-white dark:bg-gray-800/40 border border-border-light/60 hover:border-border-light hover:shadow-sm transition-all"
+                    className="flex items-start gap-3 rounded-xl p-3 bg-white dark:bg-gray-800/40 border border-border-light/60 hover:border-border-light hover:shadow-sm transition-colors"
                   >
                     <div className={`w-8 h-8 rounded-lg ${f.color} border flex items-center justify-center shrink-0`}>
                       <f.icon size={15} className={f.ic} />
@@ -7824,7 +7824,7 @@ export default function TakeoffViewerModule({
                 <button
                   onClick={handleExportPdf}
                   disabled={isExportingPdf || !pdfDoc}
-                  className="inline-flex h-7 items-center gap-1.5 rounded-md bg-emerald-600 px-2.5 text-xs font-semibold text-white shadow-xs transition-all hover:bg-emerald-700 hover:shadow-sm disabled:opacity-50 disabled:pointer-events-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400/50"
+                  className="inline-flex h-7 items-center gap-1.5 rounded-md bg-emerald-600 px-2.5 text-xs font-semibold text-white shadow-xs transition hover:bg-emerald-700 hover:shadow-sm disabled:opacity-50 disabled:pointer-events-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400/50"
                   title={t('takeoff_viewer.save_pdf_hint', { defaultValue: 'Save this drawing as a PDF with your measurements and markups' })}
                   aria-label={t('takeoff_viewer.save_pdf', { defaultValue: 'Save PDF' })}
                   data-testid="toolbar-export-pdf-button"
@@ -7964,7 +7964,7 @@ export default function TakeoffViewerModule({
               <button
                 onClick={handleRecognize}
                 disabled={recognizeBusy}
-                className="ml-auto inline-flex h-7 items-center gap-1.5 rounded-md bg-gradient-to-r from-violet-500 to-indigo-500 px-2.5 text-xs font-semibold text-white shadow-xs transition-all hover:from-violet-600 hover:to-indigo-600 hover:shadow-sm disabled:opacity-50 disabled:pointer-events-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-400/50"
+                className="ml-auto inline-flex h-7 items-center gap-1.5 rounded-md bg-gradient-to-r from-violet-500 to-indigo-500 px-2.5 text-xs font-semibold text-white shadow-xs transition hover:from-violet-600 hover:to-indigo-600 hover:shadow-sm disabled:opacity-50 disabled:pointer-events-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-400/50"
                 title={t('takeoff_viewer.recognize_hint', { defaultValue: 'Scan this page and suggest measurements (AI proposes, you confirm)' })}
                 aria-label={t('takeoff_viewer.recognize', { defaultValue: 'Recognize' })}
                 data-testid="recognize-button"
@@ -7979,7 +7979,7 @@ export default function TakeoffViewerModule({
                 onClick={toggleCountSimilar}
                 disabled={countSimilarBusy}
                 aria-pressed={armCountSimilar}
-                className={`inline-flex h-7 items-center gap-1.5 rounded-md px-2.5 text-xs font-semibold shadow-xs transition-all disabled:opacity-50 disabled:pointer-events-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400/50 ${
+                className={`inline-flex h-7 items-center gap-1.5 rounded-md px-2.5 text-xs font-semibold shadow-xs transition disabled:opacity-50 disabled:pointer-events-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400/50 ${
                   armCountSimilar
                     ? 'bg-emerald-600 text-white ring-2 ring-emerald-300'
                     : 'bg-gradient-to-r from-emerald-500 to-teal-500 text-white hover:from-emerald-600 hover:to-teal-600 hover:shadow-sm'
@@ -8001,7 +8001,7 @@ export default function TakeoffViewerModule({
                 <button
                   onClick={handleReadWithAi}
                   disabled={planReadBusy}
-                  className="inline-flex h-7 items-center gap-1.5 rounded-md bg-gradient-to-r from-fuchsia-500 to-purple-600 px-2.5 text-xs font-semibold text-white shadow-xs transition-all hover:from-fuchsia-600 hover:to-purple-700 hover:shadow-sm disabled:opacity-50 disabled:pointer-events-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fuchsia-400/50"
+                  className="inline-flex h-7 items-center gap-1.5 rounded-md bg-gradient-to-r from-fuchsia-500 to-purple-600 px-2.5 text-xs font-semibold text-white shadow-xs transition hover:from-fuchsia-600 hover:to-purple-700 hover:shadow-sm disabled:opacity-50 disabled:pointer-events-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fuchsia-400/50"
                   title={t('takeoff_viewer.plan_read.hint', {
                     defaultValue: 'Read this page with a vision AI: room names and scale (AI proposes, you confirm)',
                   })}
@@ -8175,7 +8175,7 @@ export default function TakeoffViewerModule({
                     </div>
                   )}
                   <div className="mt-0.5 flex items-center gap-1 text-content-tertiary">
-                    <span className="uppercase tracking-wide text-[10px]">
+                    <span className="text-[10px]">
                       {t('takeoff_viewer.tooltip_group', { defaultValue: 'Group' })}
                     </span>
                     <span>{displayGroupName(hoverMeasurement.group || 'General')}</span>
@@ -8244,7 +8244,7 @@ export default function TakeoffViewerModule({
                   data-testid="draw-readout"
                 >
                   <div className="flex items-center gap-2">
-                    <span className="text-content-quaternary uppercase tracking-wide">
+                    <span className="text-content-quaternary">
                       {t('takeoff_viewer.readout_position', { defaultValue: 'Position' })}
                     </span>
                     <span className="tabular-nums text-content-primary">
@@ -8253,7 +8253,7 @@ export default function TakeoffViewerModule({
                   </div>
                   {drawReadout.segment != null && (
                     <div className="flex items-center gap-2">
-                      <span className="text-content-quaternary uppercase tracking-wide">
+                      <span className="text-content-quaternary">
                         {t('takeoff_viewer.readout_segment', { defaultValue: 'Segment' })}
                       </span>
                       <span className="tabular-nums text-content-primary">
@@ -8263,7 +8263,7 @@ export default function TakeoffViewerModule({
                   )}
                   {drawReadout.total != null && (
                     <div className="flex items-center gap-2">
-                      <span className="text-content-quaternary uppercase tracking-wide">
+                      <span className="text-content-quaternary">
                         {t('takeoff_viewer.readout_total', { defaultValue: 'Total' })}
                       </span>
                       <span className="tabular-nums text-content-primary">
@@ -8411,7 +8411,7 @@ export default function TakeoffViewerModule({
                     data-testid="legend-drag-handle"
                     title={t('takeoff_viewer.legend_drag_hint', { defaultValue: 'Drag to move, double-click to reset' })}
                   >
-                    <span className="text-[10px] font-bold uppercase tracking-widest text-content-tertiary">
+                    <span className="text-[10px] font-bold text-content-tertiary">
                       {t('takeoff_viewer.legend', { defaultValue: 'Legend' })}
                     </span>
                     <button
@@ -8531,7 +8531,7 @@ export default function TakeoffViewerModule({
           <div className={clsx('w-72 shrink-0 space-y-2 overflow-y-auto min-h-0', !showSidebar && 'hidden')}>
             {/* Scale info */}
             <div className="rounded-md border border-border/80 bg-surface-primary/80 backdrop-blur-sm p-3 shadow-sm">
-              <p className="text-[10px] font-bold uppercase tracking-widest text-content-tertiary mb-1">
+              <p className="text-[10px] font-bold text-content-tertiary mb-1">
                 {t('takeoff_viewer.scale', { defaultValue: 'Scale' })}
               </p>
               <p className="text-sm font-semibold text-content-primary tabular-nums">
@@ -8551,7 +8551,7 @@ export default function TakeoffViewerModule({
                   <button
                     key={s.label}
                     onClick={() => setScale(presetScale(s.ratio))}
-                    className="text-[10px] px-1.5 py-0.5 rounded-sm bg-surface-secondary hover:bg-oe-blue hover:text-white text-content-secondary transition-all font-medium"
+                    className="text-[10px] px-1.5 py-0.5 rounded-sm bg-surface-secondary hover:bg-oe-blue hover:text-white text-content-secondary transition-colors font-medium"
                   >
                     {s.label}
                   </button>
@@ -8561,7 +8561,7 @@ export default function TakeoffViewerModule({
 
             {/* Active group selector */}
             <div className="rounded-md border border-border/80 bg-surface-primary/80 backdrop-blur-sm p-3 shadow-sm">
-              <label className="text-[10px] font-bold uppercase tracking-widest text-content-tertiary block mb-1">
+              <label className="text-[10px] font-bold text-content-tertiary block mb-1">
                 {t('takeoff_viewer.active_group', { defaultValue: 'Active Group' })}
               </label>
               <div className="flex items-center gap-2">
@@ -8622,7 +8622,7 @@ export default function TakeoffViewerModule({
             {/* Count label (when count tool active) */}
             {activeTool === 'count' && (
               <div className="rounded-md border border-border/80 bg-surface-primary/80 backdrop-blur-sm p-3 shadow-sm">
-                <label className="text-[10px] font-bold uppercase tracking-widest text-content-tertiary block mb-1">
+                <label className="text-[10px] font-bold text-content-tertiary block mb-1">
                   {t('takeoff_viewer.count_label', { defaultValue: 'Count Label' })}
                 </label>
                 <input
@@ -8638,7 +8638,7 @@ export default function TakeoffViewerModule({
             {/* Annotation color picker (when annotation tool active) */}
             {isAnnotationTool(activeTool) && (
               <div className="rounded-md border border-border/80 bg-surface-primary/80 backdrop-blur-sm p-3 shadow-sm">
-                <label className="text-[10px] font-bold uppercase tracking-widest text-content-tertiary block mb-1.5">
+                <label className="text-[10px] font-bold text-content-tertiary block mb-1.5">
                   {t('takeoff_viewer.annotation_color', { defaultValue: 'Annotation Color' })}
                 </label>
                 <div className="flex items-center gap-1.5">
@@ -8646,7 +8646,7 @@ export default function TakeoffViewerModule({
                     <button
                       key={c.value}
                       onClick={() => setAnnotationColor(c.value)}
-                      className={`h-6 w-6 rounded-full border-2 transition-all ${
+                      className={`h-6 w-6 rounded-full border-2 transition ${
                         annotationColor === c.value
                           ? 'border-content-primary scale-110'
                           : 'border-transparent hover:scale-105'
@@ -8711,7 +8711,7 @@ export default function TakeoffViewerModule({
                     data-testid="ledger-bulk-add-panel"
                   >
                     <div className="flex items-center justify-between mb-1.5">
-                      <span className="text-[10px] font-bold uppercase tracking-wider text-oe-blue">
+                      <span className="text-[10px] font-bold text-oe-blue">
                         {t('takeoff.bulk_add_title', {
                           defaultValue: 'Add {{count}} measurements to BOQ',
                           count: bulkAddMeasurements.length,
@@ -8799,7 +8799,7 @@ export default function TakeoffViewerModule({
                 data-testid="properties-panel"
               >
                 <div className="flex items-center justify-between">
-                  <p className="text-[10px] font-bold uppercase tracking-widest text-oe-blue">
+                  <p className="text-[10px] font-bold text-oe-blue">
                     {t('takeoff_viewer.properties', { defaultValue: 'Properties' })}
                   </p>
                   <button
@@ -8891,7 +8891,7 @@ export default function TakeoffViewerModule({
                         type="button"
                         onClick={() => updateSelectedMeasurement({ color: c.value })}
                         className={clsx(
-                          'h-5 w-5 rounded-full border-2 transition-all',
+                          'h-5 w-5 rounded-full border-2 transition',
                           (selectedMeasurement.color ?? '') === c.value
                             ? 'border-content-primary scale-110'
                             : 'border-transparent hover:scale-105',
@@ -9308,7 +9308,7 @@ export default function TakeoffViewerModule({
                     className="space-y-1.5 rounded border border-amber-300/70 dark:border-amber-700/50 bg-amber-50/70 dark:bg-amber-950/20 p-2"
                     data-testid="prop-linked-drift"
                   >
-                    <p className="flex items-center gap-1 text-[10px] font-semibold uppercase tracking-wider text-amber-800 dark:text-amber-300">
+                    <p className="flex items-center gap-1 text-[10px] font-semibold text-amber-800 dark:text-amber-300">
                       <AlertTriangle size={11} className="shrink-0" />
                       {t('takeoff_drift.title', { defaultValue: 'Bill differs from the drawing' })}
                     </p>
@@ -9353,7 +9353,7 @@ export default function TakeoffViewerModule({
                     className="space-y-2 rounded border border-border/60 bg-surface-secondary/30 p-2"
                     data-testid="prop-adjustments"
                   >
-                    <p className="text-[10px] font-semibold uppercase tracking-wider text-content-tertiary">
+                    <p className="text-[10px] font-semibold text-content-tertiary">
                       {t('takeoff_viewer.prop_adjustments', { defaultValue: 'Quantity adjustments' })}
                     </p>
 
@@ -9564,7 +9564,7 @@ export default function TakeoffViewerModule({
                     className="space-y-1.5 rounded border border-border/60 bg-surface-secondary/30 p-2"
                     data-testid="prop-copy-to-pages"
                   >
-                    <p className="text-[10px] font-semibold uppercase tracking-wider text-content-tertiary">
+                    <p className="text-[10px] font-semibold text-content-tertiary">
                       {t('takeoff_viewer.prop_copy_to_pages', { defaultValue: 'Copy to pages' })}
                     </p>
                     <div className="flex flex-wrap gap-1 max-h-24 overflow-auto">
@@ -9650,7 +9650,7 @@ export default function TakeoffViewerModule({
                     this measurement's type/size and apply a priced BOQ position to it. */}
                 {activeProjectId && (
                   <div className="pt-2 border-t border-oe-blue/20">
-                    <p className="text-[10px] font-bold uppercase tracking-widest text-oe-blue mb-1.5">
+                    <p className="text-[10px] font-bold text-oe-blue mb-1.5">
                       {t('match.apply_section_title', { defaultValue: 'Find a cost position' })}
                     </p>
                     <div className="h-96 rounded-md border border-border-light overflow-hidden bg-surface-primary">
@@ -9860,7 +9860,7 @@ export default function TakeoffViewerModule({
                           className="h-2.5 w-2.5 rounded-full shrink-0"
                           style={{ backgroundColor: groupColor }}
                         />
-                        <span className="text-2xs font-semibold text-content-secondary flex-1 uppercase tracking-wider">
+                        <span className="text-2xs font-semibold text-content-secondary flex-1">
                           {groupName} ({measurementOnly.length})
                         </span>
                         <button
@@ -9914,7 +9914,7 @@ export default function TakeoffViewerModule({
                                 setDragOverTarget(null);
                               }}
                               className={clsx(
-                                'rounded-sm px-2 py-1 group/item transition-all cursor-pointer',
+                                'rounded-sm px-2 py-1 group/item transition cursor-pointer',
                                 selectedMeasurementId === m.id
                                   ? 'bg-oe-blue/10 border border-oe-blue/40'
                                   : 'bg-surface-secondary/70 hover:bg-surface-secondary border border-transparent hover:border-border-light',
@@ -10077,7 +10077,7 @@ export default function TakeoffViewerModule({
                                   <button
                                     onClick={(e) => { e.stopPropagation(); handleOpenLinkToBoq(m.id); }}
                                     className={clsx(
-                                      'transition-all p-0.5 rounded',
+                                      'transition p-0.5 rounded',
                                       m.linkedPositionId
                                         ? 'text-emerald-600 dark:text-emerald-400 hover:text-emerald-700 dark:hover:text-emerald-300 hover:bg-emerald-100 dark:hover:bg-emerald-900/30'
                                         : 'text-rose-500/60 dark:text-rose-400/60 hover:text-rose-700 dark:hover:text-rose-300 hover:bg-rose-100 dark:hover:bg-rose-900/30',
@@ -10121,7 +10121,7 @@ export default function TakeoffViewerModule({
                                     <>
                                       <button
                                         onClick={(e) => { e.stopPropagation(); reorderMeasurement(m.id, 'front'); }}
-                                        className="opacity-0 group-hover/item:opacity-100 p-0.5 rounded text-content-tertiary hover:text-content-primary hover:bg-surface-secondary transition-all shrink-0"
+                                        className="opacity-0 group-hover/item:opacity-100 p-0.5 rounded text-content-tertiary hover:text-content-primary hover:bg-surface-secondary transition shrink-0"
                                         aria-label={t('takeoff_viewer.bring_to_front', { defaultValue: 'Bring to front' })}
                                         title={t('takeoff_viewer.bring_to_front', { defaultValue: 'Bring to front' })}
                                         data-testid="bring-to-front"
@@ -10130,7 +10130,7 @@ export default function TakeoffViewerModule({
                                       </button>
                                       <button
                                         onClick={(e) => { e.stopPropagation(); reorderMeasurement(m.id, 'back'); }}
-                                        className="opacity-0 group-hover/item:opacity-100 p-0.5 rounded text-content-tertiary hover:text-content-primary hover:bg-surface-secondary transition-all shrink-0"
+                                        className="opacity-0 group-hover/item:opacity-100 p-0.5 rounded text-content-tertiary hover:text-content-primary hover:bg-surface-secondary transition shrink-0"
                                         aria-label={t('takeoff_viewer.send_to_back', { defaultValue: 'Send to back' })}
                                         title={t('takeoff_viewer.send_to_back', { defaultValue: 'Send to back' })}
                                         data-testid="send-to-back"
@@ -10141,7 +10141,7 @@ export default function TakeoffViewerModule({
                                   )}
                                   <button
                                     onClick={(e) => { e.stopPropagation(); deleteMeasurement(m.id); }}
-                                    className="opacity-40 group-hover/item:opacity-100 text-content-tertiary hover:text-semantic-error transition-all shrink-0"
+                                    className="opacity-40 group-hover/item:opacity-100 text-content-tertiary hover:text-semantic-error transition shrink-0"
                                     aria-label={t('takeoff_viewer.delete_measurement', { defaultValue: 'Delete measurement' })}
                                     title={`${t('takeoff_viewer.delete_measurement', { defaultValue: 'Delete measurement' })} (Del)`}
                                   >
@@ -10162,7 +10162,7 @@ export default function TakeoffViewerModule({
                                   onClick={(e) => e.stopPropagation()}
                                 >
                                   <div className="flex items-center justify-between mb-1.5">
-                                    <span className="text-[10px] font-bold uppercase tracking-wider text-rose-700 dark:text-rose-400">
+                                    <span className="text-[10px] font-bold text-rose-700 dark:text-rose-400">
                                       {m.linkedPositionId
                                         ? t('takeoff_viewer.relink_title', { defaultValue: 'Linked - pick new or unlink' })
                                         : t('takeoff_viewer.link_to_boq_title', { defaultValue: 'Link to BOQ position' })}
@@ -10512,7 +10512,7 @@ export default function TakeoffViewerModule({
                           {annoCollapsed ? <ChevronDown size={10} /> : <ChevronUp size={10} />}
                         </button>
                         <Cloud size={10} className="text-orange-500 shrink-0" />
-                        <span className="text-2xs font-semibold text-content-secondary flex-1 uppercase tracking-wider">
+                        <span className="text-2xs font-semibold text-content-secondary flex-1">
                           {t('takeoff_viewer.annotations', { defaultValue: 'Annotations' })} ({annotations.length})
                         </span>
                         <button
@@ -10595,7 +10595,7 @@ export default function TakeoffViewerModule({
                                   />
                                   <button
                                     onClick={() => deleteMeasurement(m.id)}
-                                    className="opacity-50 group-hover/item:opacity-100 text-content-tertiary hover:text-semantic-error transition-all shrink-0"
+                                    className="opacity-50 group-hover/item:opacity-100 text-content-tertiary hover:text-semantic-error transition shrink-0"
                                     aria-label={t('takeoff_viewer.delete_annotation', { defaultValue: 'Delete annotation' })}
                                     title={`${t('takeoff_viewer.delete_annotation', { defaultValue: 'Delete annotation' })} (Del)`}
                                   >

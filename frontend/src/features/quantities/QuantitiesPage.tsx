@@ -241,14 +241,14 @@ function ConverterCard({
   return (
     <div
       className={clsx(
-        'group relative flex flex-col rounded-xl border p-5 transition-all duration-200',
+        'group relative flex flex-col rounded-xl border p-5 transition duration-200',
         installed
           ? 'border-emerald-300 dark:border-emerald-800/50 bg-gradient-to-br from-emerald-500/5 to-teal-500/5'
           : clsx(
               'bg-gradient-to-br',
               colors.bg,
               colors.border,
-              'ring-2 ring-oe-blue/30 animate-pulse-border',
+              'ring-2 ring-oe-blue/30',
             ),
         disabled && !installing ? 'opacity-40 pointer-events-none' : '',
       )}
@@ -557,12 +557,12 @@ function InstallProgressPanel({
           <div className="h-2.5 w-full overflow-hidden rounded-full bg-surface-secondary">
             <div
               className={clsx(
-                'h-full rounded-full transition-all duration-1000 ease-out',
+                'h-full rounded-full transition duration-1000 ease-out',
                 error
                   ? 'bg-red-500'
                   : result
                     ? 'bg-semantic-success'
-                    : 'bg-gradient-to-r from-oe-blue via-blue-400 to-oe-blue bg-[length:200%_100%] animate-shimmer',
+                    : 'bg-oe-blue',
               )}
               style={{ width: `${progressPct}%` }}
             />
@@ -996,7 +996,7 @@ export function QuantitiesPage() {
               onClick={() => method.available && navigate(method.route)}
               disabled={!method.available}
               className={clsx(
-                'group relative flex flex-col rounded-xl border border-border-light p-6 text-left transition-all duration-200',
+                'group relative flex flex-col rounded-xl border border-border-light p-6 text-left transition duration-200',
                 method.available
                   ? `bg-gradient-to-br ${method.gradient} cursor-pointer hover:shadow-md hover:border-oe-blue/30`
                   : 'opacity-60 cursor-not-allowed bg-surface-secondary',

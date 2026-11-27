@@ -38,7 +38,6 @@ import {
   Loader2,
   Trash2,
   HardDrive,
-  Star,
   Database,
   Plus,
   Search,
@@ -79,15 +78,14 @@ interface TabDef {
   icon: React.ReactNode;
   descKey: string;
   descFallback: string;
-  color: string;
 }
 
 const TABS: TabDef[] = [
-  { id: 'text', label: 'Text', labelKey: 'ai.tab_text', icon: <Pencil size={22} />, descKey: 'ai.tab_text_desc', descFallback: 'Describe your project in plain text', color: 'from-blue-500/10 to-cyan-500/10 text-blue-600' },
-  { id: 'photo', label: 'Photo / Scan', labelKey: 'ai.tab_photo', icon: <Camera size={22} />, descKey: 'ai.tab_photo_desc', descFallback: 'Building photo or scanned document', color: 'from-violet-500/10 to-purple-500/10 text-violet-600' },
-  { id: 'pdf', label: 'PDF', labelKey: 'ai.tab_pdf', icon: <FileText size={22} />, descKey: 'ai.tab_pdf_desc', descFallback: 'BOQ sheets, specs, tender docs', color: 'from-red-500/10 to-orange-500/10 text-red-600' },
-  { id: 'excel', label: 'Excel / CSV', labelKey: 'ai.tab_excel', icon: <FileSpreadsheet size={22} />, descKey: 'ai.tab_excel_desc', descFallback: 'Spreadsheet with BOQ data', color: 'from-green-500/10 to-emerald-500/10 text-green-600' },
-  { id: 'paste', label: 'Paste', labelKey: 'ai.tab_paste', icon: <ClipboardPaste size={22} />, descKey: 'ai.tab_paste_desc', descFallback: 'Copy-paste from any app', color: 'from-slate-500/10 to-gray-500/10 text-slate-600' },
+  { id: 'text', label: 'Text', labelKey: 'ai.tab_text', icon: <Pencil size={18} strokeWidth={1.5} />, descKey: 'ai.tab_text_desc', descFallback: 'Describe your project in plain text' },
+  { id: 'photo', label: 'Photo / Scan', labelKey: 'ai.tab_photo', icon: <Camera size={18} strokeWidth={1.5} />, descKey: 'ai.tab_photo_desc', descFallback: 'Building photo or scanned document' },
+  { id: 'pdf', label: 'PDF', labelKey: 'ai.tab_pdf', icon: <FileText size={18} strokeWidth={1.5} />, descKey: 'ai.tab_pdf_desc', descFallback: 'BOQ sheets, specs, tender docs' },
+  { id: 'excel', label: 'Excel / CSV', labelKey: 'ai.tab_excel', icon: <FileSpreadsheet size={18} strokeWidth={1.5} />, descKey: 'ai.tab_excel_desc', descFallback: 'Spreadsheet with BOQ data' },
+  { id: 'paste', label: 'Paste', labelKey: 'ai.tab_paste', icon: <ClipboardPaste size={18} strokeWidth={1.5} />, descKey: 'ai.tab_paste_desc', descFallback: 'Copy-paste from any app' },
 ];
 
 // ── Option data ──────────────────────────────────────────────────────────────
@@ -186,9 +184,9 @@ function formatRegionLabel(code: string): string {
   return `${country} / ${place}`;
 }
 
-// ── Shimmer loading rows ─────────────────────────────────────────────────────
+// ── Loading skeleton rows ────────────────────────────────────────────────────
 
-function ShimmerRow() {
+function SkeletonRow() {
   return (
     <tr className="animate-pulse">
       <td className="px-4 py-3">
@@ -240,8 +238,8 @@ function LoadingState({ isCad, fileName, fileSizeMB }: { isCad?: boolean; fileNa
 
   // a11y: aria-live="polite" so SR users hear the loading transition
   // without interrupting the user; aria-busy reinforces "in progress" for
-  // assistive tech; the decorative gradient + sparkle icon stay hidden
-  // from screen readers.
+  // assistive tech. The icon is decorative and stays hidden from screen
+  // readers; no glow, shimmer or decorative pulse is used here.
   return (
     <div className="animate-card-in" style={{ animationDelay: '100ms' }}>
       <section
@@ -249,37 +247,33 @@ function LoadingState({ isCad, fileName, fileSizeMB }: { isCad?: boolean; fileNa
         aria-live="polite"
         aria-busy="true"
         aria-label={title}
-        className="relative overflow-hidden rounded-2xl border border-white/40 bg-white/60 backdrop-blur-xl shadow-lg shadow-slate-900/[0.04] dark:border-white/5 dark:bg-slate-900/40 dark:shadow-slate-950/30"
+        className="rounded-xl border border-border-light bg-surface-primary"
       >
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute -top-20 -right-20 h-48 w-48 rounded-full bg-gradient-radial from-sky-500/20 to-transparent blur-3xl"
-        />
-        <div className="relative px-6 pt-6 pb-2">
+        <div className="px-6 pt-6 pb-2">
           <div className="flex items-center gap-3 mb-4">
-            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-sky-500 to-blue-600 text-white shadow-md shadow-sky-500/25">
-              <Sparkles size={18} className="animate-pulse" aria-hidden="true" />
+            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-oe-blue-subtle text-oe-blue-text">
+              <Sparkles size={18} strokeWidth={1.5} className="text-oe-blue-text" aria-hidden="true" />
             </div>
             <div className="flex-1 min-w-0">
-              <p className="text-sm font-semibold text-content-primary">{title}</p>
+              <p className="text-sm font-medium text-content-primary">{title}</p>
               <p className="text-xs text-content-tertiary">{subtitle}</p>
             </div>
             <div className="text-xs text-content-quaternary tabular-nums shrink-0">
               {isCad && estimatedTotal > 0 && (
-                <span className="font-semibold text-oe-blue mr-2">{Math.round(progressPct)}%</span>
+                <span className="font-medium tabular-nums text-oe-blue-text mr-2">{Math.round(progressPct)}%</span>
               )}
               {elapsed > 0 && `${elapsed}s`}
               {fileName && <span className="ml-2 text-content-tertiary truncate max-w-[120px] inline-block align-bottom">{fileName}</span>}
             </div>
           </div>
-          <div className="h-1.5 w-full overflow-hidden rounded-full bg-slate-200/60 dark:bg-slate-700/40">
+          <div className="h-1 w-full overflow-hidden rounded bg-surface-tertiary">
             {isCad && estimatedTotal > 0 ? (
               <div
-                className="h-full rounded-full bg-gradient-to-r from-sky-500 to-blue-600 transition-all duration-1000 ease-linear"
+                className="h-full rounded bg-oe-blue transition-[width] duration-500 ease-out"
                 style={{ width: `${progressPct}%` }}
               />
             ) : (
-              <div className="h-full w-1/3 animate-shimmer rounded-full bg-gradient-to-r from-sky-500 to-blue-600 opacity-70 bg-[length:200%_100%]" />
+              <div className="h-full w-1/3 rounded bg-oe-blue/30" />
             )}
           </div>
         </div>
@@ -287,29 +281,29 @@ function LoadingState({ isCad, fileName, fileSizeMB }: { isCad?: boolean; fileNa
           <table className="w-full text-sm">
             <thead>
               <tr className="border-b border-border-light text-left">
-                <th className="px-4 py-3 text-xs font-semibold text-content-tertiary uppercase tracking-wide">
+                <th className="px-4 py-3 text-xs font-medium text-content-tertiary">
                   {t('boq.pos', { defaultValue: 'Pos' })}
                 </th>
-                <th className="px-4 py-3 text-xs font-semibold text-content-tertiary uppercase tracking-wide">
+                <th className="px-4 py-3 text-xs font-medium text-content-tertiary">
                   {t('boq.description', { defaultValue: 'Description' })}
                 </th>
-                <th className="px-4 py-3 text-xs font-semibold text-content-tertiary uppercase tracking-wide">
+                <th className="px-4 py-3 text-xs font-medium text-content-tertiary">
                   {t('boq.unit', { defaultValue: 'Unit' })}
                 </th>
-                <th className="px-4 py-3 text-xs font-semibold text-content-tertiary uppercase tracking-wide text-right">
+                <th className="px-4 py-3 text-xs font-medium text-content-tertiary text-right">
                   {t('common.quantity')}
                 </th>
-                <th className="px-4 py-3 text-xs font-semibold text-content-tertiary uppercase tracking-wide text-right">
+                <th className="px-4 py-3 text-xs font-medium text-content-tertiary text-right">
                   {t('common.rate')}
                 </th>
-                <th className="px-4 py-3 text-xs font-semibold text-content-tertiary uppercase tracking-wide text-right">
+                <th className="px-4 py-3 text-xs font-medium text-content-tertiary text-right">
                   {t('boq.total', { defaultValue: 'Total' })}
                 </th>
               </tr>
             </thead>
             <tbody>
               {Array.from({ length: 8 }).map((_, i) => (
-                <ShimmerRow key={i} />
+                <SkeletonRow key={i} />
               ))}
             </tbody>
           </table>
@@ -378,7 +372,7 @@ function RecentEstimatesPanel({
       <div className="mb-2 flex items-center justify-between">
         <div className="flex items-center gap-2">
           <FileText size={15} className="text-content-tertiary" aria-hidden="true" />
-          <h3 className="text-sm font-semibold text-content-primary">
+          <h3 className="text-sm font-medium text-content-primary">
             {t('ai.recent_estimates', { defaultValue: 'Recent estimates' })}
           </h3>
           {data && data.total > 0 && (
@@ -423,7 +417,7 @@ function RecentEstimatesPanel({
                     onClick={() => !failed && !busy && onReopen(job.id)}
                     disabled={failed || busy}
                     className={clsx(
-                      'flex w-full items-center gap-3 px-4 py-2.5 text-left transition-colors',
+                      'flex w-full items-center gap-3 px-4 py-3 text-left transition-colors',
                       failed || busy
                         ? 'cursor-default opacity-70'
                         : 'hover:bg-surface-secondary/40 cursor-pointer',
@@ -435,7 +429,7 @@ function RecentEstimatesPanel({
                           job.input_filename ||
                           t('ai.untitled_estimate', { defaultValue: 'Untitled estimate' })}
                       </p>
-                      <p className="mt-0.5 flex flex-wrap items-center gap-x-2 gap-y-0.5 text-2xs text-content-tertiary">
+                      <p className="mt-1 flex flex-wrap items-center gap-x-2 gap-y-0.5 text-2xs text-content-tertiary">
                         <span>{fmtWhen(job.created_at)}</span>
                         {!failed && (
                           <>
@@ -610,12 +604,12 @@ function SaveToBOQDialog({ open, onClose, onSave, saving, enrichedMatches = 0, e
         aria-labelledby={titleId}
         className="relative w-full max-w-md animate-card-in rounded-2xl border border-border-light bg-surface-elevated p-6 shadow-xl"
       >
-        <h3 id={titleId} className="text-lg font-semibold text-content-primary mb-4">
+        <h3 id={titleId} className="text-lg font-medium text-content-primary mb-4">
           {t('ai.save_to_boq', { defaultValue: 'Save as BOQ' })}
         </h3>
 
         <div className="space-y-4">
-          <div className="flex flex-col gap-1.5">
+          <div className="flex flex-col gap-2">
             <label
               htmlFor={projectSelectId}
               className="text-sm font-medium text-content-primary"
@@ -626,7 +620,7 @@ function SaveToBOQDialog({ open, onClose, onSave, saving, enrichedMatches = 0, e
               id={projectSelectId}
               value={selectedProject}
               onChange={(e) => setSelectedProject(e.target.value)}
-              className="h-10 w-full rounded-lg border border-border bg-surface-primary px-3 text-sm text-content-primary transition-all duration-fast ease-oe focus:outline-none focus:ring-2 focus:ring-oe-blue focus:border-transparent hover:border-content-tertiary cursor-pointer appearance-none"
+              className="h-10 w-full rounded-lg border border-border bg-surface-primary px-3 text-sm text-content-primary transition-colors duration-fast ease-oe focus:outline-none focus:ring-2 focus:ring-oe-blue focus:border-transparent hover:border-content-tertiary cursor-pointer appearance-none"
             >
               <option value="" disabled>
                 {t('ai.choose_project', { defaultValue: '-- Choose a project --' })}
@@ -639,7 +633,7 @@ function SaveToBOQDialog({ open, onClose, onSave, saving, enrichedMatches = 0, e
             </select>
           </div>
 
-          <div className="flex flex-col gap-1.5">
+          <div className="flex flex-col gap-2">
             <label
               htmlFor={boqNameId}
               className="text-sm font-medium text-content-primary"
@@ -651,7 +645,7 @@ function SaveToBOQDialog({ open, onClose, onSave, saving, enrichedMatches = 0, e
               type="text"
               value={boqName}
               onChange={(e) => setBOQName(e.target.value)}
-              className="h-10 w-full rounded-lg border border-border bg-surface-primary px-3 text-sm text-content-primary placeholder:text-content-tertiary focus:outline-none focus:ring-2 focus:ring-oe-blue focus:border-transparent transition-all duration-fast ease-oe hover:border-content-tertiary"
+              className="h-10 w-full rounded-lg border border-border bg-surface-primary px-3 text-sm text-content-primary placeholder:text-content-tertiary focus:outline-none focus:ring-2 focus:ring-oe-blue focus:border-transparent transition-colors duration-fast ease-oe hover:border-content-tertiary"
               placeholder={t('ai.boq_name_placeholder', { defaultValue: 'Name for this BOQ...' })}
             />
           </div>
@@ -670,13 +664,13 @@ function SaveToBOQDialog({ open, onClose, onSave, saving, enrichedMatches = 0, e
                 type="checkbox"
                 checked={applyEnriched}
                 onChange={(e) => setApplyEnriched(e.target.checked)}
-                className="mt-0.5 h-4 w-4 shrink-0 rounded border-border text-emerald-600 focus:ring-emerald-500/40"
+                className="mt-1 h-4 w-4 shrink-0 rounded border-border text-emerald-600 focus:ring-emerald-500/40"
               />
               <span className="text-sm text-content-secondary">
                 <span className="font-medium text-content-primary">
                   {t('ai.apply_cwicr_rates', { defaultValue: 'Use matched CWICR rates' })}
                 </span>
-                <span className="mt-0.5 block text-xs text-content-tertiary">
+                <span className="mt-1 block text-xs text-content-tertiary">
                   {t('ai.apply_cwicr_rates_hint', {
                     defaultValue:
                       'Save {{count}} line(s) with the regional cost-database rate ({{region}}) instead of the AI estimate. The catalogue code is recorded on each position.',
@@ -755,22 +749,22 @@ function ResultsTable({ result, selectedCurrency, enrichResult }: { result: Esti
       <table className="w-full text-sm">
         <thead>
           <tr className="border-b border-border-light text-left">
-            <th className="px-4 py-3 text-xs font-semibold text-content-tertiary uppercase tracking-wide w-20">
+            <th className="px-4 py-3 text-xs font-medium text-content-tertiary w-20">
               {t('ai.col_pos', { defaultValue: 'Pos' })}
             </th>
-            <th className="px-4 py-3 text-xs font-semibold text-content-tertiary uppercase tracking-wide">
+            <th className="px-4 py-3 text-xs font-medium text-content-tertiary">
               {t('ai.col_description', { defaultValue: 'Description' })}
             </th>
-            <th className="px-4 py-3 text-xs font-semibold text-content-tertiary uppercase tracking-wide w-16">
+            <th className="px-4 py-3 text-xs font-medium text-content-tertiary w-16">
               {t('ai.col_unit', { defaultValue: 'Unit' })}
             </th>
-            <th className="px-4 py-3 text-xs font-semibold text-content-tertiary uppercase tracking-wide text-right w-24">
+            <th className="px-4 py-3 text-xs font-medium text-content-tertiary text-right w-24">
               {t('common.quantity')}
             </th>
-            <th className="px-4 py-3 text-xs font-semibold text-content-tertiary uppercase tracking-wide text-right w-28">
+            <th className="px-4 py-3 text-xs font-medium text-content-tertiary text-right w-28">
               {t('ai.col_rate', { defaultValue: 'Unit Rate' })}
             </th>
-            <th className="px-4 py-3 text-xs font-semibold text-content-tertiary uppercase tracking-wide text-right w-32">
+            <th className="px-4 py-3 text-xs font-medium text-content-tertiary text-right w-32">
               {t('ai.col_total', { defaultValue: 'Total' })}
             </th>
           </tr>
@@ -788,7 +782,7 @@ function ResultsTable({ result, selectedCurrency, enrichResult }: { result: Esti
                   <tr className="bg-surface-secondary/50">
                     <td
                       colSpan={6}
-                      className="px-4 py-2 text-xs font-semibold text-content-secondary uppercase tracking-wider"
+                      className="px-4 py-2 text-xs font-medium text-content-secondaryr"
                     >
                       {item.category}
                     </td>
@@ -804,7 +798,7 @@ function ResultsTable({ result, selectedCurrency, enrichResult }: { result: Esti
                   <td className="px-4 py-3 text-content-primary">
                     {item.description}
                     {Object.keys(item.classification).length > 0 && (
-                      <div className="mt-0.5 flex gap-1">
+                      <div className="mt-1 flex gap-1">
                         {Object.entries(item.classification).map(([std, code]) => (
                           <Badge key={std} variant="neutral" size="sm">
                             {std}: {code}
@@ -828,7 +822,7 @@ function ResultsTable({ result, selectedCurrency, enrichResult }: { result: Esti
                               the converted qty (qty * rate == total). */}
                           {formatNumber(displayQty.convertRate(item.unit_rate, item.unit || ''), currencyArg)}
                         </span>
-                        <span className="text-emerald-600 font-semibold" title={`CWICR: ${bestMatch.code} (${Math.round(bestMatch.score * 100)}% match)`}>
+                        <span className="text-emerald-600 font-medium" title={`CWICR: ${bestMatch.code} (${Math.round(bestMatch.score * 100)}% match)`}>
                           {/* Show the matched rate in ITS OWN currency so we never
                               imply a foreign rate is in the estimate currency.
                               Issue #270: only when it is in the estimate currency
@@ -839,12 +833,12 @@ function ResultsTable({ result, selectedCurrency, enrichResult }: { result: Esti
                             ? formatNumber(displayQty.convertRate(bestMatch.rate, item.unit || ''), currencyArg)
                             : formatNumber(bestMatch.rate, (bestMatch.currency || currency) || undefined)}
                         </span>
-                        <span className="text-[10px] text-emerald-600/70 font-normal">
+                        <span className="text-xs text-emerald-600/70 font-normal">
                           {bestMatch.code}
                         </span>
                         {!matchAppliesToTotal(bestMatch) && (
                           <span
-                            className="text-[10px] text-amber-600 font-medium"
+                            className="text-xs text-amber-600 font-medium"
                             title={t('ai.match_currency_mismatch_hint', {
                               defaultValue:
                                 'Matched rate is in a different currency and is not folded into the total.',
@@ -868,7 +862,7 @@ function ResultsTable({ result, selectedCurrency, enrichResult }: { result: Esti
                         <span className="line-through text-content-quaternary text-xs">
                           {formatNumber(item.total, currencyArg)}
                         </span>
-                        <span className="text-emerald-600 font-semibold">
+                        <span className="text-emerald-600 font-medium">
                           {formatNumber(item.quantity * bestMatch.rate, currencyArg)}
                         </span>
                       </div>
@@ -885,11 +879,11 @@ function ResultsTable({ result, selectedCurrency, enrichResult }: { result: Esti
           <tr className="border-t-2 border-border">
             <td
               colSpan={5}
-              className="px-4 py-4 text-right text-base font-semibold text-content-primary"
+              className="px-4 py-4 text-right text-base font-medium text-content-primary"
             >
               {t('ai.grand_total', { defaultValue: 'Grand Total' })}
             </td>
-            <td className="px-4 py-4 text-right font-mono text-lg font-bold text-oe-blue">
+            <td className="px-4 py-4 text-right font-mono text-lg font-medium text-oe-blue">
               {enrichMap.size > 0 ? (
                 <div className="flex flex-col items-end gap-0.5">
                   <span className="line-through text-content-quaternary text-sm font-normal">
@@ -980,7 +974,7 @@ function QuantityTablesResult({ data }: { data: CadExtractResponse }) {
               ) : (
                 <ChevronRight size={16} className="text-content-tertiary shrink-0" />
               )}
-              <span className="text-sm font-semibold text-content-primary flex-1">
+              <span className="text-sm font-medium text-content-primary flex-1">
                 {group.category}
               </span>
               <span className="text-xs text-content-tertiary">
@@ -1012,22 +1006,22 @@ function QuantityTablesResult({ data }: { data: CadExtractResponse }) {
                 <table className="w-full text-sm">
                   <thead>
                     <tr className="border-b border-border-light/50 text-left">
-                      <th className="px-4 py-2 text-xs font-semibold text-content-tertiary uppercase tracking-wide">
+                      <th className="px-4 py-2 text-xs font-medium text-content-tertiary">
                         {t('common.type')}
                       </th>
-                      <th className="px-4 py-2 text-xs font-semibold text-content-tertiary uppercase tracking-wide">
+                      <th className="px-4 py-2 text-xs font-medium text-content-tertiary">
                         {t('ai.cad_col_material', { defaultValue: 'Material' })}
                       </th>
-                      <th className="px-4 py-2 text-xs font-semibold text-content-tertiary uppercase tracking-wide text-right w-20">
+                      <th className="px-4 py-2 text-xs font-medium text-content-tertiary text-right w-20">
                         {t('ai.cad_col_count', { defaultValue: 'Count' })}
                       </th>
-                      <th className="px-4 py-2 text-xs font-semibold text-content-tertiary uppercase tracking-wide text-right w-28">
+                      <th className="px-4 py-2 text-xs font-medium text-content-tertiary text-right w-28">
                         {swapUnit(t('ai.cad_col_volume', { defaultValue: 'Volume (m\u00b3)' }), 'm\u00b3')}
                       </th>
-                      <th className="px-4 py-2 text-xs font-semibold text-content-tertiary uppercase tracking-wide text-right w-28">
+                      <th className="px-4 py-2 text-xs font-medium text-content-tertiary text-right w-28">
                         {swapUnit(t('ai.cad_col_area', { defaultValue: 'Area (m\u00b2)' }), 'm\u00b2')}
                       </th>
-                      <th className="px-4 py-2 text-xs font-semibold text-content-tertiary uppercase tracking-wide text-right w-24">
+                      <th className="px-4 py-2 text-xs font-medium text-content-tertiary text-right w-24">
                         {swapUnit(t('ai.cad_col_length', { defaultValue: 'Length (m)' }), 'm')}
                       </th>
                     </tr>
@@ -1049,13 +1043,13 @@ function QuantityTablesResult({ data }: { data: CadExtractResponse }) {
                   </tbody>
                   <tfoot>
                     <tr className="border-t border-border bg-surface-secondary/30">
-                      <td colSpan={2} className="px-4 py-2 text-xs font-semibold text-content-secondary uppercase">
+                      <td colSpan={2} className="px-4 py-2 text-xs font-medium text-content-secondary">
                         {t('ai.cad_subtotal', { defaultValue: 'Subtotal' })}
                       </td>
-                      <td className="px-4 py-2 text-right font-mono font-semibold text-content-primary">{fmtNum(group.totals.count)}</td>
-                      <td className="px-4 py-2 text-right font-mono font-semibold text-content-primary">{fmtNum(dVol(group.totals.volume_m3))}</td>
-                      <td className="px-4 py-2 text-right font-mono font-semibold text-content-primary">{fmtNum(dArea(group.totals.area_m2))}</td>
-                      <td className="px-4 py-2 text-right font-mono font-semibold text-content-primary">{fmtNum(dLen(group.totals.length_m))}</td>
+                      <td className="px-4 py-2 text-right font-mono font-medium text-content-primary">{fmtNum(group.totals.count)}</td>
+                      <td className="px-4 py-2 text-right font-mono font-medium text-content-primary">{fmtNum(dVol(group.totals.volume_m3))}</td>
+                      <td className="px-4 py-2 text-right font-mono font-medium text-content-primary">{fmtNum(dArea(group.totals.area_m2))}</td>
+                      <td className="px-4 py-2 text-right font-mono font-medium text-content-primary">{fmtNum(dLen(group.totals.length_m))}</td>
                     </tr>
                   </tfoot>
                 </table>
@@ -1068,10 +1062,10 @@ function QuantityTablesResult({ data }: { data: CadExtractResponse }) {
       {/* Grand totals */}
       <div className="rounded-xl border-2 border-oe-blue/20 bg-oe-blue-subtle/30 px-4 py-3">
         <div className="flex items-center justify-between">
-          <span className="text-sm font-bold text-content-primary">
+          <span className="text-sm font-medium text-content-primary">
             {t('ai.cad_grand_total', { defaultValue: 'Grand Total' })}
           </span>
-          <div className="flex items-center gap-4 text-sm font-mono font-bold text-oe-blue">
+          <div className="flex items-center gap-4 text-sm font-mono font-medium text-oe-blue">
             {data.grand_totals.count > 0 && <span>{fmtNum(data.grand_totals.count)} pcs</span>}
             {data.grand_totals.volume_m3 > 0 && <span>{fmtNum(dVol(data.grand_totals.volume_m3))} {volUnit}</span>}
             {data.grand_totals.area_m2 > 0 && <span>{fmtNum(dArea(data.grand_totals.area_m2))} {areaUnit}</span>}
@@ -1133,8 +1127,8 @@ function FileDropZone({
       onClick={() => !disabled && inputRef.current?.click()}
       className={`
         flex flex-col items-center justify-center gap-3 rounded-xl border-2 border-dashed
-        px-6 py-8 text-center cursor-pointer transition-all duration-200
-        ${dragOver ? 'border-oe-blue bg-oe-blue-subtle/30 scale-[1.01]' : 'border-border-light hover:border-content-tertiary hover:bg-surface-secondary/50'}
+        px-6 py-8 text-center cursor-pointer transition-colors duration-200
+        ${dragOver ? 'border-oe-blue bg-oe-blue-subtle' : 'border-border-light hover:border-content-tertiary hover:bg-surface-secondary/50'}
         ${disabled ? 'opacity-50 pointer-events-none' : ''}
       `}
     >
@@ -1258,16 +1252,16 @@ function CompactOptions({
   const currencyId = useId();
   const standardId = useId();
   const selectClass =
-    'h-9 w-full rounded-lg border border-border bg-surface-primary px-2.5 text-sm text-content-primary transition-all duration-fast ease-oe focus:outline-none focus:ring-2 focus:ring-oe-blue/30 focus:border-oe-blue hover:border-content-tertiary cursor-pointer appearance-none';
+    'h-9 w-full rounded-lg border border-border bg-surface-primary px-3 text-sm text-content-primary transition-colors duration-fast ease-oe focus:outline-none focus:ring-2 focus:ring-oe-blue/30 focus:border-oe-blue hover:border-content-tertiary cursor-pointer appearance-none';
   const inputClass =
-    'h-9 w-full rounded-lg border border-border bg-surface-primary px-2.5 text-sm text-content-primary placeholder:text-content-tertiary focus:outline-none focus:ring-2 focus:ring-oe-blue/30 focus:border-oe-blue transition-all duration-fast ease-oe hover:border-content-tertiary';
+    'h-9 w-full rounded-lg border border-border bg-surface-primary px-3 text-sm text-content-primary placeholder:text-content-tertiary focus:outline-none focus:ring-2 focus:ring-oe-blue/30 focus:border-oe-blue transition-colors duration-fast ease-oe hover:border-content-tertiary';
 
   return (
     <div className="mt-4 grid grid-cols-3 gap-3">
       <div className="flex flex-col gap-1">
         <label
           htmlFor={locationId}
-          className="text-xs font-medium text-content-tertiary uppercase tracking-wide"
+          className="text-xs font-medium text-content-tertiary"
         >
           {t('ai.location', { defaultValue: 'Location' })}
         </label>
@@ -1284,7 +1278,7 @@ function CompactOptions({
       <div className="flex flex-col gap-1">
         <label
           htmlFor={currencyId}
-          className="text-xs font-medium text-content-tertiary uppercase tracking-wide"
+          className="text-xs font-medium text-content-tertiary"
         >
           {t('common.currency')}
         </label>
@@ -1305,7 +1299,7 @@ function CompactOptions({
       <div className="flex flex-col gap-1">
         <label
           htmlFor={standardId}
-          className="text-xs font-medium text-content-tertiary uppercase tracking-wide"
+          className="text-xs font-medium text-content-tertiary"
         >
           {t('ai.standard_label', { defaultValue: 'Standard' })}
         </label>
@@ -1330,9 +1324,9 @@ function CompactOptions({
 // ── Converter color map ──────────────────────────────────────────────────────
 
 const CONVERTER_COLORS: Record<string, { bg: string; border: string; icon: string }> = {
-  dwg: { bg: 'from-red-500/10 to-orange-500/10', border: 'border-red-200 dark:border-red-900/30', icon: 'bg-gradient-to-br from-red-500 to-orange-500' },
-  rvt: { bg: 'from-blue-500/10 to-indigo-500/10', border: 'border-blue-200 dark:border-blue-900/30', icon: 'bg-gradient-to-br from-blue-500 to-indigo-500' },
-  ifc: { bg: 'from-emerald-500/10 to-green-500/10', border: 'border-emerald-200 dark:border-emerald-900/30', icon: 'bg-gradient-to-br from-emerald-500 to-green-500' },
+  dwg: { bg: 'bg-surface-secondary', border: 'border-border-light', icon: 'bg-surface-tertiary text-content-secondary' },
+  rvt: { bg: 'bg-surface-secondary', border: 'border-border-light', icon: 'bg-oe-blue-subtle text-oe-blue-text' },
+  ifc: { bg: 'bg-surface-secondary', border: 'border-border-light', icon: 'bg-surface-tertiary text-content-secondary' },
 };
 
 // ── Full Converter Section (for /data-explorer) ──────────────────────────────
@@ -1376,7 +1370,7 @@ function CadConverterSection({
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
           <HardHat size={18} className="text-oe-blue" />
-          <h3 className="text-sm font-semibold text-content-primary">
+          <h3 className="text-sm font-medium text-content-primary">
             {t('ai.cad_converters_title', { defaultValue: 'Vastukar Converter Modules' })}
           </h3>
           <Badge variant={installedCount > 0 ? 'success' : 'warning'} size="sm">
@@ -1393,7 +1387,7 @@ function CadConverterSection({
           { num: '3', label: t('ai.cad_step_extract', { defaultValue: 'Get quantities & elements' }) },
         ].map((s, i) => (
           <div key={i} className="flex items-center gap-2">
-            <span className="flex h-5 w-5 items-center justify-center rounded-full bg-oe-blue/10 text-2xs font-bold text-oe-blue">
+            <span className="flex h-5 w-5 items-center justify-center rounded bg-oe-blue-subtle text-xs font-medium tabular-nums text-oe-blue-text">
               {s.num}
             </span>
             <span>{s.label}</span>
@@ -1416,19 +1410,20 @@ function CadConverterSection({
                   <CheckCircle2 size={20} className="text-semantic-success" />
                 </div>
               ) : (
-                <div className="relative flex h-9 w-9 items-center justify-center rounded-lg bg-oe-blue-subtle">
-                  <HardDrive size={18} className="text-oe-blue" />
-                  <div className="absolute -top-0.5 -right-0.5 h-2.5 w-2.5 rounded-full bg-oe-blue animate-ping" />
-                  <div className="absolute -top-0.5 -right-0.5 h-2.5 w-2.5 rounded-full bg-oe-blue" />
+                <div className="relative flex h-9 w-9 items-center justify-center rounded-lg bg-oe-blue-subtle text-oe-blue-text">
+                  <HardDrive size={18} strokeWidth={1.5} />
+                  {/* Live install: the pulse marks a genuinely running job. */}
+                  <span className="absolute -top-1 -right-1 h-2 w-2 rounded-full bg-oe-blue animate-ping" aria-hidden="true" />
+                  <span className="absolute -top-1 -right-1 h-2 w-2 rounded-full bg-oe-blue" aria-hidden="true" />
                 </div>
               )}
               <div className="flex-1 min-w-0">
-                <h4 className="text-sm font-semibold text-content-primary">
+                <h4 className="text-sm font-medium text-content-primary">
                   {installError ? t('quantities.install_failed', { defaultValue: 'Installation failed' })
                     : installResult ? t('quantities.install_success', { defaultValue: 'Converter installed successfully' })
                     : t('quantities.installing_converter', { defaultValue: `Installing ${installingName}...`, name: installingName })}
                 </h4>
-                <p className="text-xs text-content-tertiary mt-0.5">
+                <p className="text-xs text-content-tertiary mt-1">
                   {installError ?? (installResult ? t('quantities.install_ready', { defaultValue: 'Converter is ready to use.' }) : phaseLabels[phase])}
                 </p>
               </div>
@@ -1443,11 +1438,11 @@ function CadConverterSection({
               )}
             </div>
             {/* Progress bar */}
-            <div className="h-2 w-full overflow-hidden rounded-full bg-surface-secondary">
+            <div className="h-1 w-full overflow-hidden rounded bg-surface-tertiary">
               <div
                 className={clsx(
-                  'h-full rounded-full transition-all duration-1000 ease-out',
-                  installError ? 'bg-red-500' : installResult ? 'bg-semantic-success' : 'bg-gradient-to-r from-oe-blue via-blue-400 to-oe-blue bg-[length:200%_100%] animate-shimmer',
+                  'h-full rounded transition-[width] duration-500 ease-out',
+                  installError ? 'bg-semantic-error' : installResult ? 'bg-semantic-success' : 'bg-oe-blue',
                 )}
                 style={{ width: `${progressPct}%` }}
               />
@@ -1465,17 +1460,16 @@ function CadConverterSection({
             <div
               key={c.id}
               className={clsx(
-                'group relative flex flex-col rounded-xl border p-4 transition-all duration-200',
+                'group relative flex flex-col rounded-xl border p-4 transition-colors duration-fast ease-oe',
                 c.installed
-                  ? 'border-emerald-300 dark:border-emerald-800/50 bg-gradient-to-br from-emerald-500/5 to-teal-500/5'
-                  : clsx('bg-gradient-to-br', colors.bg, colors.border),
+                  ? 'border-semantic-success/30 bg-semantic-success-bg'
+                  : clsx(colors.bg, colors.border),
               )}
             >
               {/* Recommended badge */}
               {!c.installed && !isInstalling && (
                 <div className="absolute -top-2 left-3 z-10">
-                  <span className="inline-flex items-center gap-1 rounded-full bg-gradient-to-r from-amber-400 to-orange-500 px-2 py-0.5 text-2xs font-bold text-white shadow-sm">
-                    <Star size={9} />
+                  <span className="inline-flex items-center gap-1 rounded bg-oe-blue px-2 py-1 text-xs font-medium text-white">
                     {t('quantities.recommended', { defaultValue: 'Recommended' })}
                   </span>
                 </div>
@@ -1484,17 +1478,17 @@ function CadConverterSection({
               {/* Status badge */}
               <div className="absolute top-2.5 right-2.5">
                 {isInstalling ? (
-                  <span className="inline-flex items-center gap-1 rounded-full bg-blue-100 dark:bg-blue-900/30 px-2 py-0.5 text-2xs font-semibold text-blue-700 dark:text-blue-400">
+                  <span className="inline-flex items-center gap-1 rounded bg-oe-blue-subtle px-2 py-1 text-xs font-medium text-oe-blue-text">
                     <Loader2 size={10} className="animate-spin" />
                     {t('quantities.converter_installing', { defaultValue: 'Installing...' })}
                   </span>
                 ) : c.installed ? (
-                  <span className="inline-flex items-center gap-1 rounded-full bg-emerald-100 dark:bg-emerald-900/30 px-2 py-0.5 text-2xs font-semibold text-emerald-700 dark:text-emerald-400">
+                  <span className="inline-flex items-center gap-1 rounded bg-semantic-success-bg px-2 py-1 text-xs font-medium text-semantic-success">
                     <CheckCircle2 size={10} />
                     {t('quantities.converter_installed', { defaultValue: 'Installed' })}
                   </span>
                 ) : (
-                  <span className="inline-flex items-center gap-1 rounded-full bg-amber-100 dark:bg-amber-900/30 px-2 py-0.5 text-2xs font-semibold text-amber-700 dark:text-amber-400">
+                  <span className="inline-flex items-center gap-1 rounded bg-semantic-warning-bg px-2 py-1 text-xs font-medium text-semantic-warning">
                     <Download size={10} />
                     {t('quantities.converter_available', { defaultValue: 'Available' })}
                   </span>
@@ -1503,11 +1497,11 @@ function CadConverterSection({
 
               {/* Icon + Name */}
               <div className="flex items-center gap-3">
-                <div className={clsx('flex h-9 w-9 items-center justify-center rounded-lg text-white', c.installed ? 'bg-gradient-to-br from-emerald-500 to-teal-500' : colors.icon)}>
-                  <FileInput size={18} strokeWidth={1.75} />
+                <div className={clsx('flex h-9 w-9 items-center justify-center rounded-lg', c.installed ? 'bg-semantic-success-bg text-semantic-success' : colors.icon)}>
+                  <FileInput size={18} strokeWidth={1.5} />
                 </div>
                 <div>
-                  <h4 className="text-sm font-semibold text-content-primary">{converterName(t, c)}</h4>
+                  <h4 className="text-sm font-medium text-content-primary">{converterName(t, c)}</h4>
                   <p className="text-2xs text-content-quaternary">{c.engine}</p>
                 </div>
               </div>
@@ -1518,7 +1512,7 @@ function CadConverterSection({
               {/* Extensions */}
               <div className="mt-2 flex flex-wrap gap-1">
                 {c.extensions.map((ext) => (
-                  <span key={ext} className="inline-flex rounded bg-surface-tertiary px-1.5 py-0.5 text-2xs font-mono text-content-secondary">
+                  <span key={ext} className="inline-flex rounded bg-surface-tertiary px-2 py-0.5 text-2xs font-mono text-content-secondary">
                     {ext}
                   </span>
                 ))}
@@ -1555,8 +1549,8 @@ function CadConverterSection({
       </div>
 
       {/* Info note */}
-      <div className="flex items-start gap-2 rounded-lg bg-oe-blue/10 dark:bg-oe-blue/[0.14] px-3 py-2.5">
-        <Info size={14} className="shrink-0 mt-0.5 text-oe-blue-text" />
+      <div className="flex items-start gap-2 rounded-lg bg-oe-blue/10 dark:bg-oe-blue/[0.14] px-3 py-3">
+        <Info size={14} className="shrink-0 mt-1 text-oe-blue-text" />
         <p className="text-xs text-oe-blue-text leading-relaxed">
           {t('ai.cad_module_info_extract', {
             defaultValue: 'CAD/BIM files are converted using Vastukar converters and quantities are extracted directly - no AI API key required.',
@@ -2596,20 +2590,6 @@ export function QuickEstimatePage() {
       data-testid="ai-quick-estimate-page"
       className="relative min-h-full w-full overflow-hidden animate-fade-in"
     >
-      {/* Page-level gradient backdrop (sky → white → emerald) */}
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-0 -z-10 bg-gradient-to-br from-sky-50 via-white to-emerald-50/40 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950"
-      />
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute -top-40 -left-40 -z-10 h-96 w-96 rounded-full bg-gradient-radial from-sky-400/15 to-transparent blur-3xl"
-      />
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute -bottom-40 -right-40 -z-10 h-96 w-96 rounded-full bg-gradient-radial from-emerald-400/15 to-transparent blur-3xl"
-      />
-
       <div className="space-y-5 px-4 py-5 lg:px-6 lg:py-6">
       <Breadcrumb
         items={[
@@ -2640,10 +2620,9 @@ export function QuickEstimatePage() {
               {isConfigured && aiSettings?.preferred_model && (
                 <span
                   data-testid="ai-quick-estimate-model-pill"
-                  className="inline-flex items-center gap-1.5 rounded-full border border-border-light bg-surface-elevated px-3 py-1 text-xs font-medium text-content-secondary"
+                  className="inline-flex items-center gap-2 rounded-lg border border-border-light bg-surface-elevated px-3 py-1 text-xs font-medium text-content-secondary"
                 >
-                  <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
-                  <Zap size={11} className="text-violet-500" />
+                  <Zap size={14} strokeWidth={1.5} className="text-content-tertiary" />
                   {t('ai.model_pill', {
                     defaultValue: 'model: {{model}}',
                     model: aiSettings.preferred_model,
@@ -2700,7 +2679,7 @@ export function QuickEstimatePage() {
         isCadRoute ? (
           /* ── CAD route: compact AI info (AI is optional here) ─── */
           <div
-            className="animate-card-in flex items-center gap-3 rounded-xl border border-border-light bg-surface-secondary/50 px-4 py-2.5"
+            className="animate-card-in flex items-center gap-3 rounded-xl border border-border-light bg-surface-secondary/50 px-4 py-3"
             style={{ animationDelay: '50ms' }}
           >
             <Sparkles size={16} className="text-content-tertiary shrink-0" />
@@ -2716,13 +2695,13 @@ export function QuickEstimatePage() {
         ) : (
           /* ── AI Estimate route: prominent setup card ─── */
           <div
-            className="animate-card-in rounded-2xl border-2 border-dashed border-oe-blue/30 bg-gradient-to-br from-oe-blue-subtle/60 to-surface-elevated p-6 text-center"
+            className="animate-card-in rounded-xl border border-dashed border-oe-blue/30 bg-surface-primary p-6 text-center"
             style={{ animationDelay: '50ms' }}
           >
             <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-oe-blue/10">
-              <Sparkles size={28} className="text-oe-blue" />
+              <FileText size={18} strokeWidth={1.5} className="text-oe-blue-text" />
             </div>
-            <h3 className="text-lg font-bold text-content-primary">
+            <h3 className="text-lg font-medium text-content-primary">
               {t('ai.setup_required_title', { defaultValue: 'Connect your AI to get started' })}
             </h3>
             <p className="mt-2 text-sm text-content-secondary max-w-md mx-auto">
@@ -2737,21 +2716,20 @@ export function QuickEstimatePage() {
                 onClick={() => navigate('/settings')}
                 icon={<ArrowRight size={16} />}
                 iconPosition="right"
-                className="btn-shimmer"
               >
                 {t('ai.configure_ai', { defaultValue: 'Configure AI Provider' })}
               </Button>
             </div>
             <div className="mt-4 flex items-center justify-center gap-4 text-xs text-content-tertiary">
-              <span className="flex items-center gap-1.5">
+              <span className="flex items-center gap-2">
                 <span className="h-1.5 w-1.5 rounded-full bg-content-tertiary" />
                 Anthropic Claude
               </span>
-              <span className="flex items-center gap-1.5">
+              <span className="flex items-center gap-2">
                 <span className="h-1.5 w-1.5 rounded-full bg-content-tertiary" />
                 OpenAI GPT-4
               </span>
-              <span className="flex items-center gap-1.5">
+              <span className="flex items-center gap-2">
                 <span className="h-1.5 w-1.5 rounded-full bg-content-tertiary" />
                 Google Gemini
               </span>
@@ -2763,13 +2741,13 @@ export function QuickEstimatePage() {
             "Status:" sr-only prefix so meaning does not rely on green
             colour alone (WCAG 1.4.1). */
         <div
-          className="animate-card-in flex items-center gap-3 rounded-xl bg-semantic-success-bg/60 border border-semantic-success/20 px-4 py-2.5"
+          className="animate-card-in flex items-center gap-3 rounded-xl bg-semantic-success-bg/60 border border-semantic-success/20 px-4 py-3"
           style={{ animationDelay: '50ms' }}
           role="status"
         >
           <div
             aria-hidden="true"
-            className="flex h-7 w-7 items-center justify-center rounded-full bg-semantic-success/20"
+            className="flex h-7 w-7 items-center justify-center rounded-lg bg-semantic-success-bg"
           >
             <CheckCircle2 size={14} className="text-semantic-success" />
           </div>
@@ -2806,7 +2784,7 @@ export function QuickEstimatePage() {
               <Info size={15} className="text-oe-blue" />
             </div>
             <div className="flex-1 min-w-0">
-              <p className="text-xs font-semibold text-content-primary mb-1">
+              <p className="text-xs font-medium text-content-primary mb-1">
                 {t('ai.estimate_intro_title', {
                   defaultValue: 'A first-pass estimate in seconds - then you refine it',
                 })}
@@ -2817,22 +2795,22 @@ export function QuickEstimatePage() {
                     'Pick a source below. The AI returns a structured BOQ with quantities and indicative unit rates. Match those rates against the real CWICR cost database, save it as a project BOQ, then validate it. Treat AI numbers as a starting point - always review before pricing a tender.',
                 })}
               </p>
-              <div className="mt-2 flex flex-wrap items-center gap-1.5 text-2xs text-content-tertiary">
+              <div className="mt-2 flex flex-wrap items-center gap-2 text-2xs text-content-tertiary">
                 {[
                   t('ai.estimate_step_1', { defaultValue: 'Describe / upload' }),
                   t('ai.estimate_step_2', { defaultValue: 'AI drafts BOQ' }),
                   t('ai.estimate_step_3', { defaultValue: 'Match Cost DB' }),
                   t('ai.estimate_step_4', { defaultValue: 'Save & validate' }),
                 ].map((step, i, arr) => (
-                  <span key={step} className="flex items-center gap-1.5">
-                    <span className="inline-flex items-center gap-1 rounded-full bg-surface-primary border border-border-light px-2 py-0.5">
-                      <span className="inline-flex h-3.5 w-3.5 items-center justify-center rounded-full bg-oe-blue/10 text-[9px] font-bold text-oe-blue">
+                  <span key={step} className="flex items-center gap-2">
+                    <span className="inline-flex items-center gap-1 rounded-md bg-surface-primary border border-border-light px-2 py-1">
+                      <span className="inline-flex h-4 w-4 items-center justify-center rounded bg-oe-blue-subtle text-xs font-medium tabular-nums text-oe-blue-text">
                         {i + 1}
                       </span>
                       {step}
                     </span>
                     {i < arr.length - 1 && (
-                      <ArrowRight size={10} className="text-content-quaternary" />
+                      <ArrowRight size={14} strokeWidth={1.5} className="text-content-quaternary" />
                     )}
                   </span>
                 ))}
@@ -2870,29 +2848,29 @@ export function QuickEstimatePage() {
                 onClick={() => handleTabChange(tab.id)}
                 disabled={isPending}
                 className={clsx(
-                  'group relative flex flex-col items-center gap-1.5 overflow-hidden rounded-xl px-2 py-3 text-center transition-all border backdrop-blur-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-oe-blue',
+                  'group flex flex-col items-center gap-2 rounded-lg border px-2 py-3 text-center transition-colors duration-fast ease-oe focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-oe-blue',
                   isActive
-                    ? 'border-violet-300/60 bg-gradient-to-br from-violet-50/90 via-white/80 to-sky-50/70 shadow-md shadow-violet-500/10 ring-1 ring-violet-400/20 dark:border-violet-400/30 dark:from-violet-500/10 dark:via-slate-900/40 dark:to-sky-500/10'
-                    : 'border-white/40 bg-white/50 hover:-translate-y-0.5 hover:border-violet-300/40 hover:bg-white/80 hover:shadow-lg dark:border-white/5 dark:bg-slate-900/40 dark:hover:bg-slate-800/60',
+                    ? 'border-oe-blue/30 bg-oe-blue-subtle'
+                    : 'border-border-light bg-surface-primary hover:border-content-tertiary hover:bg-surface-secondary',
                   isPending && 'opacity-50 pointer-events-none',
                 )}
               >
                 <div
                   aria-hidden="true"
                   className={clsx(
-                    'flex h-9 w-9 shrink-0 items-center justify-center rounded-lg transition-all',
+                    'flex h-9 w-9 shrink-0 items-center justify-center rounded-md transition-colors duration-fast ease-oe',
                     isActive
-                      ? 'bg-gradient-to-br from-violet-500 to-sky-500 text-white shadow-sm shadow-violet-500/30'
-                      : 'bg-slate-100 text-content-tertiary group-hover:bg-violet-100 group-hover:text-violet-600 dark:bg-slate-800 dark:group-hover:bg-violet-500/20',
+                      ? 'bg-oe-blue text-white'
+                      : 'bg-surface-secondary text-content-tertiary group-hover:bg-surface-tertiary group-hover:text-content-secondary',
                   )}
                 >
                   {tab.icon}
                 </div>
                 <div>
-                  <div className={clsx('text-xs font-semibold', isActive ? 'text-violet-700 dark:text-violet-300' : 'text-content-primary')}>
+                  <div className={clsx('text-xs font-medium', isActive ? 'text-oe-blue-text' : 'text-content-primary')}>
                     {t(tab.labelKey, { defaultValue: tab.label })}
                   </div>
-                  <div className="text-2xs text-content-tertiary leading-tight mt-0.5">
+                  <div className="text-xs text-content-tertiary leading-tight mt-1">
                     {t(tab.descKey, { defaultValue: tab.descFallback })}
                   </div>
                 </div>
@@ -2911,20 +2889,15 @@ export function QuickEstimatePage() {
           id: `${tablistId}-panel-${activeTab}`,
           'aria-labelledby': `${tablistId}-tab-${activeTab}`,
         })}
-        className="animate-card-in relative overflow-hidden rounded-2xl border border-white/40 bg-white/60 backdrop-blur-xl shadow-lg shadow-slate-900/[0.04] dark:border-white/5 dark:bg-slate-900/40 dark:shadow-slate-950/30"
+        className="animate-card-in rounded-xl border border-border-light bg-surface-primary"
         style={{ animationDelay: '200ms' }}
       >
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute -top-24 -right-24 h-56 w-56 rounded-full bg-gradient-radial from-sky-500/15 to-transparent blur-3xl"
-        />
-        {/* Coloured section accent bar */}
-        <div className="relative flex items-center gap-3 border-b border-white/40 px-5 py-3 dark:border-white/5">
-          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-sky-500 to-blue-600 text-white shadow-sm shadow-sky-500/25">
-            <Wand2 size={15} />
+        <div className="flex items-center gap-3 border-b border-border-light px-4 py-3">
+          <div className="flex h-8 w-8 items-center justify-center rounded-md bg-oe-blue-subtle text-oe-blue-text">
+            <Wand2 size={16} strokeWidth={1.5} />
           </div>
           <div className="min-w-0 flex-1">
-            <h2 className="text-sm font-semibold text-content-primary">
+            <h2 className="text-sm font-medium text-content-primary">
               {isCadRoute
                 ? t('ai.input_cad_title', { defaultValue: 'Upload a CAD or BIM file' })
                 : activeTab === 'text'
@@ -2979,11 +2952,11 @@ export function QuickEstimatePage() {
                 {/* Conversational intake v2 - opt-in guided flow that turns a
                     one-line request into a confirmed, vector-grounded group
                     board through a short dialogue (max 3 rounds). */}
-                <div className="flex flex-wrap items-center justify-between gap-3 rounded-xl border border-violet-200/60 bg-gradient-to-r from-violet-500/5 to-cyan-500/5 px-4 py-3 dark:border-violet-500/20">
+                <div className="flex flex-wrap items-center justify-between gap-4 rounded-lg border border-border-light bg-surface-secondary px-4 py-3">
                   <div className="flex items-center gap-2">
-                    <Wand2 size={18} className="text-violet-500" />
+                    <Wand2 size={18} strokeWidth={1.5} className="text-oe-blue-text" />
                     <div>
-                      <p className="text-sm font-semibold text-content-primary">
+                      <p className="text-sm font-medium text-content-primary">
                         {t('aiest.intake.cta_title', { defaultValue: 'Guided estimate (new)' })}
                       </p>
                       <p className="text-xs text-content-secondary">
@@ -3019,7 +2992,7 @@ export function QuickEstimatePage() {
                         'Describe your project...\n\nExample: "3-story residential building, 1200 m\u00b2 total area, reinforced concrete frame with brick facade, flat roof, standard MEP installations. Location: Berlin, Germany."',
                     })}
                     rows={6}
-                    className="w-full rounded-xl border border-white/50 bg-white/70 px-5 py-4 text-base text-content-primary placeholder:text-content-tertiary shadow-inner shadow-slate-900/[0.03] backdrop-blur-sm transition-all duration-normal ease-oe hover:border-violet-300/60 focus:border-violet-400 focus:bg-white/90 focus:outline-none focus:ring-2 focus:ring-violet-400/40 focus:shadow-[0_0_0_6px_rgba(139,92,246,0.08)] resize-none leading-relaxed dark:border-white/10 dark:bg-slate-900/50 dark:focus:bg-slate-900/70"
+                    className="w-full rounded-lg border border-border bg-surface-primary px-4 py-4 text-base text-content-primary placeholder:text-content-tertiary transition-colors duration-fast ease-oe hover:border-content-tertiary focus:border-oe-blue focus:outline-none focus:ring-2 focus:ring-oe-blue/30 resize-none leading-relaxed"
                     disabled={isPending}
                   />
                   <div className="absolute bottom-3 right-3 text-xs text-content-tertiary tabular-nums">
@@ -3033,7 +3006,7 @@ export function QuickEstimatePage() {
                     data-testid="ai-quick-estimate-examples"
                     className="flex flex-wrap items-center gap-2"
                   >
-                    <span className="text-2xs font-medium uppercase tracking-wide text-content-tertiary">
+                    <span className="text-2xs font-medium text-content-tertiary">
                       {t('ai.examples_label', { defaultValue: 'Try' })}
                     </span>
                     {[
@@ -3083,9 +3056,9 @@ export function QuickEstimatePage() {
                         type="button"
                         onClick={() => setDescription(ex.prompt)}
                         disabled={isPending}
-                        className="group inline-flex items-center gap-1.5 rounded-full border border-white/50 bg-white/60 px-3 py-1 text-xs font-medium text-content-secondary backdrop-blur transition hover:-translate-y-0.5 hover:border-violet-300/60 hover:bg-white/90 hover:text-violet-700 hover:shadow-sm dark:border-white/10 dark:bg-slate-800/50 dark:hover:bg-slate-700/60 dark:hover:text-violet-300"
+                        className="inline-flex items-center gap-2 rounded-md border border-border-light bg-surface-primary px-3 py-1 text-xs font-medium text-content-secondary transition-colors duration-fast ease-oe hover:border-content-tertiary hover:bg-surface-secondary"
                       >
-                        <Sparkles size={11} className="text-violet-500 opacity-70 group-hover:opacity-100" />
+                        <FileText size={14} strokeWidth={1.5} className="text-content-tertiary" />
                         {ex.label}
                       </button>
                     ))}
@@ -3098,7 +3071,7 @@ export function QuickEstimatePage() {
                   <div className="flex flex-col gap-1">
                     <label
                       htmlFor={`${descriptionId}-location`}
-                      className="text-xs font-medium text-content-tertiary uppercase tracking-wide"
+                      className="text-xs font-medium text-content-tertiary"
                     >
                       {t('ai.location', { defaultValue: 'Location' })}
                     </label>
@@ -3108,7 +3081,7 @@ export function QuickEstimatePage() {
                       value={location}
                       onChange={(e) => setLocation(e.target.value)}
                       placeholder={t('ai.location_placeholder', { defaultValue: 'e.g. Berlin' })}
-                      className="h-9 w-full rounded-lg border border-border bg-surface-primary px-2.5 text-sm text-content-primary placeholder:text-content-tertiary focus:outline-none focus:ring-2 focus:ring-oe-blue/30 focus:border-oe-blue transition-all duration-fast ease-oe hover:border-content-tertiary"
+                      className="h-9 w-full rounded-lg border border-border bg-surface-primary px-3 text-sm text-content-primary placeholder:text-content-tertiary focus:outline-none focus:ring-2 focus:ring-oe-blue/30 focus:border-oe-blue transition-colors duration-fast ease-oe hover:border-content-tertiary"
                       disabled={isPending}
                     />
                   </div>
@@ -3116,7 +3089,7 @@ export function QuickEstimatePage() {
                   <div className="flex flex-col gap-1">
                     <label
                       htmlFor={`${descriptionId}-currency`}
-                      className="text-xs font-medium text-content-tertiary uppercase tracking-wide"
+                      className="text-xs font-medium text-content-tertiary"
                     >
                       {t('common.currency')}
                     </label>
@@ -3124,7 +3097,7 @@ export function QuickEstimatePage() {
                       id={`${descriptionId}-currency`}
                       value={currency}
                       onChange={(e) => setCurrency(e.target.value)}
-                      className="h-9 w-full rounded-lg border border-border bg-surface-primary px-2.5 text-sm text-content-primary transition-all duration-fast ease-oe focus:outline-none focus:ring-2 focus:ring-oe-blue/30 focus:border-oe-blue hover:border-content-tertiary cursor-pointer appearance-none"
+                      className="h-9 w-full rounded-lg border border-border bg-surface-primary px-3 text-sm text-content-primary transition-colors duration-fast ease-oe focus:outline-none focus:ring-2 focus:ring-oe-blue/30 focus:border-oe-blue hover:border-content-tertiary cursor-pointer appearance-none"
                       disabled={isPending}
                     >
                       {CURRENCIES.map((c) => (
@@ -3138,7 +3111,7 @@ export function QuickEstimatePage() {
                   <div className="flex flex-col gap-1">
                     <label
                       htmlFor={`${descriptionId}-standard`}
-                      className="text-xs font-medium text-content-tertiary uppercase tracking-wide"
+                      className="text-xs font-medium text-content-tertiary"
                     >
                       {t('ai.standard_label', { defaultValue: 'Standard' })}
                     </label>
@@ -3146,7 +3119,7 @@ export function QuickEstimatePage() {
                       id={`${descriptionId}-standard`}
                       value={standard}
                       onChange={(e) => setStandard(e.target.value)}
-                      className="h-9 w-full rounded-lg border border-border bg-surface-primary px-2.5 text-sm text-content-primary transition-all duration-fast ease-oe focus:outline-none focus:ring-2 focus:ring-oe-blue/30 focus:border-oe-blue hover:border-content-tertiary cursor-pointer appearance-none"
+                      className="h-9 w-full rounded-lg border border-border bg-surface-primary px-3 text-sm text-content-primary transition-colors duration-fast ease-oe focus:outline-none focus:ring-2 focus:ring-oe-blue/30 focus:border-oe-blue hover:border-content-tertiary cursor-pointer appearance-none"
                       disabled={isPending}
                     >
                       {STANDARDS.map((s) => (
@@ -3160,7 +3133,7 @@ export function QuickEstimatePage() {
                   <div className="flex flex-col gap-1">
                     <label
                       htmlFor={buildingTypeId}
-                      className="text-xs font-medium text-content-tertiary uppercase tracking-wide"
+                      className="text-xs font-medium text-content-tertiary"
                     >
                       {t('ai.building_type', { defaultValue: 'Building Type' })}
                     </label>
@@ -3168,7 +3141,7 @@ export function QuickEstimatePage() {
                       id={buildingTypeId}
                       value={buildingType}
                       onChange={(e) => setBuildingType(e.target.value)}
-                      className="h-9 w-full rounded-lg border border-border bg-surface-primary px-2.5 text-sm text-content-primary transition-all duration-fast ease-oe focus:outline-none focus:ring-2 focus:ring-oe-blue/30 focus:border-oe-blue hover:border-content-tertiary cursor-pointer appearance-none"
+                      className="h-9 w-full rounded-lg border border-border bg-surface-primary px-3 text-sm text-content-primary transition-colors duration-fast ease-oe focus:outline-none focus:ring-2 focus:ring-oe-blue/30 focus:border-oe-blue hover:border-content-tertiary cursor-pointer appearance-none"
                       disabled={isPending}
                     >
                       {BUILDING_TYPES.map((bt) => (
@@ -3182,7 +3155,7 @@ export function QuickEstimatePage() {
                   <div className="flex flex-col gap-1">
                     <label
                       htmlFor={areaM2Id}
-                      className="text-xs font-medium text-content-tertiary uppercase tracking-wide"
+                      className="text-xs font-medium text-content-tertiary"
                     >
                       {t('ai.area', { defaultValue: displayQty.system === 'imperial' ? 'Area (sq ft)' : 'Area (m\u00b2)' })}
                     </label>
@@ -3194,7 +3167,7 @@ export function QuickEstimatePage() {
                       value={areaM2}
                       onChange={(e) => setAreaM2(e.target.value)}
                       placeholder="1200"
-                      className="h-9 w-full rounded-lg border border-border bg-surface-primary px-2.5 text-sm text-content-primary placeholder:text-content-tertiary focus:outline-none focus:ring-2 focus:ring-oe-blue/30 focus:border-oe-blue transition-all duration-fast ease-oe hover:border-content-tertiary"
+                      className="h-9 w-full rounded-lg border border-border bg-surface-primary px-3 text-sm text-content-primary placeholder:text-content-tertiary focus:outline-none focus:ring-2 focus:ring-oe-blue/30 focus:border-oe-blue transition-colors duration-fast ease-oe hover:border-content-tertiary"
                       disabled={isPending}
                     />
                   </div>
@@ -3319,12 +3292,12 @@ export function QuickEstimatePage() {
                         <HardDrive size={20} className={(convertersData.installed_count ?? 0) > 0 ? 'text-semantic-success' : 'text-amber-600'} />
                       </div>
                       <div>
-                        <p className="text-sm font-semibold text-content-primary">
+                        <p className="text-sm font-medium text-content-primary">
                           {(convertersData.installed_count ?? 0) > 0
                             ? t('ai.converters_ready', { defaultValue: `${convertersData.installed_count} of ${convertersData.total_count} converters installed`, installed: convertersData.installed_count, total: convertersData.total_count })
                             : t('ai.converters_none', { defaultValue: 'No converters installed - install below to enable CAD/BIM import' })}
                         </p>
-                        <p className="text-xs text-content-tertiary mt-0.5">
+                        <p className="text-xs text-content-tertiary mt-1">
                           {fmtList((convertersData.converters ?? []).filter((c: ConverterFull) => c.installed).map((c: ConverterFull) => converterName(t, c))) || t('ai.converters_hint', { defaultValue: 'Scroll down to install Vastukar converters for RVT, IFC, DWG' })}
                         </p>
                       </div>
@@ -3369,7 +3342,7 @@ export function QuickEstimatePage() {
                   /* Compact status panel on /ai-estimate?tab=cad */
                   <div className="mt-3 rounded-xl border border-border bg-surface-secondary/50 p-3">
                     <div className="flex items-center justify-between mb-2.5">
-                      <h4 className="text-xs font-semibold text-content-primary flex items-center gap-1.5">
+                      <h4 className="text-xs font-medium text-content-primary flex items-center gap-2">
                         <HardHat size={13} />
                         {t('ai.cad_converters_title', { defaultValue: 'Vastukar Converter Modules' })}
                       </h4>
@@ -3380,11 +3353,11 @@ export function QuickEstimatePage() {
                         </Badge>
                       )}
                     </div>
-                    <div className="grid grid-cols-2 gap-1.5">
+                    <div className="grid grid-cols-2 gap-2">
                       {(convertersData?.converters ?? []).map((c) => (
                         <div
                           key={c.id}
-                          className={`flex items-center gap-2 rounded-lg px-2.5 py-1.5 text-xs ${
+                          className={`flex items-center gap-2 rounded-lg px-3 py-2 text-xs ${
                             c.installed
                               ? 'bg-green-50 dark:bg-green-950/30 text-green-700 dark:text-green-400'
                               : 'bg-surface-primary text-content-tertiary'
@@ -3396,13 +3369,13 @@ export function QuickEstimatePage() {
                             <XCircle size={13} className="shrink-0 text-content-quaternary" />
                           )}
                           <span className="font-medium truncate">{converterName(t, c)}</span>
-                          <span className="ml-auto text-[10px] opacity-60">{fmtList(c.extensions)}</span>
+                          <span className="ml-auto text-xs opacity-60">{fmtList(c.extensions)}</span>
                         </div>
                       ))}
                     </div>
-                    <div className="mt-2.5 flex items-start gap-2 rounded-lg bg-oe-blue/10 dark:bg-oe-blue/[0.14] px-2.5 py-2">
-                      <Info size={13} className="shrink-0 mt-0.5 text-oe-blue-text" />
-                      <div className="text-[11px] text-oe-blue-text leading-relaxed">
+                    <div className="mt-2.5 flex items-start gap-2 rounded-lg bg-oe-blue/10 dark:bg-oe-blue/[0.14] px-3 py-2">
+                      <Info size={13} className="shrink-0 mt-1 text-oe-blue-text" />
+                      <div className="text-xs text-oe-blue-text leading-relaxed">
                         <p>
                           {t('ai.cad_module_info_extract', {
                             defaultValue:
@@ -3439,7 +3412,7 @@ export function QuickEstimatePage() {
                         'Paste your BOQ data here (from Excel, Word, or any table)...\n\nExample:\nPos\tDescription\tUnit\tQty\tRate\n01.01\tExcavation\tm3\t250\t18.50\n01.02\tConcrete C30/37\tm3\t120\t145.00\n01.03\tReinforcement BSt 500\tkg\t12000\t1.85',
                     })}
                     rows={8}
-                    className="w-full rounded-xl border border-border bg-surface-primary px-4 py-3 text-sm text-content-primary placeholder:text-content-tertiary focus:outline-none focus:ring-2 focus:ring-oe-blue/30 focus:border-oe-blue focus:shadow-[0_0_0_4px_rgba(0,113,227,0.08)] transition-all duration-normal ease-oe hover:border-content-tertiary resize-none leading-relaxed font-mono"
+                    className="w-full rounded-xl border border-border bg-surface-primary px-4 py-3 text-sm text-content-primary placeholder:text-content-tertiary focus:outline-none focus:ring-2 focus:ring-oe-blue/30 focus:border-oe-blue focus:shadow-[0_0_0_4px_rgba(0,113,227,0.08)] transition-colors duration-normal ease-oe hover:border-content-tertiary resize-none leading-relaxed font-mono"
                     disabled={isPending}
                   />
                   <div className="absolute bottom-3 right-3 text-xs text-content-tertiary">
@@ -3468,7 +3441,7 @@ export function QuickEstimatePage() {
             <div className="mt-5 flex items-center justify-between">
               <div className="text-xs text-content-tertiary">
                 {isConfigured && aiSettings?.preferred_model && (
-                  <span className="flex items-center gap-1.5">
+                  <span className="flex items-center gap-2">
                     <Zap size={12} />
                     {t('ai.powered_by', {
                       defaultValue: 'Powered by {{model}}',
@@ -3582,7 +3555,7 @@ export function QuickEstimatePage() {
                   <AlertCircle size={18} className="text-semantic-error" aria-hidden="true" />
                 </div>
                 <div>
-                  <p className="text-sm font-semibold text-semantic-error">
+                  <p className="text-sm font-medium text-semantic-error">
                     <span className="sr-only">
                       {t('ai.error_prefix', { defaultValue: 'Error: ' })}
                     </span>
@@ -3617,7 +3590,7 @@ export function QuickEstimatePage() {
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
               <Layers size={16} className="text-oe-blue" />
-              <h3 className="text-sm font-semibold text-content-primary">
+              <h3 className="text-sm font-medium text-content-primary">
                 {cadColumnsData.filename}
               </h3>
               <Badge variant="blue" size="sm">{cadColumnsData.total_elements.toLocaleString(getNumberLocale())} elements</Badge>
@@ -3656,34 +3629,34 @@ export function QuickEstimatePage() {
                     setShowCustom(false);
                   }}
                   className={clsx(
-                    'rounded-lg px-4 py-2 text-xs font-medium transition-all border',
+                    'rounded-lg px-4 py-2 text-xs font-medium transition-colors border',
                     activePreset === key && !showCustom
                       ? 'bg-oe-blue text-white border-oe-blue shadow-sm'
                       : 'border-border bg-surface-secondary text-content-secondary hover:border-oe-blue/40',
                   )}
                 >
-                  <div className="font-semibold">{preset.label}</div>
-                  <div className="text-2xs opacity-70 mt-0.5">{preset.description}</div>
+                  <div className="font-medium">{preset.label}</div>
+                  <div className="text-2xs opacity-70 mt-1">{preset.description}</div>
                 </button>
               ))}
               <button
                 type="button"
                 onClick={() => setShowCustom(!showCustom)}
                 className={clsx(
-                  'rounded-lg px-4 py-2 text-xs font-medium transition-all border',
+                  'rounded-lg px-4 py-2 text-xs font-medium transition-colors border',
                   showCustom
                     ? 'bg-oe-blue text-white border-oe-blue shadow-sm'
                     : 'border-border bg-surface-secondary text-content-secondary hover:border-oe-blue/40',
                 )}
               >
-                <div className="font-semibold">{t('ai.quick_estimate.custom', { defaultValue: 'Custom' })}</div>
-                <div className="text-2xs opacity-70 mt-0.5">{t('ai.quick_estimate.advanced_column_selection', { defaultValue: 'Advanced column selection' })}</div>
+                <div className="font-medium">{t('ai.quick_estimate.custom', { defaultValue: 'Custom' })}</div>
+                <div className="text-2xs opacity-70 mt-1">{t('ai.quick_estimate.advanced_column_selection', { defaultValue: 'Advanced column selection' })}</div>
               </button>
             </div>
           </div>
 
           {/* Selected columns summary (always visible) */}
-          <div className="flex flex-wrap gap-4 text-xs text-content-secondary bg-surface-secondary/50 rounded-lg px-4 py-2.5">
+          <div className="flex flex-wrap gap-4 text-xs text-content-secondary bg-surface-secondary/50 rounded-lg px-4 py-3">
             <div>
               <span className="font-medium text-content-primary">Group by: </span>
               {fmtList((selectedGroupBy || [])) || 'none'}
@@ -3702,13 +3675,13 @@ export function QuickEstimatePage() {
             <div className="space-y-3 border-t border-border-light pt-3">
               <div>
                 <label className="text-xs font-medium text-content-secondary mb-2 block">Group by columns</label>
-                <div className="flex flex-wrap gap-1.5">
+                <div className="flex flex-wrap gap-2">
                   {(cadColumnsData.columns?.grouping || []).map(col => {
                     const isSelected = (selectedGroupBy || []).includes(col);
                     const conf = cadColumnsData.confidence?.[col];
                     return (
                       <button key={col} type="button" onClick={() => toggleGroupByCol(col)}
-                        className={clsx('rounded-md px-2.5 py-1 text-2xs font-medium transition-colors inline-flex items-center gap-1',
+                        className={clsx('rounded-md px-3 py-1 text-2xs font-medium transition-colors inline-flex items-center gap-1',
                           isSelected ? 'bg-oe-blue text-white' : 'border border-border-light bg-surface-secondary text-content-tertiary hover:text-content-primary'
                         )}>
                         {col}
@@ -3724,14 +3697,14 @@ export function QuickEstimatePage() {
               </div>
               <div>
                 <label className="text-xs font-medium text-content-secondary mb-2 block">{t('ai.sum_quantities', { defaultValue: 'Sum quantities' })}</label>
-                <div className="flex flex-wrap gap-1.5">
+                <div className="flex flex-wrap gap-2">
                   {(cadColumnsData.columns?.quantity || []).map(col => {
                     const isSelected = (selectedSumCols || []).includes(col);
                     const unit = cadColumnsData.unit_labels?.[col];
                     const conf = cadColumnsData.confidence?.[col];
                     return (
                       <button key={col} type="button" onClick={() => toggleSumCol(col)}
-                        className={clsx('rounded-md px-2.5 py-1 text-2xs font-medium transition-colors inline-flex items-center gap-1',
+                        className={clsx('rounded-md px-3 py-1 text-2xs font-medium transition-colors inline-flex items-center gap-1',
                           isSelected ? 'bg-emerald-500 text-white' : 'border border-border-light bg-surface-secondary text-content-tertiary hover:text-content-primary'
                         )}>
                         {col}{unit ? ` (${unit})` : ''}
@@ -3772,7 +3745,7 @@ export function QuickEstimatePage() {
                           return (
                             <th
                               key={key}
-                              className="px-3 py-1.5 text-left font-semibold text-content-tertiary uppercase tracking-wide whitespace-nowrap text-oe-blue"
+                              className="px-3 py-2 text-left font-medium text-content-tertiary whitespace-nowrap text-oe-blue"
                             >
                               {key}{displayUnit ? ` (${displayUnit})` : ''}
                             </th>
@@ -3857,7 +3830,7 @@ export function QuickEstimatePage() {
           {/* Header */}
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <h2 className="text-lg font-semibold text-content-primary">
+              <h2 className="text-lg font-medium text-content-primary">
                 {t('ai.cad_grouped_results', { defaultValue: 'Grouped Results' })}
               </h2>
               <Badge variant="success" size="sm">
@@ -3879,7 +3852,7 @@ export function QuickEstimatePage() {
 
           {/* Filter & sort controls */}
           <div className="flex flex-wrap items-center gap-3 rounded-lg bg-surface-secondary/30 border border-border-light/40 px-3 py-2">
-            <label className="flex items-center gap-1.5 text-xs text-content-secondary cursor-pointer">
+            <label className="flex items-center gap-2 text-xs text-content-secondary cursor-pointer">
               <input type="checkbox" checked={hideEmptyGroups} onChange={e => setHideEmptyGroups(e.target.checked)} className="rounded accent-oe-blue" />
               {t('ai.cad_hide_empty', { defaultValue: 'Hide empty groups' })}
             </label>
@@ -3902,7 +3875,7 @@ export function QuickEstimatePage() {
                   <button
                     onClick={() => setTreeViewMode(false)}
                     className={clsx(
-                      'px-2.5 py-0.5 text-xs font-medium transition-colors',
+                      'px-3 py-0.5 text-xs font-medium transition-colors',
                       !treeViewMode ? 'bg-oe-blue text-white' : 'bg-surface-secondary text-content-tertiary hover:text-content-primary',
                     )}
                   >
@@ -3911,7 +3884,7 @@ export function QuickEstimatePage() {
                   <button
                     onClick={() => { setTreeViewMode(true); setExpandedTreeNodes(new Set(treeData.map(n => n.parentKey))); }}
                     className={clsx(
-                      'px-2.5 py-0.5 text-xs font-medium transition-colors',
+                      'px-3 py-0.5 text-xs font-medium transition-colors',
                       treeViewMode ? 'bg-oe-blue text-white' : 'bg-surface-secondary text-content-tertiary hover:text-content-primary',
                     )}
                   >
@@ -3928,9 +3901,9 @@ export function QuickEstimatePage() {
               <table className="w-full text-sm">
                 <thead>
                   <tr className="border-b border-border-light bg-surface-secondary/50 text-left">
-                    <th className="px-2 py-2.5 w-8" />
+                    <th className="px-2 py-3 w-8" />
                     {(cadGroupResult.group_by || []).map((col) => (
-                      <th key={col} className="px-4 py-2.5 text-xs font-semibold text-content-tertiary uppercase tracking-wide">
+                      <th key={col} className="px-4 py-3 text-xs font-medium text-content-tertiary">
                         {col}
                       </th>
                     ))}
@@ -3939,12 +3912,12 @@ export function QuickEstimatePage() {
                       // Display boundary (#270): relabel to the user's system.
                       const displayUnit = unit ? displayQty.unitFor(unit) : unit;
                       return (
-                        <th key={col} className="px-4 py-2.5 text-xs font-semibold text-content-tertiary uppercase tracking-wide text-right">
+                        <th key={col} className="px-4 py-3 text-xs font-medium text-content-tertiary text-right">
                           {col}{displayUnit ? ` (${displayUnit})` : ''}
                         </th>
                       );
                     })}
-                    <th className="px-4 py-2.5 text-xs font-semibold text-content-tertiary uppercase tracking-wide text-right w-20">
+                    <th className="px-4 py-3 text-xs font-medium text-content-tertiary text-right w-20">
                       {t('ai.cad_col_count', { defaultValue: 'Count' })}
                     </th>
                   </tr>
@@ -3984,7 +3957,7 @@ export function QuickEstimatePage() {
                                   : <ChevronRight size={14} className="text-content-tertiary" />
                                 }
                               </td>
-                              <td className="px-4 py-2 text-sm text-content-primary font-semibold">
+                              <td className="px-4 py-2 text-sm text-content-primary font-medium">
                                 {node.parentLabel}
                               </td>
                               {groupByCols.slice(1).map((col) => (
@@ -3993,13 +3966,13 @@ export function QuickEstimatePage() {
                                 </td>
                               ))}
                               {sumCols.map((col) => (
-                                <td key={col} className="px-4 py-2 text-right font-mono text-sm font-semibold text-content-primary">
+                                <td key={col} className="px-4 py-2 text-right font-mono text-sm font-medium text-content-primary">
                                   {(node.sums[col] || 0) > 0
                                     ? sumDisplay(col, node.sums[col] || 0).toLocaleString(getNumberLocale(), { minimumFractionDigits: 0, maximumFractionDigits: 2 })
                                     : '-'}
                                 </td>
                               ))}
-                              <td className="px-4 py-2 text-right font-mono text-sm font-semibold text-content-primary">
+                              <td className="px-4 py-2 text-right font-mono text-sm font-medium text-content-primary">
                                 {node.count}
                               </td>
                             </tr>
@@ -4015,7 +3988,7 @@ export function QuickEstimatePage() {
                                   )}
                                   onClick={() => setElementDetailGroup(g)}
                                 >
-                                  <td className="px-2 py-1.5">
+                                  <td className="px-2 py-2">
                                     <button
                                       onClick={(e) => { e.stopPropagation(); setDeletedGroupKeys(prev => new Set(prev).add(g.key)); }}
                                       className="text-content-quaternary hover:text-red-500 transition-colors"
@@ -4024,18 +3997,18 @@ export function QuickEstimatePage() {
                                       <X size={12} />
                                     </button>
                                   </td>
-                                  <td className="px-4 py-1.5 text-sm text-content-secondary ps-10">
+                                  <td className="px-4 py-2 text-sm text-content-secondary ps-10">
                                     <span className="text-border mr-1.5">|--</span>
                                     {cleanValue(groupByCols[0]!, g.key_parts[groupByCols[0]!] || '')}
                                   </td>
                                   {groupByCols.slice(1).map((col) => (
-                                    <td key={col} className="px-4 py-1.5 text-sm text-content-primary font-medium">
+                                    <td key={col} className="px-4 py-2 text-sm text-content-primary font-medium">
                                       {cleanValue(col, g.key_parts[col] || '')}
                                     </td>
                                   ))}
                                   {sumCols.map((col) => (
                                     <td key={col} className={clsx(
-                                      'px-4 py-1.5 text-right font-mono text-sm',
+                                      'px-4 py-2 text-right font-mono text-sm',
                                       (g.sums[col] ?? 0) > 0 ? 'text-content-primary font-medium' : 'text-content-quaternary',
                                     )}>
                                       {g.sums[col] != null && g.sums[col] > 0
@@ -4043,7 +4016,7 @@ export function QuickEstimatePage() {
                                         : '-'}
                                     </td>
                                   ))}
-                                  <td className="px-4 py-1.5 text-right font-mono text-sm font-medium text-content-primary">{g.count}</td>
+                                  <td className="px-4 py-2 text-right font-mono text-sm font-medium text-content-primary">{g.count}</td>
                                 </tr>
                               );
                             })}
@@ -4066,7 +4039,7 @@ export function QuickEstimatePage() {
                             )}
                             onClick={() => setElementDetailGroup(g)}
                           >
-                            <td className="px-2 py-1.5">
+                            <td className="px-2 py-2">
                               <button
                                 onClick={(e) => { e.stopPropagation(); setDeletedGroupKeys(prev => new Set(prev).add(g.key)); }}
                                 className="text-content-quaternary hover:text-red-500 transition-colors"
@@ -4076,13 +4049,13 @@ export function QuickEstimatePage() {
                               </button>
                             </td>
                             {groupByCols.map((col) => (
-                              <td key={col} className="px-4 py-1.5 text-sm text-content-primary font-medium">
+                              <td key={col} className="px-4 py-2 text-sm text-content-primary font-medium">
                                 {cleanValue(col, g.key_parts[col] || '')}
                               </td>
                             ))}
                             {sumCols.map((col) => (
                               <td key={col} className={clsx(
-                                'px-4 py-1.5 text-right font-mono text-sm',
+                                'px-4 py-2 text-right font-mono text-sm',
                                 (g.sums[col] ?? 0) > 0 ? 'text-content-primary font-medium' : 'text-content-quaternary',
                               )}>
                                 {g.sums[col] != null && g.sums[col] > 0
@@ -4090,7 +4063,7 @@ export function QuickEstimatePage() {
                                   : '-'}
                               </td>
                             ))}
-                            <td className="px-4 py-1.5 text-right font-mono text-sm font-medium text-content-primary">{g.count}</td>
+                            <td className="px-4 py-2 text-right font-mono text-sm font-medium text-content-primary">{g.count}</td>
                           </tr>
                         );
                       });
@@ -4101,12 +4074,12 @@ export function QuickEstimatePage() {
                     <td />
                     <td
                       colSpan={(cadGroupResult.group_by || []).length}
-                      className="px-4 py-2.5 text-xs font-bold text-content-primary uppercase"
+                      className="px-4 py-3 text-xs font-medium text-content-primary"
                     >
                       {t('ai.cad_grand_total', { defaultValue: 'Grand Total' })}
                     </td>
                     {(cadGroupResult.sum_columns || []).map((col) => (
-                      <td key={col} className="px-4 py-2.5 text-right font-mono font-bold text-oe-blue">
+                      <td key={col} className="px-4 py-3 text-right font-mono font-medium text-oe-blue">
                         {computedTotals.sums[col] != null
                           ? displayQty
                               .convert(computedTotals.sums[col] ?? 0, cadColumnsData?.unit_labels?.[col] ?? '')
@@ -4115,7 +4088,7 @@ export function QuickEstimatePage() {
                           : '-'}
                       </td>
                     ))}
-                    <td className="px-4 py-2.5 text-right font-mono font-bold text-oe-blue">
+                    <td className="px-4 py-3 text-right font-mono font-medium text-oe-blue">
                       {computedTotals.count}
                     </td>
                   </tr>
@@ -4181,10 +4154,10 @@ export function QuickEstimatePage() {
             {/* Header */}
             <div className="flex items-center justify-between px-5 py-4 border-b border-border-light bg-surface-secondary/30">
               <div>
-                <h3 className="text-sm font-semibold text-content-primary">
+                <h3 className="text-sm font-medium text-content-primary">
                   {t('ai.cad_element_detail', { defaultValue: 'Element Detail' })}
                 </h3>
-                <p className="text-xs text-content-tertiary mt-0.5">
+                <p className="text-xs text-content-tertiary mt-1">
                   {Object.entries(elementDetailGroup.key_parts).map(([k, v]) =>
                     `${k}: ${v}`
                   ).join(' / ')}
@@ -4221,7 +4194,7 @@ export function QuickEstimatePage() {
                 <table className="w-full text-xs">
                   <thead className="sticky top-0 z-10">
                     <tr className="border-b border-border-light bg-surface-secondary/80 backdrop-blur">
-                      <th className="px-3 py-2 text-left font-semibold text-content-tertiary uppercase tracking-wide w-10">#</th>
+                      <th className="px-3 py-2 text-left font-medium text-content-tertiary w-10">#</th>
                       {elementDetailData.columns.map((col) => {
                         // Display boundary (#270): append the user's unit so the
                         // converted numbers below are self-describing. Only
@@ -4232,7 +4205,7 @@ export function QuickEstimatePage() {
                           <th
                             key={col}
                             className={clsx(
-                              'px-3 py-2 font-semibold text-content-tertiary uppercase tracking-wide whitespace-nowrap',
+                              'px-3 py-2 font-medium text-content-tertiary whitespace-nowrap',
                               col in (elementDetailData.totals || {}) ? 'text-right' : 'text-left',
                             )}
                           >
@@ -4245,7 +4218,7 @@ export function QuickEstimatePage() {
                   <tbody>
                     {elementDetailData.elements.map((el, idx) => (
                       <tr key={`el-${idx}-${Object.values(el).slice(0, 2).join('-')}`} className="border-b border-border-light/20 hover:bg-surface-secondary/20 transition-colors">
-                        <td className="px-3 py-1.5 text-content-quaternary font-mono">{idx + 1}</td>
+                        <td className="px-3 py-2 text-content-quaternary font-mono">{idx + 1}</td>
                         {elementDetailData.columns.map((col) => {
                           const val = el[col];
                           const isNumeric = col in (elementDetailData.totals || {});
@@ -4259,7 +4232,7 @@ export function QuickEstimatePage() {
                             <td
                               key={col}
                               className={clsx(
-                                'px-3 py-1.5 whitespace-nowrap max-w-[200px] truncate',
+                                'px-3 py-2 whitespace-nowrap max-w-[200px] truncate',
                                 isNumeric ? 'text-right font-mono text-content-primary' : 'text-content-secondary',
                               )}
                               title={val != null ? String(val) : ''}
@@ -4277,7 +4250,7 @@ export function QuickEstimatePage() {
                   </tbody>
                   <tfoot>
                     <tr className="border-t-2 border-oe-blue/20 bg-oe-blue-subtle/30 sticky bottom-0">
-                      <td className="px-3 py-2 font-bold text-xs text-content-primary uppercase">
+                      <td className="px-3 py-2 font-medium text-xs text-content-primary">
                         {t('ai.cad_total', { defaultValue: 'Total' })}
                       </td>
                       {elementDetailData.columns.map((col) => {
@@ -4292,7 +4265,7 @@ export function QuickEstimatePage() {
                             key={col}
                             className={clsx(
                               'px-3 py-2',
-                              total != null ? 'text-right font-mono font-bold text-oe-blue' : '',
+                              total != null ? 'text-right font-mono font-medium text-oe-blue' : '',
                             )}
                           >
                             {displayTotal != null
@@ -4323,7 +4296,7 @@ export function QuickEstimatePage() {
           {/* Header */}
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <h2 className="text-lg font-semibold text-content-primary">
+              <h2 className="text-lg font-medium text-content-primary">
                 {t('ai.cad_quantity_tables', { defaultValue: 'Quantity Tables' })}
               </h2>
               <Badge variant="success" size="sm">
@@ -4383,7 +4356,7 @@ export function QuickEstimatePage() {
                   <AlertCircle size={16} className="text-red-500" aria-hidden="true" />
                 </div>
                 <div>
-                  <p className="text-sm font-semibold text-content-primary">
+                  <p className="text-sm font-medium text-content-primary">
                     <span className="sr-only">
                       {t('ai.error_prefix', { defaultValue: 'Error: ' })}
                     </span>
@@ -4423,7 +4396,7 @@ export function QuickEstimatePage() {
           {/* Results header */}
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <h2 className="text-lg font-semibold text-content-primary">
+              <h2 className="text-lg font-medium text-content-primary">
                 {t('ai.results', { defaultValue: 'Estimate Results' })}
               </h2>
               <Badge variant="success" size="sm">
@@ -4464,7 +4437,7 @@ export function QuickEstimatePage() {
             <div className="flex items-center justify-between mb-3">
               <div className="flex items-center gap-2">
                 <Database size={16} className="text-emerald-600" />
-                <span className="text-sm font-semibold text-content-primary">
+                <span className="text-sm font-medium text-content-primary">
                   {t('ai.cost_db_matching', { defaultValue: 'Cost Database Matching' })}
                 </span>
                 {enrichResult && (
@@ -4482,7 +4455,7 @@ export function QuickEstimatePage() {
                 <select
                   value={enrichRegion}
                   onChange={(e) => setEnrichRegion(e.target.value)}
-                  className="h-8 rounded-lg border border-border bg-surface-primary px-2 text-xs text-content-primary transition-all duration-fast ease-oe focus:outline-none focus:ring-2 focus:ring-oe-blue/30 focus:border-oe-blue hover:border-content-tertiary cursor-pointer appearance-none"
+                  className="h-8 rounded-lg border border-border bg-surface-primary px-2 text-xs text-content-primary transition-colors duration-fast ease-oe focus:outline-none focus:ring-2 focus:ring-oe-blue/30 focus:border-oe-blue hover:border-content-tertiary cursor-pointer appearance-none"
                   disabled={enriching}
                   aria-label={t('ai.enrich_region_label', { defaultValue: 'Cost database region' })}
                 >
@@ -4530,27 +4503,27 @@ export function QuickEstimatePage() {
           {/* Next steps - make the AI→BOQ→validate→tender pipeline explicit.
               Without this, "Save as BOQ" feels like the end of the road. */}
           <div className="rounded-xl border border-oe-blue/15 bg-oe-blue-subtle/20 p-4">
-            <p className="flex items-center gap-1.5 text-xs font-semibold text-content-primary mb-1.5">
+            <p className="flex items-center gap-2 text-xs font-medium text-content-primary mb-1.5">
               <Info size={13} className="text-oe-blue" />
               {t('ai.estimate_after_title', { defaultValue: 'Recommended next steps' })}
             </p>
             <ul className="space-y-1 text-xs text-content-secondary leading-relaxed list-none">
               <li className="flex gap-2">
-                <span className="text-oe-blue font-bold shrink-0">1.</span>
+                <span className="text-oe-blue font-medium shrink-0">1.</span>
                 {t('ai.estimate_after_1', {
                   defaultValue:
                     'Match rates against the CWICR cost database above so prices reflect real regional data, not AI guesses.',
                 })}
               </li>
               <li className="flex gap-2">
-                <span className="text-oe-blue font-bold shrink-0">2.</span>
+                <span className="text-oe-blue font-medium shrink-0">2.</span>
                 {t('ai.estimate_after_2', {
                   defaultValue:
                     'Save as a project BOQ - then review every quantity and rate in the BOQ editor before relying on the total.',
                 })}
               </li>
               <li className="flex gap-2">
-                <span className="text-oe-blue font-bold shrink-0">3.</span>
+                <span className="text-oe-blue font-medium shrink-0">3.</span>
                 {t('ai.estimate_after_3', {
                   defaultValue:
                     'Run validation (DIN 276 / GAEB / quality rules) to catch missing scope, zero prices and classification gaps.',
@@ -4560,21 +4533,21 @@ export function QuickEstimatePage() {
             <div className="mt-3 flex flex-wrap gap-2">
               <Link
                 to="/match-elements"
-                className="inline-flex items-center gap-1.5 rounded-lg border border-border-light bg-surface-primary px-3 py-1.5 text-xs font-medium text-content-secondary hover:border-oe-blue/40 hover:text-oe-blue transition-colors"
+                className="inline-flex items-center gap-2 rounded-lg border border-border-light bg-surface-primary px-3 py-2 text-xs font-medium text-content-secondary hover:border-oe-blue/40 hover:text-oe-blue transition-colors"
               >
                 <Database size={13} />
                 {t('ai.estimate_link_match', { defaultValue: 'CAD-BIM Match → Cost' })}
               </Link>
               <Link
                 to="/validation"
-                className="inline-flex items-center gap-1.5 rounded-lg border border-border-light bg-surface-primary px-3 py-1.5 text-xs font-medium text-content-secondary hover:border-oe-blue/40 hover:text-oe-blue transition-colors"
+                className="inline-flex items-center gap-2 rounded-lg border border-border-light bg-surface-primary px-3 py-2 text-xs font-medium text-content-secondary hover:border-oe-blue/40 hover:text-oe-blue transition-colors"
               >
                 <CheckCircle2 size={13} />
                 {t('ai.estimate_link_validation', { defaultValue: 'Validation' })}
               </Link>
               <Link
                 to="/costs"
-                className="inline-flex items-center gap-1.5 rounded-lg border border-border-light bg-surface-primary px-3 py-1.5 text-xs font-medium text-content-secondary hover:border-oe-blue/40 hover:text-oe-blue transition-colors"
+                className="inline-flex items-center gap-2 rounded-lg border border-border-light bg-surface-primary px-3 py-2 text-xs font-medium text-content-secondary hover:border-oe-blue/40 hover:text-oe-blue transition-colors"
               >
                 <Search size={13} />
                 {t('ai.estimate_link_costs', { defaultValue: 'Cost Database' })}

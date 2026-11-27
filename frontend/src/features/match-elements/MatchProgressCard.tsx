@@ -505,7 +505,7 @@ export function MatchProgressCard({
           </p>
         </div>
         <div className="shrink-0 text-right tabular-nums">
-          <div className="text-[11px] uppercase tracking-[0.14em] text-content-tertiary font-semibold">
+          <div className="text-[11px] text-content-tertiary font-semibold">
             {t('match_progress.elapsed', { defaultValue: 'Elapsed' })}
           </div>
           <div className="text-sm font-semibold text-content-primary">
@@ -529,7 +529,7 @@ export function MatchProgressCard({
       >
         <div
           className={clsx(
-            'h-full rounded-full transition-all duration-700 ease-out',
+            'h-full rounded-full transition duration-700 ease-out',
             isError
               ? 'bg-rose-500'
               : isEmpty
@@ -673,7 +673,7 @@ export function MatchProgressCard({
             <button
               type="button"
               onClick={onRetry}
-              className="shrink-0 inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-semibold bg-gradient-to-br from-rose-500 to-rose-600 text-white shadow-sm shadow-rose-500/30 hover:shadow-md hover:shadow-rose-500/40 hover:-translate-y-px transition-all"
+              className="shrink-0 inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-semibold bg-gradient-to-br from-rose-500 to-rose-600 text-white shadow-sm shadow-rose-500/30 hover:shadow-md hover:shadow-rose-500/40 hover:-translate-y-px transition"
             >
               <RefreshCw className="w-4 h-4" />
               {t('match_progress.retry', { defaultValue: 'Try again' })}
@@ -742,7 +742,7 @@ export function MatchProgressCard({
                 type="button"
                 data-testid="match-progress-empty-adjust"
                 onClick={onAdjust}
-                className="shrink-0 inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-semibold bg-gradient-to-br from-amber-500 to-orange-600 text-white shadow-sm shadow-amber-500/30 hover:shadow-md hover:shadow-amber-500/40 hover:-translate-y-px transition-all"
+                className="shrink-0 inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-semibold bg-gradient-to-br from-amber-500 to-orange-600 text-white shadow-sm shadow-amber-500/30 hover:shadow-md hover:shadow-amber-500/40 hover:-translate-y-px transition"
               >
                 <SlidersHorizontal className="w-4 h-4" />
                 {t('match_progress.empty_adjust', {

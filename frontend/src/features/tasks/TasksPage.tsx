@@ -356,7 +356,7 @@ function AddTaskModal({
                     type="button"
                     onClick={() => set('task_type', tt)}
                     className={clsx(
-                      'flex flex-col items-center gap-1.5 rounded-lg border-2 px-2 py-2.5 text-center transition-all min-w-[72px]',
+                      'flex flex-col items-center gap-1.5 rounded-lg border-2 px-2 py-2.5 text-center transition min-w-[72px]',
                       selected
                         ? (BUILTIN_TYPE_COLOR[tt] ?? '') + ' border-current ring-2 ring-oe-blue/30'
                         : 'border-border bg-surface-primary text-content-tertiary hover:border-border-light hover:bg-surface-secondary',
@@ -380,7 +380,7 @@ function AddTaskModal({
                     type="button"
                     onClick={() => set('task_type', cat.name as TaskType)}
                     className={clsx(
-                      'flex flex-col items-center gap-1.5 rounded-lg border-2 px-2 py-2.5 text-center transition-all min-w-[72px]',
+                      'flex flex-col items-center gap-1.5 rounded-lg border-2 px-2 py-2.5 text-center transition min-w-[72px]',
                       selected
                         ? colorCls + ' border-current ring-2 ring-oe-blue/30'
                         : 'border-border bg-surface-primary text-content-tertiary hover:border-border-light hover:bg-surface-secondary',
@@ -399,7 +399,7 @@ function AddTaskModal({
           {/* ── Task Details ── */}
           <div className="flex items-center gap-2 pt-2 pb-1">
             <ClipboardList size={14} className="text-content-tertiary" />
-            <span className="text-xs font-semibold uppercase tracking-wider text-content-tertiary">
+            <span className="text-xs font-semibold text-content-tertiary">
               {t('tasks.section_details', { defaultValue: 'Task Details' })}
             </span>
             <div className="flex-1 h-px bg-border-light" />
@@ -467,7 +467,7 @@ function AddTaskModal({
                     type="button"
                     onClick={() => set('priority', p)}
                     className={clsx(
-                      'rounded-lg border-2 px-3 py-2 text-center text-sm font-semibold transition-all',
+                      'rounded-lg border-2 px-3 py-2 text-center text-sm font-semibold transition',
                       selected
                         ? colorMap[p] + ' ring-2 ring-oe-blue/30'
                         : 'border-border bg-surface-primary text-content-tertiary hover:border-border-light',
@@ -485,7 +485,7 @@ function AddTaskModal({
           {/* ── Assignment & Schedule ── */}
           <div className="flex items-center gap-2 pt-2 pb-1">
             <Calendar size={14} className="text-content-tertiary" />
-            <span className="text-xs font-semibold uppercase tracking-wider text-content-tertiary">
+            <span className="text-xs font-semibold text-content-tertiary">
               {t('tasks.section_schedule', { defaultValue: 'Assignment & Schedule' })}
             </span>
             <div className="flex-1 h-px bg-border-light" />
@@ -593,7 +593,7 @@ const TaskCard = React.memo(function TaskCard({
       aria-grabbed={isDragging ?? false}
       aria-label={task.title}
       className={clsx(
-        'px-2.5 py-2 mb-1.5 hover:shadow-md transition-all group cursor-grab active:cursor-grabbing',
+        'px-2.5 py-2 mb-1.5 hover:shadow-md transition group cursor-grab active:cursor-grabbing',
         'hover:border-border hover:-translate-y-px',
         isDragging && 'opacity-40 scale-[0.97] shadow-none',
         isOverdue && 'bg-red-50/40 dark:bg-red-950/15',
@@ -787,7 +787,7 @@ const TaskCard = React.memo(function TaskCard({
         <div className="mt-1.5 flex items-center gap-2">
           <div className="flex-1 h-1 rounded-full bg-surface-tertiary overflow-hidden">
             <div
-              className="h-full rounded-full bg-oe-blue transition-all"
+              className="h-full rounded-full bg-oe-blue transition"
               style={{ width: `${checklistPercent}%` }}
             />
           </div>
@@ -1690,7 +1690,7 @@ export function TasksPage() {
                     type="button"
                     onClick={() => setNewCategoryColorIdx(idx)}
                     className={clsx(
-                      'w-5 h-5 rounded-full border-2 transition-all',
+                      'w-5 h-5 rounded-full border-2 transition',
                       newCategoryColorIdx === idx
                         ? 'border-content-primary scale-110'
                         : 'border-transparent hover:scale-105',
@@ -1827,7 +1827,7 @@ export function TasksPage() {
                 <div
                   key={status}
                   className={clsx(
-                    'flex flex-col min-w-[240px] flex-1 transition-all duration-150',
+                    'flex flex-col min-w-[240px] flex-1 transition duration-150',
                     isColumnDragging && 'opacity-50',
                     isColumnDropTarget && 'border-l-2 border-oe-blue',
                   )}
@@ -1896,7 +1896,7 @@ export function TasksPage() {
                   {/* Column items -- drop zone */}
                   <div
                     className={clsx(
-                      'flex-1 min-h-[60px] rounded-lg transition-all duration-150',
+                      'flex-1 min-h-[60px] rounded-lg transition duration-150',
                       isDropTarget && 'bg-oe-blue/5 border-2 border-dashed border-oe-blue/30',
                     )}
                     aria-dropeffect={draggedTaskId ? 'move' : 'none'}
@@ -1971,7 +1971,7 @@ export function TasksPage() {
               ) : (
                 <button
                   onClick={() => setShowAddStatus(true)}
-                  className="rounded-md border-2 border-dashed border-border-medium px-4 py-3 flex items-center justify-center gap-2 text-xs text-content-tertiary hover:text-oe-blue hover:border-oe-blue/30 hover:bg-oe-blue/5 transition-all"
+                  className="rounded-md border-2 border-dashed border-border-medium px-4 py-3 flex items-center justify-center gap-2 text-xs text-content-tertiary hover:text-oe-blue hover:border-oe-blue/30 hover:bg-oe-blue/5 transition-colors"
                 >
                   <Plus size={14} />
                   {t('tasks.add_column', { defaultValue: 'Add column' })}

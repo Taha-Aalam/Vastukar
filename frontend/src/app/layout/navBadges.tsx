@@ -97,9 +97,9 @@ export function badgeLabel(badge: NavBadgeData, t: TFunction): string {
 }
 
 const TONE_CLASS: Record<NavBadgeTone, string> = {
-  neutral: 'bg-surface-secondary text-content-secondary border-border-light',
-  warning: 'bg-amber-500/15 text-amber-700 dark:text-amber-300 border-amber-500/30',
-  danger: 'bg-red-500/15 text-red-700 dark:text-red-300 border-red-500/30',
+  neutral: 'text-content-tertiary',
+  warning: 'text-amber-700 dark:text-amber-300',
+  danger: 'text-semantic-error',
 };
 
 /** What the Sidebar renders in a row's badge slot. Nothing when the row has no count. */
@@ -111,8 +111,7 @@ export function NavItemBadge({ itemId, className }: { itemId: string; className?
   return (
     <span
       className={clsx(
-        'ms-auto inline-flex h-4 min-w-[1rem] shrink-0 items-center justify-center rounded-full border px-1',
-        'text-[10px] font-semibold leading-none tabular-nums',
+        'ms-auto shrink-0 font-mono text-2xs leading-4 tabular-nums',
         TONE_CLASS[badge.tone] ?? TONE_CLASS.neutral,
         className,
       )}

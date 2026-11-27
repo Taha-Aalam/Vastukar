@@ -3372,14 +3372,14 @@ export function DwgTakeoffPage() {
                         onDragEnter={(e) => { e.preventDefault(); setIsDragActive(true); }}
                         onDragLeave={() => setIsDragActive(false)}
                         className={clsx(
-                          'group/drop flex flex-col items-center justify-center gap-7 rounded-xl p-20 text-center cursor-pointer transition-all flex-1 border-2 border-dashed focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 focus-visible:ring-offset-[#22252b]',
+                          'group/drop flex flex-col items-center justify-center gap-7 rounded-xl p-20 text-center cursor-pointer transition-colors flex-1 border-2 border-dashed focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 focus-visible:ring-offset-[#22252b]',
                           isDragActive
                             ? 'border-blue-400 bg-blue-500/15 shadow-[0_0_40px_rgba(59,130,246,0.2)] scale-[1.01]'
                             : 'border-[#444c5a] bg-[#1a1d23]/60 hover:border-blue-500/50 hover:bg-blue-500/5 hover:shadow-[0_0_30px_rgba(59,130,246,0.1)]',
                         )}
                         onClick={() => setShowUpload(true)}
                       >
-                        <div className="w-20 h-20 rounded-2xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center group-hover/drop:scale-110 group-hover/drop:shadow-[0_0_20px_rgba(59,130,246,0.2)] transition-all">
+                        <div className="w-20 h-20 rounded-2xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center group-hover/drop:scale-110 group-hover/drop:shadow-[0_0_20px_rgba(59,130,246,0.2)] transition-transform">
                           <Upload size={36} className="text-blue-400" />
                         </div>
                         <div>
@@ -3427,7 +3427,7 @@ export function DwgTakeoffPage() {
                         { icon: Layers, title: t('dwg_takeoff.feat_layers', { defaultValue: 'Layer Control' }), desc: t('dwg_takeoff.feat_layers_desc', { defaultValue: 'Toggle layers on/off, filter by entity type' }) },
                         { icon: FileUp, title: t('dwg_takeoff.feat_measure', { defaultValue: 'Measurements' }), desc: t('dwg_takeoff.feat_measure_desc', { defaultValue: 'Area, length, perimeter · link to BOQ' }) },
                       ].map((f, i) => (
-                        <div key={i} className="flex items-start gap-3 rounded-xl p-4 bg-[#22252b]/80 backdrop-blur-sm border border-[#333842] hover:border-blue-500/30 hover:shadow-[0_0_15px_rgba(59,130,246,0.06)] transition-all">
+                        <div key={i} className="flex items-start gap-3 rounded-xl p-4 bg-[#22252b]/80 backdrop-blur-sm border border-[#333842] hover:border-blue-500/30 hover:shadow-[0_0_15px_rgba(59,130,246,0.06)] transition-colors">
                           <div className="w-8 h-8 rounded-lg bg-orange-500/10 border border-orange-500/20 flex items-center justify-center shrink-0"><f.icon size={15} className="text-orange-400" /></div>
                           <div className="min-w-0">
                             <h3 className="text-xs font-semibold text-gray-200 leading-tight">{f.title}</h3>
@@ -4526,7 +4526,7 @@ export function DwgTakeoffPage() {
               return (
                 <div className="border-b border-border-light px-3 py-2 bg-surface-secondary/40">
                   <div className="flex items-center justify-between mb-1.5">
-                    <span className="text-[10px] font-semibold uppercase tracking-wider text-content-tertiary">
+                    <span className="text-[10px] font-semibold text-content-tertiary">
                       {t('dwg_takeoff.summary', 'Summary')}
                     </span>
                     <button
@@ -4825,7 +4825,7 @@ export function DwgTakeoffPage() {
                         }
                         return (
                           <div className="mt-2 pt-2 border-t border-[#3a3a3a]">
-                            <p className="text-[10px] font-bold uppercase tracking-widest text-blue-300 mb-1.5">
+                            <p className="text-[10px] font-bold text-blue-300 mb-1.5">
                               {t('match.apply_section_title', { defaultValue: 'Find a cost position' })}
                             </p>
                             <div className="h-96 rounded-sm border border-[#3a3a3a] overflow-hidden bg-surface-primary">
@@ -4928,7 +4928,7 @@ export function DwgTakeoffPage() {
                                 : t('common.no', 'No')}
                             />
                             <div className="mt-2">
-                              <div className="font-medium text-[10px] text-muted-foreground uppercase tracking-wider mb-1">
+                              <div className="font-medium text-[10px] text-muted-foreground mb-1">
                                 {t('dwg_takeoff.segments', 'Segments')} ({segLengths.length})
                               </div>
                               <div className="space-y-0.5 max-h-48 overflow-y-auto">
@@ -5076,7 +5076,7 @@ export function DwgTakeoffPage() {
                 }
               }}
               className={clsx(
-                'w-full flex flex-col items-center gap-2 border-2 border-dashed rounded-xl p-6 text-center cursor-pointer transition-all',
+                'w-full flex flex-col items-center gap-2 border-2 border-dashed rounded-xl p-6 text-center cursor-pointer transition',
                 isDragActive && !uploadFile && 'border-oe-blue bg-oe-blue/10 scale-[1.01] shadow-md',
                 uploadFile && !isDragActive && 'border-oe-blue bg-oe-blue/5',
                 !uploadFile && !isDragActive && 'border-border-medium hover:border-oe-blue hover:bg-blue-50/50 dark:hover:bg-blue-950/20',
@@ -5194,7 +5194,7 @@ export function DwgTakeoffPage() {
                     if (picked) setActiveProject(picked.id, picked.name);
                   }}
                   disabled={projectsLoading || projects.length === 0}
-                  className="w-full rounded-xl border border-border-light bg-surface-secondary px-3.5 py-2.5 text-sm text-content-primary focus:outline-none focus:ring-2 focus:ring-oe-blue/30 focus:border-oe-blue transition-all disabled:opacity-60"
+                  className="w-full rounded-xl border border-border-light bg-surface-secondary px-3.5 py-2.5 text-sm text-content-primary focus:outline-none focus:ring-2 focus:ring-oe-blue/30 focus:border-oe-blue transition disabled:opacity-60"
                 >
                   {projectsLoading && (
                     <option value="">{t('common.loading', { defaultValue: 'Loading…' })}</option>
@@ -5218,7 +5218,7 @@ export function DwgTakeoffPage() {
                 value={uploadName}
                 onChange={(e) => setUploadName(e.target.value)}
                 placeholder={t('dwg_takeoff.drawing_name_placeholder', 'e.g. Floor Plan Level 1')}
-                className="w-full rounded-xl border border-border-light bg-surface-secondary px-3.5 py-2.5 text-sm text-content-primary placeholder:text-content-quaternary focus:outline-none focus:ring-2 focus:ring-oe-blue/30 focus:border-oe-blue transition-all"
+                className="w-full rounded-xl border border-border-light bg-surface-secondary px-3.5 py-2.5 text-sm text-content-primary placeholder:text-content-quaternary focus:outline-none focus:ring-2 focus:ring-oe-blue/30 focus:border-oe-blue transition-colors"
               />
             </div>
 
@@ -5230,7 +5230,7 @@ export function DwgTakeoffPage() {
               <select
                 value={uploadDiscipline}
                 onChange={(e) => setUploadDiscipline(e.target.value)}
-                className="w-full rounded-xl border border-border-light bg-surface-secondary px-3.5 py-2.5 text-sm text-content-primary focus:outline-none focus:ring-2 focus:ring-oe-blue/30 focus:border-oe-blue transition-all"
+                className="w-full rounded-xl border border-border-light bg-surface-secondary px-3.5 py-2.5 text-sm text-content-primary focus:outline-none focus:ring-2 focus:ring-oe-blue/30 focus:border-oe-blue transition-colors"
               >
                 <option value="architectural">{t('dwg_takeoff.discipline_arch', 'Architectural')}</option>
                 <option value="structural">{t('dwg_takeoff.discipline_struct', 'Structural')}</option>
@@ -5283,7 +5283,7 @@ export function DwgTakeoffPage() {
                       });
                       closeUploadModal();
                     }}
-                    className="w-full flex items-center justify-center gap-2 py-3 rounded-xl text-sm font-bold transition-all disabled:opacity-50 disabled:cursor-not-allowed bg-oe-blue text-white hover:bg-oe-blue-dark active:scale-[0.98] shadow-md hover:shadow-lg"
+                    className="w-full flex items-center justify-center gap-2 py-3 rounded-xl text-sm font-bold transition disabled:opacity-50 disabled:cursor-not-allowed bg-oe-blue text-white hover:bg-oe-blue-dark active:scale-[0.98] shadow-md hover:shadow-lg"
                   >
                     <Upload size={16} />
                     {t('dwg_takeoff.upload_and_process', 'Upload & Process')}
@@ -5496,7 +5496,7 @@ function DrawingFilmstrip({
                 }}
                 className={clsx(
                   'group relative shrink-0 w-36 h-[72px] text-start rounded-md border overflow-hidden flex flex-col cursor-pointer focus:outline-none focus:ring-2 focus:ring-oe-blue/50',
-                  'transition-all duration-150',
+                  'transition duration-150',
                   activeDrawingId === d.id
                     ? 'border-blue-500/80 bg-blue-500/10 shadow shadow-blue-500/20'
                     : 'border-[#3a3a3a] bg-[#363636] hover:bg-[#3d3d3d] hover:border-[#4a4a4a]',
@@ -5550,7 +5550,7 @@ function DrawingFilmstrip({
                   title={t('dwg_takeoff.delete_drawing', { defaultValue: 'Delete drawing' })}
                   className="absolute top-0.5 right-0.5 h-4 w-4 rounded flex items-center justify-center
                              text-transparent group-hover:text-slate-400 hover:!text-red-400 hover:bg-red-500/20
-                             transition-all"
+                             transition"
                 >
                   <Trash2 size={9} />
                 </button>
@@ -5566,7 +5566,7 @@ function DrawingFilmstrip({
         <button
           onClick={onUpload}
           className="flex items-center justify-center shrink-0 w-9 h-9 rounded-md border-2 border-dashed
-                     border-[#4a4a4a] hover:border-blue-400/60 hover:bg-blue-500/10 transition-all group"
+                     border-[#4a4a4a] hover:border-blue-400/60 hover:bg-blue-500/10 transition-colors group"
           title={t('dwg_takeoff.upload_drawing', 'Upload drawing')}
         >
           <Plus size={14} className="text-slate-400 group-hover:text-blue-300 transition-colors" />
@@ -5612,7 +5612,7 @@ function SummaryKpiCard({ label, value, unit, accent }: SummaryKpiCardProps) {
       )}
       data-testid="dwg-summary-kpi"
     >
-      <div className="text-[9px] uppercase tracking-wider opacity-80 truncate">
+      <div className="text-[9px] opacity-80 truncate">
         {label}
       </div>
       <div className="text-lg font-bold tabular-nums leading-tight truncate">
@@ -5814,7 +5814,7 @@ function ScaleTab({
 
       {/* Mode picker - 3 strategies */}
       <div className="flex flex-col gap-1.5">
-        <span className="text-[9px] font-semibold uppercase tracking-wider text-content-tertiary">
+        <span className="text-[9px] font-semibold text-content-tertiary">
           {t('dwg_takeoff.scale_mode_label', { defaultValue: 'Scale mode' })}
         </span>
         <div className="flex gap-1.5">
@@ -5931,7 +5931,7 @@ function ScaleTab({
 
           <div className="rounded-md border border-border bg-surface-secondary px-3 py-2.5 text-[11px] flex flex-col gap-2">
             <div className="flex items-center justify-between gap-2">
-              <span className="text-content-tertiary uppercase tracking-wider text-[9px] font-semibold">
+              <span className="text-content-tertiary text-[9px] font-semibold">
                 {t('dwg_takeoff.scale_calibrate_measured', { defaultValue: 'Measured (raw)' })}
               </span>
               <span className="font-mono font-semibold text-content-primary tabular-nums">
@@ -5963,7 +5963,7 @@ function ScaleTab({
           </div>
 
           <div className="flex flex-col gap-1.5">
-            <span className="text-[9px] font-semibold uppercase tracking-wider text-content-tertiary">
+            <span className="text-[9px] font-semibold text-content-tertiary">
               {t('dwg_takeoff.scale_calibrate_real_label', { defaultValue: 'Real-world distance' })}
             </span>
             <div className="flex items-center gap-2">
@@ -6244,7 +6244,7 @@ function SummaryTab({
       <div data-testid="dwg-summary-by-layer">
         <div className="flex items-center gap-1.5 mb-0.5">
           <Zap size={12} className="text-amber-400" />
-          <h4 className="text-[10px] font-semibold uppercase tracking-wider text-content-secondary">
+          <h4 className="text-[10px] font-semibold text-content-secondary">
             {t('dwg_takeoff.quantify_title', { defaultValue: 'Auto-quantify by layer' })}
           </h4>
           <span className="text-[10px] text-content-quaternary tabular-nums">
@@ -6260,7 +6260,7 @@ function SummaryTab({
         {/* Grand totals strip */}
         <div className="grid grid-cols-3 gap-1 mb-2" data-testid="dwg-quantify-totals">
           <div className="rounded-md bg-emerald-500/10 border border-emerald-500/20 px-2 py-1.5">
-            <div className="text-[9px] uppercase tracking-wide text-emerald-500/80">
+            <div className="text-[9px] text-emerald-500/80">
               {t('dwg_takeoff.area', 'Area')}
             </div>
             <div className="text-[11px] font-bold tabular-nums text-emerald-300">
@@ -6271,7 +6271,7 @@ function SummaryTab({
             </div>
           </div>
           <div className="rounded-md bg-violet-500/10 border border-violet-500/20 px-2 py-1.5">
-            <div className="text-[9px] uppercase tracking-wide text-violet-400/80">
+            <div className="text-[9px] text-violet-400/80">
               {t('dwg_takeoff.length', 'Length')}
             </div>
             <div className="text-[11px] font-bold tabular-nums text-violet-300">
@@ -6282,7 +6282,7 @@ function SummaryTab({
             </div>
           </div>
           <div className="rounded-md bg-sky-500/10 border border-sky-500/20 px-2 py-1.5">
-            <div className="text-[9px] uppercase tracking-wide text-sky-400/80">
+            <div className="text-[9px] text-sky-400/80">
               {t('dwg_takeoff.count', 'Count')}
             </div>
             <div className="text-[11px] font-bold tabular-nums text-sky-300">
@@ -6389,7 +6389,7 @@ function SummaryTab({
       <div data-testid="dwg-summary-by-type">
         <div className="flex items-center gap-1.5 mb-1.5">
           <Sigma size={11} className="text-content-tertiary" />
-          <h4 className="text-[10px] font-semibold uppercase tracking-wider text-content-tertiary">
+          <h4 className="text-[10px] font-semibold text-content-tertiary">
             {t('dwg_takeoff.summary_by_type', { defaultValue: 'By entity type' })}
           </h4>
           <span className="text-[10px] text-content-quaternary tabular-nums">
@@ -6419,7 +6419,7 @@ function SummaryTab({
         <div data-testid="dwg-summary-by-block">
           <div className="flex items-center gap-1.5 mb-1.5">
             <Hash size={11} className="text-content-tertiary" />
-            <h4 className="text-[10px] font-semibold uppercase tracking-wider text-content-tertiary">
+            <h4 className="text-[10px] font-semibold text-content-tertiary">
               {t('dwg_takeoff.summary_by_block', { defaultValue: 'Count by block' })}
             </h4>
             <span className="text-[10px] text-content-quaternary tabular-nums">
@@ -6588,7 +6588,7 @@ function UploadProgressInline() {
       </div>
       <div className="h-1.5 rounded-full bg-surface-tertiary overflow-hidden">
         <div
-          className="h-full rounded-full bg-oe-blue transition-all duration-300"
+          className="h-full rounded-full bg-oe-blue transition duration-300"
           style={{ width: `${active.progress}%` }}
         />
       </div>

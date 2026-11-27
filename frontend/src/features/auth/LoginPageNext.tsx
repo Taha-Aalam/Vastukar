@@ -249,200 +249,41 @@ export function LoginPageNext() {
 
       {/* Page-scoped CSS — keeps this experimental page self-contained. */}
       <style>{`
-        @keyframes oeAuroraSpin {
-          0%   { transform: translate(-50%, -50%) rotate(0deg); }
-          100% { transform: translate(-50%, -50%) rotate(360deg); }
-        }
-        @keyframes oeFloat {
-          0%, 100% { transform: translateY(0); }
-          50%      { transform: translateY(-5px); }
-        }
-        @keyframes oeShimmer {
-          0%   { background-position: -200% 0; }
-          100% { background-position: 200% 0; }
-        }
-        @keyframes oeRingPulse {
-          0%   { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.50); }
-          70%  { box-shadow: 0 0 0 10px rgba(16, 185, 129, 0); }
-          100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
-        }
-
-        /* Sky base - very pale, near-white blue. Reads as a bright
-           daylight horizon, not a saturated marketing hero. */
-        .oe-hero {
-          background:
-            radial-gradient(120% 90% at 20% 10%,  rgba(224, 242, 254, 0.65) 0%, transparent 60%),
-            radial-gradient(110% 80% at 80% 90%,  rgba(219, 234, 254, 0.55) 0%, transparent 60%),
-            linear-gradient(160deg, #f8fcff 0%, #f0f9ff 45%, #eaf4ff 100%);
-        }
-        .dark .oe-hero {
-          background:
-            radial-gradient(120% 90% at 20% 10%,  rgba(30, 64, 175, 0.45) 0%, transparent 60%),
-            radial-gradient(110% 80% at 80% 90%,  rgba(14, 116, 144, 0.45) 0%, transparent 60%),
-            linear-gradient(160deg, #0c1929 0%, #0a1628 45%, #061021 100%);
-        }
-
-        /* Aurora - soft sky/cyan tint, low opacity so the surface
-           stays light and the module tiles read clearly. */
-        .oe-aurora {
-          position: absolute;
-          inset: 0;
-          overflow: hidden;
-          pointer-events: none;
-        }
-        .oe-aurora::before,
-        .oe-aurora::after,
-        .oe-aurora > .oe-aurora-c {
-          content: "";
-          position: absolute;
-          left: 50%;
-          top: 50%;
-          width: 160vmax;
-          height: 160vmax;
-          border-radius: 50%;
-          filter: blur(80px);
-          opacity: 0.40;
-          mix-blend-mode: multiply;
-          pointer-events: none;
-        }
-        .dark .oe-aurora::before,
-        .dark .oe-aurora::after,
-        .dark .oe-aurora > .oe-aurora-c {
-          mix-blend-mode: screen;
-          opacity: 0.55;
-        }
-        /* sky-300 - light daylight sky, gentle */
-        .oe-aurora::before {
-          background: conic-gradient(from 0deg,
-            rgba(125, 211, 252, 0.55),
-            rgba(186, 230, 253, 0.0),
-            rgba(125, 211, 252, 0.0),
-            rgba(125, 211, 252, 0.55));
-          animation: oeAuroraSpin 38s linear infinite;
-        }
-        /* cyan-200 - paler haze */
-        .oe-aurora::after {
-          background: conic-gradient(from 90deg,
-            rgba(165, 243, 252, 0.50),
-            rgba(125, 211, 252, 0.0),
-            rgba(165, 243, 252, 0.0),
-            rgba(165, 243, 252, 0.50));
-          animation: oeAuroraSpin 52s linear infinite reverse;
-        }
-        /* blue-200 - soft cloud */
-        .oe-aurora > .oe-aurora-c {
-          background: conic-gradient(from 200deg,
-            rgba(191, 219, 254, 0.50),
-            rgba(186, 230, 253, 0.0),
-            rgba(191, 219, 254, 0.0),
-            rgba(191, 219, 254, 0.50));
-          animation: oeAuroraSpin 64s linear infinite;
-        }
-
-        /* Mouse spotlight - only renders if --mx/--my are set. */
-        .oe-spot {
-          position: absolute;
-          inset: 0;
-          pointer-events: none;
-          background: radial-gradient(420px circle at var(--mx, 50%) var(--my, 50%),
-            rgba(255, 255, 255, 0.40),
-            transparent 60%);
-          mix-blend-mode: soft-light;
-          opacity: 0.95;
-          transition: background 0.05s linear;
-        }
+        /* No decorative loops on this screen. */
+        /* Calm neutral surface. The world shows in the content, not the chrome. */
+        .oe-hero { background: var(--oe-bg-page); }
+        .dark .oe-hero { background: var(--oe-bg); }
 
         /* Glass module tiles. */
         .oe-tile {
-          background:
-            linear-gradient(135deg, rgba(255,255,255,0.62) 0%, rgba(255,255,255,0.34) 100%);
-          backdrop-filter: blur(22px) saturate(170%);
-          -webkit-backdrop-filter: blur(22px) saturate(170%);
-          border: 1px solid rgba(255,255,255,0.55);
-          box-shadow:
-            0 14px 40px -16px rgba(20, 20, 40, 0.18),
-            inset 0 1px 0 rgba(255, 255, 255, 0.65);
-          transition:
-            transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1),
-            box-shadow 0.35s cubic-bezier(0.2, 0.8, 0.2, 1),
-            border-color 0.35s ease;
+          background: var(--oe-bg-elevated);
+          border: 1px solid var(--oe-border-light);
+          border-radius: var(--oe-radius-md);
+          transition: border-color 120ms ease, background-color 120ms ease;
         }
         .dark .oe-tile {
-          background:
-            linear-gradient(135deg, rgba(255,255,255,0.10) 0%, rgba(255,255,255,0.03) 100%);
-          border-color: rgba(255,255,255,0.10);
-          box-shadow:
-            0 14px 40px -16px rgba(0, 0, 0, 0.55),
-            inset 0 1px 0 rgba(255, 255, 255, 0.08);
+          background: var(--oe-bg-elevated);
+          border-color: var(--oe-border);
         }
-        .oe-tile:hover {
-          transform: translateY(-3px);
-          border-color: rgba(0, 122, 255, 0.35);
-          box-shadow:
-            0 22px 50px -18px rgba(0, 90, 210, 0.30),
-            inset 0 1px 0 rgba(255, 255, 255, 0.8);
-        }
+        .oe-tile:hover { border-color: var(--oe-border); }
 
         /* Lite glass for demo accounts (right side stays solid white,
            but the demo tiles need a touch of glass over the white). */
         .oe-glass-lite {
-          background:
-            linear-gradient(135deg, rgba(248,250,252,0.95) 0%, rgba(241,245,249,0.85) 100%);
-          border: 1px solid rgba(15,23,42,0.06);
-          box-shadow:
-            0 4px 12px -4px rgba(20, 20, 40, 0.06),
-            inset 0 1px 0 rgba(255, 255, 255, 0.9);
+          background: var(--oe-bg-elevated);
+          border: 1px solid var(--oe-border-light);
         }
         .dark .oe-glass-lite {
-          background:
-            linear-gradient(135deg, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0.02) 100%);
-          border-color: rgba(255,255,255,0.08);
-        }
-
-        /* Tiny live-pulse dot. */
-        .oe-pulse {
-          position: relative;
-        }
-        .oe-pulse::after {
-          content: "";
-          position: absolute;
-          inset: 0;
-          border-radius: inherit;
-          animation: oeRingPulse 2.5s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+          background: var(--oe-bg-elevated);
+          border-color: var(--oe-border);
         }
 
         /* Animated spectrum bar - sky-only palette. */
         .oe-spec-bar {
-          background: linear-gradient(90deg,
-            rgba(2,132,199,0.95), rgba(14,165,233,0.95), rgba(56,189,248,0.95),
-            rgba(2,132,199,0.95));
-          background-size: 300% 100%;
-          animation: oeShimmer 6s linear infinite;
+          background: var(--oe-blue);
         }
 
-        .oe-tile-float-a { animation: oeFloat 7s ease-in-out infinite; }
-        .oe-tile-float-b { animation: oeFloat 8.5s ease-in-out infinite 1.2s; }
-
-        /* Form pane - solid white, soft shadow, NOT glass. The whole
-           right column reads as a clean, paper-white panel for max
-           form readability. */
-        .oe-form-pane {
-          background: #ffffff;
-          border: 1px solid rgba(15, 23, 42, 0.06);
-          box-shadow:
-            0 30px 60px -30px rgba(20, 20, 40, 0.18),
-            0 1px 0 rgba(255, 255, 255, 1) inset;
-        }
-        .dark .oe-form-pane {
-          background: #0f172a;
-          border-color: rgba(255, 255, 255, 0.06);
-          box-shadow:
-            0 30px 60px -30px rgba(0, 0, 0, 0.6),
-            0 1px 0 rgba(255, 255, 255, 0.04) inset;
-        }
-
-        /* Typography - Plus Jakarta Sans for everything, Instrument
-           Serif for the editorial headline accent. */
+        /* Module tiles stay still. */
         .oe-font-display {
           font-family: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
           font-feature-settings: 'cv11', 'ss01', 'ss03';
@@ -457,11 +298,8 @@ export function LoginPageNext() {
 
       {/* Preview badge — top-left so users know this is /login-next. */}
       <div className="absolute top-4 left-4 z-30">
-        <span className="inline-flex items-center gap-1.5 rounded-full border border-white/40 bg-white/60 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wider text-content-secondary backdrop-blur-md dark:border-white/10 dark:bg-white/10 dark:text-white/70">
-          <span className="relative flex h-1.5 w-1.5">
-            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-amber-400 opacity-75" />
-            <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-amber-500" />
-          </span>
+        <span className="inline-flex items-center gap-2 rounded-md border border-border-light bg-surface-elevated px-3 py-1.5 text-xs text-content-secondary">
+          <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
           Preview · /login-next
         </span>
       </div>
@@ -470,12 +308,12 @@ export function LoginPageNext() {
       <div className="absolute top-4 right-4 z-30" ref={langRef}>
         <button
           onClick={() => setLangOpen(!langOpen)}
-          className="flex items-center gap-2 rounded-xl border border-border-light bg-surface-primary px-3.5 py-2.5 text-sm font-medium text-content-secondary hover:bg-surface-secondary hover:border-oe-blue/30 transition-all shadow-sm"
+          className="flex items-center gap-2 rounded-xl border border-border-light bg-surface-primary px-3.5 py-2.5 text-sm font-medium text-content-secondary hover:bg-surface-secondary hover:border-oe-blue/30 transition-colors shadow-sm"
         >
-          <Globe size={15} className="text-content-tertiary" />
+          <Globe size={16} className="text-content-tertiary" />
           <CountryFlag code={currentLang.country} size={18} />
           <span className="hidden sm:inline">{currentLang.name}</span>
-          <ChevronDown size={14} className={`text-content-tertiary transition-transform ${langOpen ? 'rotate-180' : ''}`} />
+          <ChevronDown size={16} className={`text-content-tertiary transition-transform ${langOpen ? 'rotate-180' : ''}`} />
         </button>
         {langOpen && (
           <div className="absolute right-0 mt-2 w-56 max-h-80 overflow-y-auto rounded-xl border border-border-light bg-surface-elevated shadow-xl py-1 animate-stagger-in">
@@ -503,27 +341,16 @@ export function LoginPageNext() {
           onMouseMove={onHeroMouseMove}
           className="oe-hero relative hidden lg:flex flex-col justify-center overflow-hidden px-12 xl:px-20 py-14"
         >
-          {/* Aurora + spotlight stack — left side only. */}
-          <div className="oe-aurora" aria-hidden>
-            <div className="oe-aurora-c" />
-          </div>
-          <div className="oe-spot" aria-hidden />
-
           {/* Eyebrow */}
-          <div className="oe-font-display relative mb-5 inline-flex w-fit items-center gap-2 rounded-full border border-white/60 bg-white/70 px-3 py-1 text-[11px] font-semibold tracking-[0.08em] uppercase text-content-secondary backdrop-blur-md dark:border-white/10 dark:bg-white/10 dark:text-white/80">
-            <span className="oe-pulse relative flex h-1.5 w-1.5 rounded-full bg-emerald-500" />
+          <div className="relative mb-5 inline-flex w-fit items-center gap-2 rounded-md border border-border-light bg-surface-elevated px-3 py-1.5 text-xs text-content-secondary">
+            <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
             <span>{t('login.welcome_eyebrow', 'First-time setup')}</span>
           </div>
 
           {/* Headline */}
-          <h1 className="oe-font-display relative max-w-[640px] text-[46px] xl:text-[60px] leading-[0.95] font-extrabold tracking-[-0.04em] text-content-primary dark:text-white">
+          <h1 className="relative max-w-[640px] text-[44px] xl:text-[52px] leading-[1.08] font-medium text-content-primary dark:text-white">
             {t('login.welcome_h_a', 'A clean slate,')}{' '}
-            <span className="relative inline-block">
-              <span className="oe-font-serif italic font-normal bg-gradient-to-r from-[#0284c7] via-[#0ea5e9] to-[#38bdf8] bg-clip-text text-transparent">
-                {t('login.welcome_h_b', 'ready to build.')}
-              </span>
-              <span className="absolute -inset-x-2 -bottom-1 -z-10 h-[14px] rounded-full bg-gradient-to-r from-[#0284c7]/25 via-[#0ea5e9]/25 to-[#38bdf8]/25 blur-xl" />
-            </span>
+            <span>{t('login.welcome_h_b', 'ready to build.')}</span>
           </h1>
 
           <p className="oe-font-display relative mt-5 max-w-[480px] text-[15px] leading-[1.6] text-content-secondary dark:text-white/65">
@@ -550,7 +377,7 @@ export function LoginPageNext() {
                     {m.label}
                   </div>
                   <div className="mt-1 flex items-baseline gap-1.5">
-                    <span className={`text-[18px] font-extrabold tracking-tight leading-none ${m.stat === '—' ? 'text-content-quaternary/60' : 'text-content-primary dark:text-white'}`}>
+                    <span className={`text-lg font-medium leading-none ${m.stat === '—' ? 'text-content-quaternary/60' : 'text-content-primary dark:text-white'}`}>
                       {m.stat}
                     </span>
                     <span className="text-[10px] uppercase tracking-[0.08em] font-medium text-content-tertiary">
@@ -590,7 +417,7 @@ export function LoginPageNext() {
               <div className="lg:hidden mb-6 flex flex-col items-center">
                 <Logo size="md" animate />
                 <span
-                  className="mt-2.5 text-xl font-medium tracking-[-0.02em] text-content-primary dark:text-white"
+                  className="mt-2.5 text-xl font-medium text-content-primary dark:text-white"
                   style={{ fontFamily: "'Plus Jakarta Sans', system-ui, sans-serif" }}
                 >
                   Vastukar
@@ -601,7 +428,7 @@ export function LoginPageNext() {
               <div className="hidden lg:flex items-center gap-2.5 mb-7">
                 <Logo size="sm" animate />
                 <span
-                  className="text-[15px] font-medium tracking-[-0.02em] text-content-primary dark:text-white"
+                  className="text-[15px] font-medium text-content-primary dark:text-white"
                   style={{ fontFamily: "'Plus Jakarta Sans', system-ui, sans-serif" }}
                 >
                   Vastukar
@@ -610,7 +437,7 @@ export function LoginPageNext() {
 
               {/* Headline */}
               <div className="animate-stagger-in" style={{ animationDelay: '60ms' }}>
-                <h2 className="oe-font-display text-[28px] font-bold tracking-[-0.025em] text-content-primary dark:text-white">
+                <h2 className="text-2xl font-medium text-content-primary dark:text-white">
                   {t('auth.welcome_back', 'Welcome back')}
                 </h2>
                 <p className="oe-font-display mt-1.5 text-sm text-content-secondary dark:text-white/60">
@@ -664,7 +491,7 @@ export function LoginPageNext() {
                       autoComplete="current-password"
                       required aria-required="true"
                       minLength={8}
-                      className="h-9 w-full rounded-lg border border-border bg-surface-primary pl-9 pr-9 text-sm text-content-primary placeholder:text-content-tertiary transition-all duration-fast ease-oe focus:outline-none focus:ring-2 focus:ring-oe-blue focus:border-transparent hover:border-content-tertiary"
+                      className="h-9 w-full rounded-lg border border-border bg-surface-primary pl-9 pr-9 text-sm text-content-primary placeholder:text-content-tertiary transition-colors duration-fast ease-oe focus:outline-none focus:ring-2 focus:ring-oe-blue focus:border-transparent hover:border-content-tertiary"
                     />
                     <button
                       type="button"
@@ -702,7 +529,7 @@ export function LoginPageNext() {
                   variant="primary"
                   size="lg"
                   loading={loading}
-                  className="w-full btn-shimmer"
+                  className="w-full"
                 >
                   {t('auth.login', 'Sign in')}
                 </Button>
@@ -715,7 +542,7 @@ export function LoginPageNext() {
                 <button
                   type="button"
                   onClick={() => setDemoOpen(!demoOpen)}
-                  className="flex w-full items-center justify-center gap-2 rounded-xl border border-border-light bg-surface-primary px-4 py-2.5 text-sm text-content-secondary hover:text-oe-blue hover:border-oe-blue/40 transition-all"
+                  className="flex w-full items-center justify-center gap-2 rounded-xl border border-border-light bg-surface-primary px-4 py-2.5 text-sm text-content-secondary hover:text-oe-blue hover:border-oe-blue/40 transition-colors"
                 >
                   <Zap size={14} className="text-oe-blue" />
                   <span className="font-semibold">{t('auth.demo_access', 'Demo Access')}</span>
@@ -733,9 +560,9 @@ export function LoginPageNext() {
                         type="button"
                         onClick={() => handleDemoLogin(acct.email)}
                         disabled={demoLoading !== null}
-                        className="oe-glass-lite group flex w-full items-center gap-3 rounded-xl px-3.5 py-2.5 text-left transition-all hover:translate-y-[-1px] hover:border-oe-blue/30 disabled:opacity-50"
+                        className="oe-glass-lite group flex w-full items-center gap-3 rounded-xl px-3.5 py-2.5 text-left transition-colors hover:border-oe-blue/30 disabled:opacity-50"
                       >
-                        <div className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-full ${acct.color} text-white text-sm font-bold shadow-sm`}>
+                        <div className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-full ${acct.color} text-white text-sm font-medium shadow-sm`}>
                           {demoLoading === acct.email ? (
                             <svg className="animate-spin h-4 w-4" viewBox="0 0 24 24">
                               <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />

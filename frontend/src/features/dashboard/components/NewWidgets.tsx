@@ -176,13 +176,13 @@ export function BOQSummaryWidget({ projects }: { projects?: ProjectRef[] }) {
     <WidgetCard icon={icon} title={title} subtitle={subtitle}>
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         <div>
-          <div className="text-2xs uppercase tracking-wider text-content-tertiary mb-1">
+          <div className="text-2xs text-content-tertiary mb-1">
             {t('dashboard.total_boqs', { defaultValue: 'Total BOQs' })}
           </div>
           <div className="text-xl font-semibold tabular-nums">{payload.total_boqs}</div>
         </div>
         <div>
-          <div className="text-2xs uppercase tracking-wider text-content-tertiary mb-1">
+          <div className="text-2xs text-content-tertiary mb-1">
             {t('dashboard.boq_total_value', { defaultValue: 'Total value' })}
           </div>
           <div className="text-xl font-semibold tabular-nums">
@@ -190,13 +190,13 @@ export function BOQSummaryWidget({ projects }: { projects?: ProjectRef[] }) {
           </div>
         </div>
         <div>
-          <div className="text-2xs uppercase tracking-wider text-content-tertiary mb-1">
+          <div className="text-2xs text-content-tertiary mb-1">
             {t('dashboard.boq_missing_qty', { defaultValue: 'Missing qty' })}
           </div>
           <div className="text-xl font-semibold tabular-nums">{pctMissingQty}%</div>
         </div>
         <div>
-          <div className="text-2xs uppercase tracking-wider text-content-tertiary mb-1">
+          <div className="text-2xs text-content-tertiary mb-1">
             {t('dashboard.boq_zero_price', { defaultValue: 'Zero priced' })}
           </div>
           <div className="text-xl font-semibold tabular-nums">{pctZeroPrice}%</div>
@@ -341,25 +341,25 @@ export function HSEScoreCardWidget(_props: { projects?: ProjectRef[] } = {}) {
     <WidgetCard icon={icon} title={title} subtitle={subtitle}>
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         <div>
-          <div className="text-2xs uppercase tracking-wider text-content-tertiary mb-1">
+          <div className="text-2xs text-content-tertiary mb-1">
             {t('dashboard.hse_last_30d', { defaultValue: 'Last 30 days' })}
           </div>
           <div className="text-xl font-semibold tabular-nums">{payload.last_30d}</div>
         </div>
         <div>
-          <div className="text-2xs uppercase tracking-wider text-content-tertiary mb-1">
+          <div className="text-2xs text-content-tertiary mb-1">
             {t('dashboard.hse_near_miss', { defaultValue: 'Near-misses' })}
           </div>
           <div className="text-xl font-semibold tabular-nums">{payload.near_miss}</div>
         </div>
         <div>
-          <div className="text-2xs uppercase tracking-wider text-content-tertiary mb-1">
+          <div className="text-2xs text-content-tertiary mb-1">
             {t('dashboard.hse_recordable', { defaultValue: 'Recordables' })}
           </div>
           <div className="text-xl font-semibold tabular-nums">{payload.recordables}</div>
         </div>
         <div>
-          <div className="text-2xs uppercase tracking-wider text-content-tertiary mb-1">
+          <div className="text-2xs text-content-tertiary mb-1">
             {t('dashboard.hse_last_incident', { defaultValue: 'Last incident' })}
           </div>
           <div className="text-sm font-medium text-content-primary">{lastIncident}</div>
@@ -402,19 +402,19 @@ export function ProcurementPipelineWidget(_props: { projects?: ProjectRef[] } = 
     <WidgetCard icon={icon} title={title} subtitle={subtitle}>
       <div className="grid grid-cols-3 gap-4">
         <div>
-          <div className="text-2xs uppercase tracking-wider text-content-tertiary mb-1">
+          <div className="text-2xs text-content-tertiary mb-1">
             {t('dashboard.procurement_rfqs', { defaultValue: 'RFQs pending' })}
           </div>
           <div className="text-xl font-semibold tabular-nums">{payload!.rfqs_pending}</div>
         </div>
         <div>
-          <div className="text-2xs uppercase tracking-wider text-content-tertiary mb-1">
+          <div className="text-2xs text-content-tertiary mb-1">
             {t('dashboard.procurement_pos_issued', { defaultValue: 'POs issued' })}
           </div>
           <div className="text-xl font-semibold tabular-nums">{payload!.pos_issued}</div>
         </div>
         <div>
-          <div className="text-2xs uppercase tracking-wider text-content-tertiary mb-1">
+          <div className="text-2xs text-content-tertiary mb-1">
             {t('dashboard.procurement_pos_received', { defaultValue: 'POs received' })}
           </div>
           <div className="text-xl font-semibold tabular-nums">{payload!.pos_received}</div>
@@ -523,13 +523,13 @@ export function ChangeOrdersWidget({ projects }: { projects?: ProjectRef[] }) {
     <WidgetCard icon={icon} title={title} subtitle={subtitle}>
       <div className="grid grid-cols-2 gap-4 mb-3">
         <div>
-          <div className="text-2xs uppercase tracking-wider text-content-tertiary mb-1">
+          <div className="text-2xs text-content-tertiary mb-1">
             {t('dashboard.change_orders_open', { defaultValue: 'Open' })}
           </div>
           <div className="text-xl font-semibold tabular-nums">{payload.open_count}</div>
         </div>
         <div>
-          <div className="text-2xs uppercase tracking-wider text-content-tertiary mb-1">
+          <div className="text-2xs text-content-tertiary mb-1">
             {t('dashboard.change_orders_impact', { defaultValue: 'Total impact' })}
           </div>
           <div className="text-xl font-semibold tabular-nums">
@@ -589,25 +589,25 @@ export function ClashHealthWidget(_props: { projects?: ProjectRef[] } = {}) {
     <WidgetCard icon={icon} title={title} subtitle={subtitle}>
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-3">
         <div>
-          <div className="text-2xs uppercase tracking-wider text-content-tertiary mb-1">
+          <div className="text-2xs text-content-tertiary mb-1">
             {t('dashboard.clash_high', { defaultValue: 'High' })}
           </div>
           <div className="text-xl font-semibold text-red-600 tabular-nums">{payload.high}</div>
         </div>
         <div>
-          <div className="text-2xs uppercase tracking-wider text-content-tertiary mb-1">
+          <div className="text-2xs text-content-tertiary mb-1">
             {t('dashboard.clash_medium', { defaultValue: 'Medium' })}
           </div>
           <div className="text-xl font-semibold text-amber-600 tabular-nums">{payload.medium}</div>
         </div>
         <div>
-          <div className="text-2xs uppercase tracking-wider text-content-tertiary mb-1">
+          <div className="text-2xs text-content-tertiary mb-1">
             {t('dashboard.clash_low', { defaultValue: 'Low' })}
           </div>
           <div className="text-xl font-semibold text-content-secondary tabular-nums">{payload.low}</div>
         </div>
         <div>
-          <div className="text-2xs uppercase tracking-wider text-content-tertiary mb-1">
+          <div className="text-2xs text-content-tertiary mb-1">
             {t('dashboard.clash_resolved', { defaultValue: '% resolved' })}
           </div>
           <div className="text-xl font-semibold tabular-nums">{payload.pct_resolved}%</div>
@@ -658,7 +658,7 @@ export function ValidationHealthWidget(_props: { projects?: ProjectRef[] } = {})
           <div className="text-2xl font-semibold text-emerald-700 dark:text-emerald-300 tabular-nums">
             {payload.passed}
           </div>
-          <div className="text-2xs uppercase tracking-wider text-content-tertiary mt-1">
+          <div className="text-2xs text-content-tertiary mt-1">
             {t('dashboard.validation_pass', { defaultValue: 'Passed' })}
           </div>
         </div>
@@ -666,7 +666,7 @@ export function ValidationHealthWidget(_props: { projects?: ProjectRef[] } = {})
           <div className="text-2xl font-semibold text-amber-700 dark:text-amber-300 tabular-nums">
             {payload.warnings}
           </div>
-          <div className="text-2xs uppercase tracking-wider text-content-tertiary mt-1">
+          <div className="text-2xs text-content-tertiary mt-1">
             {t('dashboard.validation_warn', { defaultValue: 'Warnings' })}
           </div>
         </div>
@@ -674,7 +674,7 @@ export function ValidationHealthWidget(_props: { projects?: ProjectRef[] } = {})
           <div className="text-2xl font-semibold text-red-700 dark:text-red-300 tabular-nums">
             {payload.errors}
           </div>
-          <div className="text-2xs uppercase tracking-wider text-content-tertiary mt-1">
+          <div className="text-2xs text-content-tertiary mt-1">
             {t('dashboard.validation_err', { defaultValue: 'Errors' })}
           </div>
         </div>

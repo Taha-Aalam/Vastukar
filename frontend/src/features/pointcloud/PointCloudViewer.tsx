@@ -2012,7 +2012,7 @@ export function PointCloudViewer({ scanId, scanLabel }: PointCloudViewerProps) {
             data-testid="pointcloud-inspector"
           >
             <div className="flex shrink-0 items-center justify-between border-b border-border-light px-3 py-2">
-              <span className="text-2xs font-semibold uppercase tracking-wider text-content-tertiary">
+              <span className="text-2xs font-semibold text-content-tertiary">
                 {t('pointcloud.inspector_title', { defaultValue: 'Inspector' })}
               </span>
               <button
@@ -2029,7 +2029,7 @@ export function PointCloudViewer({ scanId, scanLabel }: PointCloudViewerProps) {
             <div className="min-h-0 flex-1 space-y-4 overflow-y-auto p-3">
               {/* ── Display settings ─────────────────────────────────────── */}
               <section className="space-y-3" data-testid="pointcloud-display-section">
-                <h4 className="flex items-center gap-1.5 text-2xs font-semibold uppercase tracking-wider text-content-tertiary">
+                <h4 className="flex items-center gap-1.5 text-2xs font-semibold text-content-tertiary">
                   <Palette size={12} />
                   {t('pointcloud.group_display', { defaultValue: 'Display' })}
                 </h4>
@@ -2037,7 +2037,7 @@ export function PointCloudViewer({ scanId, scanLabel }: PointCloudViewerProps) {
           <div>
             <label
               htmlFor="pointcloud-color-mode"
-            className="mb-1 block text-2xs font-semibold uppercase tracking-wider text-content-tertiary"
+            className="mb-1 block text-2xs font-semibold text-content-tertiary"
           >
             {t('pointcloud.viewer_color_mode', { defaultValue: 'Color by' })}
           </label>
@@ -2060,7 +2060,7 @@ export function PointCloudViewer({ scanId, scanLabel }: PointCloudViewerProps) {
         <div>
           <label
             htmlFor="pointcloud-density"
-            className="mb-1 block text-2xs font-semibold uppercase tracking-wider text-content-tertiary"
+            className="mb-1 block text-2xs font-semibold text-content-tertiary"
           >
             {t('pointcloud.viewer_density', { defaultValue: 'Density' })}
           </label>
@@ -2083,7 +2083,7 @@ export function PointCloudViewer({ scanId, scanLabel }: PointCloudViewerProps) {
         <div className="min-w-[150px]">
           <label
             htmlFor="pointcloud-point-size"
-            className="mb-1 block text-2xs font-semibold uppercase tracking-wider text-content-tertiary"
+            className="mb-1 block text-2xs font-semibold text-content-tertiary"
           >
             {t('pointcloud.viewer_point_size', { defaultValue: 'Point size' })}
           </label>
@@ -2104,7 +2104,7 @@ export function PointCloudViewer({ scanId, scanLabel }: PointCloudViewerProps) {
         <div className="min-w-[140px]">
           <label
             htmlFor="pointcloud-draw-density"
-            className="mb-1 flex items-center gap-1 text-2xs font-semibold uppercase tracking-wider text-content-tertiary"
+            className="mb-1 flex items-center gap-1 text-2xs font-semibold text-content-tertiary"
           >
             <Gauge size={11} />
             {t('pointcloud.viewer_draw_density', { defaultValue: 'Draw density' })}
@@ -2132,7 +2132,7 @@ export function PointCloudViewer({ scanId, scanLabel }: PointCloudViewerProps) {
         <div>
           <label
             htmlFor="pointcloud-bg-mode"
-            className="mb-1 flex items-center gap-1 text-2xs font-semibold uppercase tracking-wider text-content-tertiary"
+            className="mb-1 flex items-center gap-1 text-2xs font-semibold text-content-tertiary"
           >
             <Palette size={11} />
             {t('pointcloud.viewer_background', { defaultValue: 'Background' })}
@@ -2218,7 +2218,7 @@ export function PointCloudViewer({ scanId, scanLabel }: PointCloudViewerProps) {
           <div className="min-w-[160px] flex-1">
             <label
               htmlFor="pointcloud-slice-min"
-              className="mb-1 block text-2xs font-semibold uppercase tracking-wider text-content-tertiary"
+              className="mb-1 block text-2xs font-semibold text-content-tertiary"
             >
               {t('pointcloud.slice_min_height', { defaultValue: 'Min height' })}
               <span className="ml-1 font-normal normal-case text-content-quaternary">
@@ -2240,7 +2240,7 @@ export function PointCloudViewer({ scanId, scanLabel }: PointCloudViewerProps) {
           <div className="min-w-[160px] flex-1">
             <label
               htmlFor="pointcloud-slice-max"
-              className="mb-1 block text-2xs font-semibold uppercase tracking-wider text-content-tertiary"
+              className="mb-1 block text-2xs font-semibold text-content-tertiary"
             >
               {t('pointcloud.slice_max_height', { defaultValue: 'Max height' })}
               <span className="ml-1 font-normal normal-case text-content-quaternary">
@@ -2457,7 +2457,7 @@ export function PointCloudViewer({ scanId, scanLabel }: PointCloudViewerProps) {
           {areaVertexCount >= 3 && (
             <div className="space-y-2 border-t border-border-light pt-2">
               <div className="flex flex-wrap items-end gap-x-3 gap-y-2">
-                <span className="inline-flex items-center gap-1 text-2xs font-semibold uppercase tracking-wider text-content-tertiary">
+                <span className="inline-flex items-center gap-1 text-2xs font-semibold text-content-tertiary">
                   <Mountain size={12} />
                   {t('pointcloud.volume_title', { defaultValue: 'Cut / fill volume' })}
                 </span>
@@ -2738,7 +2738,7 @@ export function PointCloudViewer({ scanId, scanLabel }: PointCloudViewerProps) {
           data-testid="pointcloud-groups-panel"
         >
           <div className="flex flex-wrap items-center gap-x-3 gap-y-2">
-            <span className="inline-flex items-center gap-1 text-2xs font-semibold uppercase tracking-wider text-content-tertiary">
+            <span className="inline-flex items-center gap-1 text-2xs font-semibold text-content-tertiary">
               <Boxes size={12} />
               {t('pointcloud.groups_title', { defaultValue: 'Point groups' })}
             </span>
@@ -3205,7 +3205,7 @@ export function PointCloudViewer({ scanId, scanLabel }: PointCloudViewerProps) {
               </span>
             </div>
             <div className="flex flex-col items-start gap-1">
-              <span className="text-2xs font-semibold uppercase tracking-wider text-content-tertiary">
+              <span className="text-2xs font-semibold text-content-tertiary">
                 {t('pointcloud.legend_title', { defaultValue: 'Elevation' })}
               </span>
               <button

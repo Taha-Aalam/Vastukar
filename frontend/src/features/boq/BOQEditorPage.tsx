@@ -5733,7 +5733,7 @@ export function BOQEditorPage() {
             <span className="shrink-0">{importProgressText(importJobProgress, t)}</span>
             <div className="h-1.5 flex-1 max-w-xs rounded-full bg-surface-secondary overflow-hidden">
               <div
-                className="h-full bg-oe-blue transition-all"
+                className="h-full bg-oe-blue transition"
                 style={{ width: `${Math.max(0, Math.min(100, importJobProgress.percent))}%` }}
               />
             </div>

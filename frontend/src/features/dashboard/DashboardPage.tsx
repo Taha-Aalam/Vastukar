@@ -8,7 +8,6 @@ import { apiGet, apiPost, type Page } from '@/shared/lib/api';
 import { fetchProjectList } from '@/shared/lib/projectList';
 import { useToastStore } from '@/stores/useToastStore';
 import { useProjectContextStore } from '@/stores/useProjectContextStore';
-import { useAuthStore } from '@/stores/useAuthStore';
 import { useHasPermission } from '@/shared/lib/permissionGates';
 import { useMeOnboardingQueryKey } from '@/app/layout/meOnboardingQuery';
 import { fmtList, fmtFixed } from '@/shared/lib/formatters';
@@ -211,52 +210,6 @@ function WidgetSkeleton() {
       className="h-full min-h-[8rem] w-full animate-pulse rounded-2xl border border-border-subtle bg-surface-muted/40"
     />
   );
-}
-
-/* ── Helpers ──────────────────────────────────────────────────────────── */
-
-/**
- * Derive a presentable first name from a signed-in user's email.
- *
- * The auth store only persists the email (no full_name), so we build a
- * friendly label from the local-part: take everything before "@", split on
- * dots / underscores / hyphens / digits, title-case the first usable token,
- * and trim. Returns `undefined` when nothing usable can be derived so the
- * greeting can render name-less - we never expose a raw email or "undefined".
- *
- * Examples:
- *   "artem.boiko@acme.io" → "Artem"
- *   "j_smith42@x.com"     → "J"
- *   "demo@vastukar.com" → "Demo"
- *   "@x.com" / "" / null  → undefined
- */
-function deriveGreetingName(email: string | null | undefined): string | undefined {
-  if (!email) return undefined;
-  const local = email.split('@', 1)[0]?.trim();
-  if (!local) return undefined;
-  // First token before any common separator; drop trailing digits.
-  const token = local
-    .split(/[._\-+]/)
-    .map((s) => s.replace(/\d+$/, '').trim())
-    .find((s) => s.length > 0);
-  if (!token) return undefined;
-  return token.charAt(0).toUpperCase() + token.slice(1).toLowerCase();
-}
-
-/**
- * Pick a friendly first name from a user's profile ``full_name``.
- *
- * Greetings read most naturally with a single given name ("Good morning,
- * Artem"), so we take the first whitespace-separated token of the real name.
- * Returns ``undefined`` for an empty / whitespace-only name so the caller can
- * fall back to {@link deriveGreetingName}. The casing of the stored name is
- * preserved (it is a real name, not a guessed email token).
- */
-function firstNameFromFullName(fullName: string | null | undefined): string | undefined {
-  const trimmed = (fullName ?? '').trim();
-  if (!trimmed) return undefined;
-  const first = trimmed.split(/\s+/)[0];
-  return first && first.length > 0 ? first : undefined;
 }
 
 /* ── Types ────────────────────────────────────────────────────────────── */
@@ -1202,7 +1155,7 @@ function PortfolioOverview() {
       </div>
       <div className="grid grid-cols-1 min-[400px]:grid-cols-2 sm:grid-cols-3 gap-3">
         <div className="rounded-xl border border-border-light bg-surface-elevated/90 p-3 shadow-xs transition-shadow duration-normal ease-oe hover:shadow-sm">
-          <div className="text-2xs font-medium uppercase tracking-wider text-content-tertiary">
+          <div className="text-2xs text-content-tertiary">
             {t('dashboard.active_projects', { defaultValue: 'Active Projects' })}
           </div>
           <div className="mt-1 text-xl font-bold tabular-nums text-content-primary">
@@ -1210,7 +1163,7 @@ function PortfolioOverview() {
           </div>
         </div>
         <div className="rounded-xl border border-border-light bg-surface-elevated/90 p-3 shadow-xs transition-shadow duration-normal ease-oe hover:shadow-sm">
-          <div className="text-2xs font-medium uppercase tracking-wider text-content-tertiary">
+          <div className="text-2xs text-content-tertiary">
             {t('dashboard.total_budget_all', { defaultValue: 'Total Budget' })}
           </div>
           <div className="mt-1 text-xl font-bold tabular-nums text-content-primary">
@@ -1218,7 +1171,7 @@ function PortfolioOverview() {
           </div>
         </div>
         <div className="rounded-xl border border-border-light bg-surface-elevated/90 p-3 shadow-xs transition-shadow duration-normal ease-oe hover:shadow-sm">
-          <div className="text-2xs font-medium uppercase tracking-wider text-content-tertiary">
+          <div className="text-2xs text-content-tertiary">
             {t('dashboard.with_budget', { defaultValue: 'With Budget' })}
           </div>
           <div className="mt-1 text-xl font-bold tabular-nums text-content-primary">
@@ -1228,7 +1181,7 @@ function PortfolioOverview() {
       </div>
       {overBudgetProjects.length > 0 && (
         <div className="mt-3 pt-3 border-t border-border-light">
-          <p className="text-2xs font-medium text-amber-600 uppercase tracking-wider mb-2">
+          <p className="text-2xs font-medium text-amber-600  mb-2">
             {t('dashboard.projects_over_budget', { defaultValue: 'Projects Over Budget' })}
           </p>
           <div className="space-y-1.5">
@@ -2199,24 +2152,6 @@ function DashboardPageInner() {
     [widgetOrder],
   );
 
-  // Friendly display name for the greeting. We prefer the user's REAL profile
-  // name (their ``full_name``; there is no separate display_name field) and
-  // only fall back to a name guessed from the email local-part when no real
-  // name is known. The name comes from the auth store, which reads the live
-  // ``/v1/users/me/`` profile once at app start (syncRoleFromServer), keeps it
-  // across reloads, and is refreshed again when the name is edited in
-  // Settings. The dashboard used to ask ``/v1/users/me/`` a second time on
-  // every open for the same field, and cached ``null`` on a failure under the
-  // ['me'] key that Settings, Projects and approvals read for the profile.
-  // We never surface a raw email or "undefined" - if nothing usable remains,
-  // the greeting renders name-less.
-  const userEmail = useAuthStore((s) => s.userEmail);
-  const cachedFullName = useAuthStore((s) => s.userFullName);
-  const greetingName = useMemo(
-    () => firstNameFromFullName(cachedFullName) ?? deriveGreetingName(userEmail),
-    [cachedFullName, userEmail],
-  );
-
   // Pull the server-side layout once at mount so a user who customised on
   // another browser sees the same dashboard here. Idempotent: only the
   // first call actually fires.
@@ -2485,7 +2420,7 @@ function DashboardPageInner() {
           <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-oe-blue/40 opacity-75" />
           <span className="relative inline-flex h-2 w-2 rounded-full bg-oe-blue" />
         </span>
-        <span className="text-2xs uppercase tracking-wider font-semibold text-oe-blue shrink-0">
+        <span className="text-2xs  font-semibold text-oe-blue shrink-0">
           {t('dashboard.continue_work', { defaultValue: 'Resume' })}
         </span>
         <span className="text-sm font-semibold text-content-primary truncate min-w-0">
@@ -2757,30 +2692,12 @@ function DashboardPageInner() {
           active (env OE_PARTNER_PACK or first installed). Dismissable
           per session; reappears on next browser launch. */}
       <PartnerLogoBadge variant="dashboard" />
-      {/* ─── 1. Hero · row A - greeting + primary actions ────────────────
-          Compressed from the previous 6-row hero (audit 2026-05-11): the
-          greeting and the 3 CTAs share a single line on desktop; row B
-          below merges Vastukar attribution + OSS badge + status pills into a
-          thin meta-strip. Saves ~180px above the fold. */}
+      {/* ─── 1. Hero · row A - page title + primary actions ───────────────
+          The page names its context instead of greeting the reader. The
+          actions stay on the same line on desktop. */}
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between animate-card-in">
-        <h1 className="text-2xl font-semibold tracking-tight gradient-text pl-2">
-          {(() => {
-            const h = new Date().getHours();
-            const key =
-              h < 5  ? 'dashboard.greet_night'
-            : h < 12 ? 'dashboard.greet_morning'
-            : h < 18 ? 'dashboard.greet_afternoon'
-            :          'dashboard.greet_evening';
-            const fallback =
-              h < 5  ? 'Welcome back'
-            : h < 12 ? 'Good morning'
-            : h < 18 ? 'Good afternoon'
-            :          'Good evening';
-            const greeting = t(key, { defaultValue: fallback });
-            // Append the user's name as ", Name" so the greeting i18n keys
-            // stay reusable across languages without a name-aware template.
-            return `${greeting}${greetingName ? `, ${greetingName}` : ''}`;
-          })()}
+        <h1 className="pl-2 text-2xl font-medium tracking-normal text-content-primary">
+          {t('nav.dashboard', { defaultValue: 'Dashboard' })}
         </h1>
         <div
           className="flex items-center gap-2 flex-wrap animate-stagger-in"
@@ -3201,7 +3118,7 @@ function AnalyticsSection({ projects }: { projects: ProjectSummary[] }) {
         {/* Aggregate Stats */}
         <div className="grid grid-cols-2 gap-4 sm:grid-cols-4 mb-6">
           <div className="rounded-xl border border-border-light bg-surface-elevated/90 p-3 shadow-xs transition-shadow duration-normal ease-oe hover:shadow-sm">
-            <div className="text-xs font-medium uppercase tracking-wider text-content-tertiary">
+            <div className="text-xs  text-content-tertiary">
               {t('dashboard.total_projects', { defaultValue: 'Total Projects' })}
             </div>
             <div className="mt-1 text-xl font-bold tabular-nums text-content-primary">
@@ -3209,7 +3126,7 @@ function AnalyticsSection({ projects }: { projects: ProjectSummary[] }) {
             </div>
           </div>
           <div className="rounded-xl border border-border-light bg-surface-elevated/90 p-3 shadow-xs transition-shadow duration-normal ease-oe hover:shadow-sm">
-            <div className="text-xs font-medium uppercase tracking-wider text-content-tertiary">
+            <div className="text-xs  text-content-tertiary">
               {t('dashboard.total_boqs', { defaultValue: 'Total BOQs' })}
             </div>
             <div className="mt-1 text-xl font-bold tabular-nums text-content-primary">
@@ -3217,7 +3134,7 @@ function AnalyticsSection({ projects }: { projects: ProjectSummary[] }) {
             </div>
           </div>
           <div className="rounded-xl border border-border-light bg-surface-elevated/90 p-3 shadow-xs transition-shadow duration-normal ease-oe hover:shadow-sm sm:col-span-2">
-            <div className="flex items-center gap-1.5 text-xs font-medium uppercase tracking-wider text-content-tertiary">
+            <div className="flex items-center gap-1.5 text-xs  text-content-tertiary">
               {t('dashboard.total_value', { defaultValue: 'Total Value' })}
               {stats.multiCurrency && (
                 <span className="rounded bg-surface-tertiary px-1.5 py-0.5 text-2xs font-medium normal-case tracking-normal text-content-tertiary">
@@ -3255,7 +3172,7 @@ function AnalyticsSection({ projects }: { projects: ProjectSummary[] }) {
             (vanity metric - nobody asks "how many of my BOQs are drafts?").
             Bars now span full-width with slimmer height (h-2 vs h-6) and
             use the oe-blue brand color instead of a 10-colour rainbow. */}
-        <div className="text-xs font-medium uppercase tracking-wider text-content-tertiary mb-3">
+        <div className="text-xs  text-content-tertiary mb-3">
           {t('dashboard.value_by_project', 'Value by Project')}
         </div>
         <div className="space-y-3">

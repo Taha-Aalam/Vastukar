@@ -293,7 +293,7 @@ function ModelFilmstrip({ models, isLoading, activeModelId, onSelectModel, onDel
         className="flex items-center w-full px-4 py-2 cursor-pointer group hover:bg-surface-secondary/30 transition-colors"
       >
         {/* Drag handle icon */}
-        <div className="flex flex-col items-center gap-[3px] mr-3 opacity-50 group-hover:opacity-80 transition-opacity">
+        <div className="flex flex-col items-center gap-1 mr-3 opacity-50 group-hover:opacity-80 transition-opacity">
           <div className="w-5 h-[2px] rounded-full bg-content-tertiary" />
           <div className="w-5 h-[2px] rounded-full bg-content-tertiary" />
           <div className="w-5 h-[2px] rounded-full bg-content-tertiary" />
@@ -320,7 +320,7 @@ function ModelFilmstrip({ models, isLoading, activeModelId, onSelectModel, onDel
 
       {/* Collapsible model cards */}
       <div
-        className="overflow-hidden transition-all duration-300 ease-in-out"
+        className="overflow-hidden transition duration-300 ease-in-out"
         style={{ maxHeight: '120px', opacity: 1 }}
       >
         <div className="flex items-center gap-3 px-4 pb-2 overflow-x-auto">
@@ -340,7 +340,7 @@ function ModelFilmstrip({ models, isLoading, activeModelId, onSelectModel, onDel
           {/* Add model button */}
           <button
             onClick={onUpload}
-            className="flex items-center justify-center shrink-0 w-16 h-16 rounded-xl border-2 border-dashed border-border-medium hover:border-oe-blue/50 hover:bg-oe-blue/5 transition-all group"
+            className="flex items-center justify-center shrink-0 w-16 h-16 rounded-xl border-2 border-dashed border-border-medium hover:border-oe-blue/50 hover:bg-oe-blue/5 transition-colors group"
             title={t('bim.upload_model', { defaultValue: 'Upload model' })}
             aria-label={t('bim.upload_model', { defaultValue: 'Upload model' })}
           >
@@ -398,7 +398,7 @@ function ModelCard({ model, isActive, onClick, onDelete }: {
           onClick();
         }
       }}
-      className={`group relative shrink-0 w-52 text-start rounded-xl border-2 transition-all duration-200 overflow-hidden cursor-pointer focus:outline-none focus:ring-2 focus:ring-oe-blue/50 ${
+      className={`group relative shrink-0 w-52 text-start rounded-xl border-2 transition-colors duration-200 overflow-hidden cursor-pointer focus:outline-none focus:ring-2 focus:ring-oe-blue/50 ${
         isActive
           ? 'border-oe-blue bg-oe-blue/5 shadow-lg shadow-oe-blue/10 ring-1 ring-oe-blue/20'
           : 'border-transparent bg-surface-primary hover:bg-surface-secondary hover:border-border-light shadow-sm'
@@ -413,7 +413,7 @@ function ModelCard({ model, isActive, onClick, onDelete }: {
           onClick={(e) => { e.stopPropagation(); onDelete(); }}
           onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); e.stopPropagation(); onDelete?.(); } }}
           aria-label={t('bim.delete_model', { defaultValue: 'Delete model' })}
-          className="absolute top-2.5 end-2 p-1 rounded-md text-content-quaternary hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-950/30 opacity-0 group-hover:opacity-100 focus:opacity-100 transition-all z-10"
+          className="absolute top-2.5 end-2 p-1 rounded-md text-content-quaternary hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-950/30 opacity-0 group-hover:opacity-100 focus:opacity-100 transition z-10"
         >
           <Trash2 size={11} />
         </button>
@@ -960,7 +960,7 @@ function UploadPanel({
             onDrop={(e) => { e.preventDefault(); setDragOver(false); const f = e.dataTransfer.files?.[0]; if (f) handleFileSelect(f); }}
             onDragOver={(e) => { e.preventDefault(); setDragOver(true); }}
             onDragLeave={(e) => { e.preventDefault(); setDragOver(false); }}
-            className={`flex flex-col items-center gap-3 border-2 border-dashed rounded-xl p-6 text-center cursor-pointer transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-oe-blue focus-visible:ring-offset-2 ${
+            className={`flex flex-col items-center gap-3 border-2 border-dashed rounded-xl p-6 text-center cursor-pointer transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-oe-blue focus-visible:ring-offset-2 ${
               dragOver ? 'border-oe-blue bg-oe-blue/5' : file ? 'border-oe-blue/40 bg-oe-blue/5' : 'border-border-medium hover:border-oe-blue/50 hover:bg-surface-secondary'
             }`}
           >
@@ -1023,14 +1023,14 @@ function UploadPanel({
           </label>
         ) : (
           <div className="grid grid-cols-2 gap-3">
-            <label className="flex flex-col items-center gap-2 border-2 border-dashed border-border-medium rounded-xl p-4 text-center cursor-pointer hover:border-oe-blue/50 hover:bg-surface-secondary transition-all">
+            <label className="flex flex-col items-center gap-2 border-2 border-dashed border-border-medium rounded-xl p-4 text-center cursor-pointer hover:border-oe-blue/50 hover:bg-surface-secondary transition-colors">
               <Database size={20} className="text-content-quaternary" />
               <span className="text-[11px] font-medium text-content-primary">{t('bim.upload_advanced_element_data')}</span>
               <span className="text-[9px] text-content-quaternary">{t('bim.upload_advanced_element_data_hint')}</span>
               {dataFile && <Badge variant="blue" size="sm">{dataFile.name}</Badge>}
               <input ref={dataInputRef} type="file" accept={DATA_ACCEPT} className="hidden" onChange={(e) => { setDataFile(e.target.files?.[0] ?? null); if (e.target.files?.[0] && !modelName) setModelName(e.target.files[0].name.replace(/\.\w+$/, '')); }} />
             </label>
-            <label className="flex flex-col items-center gap-2 border-2 border-dashed border-border-medium rounded-xl p-4 text-center cursor-pointer hover:border-oe-blue/50 hover:bg-surface-secondary transition-all">
+            <label className="flex flex-col items-center gap-2 border-2 border-dashed border-border-medium rounded-xl p-4 text-center cursor-pointer hover:border-oe-blue/50 hover:bg-surface-secondary transition-colors">
               <FileBox size={20} className="text-content-quaternary" />
               <span className="text-[11px] font-medium text-content-primary">{t('bim.upload_advanced_geometry')}</span>
               <span className="text-[9px] text-content-quaternary">{t('bim.upload_advanced_geometry_hint')}</span>
@@ -1083,18 +1083,18 @@ function UploadPanel({
         />
 
         <div>
-          <label className="block text-[10px] font-semibold text-content-tertiary mb-1.5 uppercase tracking-wider">{t('bim.upload_model_name_label')}</label>
+          <label className="block text-[10px] font-semibold text-content-tertiary mb-1.5">{t('bim.upload_model_name_label')}</label>
           <input type="text" className="w-full text-sm py-2 px-3 rounded-lg border border-border-light bg-surface-secondary text-content-primary placeholder-content-quaternary focus:outline-none focus:ring-1 focus:ring-oe-blue" placeholder={t('bim.upload_model_name_placeholder')} value={modelName} onChange={(e) => setModelName(e.target.value)} />
         </div>
         <div>
-          <label className="block text-[10px] font-semibold text-content-tertiary mb-1.5 uppercase tracking-wider">{t('bim.upload_discipline_label')}</label>
+          <label className="block text-[10px] font-semibold text-content-tertiary mb-1.5">{t('bim.upload_discipline_label')}</label>
           <select className="w-full text-sm py-2 px-3 rounded-lg border border-border-light bg-surface-secondary text-content-primary focus:outline-none focus:ring-1 focus:ring-oe-blue" value={discipline} onChange={(e) => setDiscipline(e.target.value)}>
             {disciplines.map((d) => <option key={d.v} value={d.v}>{d.l}</option>)}
           </select>
         </div>
         {versionParents.length > 0 && (
           <div>
-            <label htmlFor="bim-upload-version-of" className="block text-[10px] font-semibold text-content-tertiary mb-1.5 uppercase tracking-wider">{t('bim.upload_version_of_label', { defaultValue: 'New version of' })}</label>
+            <label htmlFor="bim-upload-version-of" className="block text-[10px] font-semibold text-content-tertiary mb-1.5">{t('bim.upload_version_of_label', { defaultValue: 'New version of' })}</label>
             <select
               id="bim-upload-version-of"
               data-testid="bim-upload-version-of"
@@ -1123,7 +1123,7 @@ function UploadPanel({
         {file && getFileExtension(file.name) === '.rvt' && (
           <>
             <div>
-              <label className="block text-[10px] font-semibold text-content-tertiary mb-1.5 uppercase tracking-wider">{t('bim.upload_depth_label', { defaultValue: 'Conversion depth' })}</label>
+              <label className="block text-[10px] font-semibold text-content-tertiary mb-1.5">{t('bim.upload_depth_label', { defaultValue: 'Conversion depth' })}</label>
               <select className="w-full text-sm py-2 px-3 rounded-lg border border-border-light bg-surface-secondary text-content-primary focus:outline-none focus:ring-1 focus:ring-oe-blue" value={conversionDepth} onChange={(e) => setConversionDepth(e.target.value as 'standard' | 'medium' | 'complete')}>
                 <option value="standard">{t('bim.upload_depth_standard', { defaultValue: 'Standard · main categories (fast)' })}</option>
                 <option value="medium">{t('bim.upload_depth_medium', { defaultValue: 'Medium · extended categories (balanced)' })}</option>
@@ -1161,7 +1161,7 @@ function UploadPanel({
         {uploading && (
           <div className="space-y-2">
             <div className="flex justify-between text-[11px]"><span className="text-content-secondary">{uploadStage}</span><span className="text-content-quaternary tabular-nums">{uploadProgress}%</span></div>
-            <div className="h-1.5 w-full rounded-full bg-surface-tertiary overflow-hidden"><div className="h-full rounded-full bg-gradient-to-r from-oe-blue to-blue-400 transition-all duration-300" style={{ width: `${uploadProgress}%` }} /></div>
+            <div className="h-1.5 w-full rounded-full bg-surface-tertiary overflow-hidden"><div className="h-full rounded-full bg-gradient-to-r from-oe-blue to-blue-400 transition duration-300" style={{ width: `${uploadProgress}%` }} /></div>
           </div>
         )}
         {uploadError && (
@@ -1178,7 +1178,7 @@ function UploadPanel({
 
       {/* Footer */}
       <div className="px-5 py-4 border-t border-border-light">
-        <button data-testid="bim-upload-submit" onClick={handleUpload} disabled={!canUpload} className="w-full flex items-center justify-center gap-2 py-2.5 rounded-xl text-sm font-semibold transition-all disabled:opacity-30 disabled:cursor-not-allowed bg-oe-blue text-white hover:bg-oe-blue-dark active:scale-[0.98] shadow-sm hover:shadow-md">
+        <button data-testid="bim-upload-submit" onClick={handleUpload} disabled={!canUpload} className="w-full flex items-center justify-center gap-2 py-2.5 rounded-xl text-sm font-semibold transition disabled:opacity-30 disabled:cursor-not-allowed bg-oe-blue text-white hover:bg-oe-blue-dark active:scale-[0.98] shadow-sm hover:shadow-md">
           {uploading ? <Loader2 size={16} className="animate-spin" /> : <Upload size={16} />}
           {uploading ? t('bim.uploading') : t('bim.upload_panel_title')}
         </button>
@@ -1778,7 +1778,7 @@ function LandingPage({ projectId, onUploadComplete: _onUploadComplete, breadcrum
                     }
                   }}
                   onDragOver={(e) => e.preventDefault()}
-                  className={`group/drop flex flex-col items-center justify-center gap-4 rounded-xl p-10 text-center cursor-pointer transition-all flex-1 ${
+                  className={`group/drop flex flex-col items-center justify-center gap-4 rounded-xl p-10 text-center cursor-pointer transition flex-1 ${
                     file
                       ? 'border-2 border-oe-blue bg-oe-blue/5'
                       : 'border-2 border-dashed border-border-medium bg-gradient-to-br from-blue-50/60 via-white to-violet-50/40 dark:from-blue-950/20 dark:via-gray-800/40 dark:to-violet-950/20 hover:border-oe-blue/50 hover:shadow-md'
@@ -1849,7 +1849,7 @@ function LandingPage({ projectId, onUploadComplete: _onUploadComplete, breadcrum
                     {getFileExtension(file.name) === '.rvt' && (
                       <>
                         <div>
-                          <label className="block text-[10px] font-semibold text-content-tertiary mb-1.5 uppercase tracking-wider">
+                          <label className="block text-[10px] font-semibold text-content-tertiary mb-1.5">
                             {t('bim.upload_depth_label', { defaultValue: 'Conversion depth' })}
                           </label>
                           <select
@@ -1887,9 +1887,9 @@ function LandingPage({ projectId, onUploadComplete: _onUploadComplete, breadcrum
                         only while installing or after a failed attempt. */}
                     <ConverterReleaseNotice format={file?.name.split('.').pop()?.toUpperCase()} />
                     <AutoInstallConverterNotice state={autoInstall} />
-                    {uploading && <div className="h-1.5 rounded-full bg-surface-tertiary overflow-hidden"><div className="h-full rounded-full bg-gradient-to-r from-oe-blue to-blue-400 transition-all duration-300" style={{ width: `${uploadProgress}%` }} /></div>}
+                    {uploading && <div className="h-1.5 rounded-full bg-surface-tertiary overflow-hidden"><div className="h-full rounded-full bg-gradient-to-r from-oe-blue to-blue-400 transition duration-300" style={{ width: `${uploadProgress}%` }} /></div>}
                     {uploadError && <p className="text-xs text-red-500">{uploadError}</p>}
-                    <button onClick={handleUpload} disabled={uploading} className="w-full flex items-center justify-center gap-2 py-3 rounded-xl text-sm font-bold transition-all disabled:opacity-50 bg-oe-blue text-white hover:bg-oe-blue-dark active:scale-[0.98] shadow-md hover:shadow-lg">
+                    <button onClick={handleUpload} disabled={uploading} className="w-full flex items-center justify-center gap-2 py-3 rounded-xl text-sm font-bold transition disabled:opacity-50 bg-oe-blue text-white hover:bg-oe-blue-dark active:scale-[0.98] shadow-md hover:shadow-lg">
                       {uploading ? <Loader2 size={16} className="animate-spin" /> : <ArrowRight size={16} />}
                       {uploading ? t('bim.landing_processing') : t('bim.landing_upload_process')}
                     </button>
@@ -1963,12 +1963,12 @@ function LandingPage({ projectId, onUploadComplete: _onUploadComplete, breadcrum
 
           {/* Row 2: Feature cards - 3x2 grid */}
           <div>
-            <h2 className="text-xs font-bold text-content-tertiary uppercase tracking-widest mb-3">
+            <h2 className="text-xs font-bold text-content-tertiary mb-3">
               {t('bim.landing_what_you_get', { defaultValue: 'What you get' })}
             </h2>
             <div className="grid grid-cols-2 lg:grid-cols-3 gap-4">
               {features.map((f, i) => (
-                <div key={i} className="flex items-start gap-3 rounded-xl p-4 bg-white dark:bg-gray-800/40 border border-border-light/60 hover:border-border-light hover:shadow-sm transition-all">
+                <div key={i} className="flex items-start gap-3 rounded-xl p-4 bg-white dark:bg-gray-800/40 border border-border-light/60 hover:border-border-light hover:shadow-sm transition-colors">
                   <div className={`w-8 h-8 rounded-lg ${f.color} border flex items-center justify-center shrink-0`}><f.icon size={15} className={f.ic} /></div>
                   <div className="min-w-0">
                     <h3 className="text-xs font-semibold text-content-primary leading-tight">{f.title}</h3>
@@ -2038,7 +2038,7 @@ function LandingPage({ projectId, onUploadComplete: _onUploadComplete, breadcrum
                     <button
                       key={m.id}
                       onClick={() => onSelectModel?.(m.id)}
-                      className={`group relative w-full text-left rounded-xl border border-border-light border-l-[3px] ${borderAccent} bg-white dark:bg-gray-800/50 p-4 hover:shadow-lg hover:border-oe-blue/30 hover:-translate-y-0.5 transition-all duration-200 cursor-pointer`}
+                      className={`group relative w-full text-left rounded-xl border border-border-light border-l-[3px] ${borderAccent} bg-white dark:bg-gray-800/50 p-4 hover:shadow-lg hover:border-oe-blue/30 hover:-translate-y-0.5 transition-colors duration-200 cursor-pointer`}
                     >
                       {/* Delete button - visible on hover */}
                       {onDeleteModel && (
@@ -2047,7 +2047,7 @@ function LandingPage({ projectId, onUploadComplete: _onUploadComplete, breadcrum
                           onClick={(e) => { e.stopPropagation(); onDeleteModel(m.id, m.name); }}
                           onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); e.stopPropagation(); onDeleteModel(m.id, m.name); } }}
                           aria-label={t('bim.delete_model', { defaultValue: 'Delete model' })}
-                          className="absolute top-3 end-3 p-1.5 rounded-lg text-content-quaternary hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-950/30 opacity-0 group-hover:opacity-100 focus:opacity-100 transition-all z-10"
+                          className="absolute top-3 end-3 p-1.5 rounded-lg text-content-quaternary hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-950/30 opacity-0 group-hover:opacity-100 focus:opacity-100 transition z-10"
                         >
                           <Trash2 size={13} />
                         </button>
@@ -2156,7 +2156,7 @@ function LandingPage({ projectId, onUploadComplete: _onUploadComplete, breadcrum
                 <button
                   key={m.id}
                   onClick={() => onSelectModel?.(m.id)}
-                  className="group relative shrink-0 w-52 text-start rounded-lg border border-border-light bg-surface-secondary hover:bg-surface-tertiary hover:border-oe-blue/30 hover:shadow-md transition-all duration-200 overflow-hidden"
+                  className="group relative shrink-0 w-52 text-start rounded-lg border border-border-light bg-surface-secondary hover:bg-surface-tertiary hover:border-oe-blue/30 hover:shadow-md transition-colors duration-200 overflow-hidden"
                 >
                   {onDeleteModel && (
                     <span
@@ -2165,7 +2165,7 @@ function LandingPage({ projectId, onUploadComplete: _onUploadComplete, breadcrum
                       aria-label={t('bim.delete_model', { defaultValue: 'Delete model' })}
                       onClick={(e) => { e.stopPropagation(); onDeleteModel(m.id, m.name); }}
                       onKeyDown={(e) => { if (e.key === 'Enter') { e.stopPropagation(); onDeleteModel(m.id, m.name); } }}
-                      className="absolute top-1.5 right-1.5 p-1 rounded text-content-quaternary hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-950/30 opacity-0 group-hover:opacity-100 transition-all z-10"
+                      className="absolute top-1.5 right-1.5 p-1 rounded text-content-quaternary hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-950/30 opacity-0 group-hover:opacity-100 transition z-10"
                     >
                       <Trash2 size={11} />
                     </span>
@@ -4259,7 +4259,7 @@ export function BIMPage() {
             bounding_box in metres. */}
         {dimensionsVisible && selectedDimensions && (
           <div
-            className="absolute top-[60px] z-30 pointer-events-none select-none
+            className="absolute top-16 z-30 pointer-events-none select-none
                        rounded-lg border border-oe-blue/30 bg-surface-primary/95
                        backdrop-blur-sm shadow-md px-3 py-2 min-w-[180px]
                        transition-[inset-inline-start] duration-200"
@@ -4268,7 +4268,7 @@ export function BIMPage() {
           >
             <div className="flex items-center gap-1.5 mb-1.5">
               <Maximize2 size={12} className="text-oe-blue shrink-0" />
-              <span className="text-[10px] font-semibold uppercase tracking-wide text-content-tertiary">
+              <span className="text-[10px] font-semibold text-content-tertiary">
                 {t('bim.dimensions_title', { defaultValue: 'BBox dimensions' })}
               </span>
             </div>

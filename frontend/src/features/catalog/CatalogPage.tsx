@@ -352,7 +352,7 @@ function RegionImportGrid({
           return (
             <div
               key={region.id}
-              className={`relative flex items-center gap-3 rounded-xl border p-3.5 transition-all ${
+              className={`relative flex items-center gap-3 rounded-xl border p-3.5 transition ${
                 isLoaded
                   ? 'border-green-200 bg-green-50/50 dark:border-green-800 dark:bg-green-900/10'
                   : 'border-border hover:border-oe-blue/40 hover:bg-surface-secondary/50'
@@ -473,7 +473,7 @@ function RegionTabBar({
           onClick={() => onChangeRegion('')}
           className={`
             group relative flex items-center gap-2 shrink-0 rounded-t-lg px-4 py-2.5
-            border-b-2 transition-all duration-fast ease-oe
+            border-b-2 transition duration-fast ease-oe
             ${
               activeRegion === ''
                 ? 'border-oe-blue bg-oe-blue-subtle/20 text-content-primary'
@@ -506,7 +506,7 @@ function RegionTabBar({
               onClick={() => onChangeRegion('CUSTOM')}
               className={`
                 group relative flex items-center gap-2 shrink-0 rounded-t-lg px-3.5 py-2.5
-                border-b-2 transition-all duration-fast ease-oe
+                border-b-2 transition duration-fast ease-oe
                 ${
                   isActive
                     ? 'border-oe-blue bg-oe-blue-subtle/20 text-content-primary'
@@ -542,7 +542,7 @@ function RegionTabBar({
               onClick={() => onChangeRegion(rs.region)}
               className={`
                 group relative flex items-center gap-2 shrink-0 rounded-t-lg px-3.5 py-2.5
-                border-b-2 transition-all duration-fast ease-oe
+                border-b-2 transition duration-fast ease-oe
                 ${
                   isActive
                     ? 'border-oe-blue bg-oe-blue-subtle/20 text-content-primary'
@@ -566,7 +566,7 @@ function RegionTabBar({
         {/* Import button */}
         <button
           onClick={onImportClick}
-          className="flex items-center gap-1.5 shrink-0 rounded-t-lg px-3 py-2.5 border-b-2 border-transparent text-content-tertiary hover:text-oe-blue-text hover:bg-oe-blue-subtle/10 transition-all duration-fast ease-oe"
+          className="flex items-center gap-1.5 shrink-0 rounded-t-lg px-3 py-2.5 border-b-2 border-transparent text-content-tertiary hover:text-oe-blue-text hover:bg-oe-blue-subtle/10 transition-colors duration-fast ease-oe"
           title={t('catalog.import_region', { defaultValue: 'Import region' })}
         >
           <Plus size={14} />
@@ -1007,14 +1007,14 @@ function ResourceDetailPanel({
         <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
           {/* Type + Category */}
           <div className="rounded-lg bg-surface-primary border border-border-light p-2.5">
-            <div className="text-2xs text-content-quaternary uppercase tracking-wider mb-1">{t('catalog.type_label', { defaultValue: 'Type' })}</div>
+            <div className="text-2xs text-content-quaternary mb-1">{t('catalog.type_label', { defaultValue: 'Type' })}</div>
             <div className="text-xs font-medium text-content-primary">{getResourceTypeLabel(resource.resource_type, t)}</div>
             <div className="text-2xs text-content-tertiary mt-0.5">{categoryLabel}</div>
           </div>
 
           {/* Usage */}
           <div className="rounded-lg bg-surface-primary border border-border-light p-2.5">
-            <div className="text-2xs text-content-quaternary uppercase tracking-wider mb-1">{t('catalog.usage', { defaultValue: 'Usage' })}</div>
+            <div className="text-2xs text-content-quaternary mb-1">{t('catalog.usage', { defaultValue: 'Usage' })}</div>
             <div className="text-xs font-medium text-content-primary">{resource.usage_count.toLocaleString(getNumberLocale())} {t('catalog.references', { defaultValue: 'references' })}</div>
             {specs.used_in_work_items ? (
               <div className="text-2xs text-content-tertiary mt-0.5">{Number(specs.used_in_work_items).toLocaleString(getNumberLocale())} {t('catalog.work_items', { defaultValue: 'work items' })}</div>
@@ -1023,7 +1023,7 @@ function ResourceDetailPanel({
 
           {/* Region */}
           <div className="rounded-lg bg-surface-primary border border-border-light p-2.5">
-            <div className="text-2xs text-content-quaternary uppercase tracking-wider mb-1">{t('catalog.region_label', { defaultValue: 'Region' })}</div>
+            <div className="text-2xs text-content-quaternary mb-1">{t('catalog.region_label', { defaultValue: 'Region' })}</div>
             <div className="flex items-center gap-1.5">
               {regionInfo && <MiniFlag code={regionInfo.flag} size={12} />}
               <span className="text-xs font-medium text-content-primary">{regionInfo?.name ?? resource.region}</span>
@@ -1035,7 +1035,7 @@ function ResourceDetailPanel({
         {/* Source info for boq_import items */}
         {resource.source === 'boq_import' && Boolean(specs.source_project_name || specs.source_boq_name || specs.saved_at) && (
           <div className="mt-3 rounded-lg bg-oe-blue-subtle/20 border border-oe-blue/10 px-3 py-2.5">
-            <div className="text-2xs text-oe-blue font-semibold uppercase tracking-wider mb-1.5">
+            <div className="text-2xs text-oe-blue font-semibold mb-1.5">
               {t('catalog.saved_from_project', { defaultValue: 'Saved from project' })}
             </div>
             <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs">
@@ -1779,7 +1779,7 @@ export function CatalogPage() {
                 value={region}
                 onChange={(e) => handleRegionChange(e.target.value)}
                 aria-label={t('catalog.filter_region', { defaultValue: 'Filter by region' })}
-                className="h-7 appearance-none rounded-lg border border-border bg-surface-primary ps-3 pe-8 text-sm text-content-primary transition-all focus:outline-none focus:ring-2 focus:ring-oe-blue focus:border-transparent"
+                className="h-7 appearance-none rounded-lg border border-border bg-surface-primary ps-3 pe-8 text-sm text-content-primary transition-colors focus:outline-none focus:ring-2 focus:ring-oe-blue focus:border-transparent"
               >
                 <option value="">
                   {t('catalog.all_regions', { defaultValue: 'All regions' })}
@@ -1895,7 +1895,7 @@ export function CatalogPage() {
                 onClick={() => handleTypeChange(tab.key)}
                 className={`
                   flex items-center gap-1.5 shrink-0 rounded-full px-3 py-1.5
-                  text-xs font-medium transition-all duration-fast ease-oe
+                  text-xs font-medium transition duration-fast ease-oe
                   ${
                     isActive
                       ? 'bg-oe-blue text-white shadow-sm'
@@ -1947,7 +1947,7 @@ export function CatalogPage() {
                       defaultValue: 'Search by name or code...',
                     })
               }
-              className="h-10 w-full rounded-lg border border-border bg-surface-primary ps-10 pe-9 text-sm text-content-primary placeholder:text-content-tertiary transition-all duration-fast ease-oe focus:outline-none focus:ring-2 focus:ring-oe-blue focus:border-transparent hover:border-content-tertiary"
+              className="h-10 w-full rounded-lg border border-border bg-surface-primary ps-10 pe-9 text-sm text-content-primary placeholder:text-content-tertiary transition-colors duration-fast ease-oe focus:outline-none focus:ring-2 focus:ring-oe-blue focus:border-transparent hover:border-content-tertiary"
             />
             {query && (
               <button
@@ -1971,7 +1971,7 @@ export function CatalogPage() {
                 value={category}
                 onChange={(e) => handleCategoryChange(e.target.value)}
                 aria-label={t('catalog.filter_category', { defaultValue: 'Filter by category' })}
-                className="h-10 w-full appearance-none rounded-lg border border-border bg-surface-primary ps-3 pe-9 text-sm text-content-primary transition-all duration-fast ease-oe focus:outline-none focus:ring-2 focus:ring-oe-blue focus:border-transparent hover:border-content-tertiary sm:w-48"
+                className="h-10 w-full appearance-none rounded-lg border border-border bg-surface-primary ps-3 pe-9 text-sm text-content-primary transition-colors duration-fast ease-oe focus:outline-none focus:ring-2 focus:ring-oe-blue focus:border-transparent hover:border-content-tertiary sm:w-48"
               >
                 <option value="">
                   {t('catalog.all_categories', { defaultValue: 'All categories' })}
@@ -1997,7 +1997,7 @@ export function CatalogPage() {
                 setUnit(e.target.value);
                 setOffset(0);
               }}
-              className="h-10 w-full appearance-none rounded-lg border border-border bg-surface-primary ps-3 pe-9 text-sm text-content-primary transition-all duration-fast ease-oe focus:outline-none focus:ring-2 focus:ring-oe-blue focus:border-transparent hover:border-content-tertiary sm:w-32"
+              className="h-10 w-full appearance-none rounded-lg border border-border bg-surface-primary ps-3 pe-9 text-sm text-content-primary transition-colors duration-fast ease-oe focus:outline-none focus:ring-2 focus:ring-oe-blue focus:border-transparent hover:border-content-tertiary sm:w-32"
             >
               <option value="">
                 {t('catalog.all_units', { defaultValue: 'All units' })}

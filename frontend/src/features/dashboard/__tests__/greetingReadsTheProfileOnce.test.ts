@@ -245,8 +245,9 @@ describe('the dashboard and the profile route', () => {
     expect(dashboard).not.toMatch(/queryKey:\s*\['me'\]/);
   });
 
-  it('greets with the name the auth store holds', () => {
-    expect(dashboard).toMatch(/useAuthStore\(\(s\) => s\.userFullName\)/);
+  it('names the page instead of greeting the reader', () => {
+    expect(dashboard).toMatch(/t\('nav\.dashboard'/);
+    expect(dashboard).not.toMatch(/greet_morning|Good morning|userFullName/);
   });
 
   it('is told about a rename by the Settings profile save', () => {

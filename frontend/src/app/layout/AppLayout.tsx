@@ -190,12 +190,12 @@ export function AppLayout({ title, children }: AppLayoutProps) {
       {/* Floating Recent button — bottom-right corner */}
       <FloatingRecentButton />
 
-      {/* AI assistant — the round button and the dock it opens (Alt+A
-          toggles it too). The dock pushes the page aside on wide screens
-          (see `oe-ai-dock-shell` above) and floats over it otherwise. Both
-          stay out of /chat, which is the full-page version of the same
+      {/* AI assistant — one entry point: the floating button and the dock it
+          opens (Alt+A toggles it too). The dock pushes the page aside on wide
+          screens (see `oe-ai-dock-shell` above) and floats over it otherwise.
+          Both stay out of /chat, which is the full-page version of the same
           assistant. Mounted at the layout level so the conversation
-          survives navigation. */}
+          survives navigation. The header no longer duplicates this entry. */}
       <FloatingChatButton />
       <FloatingChatPanel />
 

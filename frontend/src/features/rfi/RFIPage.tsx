@@ -1174,7 +1174,7 @@ export function CreateRFIModal({
             type="button"
             onClick={() => set('cost_impact', !form.cost_impact)}
             className={clsx(
-              'flex items-center gap-3 rounded-lg border-2 px-4 py-3 transition-all text-left w-full',
+              'flex items-center gap-3 rounded-lg border-2 px-4 py-3 transition text-left w-full',
               form.cost_impact
                 ? 'border-amber-400 bg-amber-50 dark:bg-amber-950/20 dark:border-amber-600'
                 : 'border-border bg-surface-primary hover:bg-surface-secondary',
@@ -1213,7 +1213,7 @@ export function CreateRFIModal({
             type="button"
             onClick={() => set('schedule_impact', !form.schedule_impact)}
             className={clsx(
-              'flex items-center gap-3 rounded-lg border-2 px-4 py-3 transition-all text-left w-full',
+              'flex items-center gap-3 rounded-lg border-2 px-4 py-3 transition text-left w-full',
               form.schedule_impact
                 ? 'border-blue-400 bg-blue-50 dark:bg-blue-950/20 dark:border-blue-600'
                 : 'border-border bg-surface-primary hover:bg-surface-secondary',
@@ -1708,7 +1708,7 @@ const RFIRow = React.memo(function RFIRow({
         <div className="px-4 pb-4 pl-12 space-y-3 animate-fade-in">
           {/* Question */}
           <div className="rounded-lg bg-surface-secondary p-3">
-            <p className="text-xs text-content-tertiary mb-1 font-medium uppercase tracking-wide">
+            <p className="text-xs text-content-tertiary mb-1 font-medium">
               {t('rfi.label_question', { defaultValue: 'Question' })}
             </p>
             <p className="text-sm text-content-primary whitespace-pre-wrap">{rfi.question}</p>
@@ -1717,7 +1717,7 @@ const RFIRow = React.memo(function RFIRow({
           {/* Response */}
           {rfi.official_response && (
             <div className="rounded-lg bg-green-50 dark:bg-green-950/20 border border-green-200 dark:border-green-800 p-3">
-              <p className="text-xs text-green-700 dark:text-green-400 mb-1 font-medium uppercase tracking-wide">
+              <p className="text-xs text-green-700 dark:text-green-400 mb-1 font-medium">
                 {t('rfi.label_response', { defaultValue: 'Response' })}
               </p>
               <p className="text-sm text-content-primary whitespace-pre-wrap">{rfi.official_response}</p>
@@ -2473,7 +2473,7 @@ export function RFIPage() {
       {/* Stats */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3" data-guide="rfi-stats">
         <div className="rounded-xl border border-border-light bg-surface-elevated/90 p-4 shadow-xs transition-shadow duration-normal ease-oe hover:shadow-sm animate-card-in">
-          <p className="text-2xs font-medium text-content-tertiary uppercase tracking-wide">
+          <p className="text-2xs font-medium text-content-tertiary">
             {t('rfi.stat_total', { defaultValue: 'Total RFIs' })}
           </p>
           <p className="text-lg font-semibold mt-1 tabular-nums text-content-primary">
@@ -2481,13 +2481,13 @@ export function RFIPage() {
           </p>
         </div>
         <div className="rounded-xl border border-border-light bg-surface-elevated/90 p-4 shadow-xs transition-shadow duration-normal ease-oe hover:shadow-sm animate-card-in">
-          <p className="text-2xs font-medium text-content-tertiary uppercase tracking-wide">
+          <p className="text-2xs font-medium text-content-tertiary">
             {t('rfi.stat_open', { defaultValue: 'Open' })}
           </p>
           <p className="text-lg font-semibold mt-1 tabular-nums text-oe-blue">{stats.open}</p>
         </div>
         <div className="rounded-xl border border-border-light bg-surface-elevated/90 p-4 shadow-xs transition-shadow duration-normal ease-oe hover:shadow-sm animate-card-in">
-          <p className="text-2xs font-medium text-content-tertiary uppercase tracking-wide">
+          <p className="text-2xs font-medium text-content-tertiary">
             {t('rfi.stat_overdue', { defaultValue: 'Overdue' })}
           </p>
           <p
@@ -2500,7 +2500,7 @@ export function RFIPage() {
           </p>
         </div>
         <div className="rounded-xl border border-border-light bg-surface-elevated/90 p-4 shadow-xs transition-shadow duration-normal ease-oe hover:shadow-sm animate-card-in">
-          <p className="text-2xs font-medium text-content-tertiary uppercase tracking-wide">
+          <p className="text-2xs font-medium text-content-tertiary">
             {t('rfi.stat_avg_days', { defaultValue: 'Avg. Days Open' })}
           </p>
           <p className="text-lg font-semibold mt-1 tabular-nums text-content-primary">
@@ -2816,7 +2816,7 @@ export function RFIPage() {
             <div className="hidden md:block">
               <Card padding="none" className="overflow-x-auto">
                 {/* Table header */}
-                <div className="flex items-center gap-3 px-4 py-2.5 border-b border-border-light bg-surface-secondary/30 text-2xs font-medium text-content-tertiary uppercase tracking-wider min-w-[640px]">
+                <div className="flex items-center gap-3 px-4 py-2.5 border-b border-border-light bg-surface-secondary/30 text-2xs font-medium text-content-tertiary min-w-[640px]">
                   <span className="w-5" /> {/* Chevron space */}
                   <span className="w-16">#</span>
                   <span className="flex-1">

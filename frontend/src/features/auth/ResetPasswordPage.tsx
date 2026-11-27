@@ -174,7 +174,7 @@ export function ResetPasswordPage() {
       <div className="relative z-10 w-full max-w-[400px]">
         {/* Logo — glow entrance */}
         <div className="mb-8 text-center animate-stagger-in" style={{ animationDelay: '0ms' }}>
-          <div className="mx-auto mb-4 animate-logo-glow rounded-[20px] w-fit">
+          <div className="mx-auto mb-4 rounded-[20px] w-fit">
             <Logo size="xl" animate className="mx-auto shadow-xl" />
           </div>
         </div>
@@ -314,7 +314,7 @@ export function ResetPasswordPage() {
                     variant="primary"
                     size="lg"
                     loading={loading}
-                    className="w-full btn-shimmer"
+                    className="w-full"
                   >
                     {t('auth.reset_submit', { defaultValue: 'Save new password' })}
                   </Button>

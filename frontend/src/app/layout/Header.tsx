@@ -4,8 +4,7 @@ import { useState, useRef, useEffect, useCallback, useId } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate, useLocation, useMatch } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
-import { openAiPanel } from '@/shared/lib/actions/askAi';
-import { Search, ChevronDown, ChevronRight, LogOut, User, Settings, Menu, MessageSquarePlus, FolderOpen, CheckCircle2, XCircle, Bug, Loader2, Upload, HelpCircle, GraduationCap, Mail, ExternalLink, Github, Sun, Moon, Monitor, Globe, Sparkles, Clock } from 'lucide-react';
+import { Search, ChevronDown, ChevronRight, LogOut, User, Settings, Menu, MessageSquarePlus, FolderOpen, CheckCircle2, XCircle, Bug, Loader2, Upload, HelpCircle, GraduationCap, Mail, ExternalLink, Github, Sun, Moon, Monitor, Globe, Clock } from 'lucide-react';
 import clsx from 'clsx';
 import { SUPPORTED_LANGUAGES, getLanguageByCode, changeLanguage } from '../i18n';
 import { sortLanguagesByName } from '@/shared/lib/languageOrder';
@@ -402,7 +401,6 @@ export function Header({ title, onMenuClick }: HeaderProps) {
   const packData = usePartnerPack().data;
   const showCoBrand = packData?.active === true && packData.manifest?.type === 'partner';
   const location = useLocation();
-  const navigate = useNavigate();
   const translatedTitle = title
     ? t(resolvePageTitleKey(title) ?? title, { defaultValue: title })
     : undefined;
@@ -551,7 +549,11 @@ export function Header({ title, onMenuClick }: HeaderProps) {
         <PresenceAvatarStack />
         <div className="hidden sm:block h-4 w-px bg-border-light/70" aria-hidden />
 
-        {/* ── Zone 2 (Search) ──────────────────────────────────────── */}
+        {/* ── Zone 2 (Search) ────────────────────────────────────────
+            The one visible search entry. Cmd/Ctrl+K opens the command
+            palette (bound globally in App.tsx); Cmd/Ctrl+Shift+K opens
+            semantic search. Both shortcuts still work without a second
+            launcher, so the sidebar no longer duplicates this control. */}
         <button
           onClick={openCommandPalette}
           className={clsx(
@@ -570,9 +572,9 @@ export function Header({ title, onMenuClick }: HeaderProps) {
             'w-40 md:w-44 xl:w-56',
           )}
         >
-          <Search size={14} strokeWidth={1.75} className="shrink-0" />
+          <Search size={16} strokeWidth={1.5} className="shrink-0" />
           <span className="truncate">{t('common.search')}</span>
-          <kbd className="ml-auto inline-flex items-center gap-0.5 rounded border border-border-light bg-surface-primary px-1 py-px text-[9px] font-medium text-content-quaternary">
+          <kbd className="ml-auto inline-flex items-center gap-0.5 rounded border border-border-light bg-surface-primary px-1 py-px text-2xs font-medium text-content-quaternary">
             ⌘K
           </kbd>
         </button>
@@ -586,23 +588,7 @@ export function Header({ title, onMenuClick }: HeaderProps) {
             'h-8 w-8 items-center justify-center rounded-lg text-content-secondary hover:bg-surface-secondary transition-colors',
           )}
         >
-          <Search size={16} />
-        </button>
-
-        {/* The AI assistant dock, also reachable from the palette ("Ask AI"). */}
-        <button
-          type="button"
-          onClick={() => openAiPanel({ pathname: location.pathname, navigate })}
-          aria-label={t('header.ask_ai', { defaultValue: 'Ask AI' })}
-          title={t('header.ask_ai', { defaultValue: 'Ask AI' })}
-          data-testid="header-ask-ai"
-          className={clsx(
-            'flex h-8 items-center gap-1.5 rounded-lg px-2 text-content-secondary',
-            'hover:bg-surface-secondary hover:text-content-primary transition-colors',
-          )}
-        >
-          <Sparkles size={16} strokeWidth={1.75} />
-          <span className="hidden xl:inline text-sm">{t('header.ask_ai', { defaultValue: 'Ask AI' })}</span>
+          <Search size={16} strokeWidth={1.5} />
         </button>
 
         {/* Hairline divider between Zone 2 and Zone 3. */}
@@ -2147,10 +2133,11 @@ function UploadQueueIndicator() {
           <Upload size={16} aria-hidden="true" />
         )}
         {(totalActive > 0 || errorTasks.length > 0) && (
-          <span className={`absolute -top-0.5 -right-0.5 flex h-4 w-4 items-center justify-center rounded-full text-[9px] font-bold text-white ${
-            errorTasks.length > 0 ? 'bg-semantic-error' : 'bg-oe-blue'
-          }`}>
-            {totalActive || errorTasks.length}
+          <span
+            className="absolute -top-1 -right-1 font-mono text-2xs tabular-nums text-content-secondary"
+            title={t('header.background_jobs', { defaultValue: 'Background jobs' })}
+          >
+            {(totalActive || errorTasks.length) > 99 ? '99+' : totalActive || errorTasks.length}
           </span>
         )}
       </button>

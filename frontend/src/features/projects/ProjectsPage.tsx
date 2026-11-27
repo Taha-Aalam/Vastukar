@@ -687,7 +687,7 @@ export function ProjectsPage() {
           <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3">
             {/* 1. Total Projects */}
             <div className="rounded-xl border border-border-light bg-surface-elevated/90 p-3 shadow-xs transition-shadow duration-normal ease-oe hover:shadow-sm">
-              <div className="text-2xs font-medium text-content-tertiary uppercase tracking-wider">
+              <div className="text-2xs font-medium text-content-tertiary">
                 {t('projects.stats_total', { defaultValue: 'Total Projects' })}
               </div>
               <div className="mt-1 text-xl font-bold text-content-primary tabular-nums leading-none">
@@ -713,7 +713,7 @@ export function ProjectsPage() {
 
             {/* 2. Total BOQs */}
             <div className="rounded-xl border border-border-light bg-surface-elevated/90 p-3 shadow-xs transition-shadow duration-normal ease-oe hover:shadow-sm">
-              <div className="text-2xs font-medium text-content-tertiary uppercase tracking-wider">
+              <div className="text-2xs font-medium text-content-tertiary">
                 {t('projects.stats_boqs', { defaultValue: 'Total BOQs' })}
               </div>
               <div className="mt-1 text-xl font-bold text-content-primary tabular-nums leading-none">
@@ -735,7 +735,7 @@ export function ProjectsPage() {
                 Single currency → one labelled total. Multiple → "Mixed
                 currencies" headline + a per-currency subtotal line. */}
             <div className="rounded-xl border border-border-light bg-surface-elevated/90 p-3 shadow-xs transition-shadow duration-normal ease-oe hover:shadow-sm">
-              <div className="text-2xs font-medium text-content-tertiary uppercase tracking-wider">
+              <div className="text-2xs font-medium text-content-tertiary">
                 {t('projects.stats_value', { defaultValue: 'Total Value' })}
               </div>
               {!boqStats ? (
@@ -771,7 +771,7 @@ export function ProjectsPage() {
                     <span className="text-xl font-bold text-content-primary tabular-nums">
                       {formatBigValue(stats.valueByCurrency[0]!.total)}
                     </span>
-                    <span className="text-2xs font-semibold uppercase tracking-wider text-content-tertiary">
+                    <span className="text-2xs font-semibold text-content-tertiary">
                       {stats.valueByCurrency[0]!.currency}
                     </span>
                   </div>
@@ -786,7 +786,7 @@ export function ProjectsPage() {
                 scalar. Single currency → one labelled figure; multiple →
                 "Mixed currencies" + per-currency average chips. */}
             <div className="rounded-xl border border-border-light bg-surface-elevated/90 p-3 shadow-xs transition-shadow duration-normal ease-oe hover:shadow-sm">
-              <div className="text-2xs font-medium text-content-tertiary uppercase tracking-wider">
+              <div className="text-2xs font-medium text-content-tertiary">
                 {t('projects.stats_avg', { defaultValue: 'Avg Project Size' })}
               </div>
               {!boqStats ? (
@@ -822,7 +822,7 @@ export function ProjectsPage() {
                     <span className="text-xl font-bold text-content-primary tabular-nums">
                       {formatBigValue(stats.valueByCurrency[0]!.avg)}
                     </span>
-                    <span className="text-2xs font-semibold uppercase tracking-wider text-content-tertiary">
+                    <span className="text-2xs font-semibold text-content-tertiary">
                       {stats.valueByCurrency[0]!.currency}
                     </span>
                   </div>
@@ -1358,7 +1358,7 @@ export function ProjectCard({
       // would also catch project-card-view-on-map on the button inside.
       data-testid="project-card"
       padding="none"
-      className={`group relative animate-card-in overflow-hidden rounded-xl bg-gradient-to-b from-surface-elevated to-surface-primary hover:shadow-xl hover:border-oe-blue/40 focus-within:ring-2 focus-within:ring-oe-blue/30 motion-safe:transition-all ${isArchived ? 'cursor-default opacity-90' : 'cursor-pointer'}`}
+      className={`group relative animate-card-in overflow-hidden rounded-xl bg-gradient-to-b from-surface-elevated to-surface-primary hover:shadow-xl hover:border-oe-blue/40 focus-within:ring-2 focus-within:ring-oe-blue/30 motion-safe:transition ${isArchived ? 'cursor-default opacity-90' : 'cursor-pointer'}`}
       style={style}
       // An archived (deleted) project has no page to open: the project route
       // answers 404 for it. Its card offers Restore instead.
@@ -1387,7 +1387,7 @@ export function ProjectCard({
             <Link
               to={`/projects/${project.id}/geo`}
               onClick={(e) => e.stopPropagation()}
-              className="absolute top-2 right-2 z-10 inline-flex items-center gap-1 rounded-full border border-white/40 bg-white/85 px-2.5 py-1 text-2xs font-semibold text-oe-blue shadow-sm backdrop-blur-md transition-all hover:bg-white hover:shadow-md hover:scale-[1.03] focus:outline-none focus-visible:ring-2 focus-visible:ring-oe-blue/60 dark:border-white/10 dark:bg-slate-900/70 dark:text-sky-300 dark:hover:bg-slate-900/90"
+              className="absolute top-2 right-2 z-10 inline-flex items-center gap-1 rounded-full border border-white/40 bg-white/85 px-2.5 py-1 text-2xs font-semibold text-oe-blue shadow-sm backdrop-blur-md transition hover:bg-white hover:shadow-md hover:scale-[1.03] focus:outline-none focus-visible:ring-2 focus-visible:ring-oe-blue/60 dark:border-white/10 dark:bg-slate-900/70 dark:text-sky-300 dark:hover:bg-slate-900/90"
               title={t('projects.card.fly_to_on_map', {
                 defaultValue: 'Fly camera to {{name}} on the globe',
                 name: project.name,
@@ -1626,7 +1626,7 @@ export function ProjectCard({
             <Link
               to={`/projects/${project.id}/geo`}
               onClick={(e) => e.stopPropagation()}
-              className="inline-flex items-center gap-1 rounded-full border border-oe-blue/30 bg-oe-blue-subtle px-2 py-0.5 text-2xs font-semibold text-oe-blue-text transition-all hover:bg-oe-blue hover:text-white hover:shadow-sm focus:outline-none focus-visible:ring-2 focus-visible:ring-oe-blue/60"
+              className="inline-flex items-center gap-1 rounded-full border border-oe-blue/30 bg-oe-blue-subtle px-2 py-0.5 text-2xs font-semibold text-oe-blue-text transition-colors hover:bg-oe-blue hover:text-white hover:shadow-sm focus:outline-none focus-visible:ring-2 focus-visible:ring-oe-blue/60"
               title={t('projects.card.fly_to_on_map', {
                 defaultValue: 'Fly camera to {{name}} on the globe',
                 name: project.name,
@@ -1653,14 +1653,14 @@ export function ProjectCard({
       {boqStats && boqStats.boqCount > 0 && boqStats.totalValue > 0 && (
         <div className="relative px-5 pb-3">
           <div className="rounded-xl border border-border-light bg-gradient-to-br from-oe-blue-subtle/60 via-surface-elevated to-surface-elevated px-4 py-3">
-            <div className="text-[10px] font-medium uppercase tracking-wider text-content-tertiary">
+            <div className="text-[10px] font-medium text-content-tertiary">
               {t('projects.card_total_value', { defaultValue: 'Total value' })}
             </div>
             <div className="mt-0.5 flex items-baseline gap-1.5">
               <span className="text-xl font-bold tabular-nums text-content-primary">
                 {currencyFmt.format(boqStats.totalValue)}
               </span>
-              <span className="text-2xs font-semibold uppercase tracking-wider text-content-tertiary">
+              <span className="text-2xs font-semibold text-content-tertiary">
                 {project.currency}
               </span>
             </div>

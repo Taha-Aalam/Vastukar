@@ -666,7 +666,7 @@ export function AIConfigurationCard() {
   const baseUrlInputClass =
     'h-10 w-full rounded-lg border border-border bg-surface-primary px-3 font-mono text-sm ' +
     'text-content-primary placeholder:text-content-tertiary focus:outline-none focus:ring-2 ' +
-    'focus:ring-oe-blue/30 focus:border-oe-blue transition-all duration-normal ease-oe ' +
+    'focus:ring-oe-blue/30 focus:border-oe-blue transition-colors duration-normal ease-oe ' +
     'hover:border-content-tertiary';
   const baseUrlHintClass = 'mt-1.5 text-xs text-content-tertiary';
 
@@ -710,7 +710,7 @@ export function AIConfigurationCard() {
                     onClick={() => handleProviderChange(provider.id)}
                     aria-pressed={isSelected}
                     aria-label={`${providerName}${isSelected ? ` (${t('settings.ai_selected', { defaultValue: 'selected' })})` : ''}`}
-                    className={`relative flex flex-col items-start gap-1 rounded-xl px-4 py-3 text-left transition-all duration-normal ease-oe ${
+                    className={`relative flex flex-col items-start gap-1 rounded-xl px-4 py-3 text-left transition duration-normal ease-oe ${
                       isSelected
                         ? 'bg-oe-blue-subtle border-2 border-oe-blue ring-2 ring-oe-blue/10'
                         : 'border-2 border-border-light hover:bg-surface-secondary hover:border-border'
@@ -793,7 +793,7 @@ export function AIConfigurationCard() {
                         defaultValue: `Paste your ${AI_PROVIDERS.find((p) => p.id === selectedProvider)?.keyPrefix || ''}... key here`,
                       })
                 }
-                className="h-10 w-full rounded-lg border border-border bg-surface-primary px-3 pr-20 font-mono text-sm text-content-primary placeholder:text-content-tertiary focus:outline-none focus:ring-2 focus:ring-oe-blue/30 focus:border-oe-blue focus:shadow-[0_0_0_4px_rgba(0,113,227,0.08)] transition-all duration-normal ease-oe hover:border-content-tertiary"
+                className="h-10 w-full rounded-lg border border-border bg-surface-primary px-3 pr-20 font-mono text-sm text-content-primary placeholder:text-content-tertiary focus:outline-none focus:ring-2 focus:ring-oe-blue/30 focus:border-oe-blue focus:shadow-[0_0_0_4px_rgba(0,113,227,0.08)] transition-colors duration-normal ease-oe hover:border-content-tertiary"
               />
               <button
                 type="button"
@@ -963,7 +963,7 @@ export function AIConfigurationCard() {
               }
               spellCheck={false}
               autoComplete="off"
-              className="h-10 w-full rounded-lg border border-border bg-surface-primary px-3 font-mono text-sm text-content-primary placeholder:text-content-tertiary focus:outline-none focus:ring-2 focus:ring-oe-blue/30 focus:border-oe-blue transition-all duration-normal ease-oe hover:border-content-tertiary"
+              className="h-10 w-full rounded-lg border border-border bg-surface-primary px-3 font-mono text-sm text-content-primary placeholder:text-content-tertiary focus:outline-none focus:ring-2 focus:ring-oe-blue/30 focus:border-oe-blue transition-colors duration-normal ease-oe hover:border-content-tertiary"
             />
             <p className="mt-1.5 text-xs text-content-tertiary">
               {t('settings.ai_model_hint', {
@@ -1097,7 +1097,7 @@ function InterfaceModeCard() {
             onClick={() => setMode('simple')}
             aria-pressed={!isAdvanced}
             aria-label={t('nav.mode_simple', { defaultValue: 'Simple' })}
-            className={`flex-1 flex flex-col items-center gap-2 rounded-xl px-4 py-4 border-2 transition-all ${
+            className={`flex-1 flex flex-col items-center gap-2 rounded-xl px-4 py-4 border-2 transition ${
               !isAdvanced
                 ? 'border-oe-blue bg-oe-blue-subtle text-oe-blue-text'
                 : 'border-transparent hover:bg-surface-secondary text-content-secondary hover:text-content-primary'
@@ -1113,7 +1113,7 @@ function InterfaceModeCard() {
             onClick={() => setMode('advanced')}
             aria-pressed={isAdvanced}
             aria-label={t('nav.mode_advanced', { defaultValue: 'Advanced' })}
-            className={`flex-1 flex flex-col items-center gap-2 rounded-xl px-4 py-4 border-2 transition-all ${
+            className={`flex-1 flex flex-col items-center gap-2 rounded-xl px-4 py-4 border-2 transition ${
               isAdvanced
                 ? 'border-oe-blue bg-oe-blue-subtle text-oe-blue-text'
                 : 'border-transparent hover:bg-surface-secondary text-content-secondary hover:text-content-primary'
@@ -1128,7 +1128,7 @@ function InterfaceModeCard() {
         </div>
         <Link
           to="/modules"
-          className="mt-4 flex items-center gap-2.5 rounded-lg border border-border-light bg-surface-secondary/40 px-4 py-3 text-left transition-all hover:bg-surface-secondary hover:border-border"
+          className="mt-4 flex items-center gap-2.5 rounded-lg border border-border-light bg-surface-secondary/40 px-4 py-3 text-left transition-colors hover:bg-surface-secondary hover:border-border"
         >
           <Package size={16} className="shrink-0 text-oe-blue" />
           <div className="min-w-0">
@@ -1143,7 +1143,7 @@ function InterfaceModeCard() {
         </Link>
         <Link
           to="/governance"
-          className="mt-2 flex items-center gap-2.5 rounded-lg border border-border-light bg-surface-secondary/40 px-4 py-3 text-left transition-all hover:bg-surface-secondary hover:border-border"
+          className="mt-2 flex items-center gap-2.5 rounded-lg border border-border-light bg-surface-secondary/40 px-4 py-3 text-left transition-colors hover:bg-surface-secondary hover:border-border"
         >
           <Scale size={16} className="shrink-0 text-oe-blue" />
           <div className="min-w-0">
@@ -1185,7 +1185,7 @@ function AppearanceCard() {
                 onClick={() => setTheme(option.value)}
                 aria-pressed={isActive}
                 aria-label={t(option.labelKey, { defaultValue: option.defaultLabel })}
-                className={`flex min-w-0 items-center justify-center gap-2 rounded-lg px-2 py-2.5 text-center transition-all duration-normal ease-oe ${
+                className={`flex min-w-0 items-center justify-center gap-2 rounded-lg px-2 py-2.5 text-center transition duration-normal ease-oe ${
                   isActive
                     ? 'bg-oe-blue-subtle border-2 border-oe-blue text-oe-blue-text'
                     : 'border-2 border-transparent hover:bg-surface-secondary text-content-secondary hover:text-content-primary'
@@ -1238,7 +1238,7 @@ function ProfileCard({ profile, loading, editing, setEditing, formName, setFormN
             <div className="flex-1 min-w-0 space-y-3">
               {/* Name + edit */}
               <div>
-                <label className="text-2xs uppercase tracking-wider text-content-tertiary font-semibold">
+                <label className="text-2xs text-content-tertiary font-semibold">
                   {t('settings.full_name', { defaultValue: 'Full name' })}
                 </label>
                 {editing ? (
@@ -1292,13 +1292,13 @@ function ProfileCard({ profile, loading, editing, setEditing, formName, setFormN
               {/* Meta grid */}
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-3 border-t border-border-light">
                 <div>
-                  <span className="text-2xs uppercase tracking-wider text-content-tertiary font-semibold block">
+                  <span className="text-2xs text-content-tertiary font-semibold block">
                     {t('settings.email_label', { defaultValue: 'Email' })}
                   </span>
                   <div className="mt-0.5 text-sm text-content-primary truncate">{profile.email}</div>
                 </div>
                 <div>
-                  <span className="text-2xs uppercase tracking-wider text-content-tertiary font-semibold block">
+                  <span className="text-2xs text-content-tertiary font-semibold block">
                     {t('settings.role_label', { defaultValue: 'Role' })}
                   </span>
                   <div className="mt-0.5">
@@ -1306,7 +1306,7 @@ function ProfileCard({ profile, loading, editing, setEditing, formName, setFormN
                   </div>
                 </div>
                 <div>
-                  <span className="text-2xs uppercase tracking-wider text-content-tertiary font-semibold block">
+                  <span className="text-2xs text-content-tertiary font-semibold block">
                     {t('settings.status', { defaultValue: 'Status' })}
                   </span>
                   <div className="mt-0.5">
@@ -1780,7 +1780,7 @@ export function SettingsPage() {
                   data-testid={`settings-tab-${tab.id}`}
                   tabIndex={isActive ? 0 : -1}
                   onClick={() => handleTabChange(tab.id)}
-                  className={`shrink-0 inline-flex items-center gap-2 px-3.5 py-2 rounded-full text-sm font-medium transition-all ${
+                  className={`shrink-0 inline-flex items-center gap-2 px-3.5 py-2 rounded-full text-sm font-medium transition ${
                     isActive
                       ? 'bg-oe-blue text-content-inverse shadow-xs'
                       : 'bg-surface-secondary text-content-secondary hover:bg-surface-tertiary hover:text-content-primary'
@@ -1815,7 +1815,7 @@ export function SettingsPage() {
                   data-testid={`settings-tab-${tab.id}-desktop`}
                   tabIndex={isActive ? 0 : -1}
                   onClick={() => handleTabChange(tab.id)}
-                  className={`group flex items-center gap-3 rounded-lg px-3 py-2.5 text-left transition-all duration-fast ${
+                  className={`group flex items-center gap-3 rounded-lg px-3 py-2.5 text-left transition duration-fast ${
                     isActive
                       ? 'bg-oe-blue-subtle text-oe-blue-text'
                       : 'text-content-secondary hover:bg-surface-secondary hover:text-content-primary'
@@ -2136,7 +2136,7 @@ export function SettingsPage() {
                           }}
                           aria-pressed={isActive}
                           aria-label={`${lang.name} (${lang.code})`}
-                          className={`flex flex-col items-center gap-1 rounded-xl px-3 py-3 text-center transition-all duration-normal ease-oe ${
+                          className={`flex flex-col items-center gap-1 rounded-xl px-3 py-3 text-center transition duration-normal ease-oe ${
                             isActive
                               ? 'bg-oe-blue-subtle border-2 border-oe-blue text-oe-blue-text'
                               : 'border-2 border-transparent hover:bg-surface-secondary text-content-secondary hover:text-content-primary'
@@ -2276,7 +2276,7 @@ export function SettingsPage() {
                 <CardContent className="space-y-3">
                   <Link
                     to="/governance?tab=permissions"
-                    className="flex items-center gap-2.5 rounded-lg border border-border-light bg-surface-secondary/40 px-4 py-3 text-left transition-all hover:bg-surface-secondary hover:border-border"
+                    className="flex items-center gap-2.5 rounded-lg border border-border-light bg-surface-secondary/40 px-4 py-3 text-left transition-colors hover:bg-surface-secondary hover:border-border"
                   >
                     <ShieldCheck size={16} className="shrink-0 text-oe-blue" />
                     <div className="min-w-0">
@@ -2291,7 +2291,7 @@ export function SettingsPage() {
                   </Link>
                   <Link
                     to="/governance?tab=approvals"
-                    className="flex items-center gap-2.5 rounded-lg border border-border-light bg-surface-secondary/40 px-4 py-3 text-left transition-all hover:bg-surface-secondary hover:border-border"
+                    className="flex items-center gap-2.5 rounded-lg border border-border-light bg-surface-secondary/40 px-4 py-3 text-left transition-colors hover:bg-surface-secondary hover:border-border"
                   >
                     <Scale size={16} className="shrink-0 text-oe-blue" />
                     <div className="min-w-0">
@@ -2306,7 +2306,7 @@ export function SettingsPage() {
                   </Link>
                   <Link
                     to="/governance?tab=validation"
-                    className="flex items-center gap-2.5 rounded-lg border border-border-light bg-surface-secondary/40 px-4 py-3 text-left transition-all hover:bg-surface-secondary hover:border-border"
+                    className="flex items-center gap-2.5 rounded-lg border border-border-light bg-surface-secondary/40 px-4 py-3 text-left transition-colors hover:bg-surface-secondary hover:border-border"
                   >
                     <ShieldAlert size={16} className="shrink-0 text-oe-blue" />
                     <div className="min-w-0">
@@ -2630,7 +2630,7 @@ function ConverterStatusPanel() {
                       </div>
                       <dl className="mt-1.5 grid grid-cols-1 gap-x-4 gap-y-0.5 text-2xs text-content-tertiary sm:grid-cols-2">
                         <div className="flex items-center gap-1.5">
-                          <dt className="font-medium uppercase tracking-wider">
+                          <dt className="font-medium">
                             {t('settings.converter_installed', { defaultValue: 'Installed' })}
                           </dt>
                           <dd className="font-mono" title={c.installed_sha ?? undefined}>
@@ -2638,7 +2638,7 @@ function ConverterStatusPanel() {
                           </dd>
                         </div>
                         <div className="flex items-center gap-1.5">
-                          <dt className="font-medium uppercase tracking-wider">
+                          <dt className="font-medium">
                             {t('settings.converter_latest', { defaultValue: 'Latest' })}
                           </dt>
                           <dd className="font-mono" title={c.latest_sha ?? undefined}>

@@ -114,7 +114,7 @@ const NOT_MAPPED = '';
 const TEMPLATE_LINK_CLASS =
   'inline-flex items-center gap-1.5 rounded-lg border border-border bg-surface-primary px-3 py-1.5 ' +
   'text-xs font-medium text-content-secondary shadow-xs ' +
-  'transition-all duration-normal ease-oe ' +
+  'transition duration-normal ease-oe ' +
   'hover:bg-surface-secondary hover:text-oe-blue hover:shadow-sm active:scale-[0.98] ' +
   'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-oe-blue';
 
@@ -940,10 +940,10 @@ function CWICRDatabaseGrid(_props: { onLoadDatabase: (file: File) => void }) {
                 </div>
                 <div className="h-2.5 w-full overflow-hidden rounded-full bg-surface-secondary">
                   <div
-                    className={`h-full rounded-full transition-all duration-1000 ease-out ${
+                    className={`h-full rounded-full transition duration-1000 ease-out ${
                       result
                         ? 'bg-semantic-success'
-                        : 'bg-gradient-to-r from-oe-blue via-blue-400 to-oe-blue bg-[length:200%_100%] animate-shimmer'
+                        : 'bg-oe-blue'
                     }`}
                     style={{ width: `${progressPct}%` }}
                   />
@@ -1359,7 +1359,7 @@ export function LoadedDatabasesSection() {
                           }}
                           title={deleteLabel}
                           aria-label={deleteLabel}
-                          className="flex h-7 w-7 items-center justify-center rounded-lg text-content-tertiary transition-all duration-fast ease-oe hover:text-semantic-error hover:bg-semantic-error-bg active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-oe-blue mx-auto"
+                          className="flex h-7 w-7 items-center justify-center rounded-lg text-content-tertiary transition duration-fast ease-oe hover:text-semantic-error hover:bg-semantic-error-bg active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-oe-blue mx-auto"
                         >
                           <Trash2 size={13} />
                         </button>
@@ -1921,7 +1921,7 @@ export function VectorDatabaseSection() {
                     key={db.id}
                     className={`
                       relative flex flex-col rounded-xl
-                      border transition-all duration-normal ease-oe
+                      border transition duration-normal ease-oe
                       ${
                         isVectorized
                           ? 'border-purple-400/40 bg-purple-50/20 dark:bg-purple-500/5'
@@ -1939,7 +1939,7 @@ export function VectorDatabaseSection() {
                       type="button"
                       onClick={() => handleLoadVectors(db)}
                       disabled={isLoading}
-                      className="flex items-center gap-3 rounded-xl px-3.5 py-3 text-left transition-all duration-normal ease-oe active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-oe-blue disabled:cursor-default"
+                      className="flex items-center gap-3 rounded-xl px-3.5 py-3 text-left transition duration-normal ease-oe active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-oe-blue disabled:cursor-default"
                     >
                       <MiniFlag code={db.flagId} />
                       <div className="min-w-0 flex-1">
@@ -2148,7 +2148,7 @@ export function VectorDatabaseSection() {
                       </div>
                       <div className="h-2 w-full overflow-hidden rounded-full bg-surface-secondary">
                         <div
-                          className="h-full rounded-full transition-all duration-700 ease-out bg-gradient-to-r from-purple-500 via-blue-500 to-purple-500 bg-[length:200%_100%] animate-shimmer"
+                          className="h-full rounded-full bg-oe-blue transition duration-700 ease-out"
                           style={{ width: `${progressPct}%` }}
                         />
                       </div>
@@ -2478,7 +2478,7 @@ function ColumnMappingPanel({
       {/* Sample preview table */}
       {sampleRows.length > 0 && (
         <div className="px-6 pt-3 pb-2">
-          <p className="text-2xs font-medium uppercase tracking-wider text-content-tertiary mb-2">
+          <p className="text-2xs font-medium text-content-tertiary mb-2">
             {t('costs_import.sample_preview', { defaultValue: 'Sample from your file' })}
           </p>
           <div className="rounded-xl border border-border-light overflow-x-auto">
@@ -3038,7 +3038,7 @@ export function ImportDatabasePage() {
       {/* Divider */}
       <div className="flex items-center gap-3">
         <div className="h-px flex-1 bg-border-light" />
-        <span className="text-xs font-medium text-content-tertiary uppercase tracking-wider">
+        <span className="text-xs font-medium text-content-tertiary">
           {t('costs.or_upload_own', { defaultValue: 'or upload your own file' })}
         </span>
         <div className="h-px flex-1 bg-border-light" />
@@ -3250,7 +3250,7 @@ export function ImportDatabasePage() {
               onDragOver={handleDragOver}
               onDragLeave={handleDragLeave}
               onClick={() => fileInputRef.current?.click()}
-              className={`flex flex-col items-center justify-center px-8 py-16 cursor-pointer transition-all duration-normal ease-oe ${
+              className={`flex flex-col items-center justify-center px-8 py-16 cursor-pointer transition duration-normal ease-oe ${
                 isDragging
                   ? 'bg-oe-blue-subtle border-2 border-dashed border-oe-blue'
                   : selectedFile
